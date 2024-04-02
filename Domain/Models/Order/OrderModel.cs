@@ -18,7 +18,7 @@ namespace Domain.Models.Order
         public UserModel User { get; set; }
 
         [ForeignKey("CarId")]
-        public int CarId { get; set; }
+        public Guid CarId { get; set; }
         public Car.CarModel Car { get; set; }
 
         // [ForeignKey("RepairId")]
