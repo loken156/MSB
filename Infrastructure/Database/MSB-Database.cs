@@ -63,13 +63,23 @@ namespace Infrastructure.Database
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Mock data for CarModels
+            var cars = new CarModel[]
+            {
+                new CarModel { CarId = Guid.NewGuid(), Volume = 100, Type = "Truck", Availability = "Available" },
+                new CarModel { CarId = Guid.NewGuid(), Volume = 200, Type = "Van", Availability = "Available" },
+                new CarModel { CarId = Guid.NewGuid(), Volume = 300, Type = "Truck", Availability = "Available" },
+                new CarModel { CarId = Guid.NewGuid(), Volume = 400, Type = "Van", Availability = "Available" },
+            };
+            modelBuilder.Entity<CarModel>().HasData(cars);
+
             // Mock data for OrderModels
             var orders = new OrderModel[]
             {
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[0].UserId, OrderDate = DateTime.Now, TotalCost = 1000, OrderStatus = "Created", OrderNumber = 2101011000},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[1].UserId, OrderDate = DateTime.Now, TotalCost = 2000, OrderStatus = "Created", OrderNumber = 2101011001},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[2].UserId, OrderDate = DateTime.Now, TotalCost = 3000, OrderStatus = "Created", OrderNumber = 2101011100},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].UserId, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101},
+                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[0].UserId, OrderDate = DateTime.Now, TotalCost = 1000, OrderStatus = "Created", OrderNumber = 2101011000, CarId = cars[0].CarId},
+                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[1].UserId, OrderDate = DateTime.Now, TotalCost = 2000, OrderStatus = "Created", OrderNumber = 2101011001, CarId = cars[1].CarId},
+                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[2].UserId, OrderDate = DateTime.Now, TotalCost = 3000, OrderStatus = "Created", OrderNumber = 2101011100, CarId = cars[2].CarId},
+                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].UserId, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101, CarId = cars[3].CarId},
             };
             modelBuilder.Entity<OrderModel>().HasData(orders);
 

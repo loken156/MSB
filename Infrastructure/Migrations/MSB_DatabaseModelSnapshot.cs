@@ -28,7 +28,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Apartment")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -40,26 +40,271 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("PostalCode")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Region")
+                    b.Property<string>("Floor")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("UserModelId")
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("StreetNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("AddressId");
 
-                    b.HasIndex("UserModelId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            AddressId = new Guid("4614b8f5-8b53-4286-971e-50e34050fe04"),
+                            Apartment = "Apt 3B",
+                            City = "Springfield",
+                            Country = "USA",
+                            Floor = "2nd",
+                            Latitude = "39.9266",
+                            Longitude = "-83.8064",
+                            State = "Ohio",
+                            StreetName = "Maple Street",
+                            StreetNumber = "21",
+                            UserId = new Guid("8f2f8f13-e2ce-40a4-a808-4ec0e78f5dd3"),
+                            ZipCode = "12345"
+                        },
+                        new
+                        {
+                            AddressId = new Guid("34774d1d-d6da-485f-bc50-4cd79102fba8"),
+                            Apartment = "Apt 2A",
+                            City = "Willow Creek",
+                            Country = "USA",
+                            Floor = "Ground Floor",
+                            Latitude = "37.7833",
+                            Longitude = "-122.4167",
+                            State = "California",
+                            StreetName = "Oak Avenue",
+                            StreetNumber = "22",
+                            UserId = new Guid("5ca7c98f-284a-4037-9486-d865144948c8"),
+                            ZipCode = "54321"
+                        },
+                        new
+                        {
+                            AddressId = new Guid("65e3b2be-9cf6-495d-9d8b-10db41a2b487"),
+                            Apartment = "Apt 5C",
+                            City = "Oakville",
+                            Country = "USA",
+                            Floor = "3rd",
+                            Latitude = "40.7128",
+                            Longitude = "-74.0060",
+                            State = "New York",
+                            StreetName = "Elm Street",
+                            StreetNumber = "23",
+                            UserId = new Guid("b490483e-15e4-4b36-a866-3e343c1063c4"),
+                            ZipCode = "98765"
+                        },
+                        new
+                        {
+                            AddressId = new Guid("70ef3f15-0203-439c-887c-bfa03daf3795"),
+                            Apartment = "Apt 10D",
+                            City = "Cedarville",
+                            Country = "USA",
+                            Floor = "4th",
+                            Latitude = "31.9686",
+                            Longitude = "-99.9018",
+                            State = "Texas",
+                            StreetName = "Pine Street",
+                            StreetNumber = "24",
+                            UserId = new Guid("d3af5a2f-de32-43b3-a31a-e17f02daaffa"),
+                            ZipCode = "67890"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Models.BoxModel.BoxModel", b =>
+                {
+                    b.Property<Guid>("BoxId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TimesUsed")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserNotes")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("BoxId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Boxes");
+
+                    b.HasData(
+                        new
+                        {
+                            BoxId = new Guid("7be3fceb-cde5-4351-8300-713991f93313"),
+                            ImageUrl = "https://pngimg.com/uploads/spongebob/spongebob_PNG11.png",
+                            OrderId = new Guid("52044356-4c22-4fd5-941f-97e6d26746e0"),
+                            Size = "M",
+                            Stock = 20,
+                            TimesUsed = 2,
+                            Type = "Recycled",
+                            UserNotes = "Bubbles"
+                        },
+                        new
+                        {
+                            BoxId = new Guid("7326a078-673e-447a-88e5-d35f936ba96b"),
+                            ImageUrl = "https://cdn.shopify.com/s/files/1/2393/5817/files/6eaedeb6-dd5a-4597-8976-247f08418c99.jpg?v=1692953727",
+                            OrderId = new Guid("0bca6489-0668-4fa8-a5cb-c0ed5558da0d"),
+                            Size = "XL",
+                            Stock = 10,
+                            TimesUsed = 0,
+                            Type = "Recycled",
+                            UserNotes = "Burgers"
+                        },
+                        new
+                        {
+                            BoxId = new Guid("9baef8ba-27da-437d-baa9-ddee4a0d6201"),
+                            ImageUrl = "https://cdn.shopify.com/s/files/1/2393/5817/files/SB_ES_Squid_002_EA_REV-S.jpg?v=1692953746",
+                            OrderId = new Guid("71fe5362-75e5-491f-9dd4-26b3deaa4698"),
+                            Size = "L",
+                            Stock = 15,
+                            TimesUsed = 1,
+                            Type = "Recycled",
+                            UserNotes = "Money"
+                        },
+                        new
+                        {
+                            BoxId = new Guid("86ada95d-2b71-45ed-8832-f25d42fbd46f"),
+                            ImageUrl = "https://cdn.shopify.com/s/files/1/2393/5817/files/renditionfile_6.jpg?v=1692953765",
+                            OrderId = new Guid("e73f42a9-c715-4f8d-b84a-246a882b5037"),
+                            Size = "S",
+                            Stock = 3,
+                            TimesUsed = 2,
+                            Type = "Recycled",
+                            UserNotes = "Chestnuts"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Models.Car.CarModel", b =>
+                {
+                    b.Property<Guid>("CarId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Availability")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("Volume")
+                        .HasColumnType("double");
+
+                    b.HasKey("CarId");
+
+                    b.ToTable("Cars");
+
+                    b.HasData(
+                        new
+                        {
+                            CarId = new Guid("f2044d25-9cbf-42cf-a2cc-924d016c6704"),
+                            Availability = "Available",
+                            Type = "Truck",
+                            Volume = 100.0
+                        },
+                        new
+                        {
+                            CarId = new Guid("a2aeb555-cabe-43be-8f1d-ca545e5c73e5"),
+                            Availability = "Available",
+                            Type = "Van",
+                            Volume = 200.0
+                        },
+                        new
+                        {
+                            CarId = new Guid("cc9f29f3-265d-4fd2-8837-3cafdf70714c"),
+                            Availability = "Available",
+                            Type = "Truck",
+                            Volume = 300.0
+                        },
+                        new
+                        {
+                            CarId = new Guid("76fc2092-1fdf-4fe6-b0ab-faee290c7adc"),
+                            Availability = "Available",
+                            Type = "Van",
+                            Volume = 400.0
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Models.Driver.DriverModel", b =>
+                {
+                    b.Property<Guid>("DriverId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CarId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("DriverId");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("Domain.Models.Employee.EmployeeModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EmployeeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -83,14 +328,157 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("EmployeeId");
 
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Domain.Models.EmployeeModel.UserModel", b =>
+            modelBuilder.Entity("Domain.Models.Order.OrderModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CarId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RepairNotes")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = new Guid("52044356-4c22-4fd5-941f-97e6d26746e0"),
+                            CarId = new Guid("f2044d25-9cbf-42cf-a2cc-924d016c6704"),
+                            OrderDate = new DateTime(2024, 4, 2, 10, 5, 46, 8, DateTimeKind.Local).AddTicks(1316),
+                            OrderNumber = 2101011000,
+                            OrderStatus = "Created",
+                            RepairNotes = "No notes",
+                            TotalCost = 1000m,
+                            UserId = new Guid("8f2f8f13-e2ce-40a4-a808-4ec0e78f5dd3")
+                        },
+                        new
+                        {
+                            OrderId = new Guid("0bca6489-0668-4fa8-a5cb-c0ed5558da0d"),
+                            CarId = new Guid("a2aeb555-cabe-43be-8f1d-ca545e5c73e5"),
+                            OrderDate = new DateTime(2024, 4, 2, 10, 5, 46, 8, DateTimeKind.Local).AddTicks(1352),
+                            OrderNumber = 2101011001,
+                            OrderStatus = "Created",
+                            RepairNotes = "No notes",
+                            TotalCost = 2000m,
+                            UserId = new Guid("5ca7c98f-284a-4037-9486-d865144948c8")
+                        },
+                        new
+                        {
+                            OrderId = new Guid("71fe5362-75e5-491f-9dd4-26b3deaa4698"),
+                            CarId = new Guid("cc9f29f3-265d-4fd2-8837-3cafdf70714c"),
+                            OrderDate = new DateTime(2024, 4, 2, 10, 5, 46, 8, DateTimeKind.Local).AddTicks(1356),
+                            OrderNumber = 2101011100,
+                            OrderStatus = "Created",
+                            RepairNotes = "No notes",
+                            TotalCost = 3000m,
+                            UserId = new Guid("b490483e-15e4-4b36-a866-3e343c1063c4")
+                        },
+                        new
+                        {
+                            OrderId = new Guid("e73f42a9-c715-4f8d-b84a-246a882b5037"),
+                            CarId = new Guid("76fc2092-1fdf-4fe6-b0ab-faee290c7adc"),
+                            OrderDate = new DateTime(2024, 4, 2, 10, 5, 46, 8, DateTimeKind.Local).AddTicks(1358),
+                            OrderNumber = 2101010101,
+                            OrderStatus = "Created",
+                            RepairNotes = "No notes",
+                            TotalCost = 4000m,
+                            UserId = new Guid("d3af5a2f-de32-43b3-a31a-e17f02daaffa")
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Models.Shelf.ShelfModel", b =>
+                {
+                    b.Property<Guid>("ShelfId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("Occupancy")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("ShelfColumn")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShelfRow")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("WarehouseId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("ShelfId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("Shelves");
+
+                    b.HasData(
+                        new
+                        {
+                            ShelfId = new Guid("565a7e59-5759-4279-b721-c1ff2c25c32a"),
+                            Occupancy = true,
+                            ShelfColumn = 1,
+                            ShelfRow = 1,
+                            WarehouseId = new Guid("7d665298-57de-48c7-81d1-fb6d7a6ab1a6")
+                        },
+                        new
+                        {
+                            ShelfId = new Guid("2f798617-1d70-48f3-a56b-023bb2c3e6c2"),
+                            Occupancy = true,
+                            ShelfColumn = 2,
+                            ShelfRow = 2,
+                            WarehouseId = new Guid("82abef15-3881-4211-9834-668a337947d7")
+                        },
+                        new
+                        {
+                            ShelfId = new Guid("a1832bae-3be9-4bf7-8b5c-8fe96bee67b7"),
+                            Occupancy = true,
+                            ShelfColumn = 3,
+                            ShelfRow = 3,
+                            WarehouseId = new Guid("b2f61ff5-b2a8-4a55-9e0a-ad33e6091a80")
+                        },
+                        new
+                        {
+                            ShelfId = new Guid("b77ad591-dd4b-4d46-b5c4-b9864314ad5e"),
+                            Occupancy = true,
+                            ShelfColumn = 4,
+                            ShelfRow = 4,
+                            WarehouseId = new Guid("99a66ada-6596-4887-86fd-b88426e2d7c9")
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Models.User.UserModel", b =>
+                {
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -106,65 +494,184 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("041b4692-6ac0-45e3-98d5-65594a857065"),
+                            UserId = new Guid("8f2f8f13-e2ce-40a4-a808-4ec0e78f5dd3"),
                             Email = "Adam@gmail.com",
                             FirstName = "Adam",
                             LastName = "Andersson",
-                            Password = "Adam123"
+                            PasswordHash = "Adam123",
+                            PhoneNumber = "0735097384"
                         },
                         new
                         {
-                            Id = new Guid("65793820-9c55-4a93-8ed3-0b5516ee291c"),
+                            UserId = new Guid("5ca7c98f-284a-4037-9486-d865144948c8"),
                             Email = "Bertil@gmail.com",
                             FirstName = "Bertil",
                             LastName = "Bengtsson",
-                            Password = "Bertil123"
+                            PasswordHash = "Bertil123",
+                            PhoneNumber = "0735097384"
                         },
                         new
                         {
-                            Id = new Guid("e643395d-f63a-4cba-96fb-e35446f9af8c"),
+                            UserId = new Guid("b490483e-15e4-4b36-a866-3e343c1063c4"),
                             Email = "Cecar@gmail.com",
                             FirstName = "Cecar",
                             LastName = "Citron",
-                            Password = "Cecar123"
+                            PasswordHash = "Cecar123",
+                            PhoneNumber = "0735097384"
                         },
                         new
                         {
-                            Id = new Guid("2fc12c97-32a7-4ac8-9716-15c94e3b50a3"),
+                            UserId = new Guid("d3af5a2f-de32-43b3-a31a-e17f02daaffa"),
                             Email = "Erik@gmail.com",
                             FirstName = "Erik",
                             LastName = "Eriksson",
-                            Password = "Erik123"
+                            PasswordHash = "Erik123",
+                            PhoneNumber = "0735097384"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Models.Warehouse.WarehouseModel", b =>
+                {
+                    b.Property<Guid>("WarehouseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("WarehouseId");
+
+                    b.ToTable("Warehouses");
+
+                    b.HasData(
+                        new
+                        {
+                            WarehouseId = new Guid("7d665298-57de-48c7-81d1-fb6d7a6ab1a6"),
+                            WarehouseName = "Warehouse 1"
                         },
                         new
                         {
-                            Id = new Guid("0242de68-0b52-405c-a89b-8a48670b6ee9"),
-                            Email = "Fredrik@gmail.com",
-                            FirstName = "Fredrik",
-                            LastName = "Fredriksson",
-                            Password = "Fredrik123"
+                            WarehouseId = new Guid("82abef15-3881-4211-9834-668a337947d7"),
+                            WarehouseName = "Warehouse 2"
+                        },
+                        new
+                        {
+                            WarehouseId = new Guid("b2f61ff5-b2a8-4a55-9e0a-ad33e6091a80"),
+                            WarehouseName = "Warehouse 3"
+                        },
+                        new
+                        {
+                            WarehouseId = new Guid("99a66ada-6596-4887-86fd-b88426e2d7c9"),
+                            WarehouseName = "Warehouse 4"
                         });
                 });
 
             modelBuilder.Entity("Domain.Models.Address.AddressModel", b =>
                 {
-                    b.HasOne("Domain.Models.EmployeeModel.UserModel", null)
+                    b.HasOne("Domain.Models.User.UserModel", "User")
                         .WithMany("Addresses")
-                        .HasForeignKey("UserModelId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Models.EmployeeModel.UserModel", b =>
+            modelBuilder.Entity("Domain.Models.BoxModel.BoxModel", b =>
+                {
+                    b.HasOne("Domain.Models.Order.OrderModel", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Domain.Models.Driver.DriverModel", b =>
+                {
+                    b.HasOne("Domain.Models.Car.CarModel", "Car")
+                        .WithMany("Drivers")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Employee.EmployeeModel", "Employee")
+                        .WithMany("Drivers")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Order.OrderModel", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Domain.Models.Order.OrderModel", b =>
+                {
+                    b.HasOne("Domain.Models.Car.CarModel", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.User.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Models.Shelf.ShelfModel", b =>
+                {
+                    b.HasOne("Domain.Models.Warehouse.WarehouseModel", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("Domain.Models.Car.CarModel", b =>
+                {
+                    b.Navigation("Drivers");
+                });
+
+            modelBuilder.Entity("Domain.Models.Employee.EmployeeModel", b =>
+                {
+                    b.Navigation("Drivers");
+                });
+
+            modelBuilder.Entity("Domain.Models.User.UserModel", b =>
                 {
                     b.Navigation("Addresses");
                 });
