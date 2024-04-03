@@ -1,14 +1,13 @@
 using Domain.Models.Address;
-using Domain.Models.User;
+using Infrastructure.Entities;
 using Infrastructure.Repositories.UserRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-public class AddUserCommandHandler : IRequestHandler<AddUserCommand, UserModel>
+public class AddUserCommandHandler : IRequestHandler<AddUserCommand, ApplicationUser>
 {
     private readonly IUserRepository _userRepository;
     private readonly ILogger<AddUserCommandHandler> _logger;
-
 
     public AddUserCommandHandler(IUserRepository userRepository, ILogger<AddUserCommandHandler> logger)
     {
@@ -16,12 +15,13 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, UserModel>
         _logger = logger;
     }
 
-    public async Task<UserModel> Handle(AddUserCommand request, CancellationToken cancellationToken)
+    public async Task<ApplicationUser> Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("AddUserCommandHandler.Handle");
 
-        var newUser = new UserModel
+        var newUser = new ApplicationUser
         {
+            UserName = request.RegisterData.Email,
             Email = request.RegisterData.Email,
             FirstName = request.RegisterData.FirstName,
             LastName = request.RegisterData.LastName,
@@ -42,7 +42,6 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, UserModel>
                 City = request.RegisterData.Address.City,
                 State = request.RegisterData.Address.State,
                 Country = request.RegisterData.Address.Country,
-
             });
         }
         var savedUser = await _userRepository.AddUserAsync(newUser);

@@ -1,5 +1,6 @@
-﻿using Domain.Models.User;
+﻿using Infrastructure.Entities;
 using Infrastructure.Repositories.UserRepo;
+
 namespace Application.Commands.Users.LogIn
 {
     public class UserLoginCommandHandler
@@ -11,7 +12,7 @@ namespace Application.Commands.Users.LogIn
             _userRepository = userRepository;
         }
 
-        public async Task<UserModel> Handle(UserLoginCommand request, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> Handle(UserLoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByEmailAsync(request.logInDtos.Email);
             if (user == null)
@@ -19,7 +20,7 @@ namespace Application.Commands.Users.LogIn
                 throw new KeyNotFoundException($"User with Email '{request.logInDtos.Email}' couldn't be found");
             }
 
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(request.logInDtos.Password, user.PasswordHash); ;
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(request.logInDtos.Password, user.PasswordHash);
             if (!isPasswordValid)
             {
                 throw new UnauthorizedAccessException("Invalid credentials.");

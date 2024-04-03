@@ -1,10 +1,10 @@
 ﻿using Application.Dto.LogIn;
-using Domain.Models.User;
+using Infrastructure.Entities;
 using MediatR;
 
 namespace Application.Commands.Users.LogIn
 {
-    public class UserLoginCommand : IRequest<UserModel>
+    public class UserLoginCommand : IRequest<ApplicationUser>
     {
         public LogInDto logInDtos { get; set; }
 

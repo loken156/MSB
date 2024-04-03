@@ -1,8 +1,8 @@
 ﻿using Application.Dto.Register;
-using Domain.Models.User;
+using Infrastructure.Entities;
 using MediatR;
 
-public class AddUserCommand : IRequest<UserModel>
+public class AddUserCommand : IRequest<ApplicationUser>
 {
     public RegisterDto RegisterData { get; }
 

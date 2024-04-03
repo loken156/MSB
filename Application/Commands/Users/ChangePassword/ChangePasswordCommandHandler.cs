@@ -1,54 +1,29 @@
-﻿using Infrastructure.Repositories.UserRepo;
+﻿using Application.Commands.Users.ChangePassword;
+using Domain.Interfaces;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using BCrypt.Net; // Import the bcrypt package namespace
 
-namespace Application.Commands.Users.ChangePassword
+public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, bool>
 {
-    public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, bool>
+    private readonly IUserService _userService;
+
+    public ChangePasswordCommandHandler(IUserService userService)
     {
-        private readonly IUserRepository _userRepository;
+        _userService = userService;
+    }
 
-        public ChangePasswordCommandHandler(IUserRepository userRepository)
+    public async Task<bool> Handle(ChangePasswordCommand command, CancellationToken cancellationToken)
+    {
+        var user = await _userService.FindByIdAsync(command.UserId);
+        if (user == null)
         {
-            _userRepository = userRepository;
+            // User not found, handle accordingly
+            return false;
         }
 
-        public async Task<bool> Handle(ChangePasswordCommand command, CancellationToken cancellationToken)
-        {
-            // Assuming UserId is a string that needs to be parsed into a Guid
-            if (!Guid.TryParse(command.UserId, out Guid userId))
-            {
-                // Handle the parsing error
-                return false;
-            }
+        // Attempt to change the password
+        var result = await _userService.ChangePasswordAsync(user, command.CurrentPassword, command.NewPassword);
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
-            if (user == null)
-            {
-                // User not found, handle accordingly
-                return false;
-            }
-
-            // Verify the current password
-            if (!BCrypt.Net.BCrypt.Verify(command.CurrentPassword, user.PasswordHash))
-            {
-                // Current password does not match, handle accordingly
-                return false;
-            }
-
-            // Attempt to update the password by setting the new hashed password and saving it to the repository
-            var newHashedPassword = BCrypt.Net.BCrypt.HashPassword(command.NewPassword);
-            user.PasswordHash = newHashedPassword;
-
-            // The UpdatePasswordAsync method is responsible for both setting the new password hash
-            // and saving the changes to the database.
-            bool updateSucceeded = await _userRepository.UpdatePasswordAsync(user);
-
-            // Return the result of the update attempt
-            return updateSucceeded;
-        }
+        // Return the result of the update attempt
+        return result;
     }
 }
