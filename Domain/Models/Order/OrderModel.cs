@@ -1,4 +1,4 @@
-﻿using Domain.Models.User;
+﻿using Domain.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,9 +13,9 @@ namespace Domain.Models.Order
         public DateTime OrderDate { get; set; }
         public decimal TotalCost { get; set; }
         public string OrderStatus { get; set; } = string.Empty;
-        [ForeignKey("UserId")] // Inconsistency in naming/UserId is named Id in UserModel
-        public Guid UserId { get; set; }
-        public UserModel User { get; set; }
+        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        public IAppUser User { get; set; }
 
         [ForeignKey("CarId")]
         public Guid CarId { get; set; }

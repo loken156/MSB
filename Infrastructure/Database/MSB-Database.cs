@@ -5,17 +5,18 @@ using Domain.Models.Driver;
 using Domain.Models.Employee;
 using Domain.Models.Order;
 using Domain.Models.Shelf;
-using Domain.Models.User;
 using Domain.Models.Warehouse;
+using Infrastructure.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
 {
-    public class MSB_Database : DbContext
+    public class MSB_Database : IdentityDbContext<ApplicationUser>
     {
         public MSB_Database(DbContextOptions<MSB_Database> options) : base(options) { }
 
-        public virtual DbSet<UserModel> Users { get; set; }
+        public virtual DbSet<ApplicationUser> Users { get; set; }
         public virtual DbSet<EmployeeModel> Employees { get; set; }
         public virtual DbSet<AddressModel> Addresses { get; set; }
         public virtual DbSet<DriverModel> Drivers { get; set; }
@@ -28,12 +29,12 @@ namespace Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Mock data for UserModels
-            var users = new UserModel[]
+            var users = new ApplicationUser[]
             {
-            new UserModel{ UserId = Guid.NewGuid(), Email = "Adam@gmail.com", FirstName = "Adam", LastName = "Andersson", PhoneNumber = "0735097384", PasswordHash = "Adam123",  },
-            new UserModel { UserId = Guid.NewGuid(), Email = "Bertil@gmail.com", FirstName = "Bertil", LastName = "Bengtsson", PhoneNumber = "0735097384", PasswordHash = "Bertil123" },
-            new UserModel { UserId = Guid.NewGuid(), Email = "Cecar@gmail.com", FirstName = "Cecar", LastName = "Citron", PhoneNumber = "0735097384", PasswordHash = "Cecar123" },
-            new UserModel { UserId = Guid.NewGuid(), Email = "Erik@gmail.com", FirstName = "Erik", LastName = "Eriksson", PhoneNumber = "0735097384", PasswordHash = "Erik123" },
+            new ApplicationUser { Id = Guid.NewGuid().ToString(), Email = "Adam@gmail.com", FirstName = "Adam", LastName = "Andersson", PhoneNumber = "0735097384", PasswordHash = "Adam123",  },
+            new ApplicationUser { Id = Guid.NewGuid().ToString(), Email = "Bertil@gmail.com", FirstName = "Bertil", LastName = "Bengtsson", PhoneNumber = "0735097384", PasswordHash = "Bertil123" },
+            new ApplicationUser { Id = Guid.NewGuid().ToString(), Email = "Cecar@gmail.com", FirstName = "Cecar", LastName = "Citron", PhoneNumber = "0735097384", PasswordHash = "Cecar123" },
+            new ApplicationUser { Id = Guid.NewGuid().ToString(), Email = "Erik@gmail.com", FirstName = "Erik", LastName = "Eriksson", PhoneNumber = "0735097384", PasswordHash = "Erik123" },
             };
 
 
@@ -50,16 +51,16 @@ namespace Infrastructure.Database
             //{
             //    users[i].Addresses = addresses[i].AddressId;
             //}
-            modelBuilder.Entity<UserModel>().HasData(users);
+            modelBuilder.Entity<ApplicationUser>().HasData(users);
             for (int i = 0; i < users.Length; i++)
             {
-                addresses[i].UserId = users[i].UserId;
+                addresses[i].UserId = users[i].Id;
             }
             modelBuilder.Entity<AddressModel>().HasData(addresses);
 
-            modelBuilder.Entity<UserModel>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Addresses)
-                .WithOne(a => a.User)
+                .WithOne()
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -76,10 +77,10 @@ namespace Infrastructure.Database
             // Mock data for OrderModels
             var orders = new OrderModel[]
             {
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[0].UserId, OrderDate = DateTime.Now, TotalCost = 1000, OrderStatus = "Created", OrderNumber = 2101011000, CarId = cars[0].CarId},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[1].UserId, OrderDate = DateTime.Now, TotalCost = 2000, OrderStatus = "Created", OrderNumber = 2101011001, CarId = cars[1].CarId},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[2].UserId, OrderDate = DateTime.Now, TotalCost = 3000, OrderStatus = "Created", OrderNumber = 2101011100, CarId = cars[2].CarId},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].UserId, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101, CarId = cars[3].CarId},
+                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[0].Id, OrderDate = DateTime.Now, TotalCost = 1000, OrderStatus = "Created", OrderNumber = 2101011000, CarId = cars[0].CarId},
+                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[1].Id, OrderDate = DateTime.Now, TotalCost = 2000, OrderStatus = "Created", OrderNumber = 2101011001, CarId = cars[1].CarId},
+                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[2].Id, OrderDate = DateTime.Now, TotalCost = 3000, OrderStatus = "Created", OrderNumber = 2101011100, CarId = cars[2].CarId},
+                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].Id, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101, CarId = cars[3].CarId},
             };
             modelBuilder.Entity<OrderModel>().HasData(orders);
 

@@ -1,9 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Models.User;
 
 namespace Domain.Models.Address
 {
@@ -13,8 +10,8 @@ namespace Domain.Models.Address
         [Key]
         public Guid AddressId { get; set; }
         [ForeignKey("UserId")]
-        public Guid UserId { get; set; }
-        public UserModel User { get; set; }
+        public string UserId { get; set; }
+        public IAppUser User { get; set; }
         public string StreetName { get; set; } = string.Empty;
         public string StreetNumber { get; set; } = string.Empty;
         public string Apartment { get; set; } = string.Empty;
@@ -25,10 +22,6 @@ namespace Domain.Models.Address
         public string Country { get; set; } = string.Empty;
         public string Latitude { get; set; } = string.Empty;
         public string Longitude { get; set; } = string.Empty;
-
-
-
-
 
     }
 }

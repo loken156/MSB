@@ -10,6 +10,7 @@
     <Folder Include="Models\Driver\" />
     <Folder Include="Models\Employee\" />
     <Folder Include="Models\Car\" />
+    <Folder Include="Models\User\" />
   </ItemGroup>
 
   <ItemGroup>
