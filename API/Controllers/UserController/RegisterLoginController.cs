@@ -49,7 +49,7 @@ namespace API.Controllers.UserController
             }
             catch (Exception ex)
             {
-                 _logging.LogError(ex, "Error occurred during registration.");
+                _logging.LogError(ex, "Error occurred during registration.");
                 return StatusCode(500, new { Message = "An error occurred while processing your request." });
             }
         }

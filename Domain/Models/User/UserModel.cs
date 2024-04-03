@@ -18,7 +18,7 @@ namespace Domain.Models.User
         public string PhoneNumber { get; set; } = string.Empty;
         [Required]
         public string PasswordHash { get; set; } = string.Empty;
-       
+
         public ICollection<AddressModel> Addresses { get; set; } = new List<AddressModel>();
     }
 }
