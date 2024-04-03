@@ -17,7 +17,7 @@ namespace API.Controllers
         private readonly IValidator<RegisterDto> _registerValidator;
         private readonly IValidator<LogInDto> _loginValidator;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger, IValidator<RegisterDto> registerValidator, IValidator<LoginDto> loginValidator)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger, IValidator<RegisterDto> registerValidator, IValidator<LogInDto> loginValidator)
         {
             _userManager = userManager;
             _signInManager = signInManager;

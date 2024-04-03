@@ -1,5 +1,5 @@
-﻿using Domain.Models.User;
-using Infrastructure.Database;
+﻿using Infrastructure.Database;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.UserRepo
@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories.UserRepo
         }
 
 
-        public async Task<UserModel> AddUserAsync(UserModel user)
+        public async Task<ApplicationUser> AddUserAsync(ApplicationUser user)
         {
             await _database.Users.AddAsync(user);
             await _database.SaveChangesAsync();
@@ -33,17 +33,17 @@ namespace Infrastructure.Repositories.UserRepo
             }
         }
 
-        public async Task<List<UserModel>> GetAllUsersAsync()
+        public async Task<List<ApplicationUser>> GetAllUsersAsync()
         {
             return await _database.Users.Include(u => u.Addresses).ToListAsync();
         }
 
-        public async Task<UserModel> GetUserByIdAsync(Guid id)
+        public async Task<ApplicationUser> GetUserByIdAsync(Guid id)
         {
             return await _database.Users.FindAsync(id);
         }
 
-        public async Task<UserModel> GetByEmailAsync(string email)
+        public async Task<ApplicationUser> GetByEmailAsync(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -52,13 +52,13 @@ namespace Infrastructure.Repositories.UserRepo
             return await _database.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
         }
 
-        public async Task UpdateUserAsync(UserModel user)
+        public async Task UpdateUserAsync(ApplicationUser user)
         {
             _database.Users.Update(user);
             await _database.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdatePasswordAsync(UserModel user)
+        public async Task<bool> UpdatePasswordAsync(ApplicationUser user)
         {
             var userEntity = await _database.Users.FindAsync(user.UserId);
             if (userEntity == null)
