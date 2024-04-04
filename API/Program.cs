@@ -22,9 +22,16 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 // Add Identity Services
+//builder.Services
+//    .AddIdentityApiEndpoints<ApplicationUser>()
+//    .AddEntityFrameworkStores<MSB_Database>();
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<MSB_Database>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddControllers();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -37,6 +44,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//app.MapIdentityApi<ApplicationUser>();
+
 
 app.UseHttpsRedirection();
 

@@ -1,12 +1,14 @@
-﻿using Infrastructure.Database;
-using Infrastructure.Repositories.DriverRepo;
-using Infrastructure.Repositories.EmployeeRepo;
+﻿using Domain.Interfaces;
+using Infrastructure.Database;
 using Infrastructure.Repositories.AddressRepo;
 using Infrastructure.Repositories.BoxRepo;
+using Infrastructure.Repositories.DriverRepo;
+using Infrastructure.Repositories.EmployeeRepo;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Repositories.ShelfRepo;
 using Infrastructure.Repositories.UserRepo;
 using Infrastructure.Repositories.WarehouseRepo;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +31,9 @@ namespace Infrastructure
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IShelfRepository, ShelfRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
+            services.AddScoped<IUserService, UserService>();
+
+
 
             services.AddDbContext<MSB_Database>(options =>
                    options.UseMySql(configuration.GetConnectionString("DefaultConnection"),

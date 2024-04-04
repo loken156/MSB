@@ -1,32 +1,32 @@
-﻿using Infrastructure.Entities;
-using Infrastructure.Repositories.UserRepo;
+﻿//using Infrastructure.Entities;
+//using Infrastructure.Repositories.UserRepo;
 
-namespace Application.Commands.Users.LogIn
-{
-    public class UserLoginCommandHandler
-    {
-        private readonly IUserRepository _userRepository;
+//namespace Application.Commands.Users.LogIn
+//{
+//    public class UserLoginCommandHandler
+//    {
+//        private readonly IUserRepository _userRepository;
 
-        public UserLoginCommandHandler(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+//        public UserLoginCommandHandler(IUserRepository userRepository)
+//        {
+//            _userRepository = userRepository;
+//        }
 
-        public async Task<ApplicationUser> Handle(UserLoginCommand request, CancellationToken cancellationToken)
-        {
-            var user = await _userRepository.GetByEmailAsync(request.logInDtos.Email);
-            if (user == null)
-            {
-                throw new KeyNotFoundException($"User with Email '{request.logInDtos.Email}' couldn't be found");
-            }
+//        public async Task<ApplicationUser> Handle(UserLoginCommand request, CancellationToken cancellationToken)
+//        {
+//            var user = await _userRepository.GetByEmailAsync(request.logInDtos.Email);
+//            if (user == null)
+//            {
+//                throw new KeyNotFoundException($"User with Email '{request.logInDtos.Email}' couldn't be found");
+//            }
 
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(request.logInDtos.Password, user.PasswordHash);
-            if (!isPasswordValid)
-            {
-                throw new UnauthorizedAccessException("Invalid credentials.");
-            }
+//            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(request.logInDtos.Password, user.PasswordHash);
+//            if (!isPasswordValid)
+//            {
+//                throw new UnauthorizedAccessException("Invalid credentials.");
+//            }
 
-            return user;
-        }
-    }
-}
+//            return user;
+//        }
+//    }
+//}

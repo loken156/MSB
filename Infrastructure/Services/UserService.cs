@@ -15,8 +15,10 @@ namespace Infrastructure.Services
 
         public async Task<IAppUser> FindByIdAsync(string userId)
         {
-            return await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
+            return user as IAppUser;
         }
+
 
         public async Task<bool> ChangePasswordAsync(IAppUser user, string currentPassword, string newPassword)
         {

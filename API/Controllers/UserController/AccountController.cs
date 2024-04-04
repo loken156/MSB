@@ -1,5 +1,6 @@
 ﻿using Application.Dto.LogIn;
 using Application.Dto.Register;
+using Domain.Models.Address;
 using FluentValidation;
 using Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -35,7 +36,30 @@ namespace API.Controllers
                 return BadRequest(validationResult.Errors);
             }
 
-            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                Addresses = new List<AddressModel>
+        {
+            new AddressModel
+            {
+                StreetName = model.Address.StreetName,
+                StreetNumber = model.Address.StreetNumber,
+                Apartment = model.Address.Apartment,
+                ZipCode = model.Address.ZipCode,
+                Floor = model.Address.Floor,
+                City = model.Address.City,
+                State = model.Address.State,
+                Country = model.Address.Country,
+                Latitude = model.Address.Latitude,
+                Longitude = model.Address.Longitude
+            }
+        }
+            };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
@@ -48,6 +72,8 @@ namespace API.Controllers
             _logger.LogWarning("Registration failed for user: {Email}", model.Email);
             return BadRequest(result.Errors);
         }
+
+
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LogInDto model)

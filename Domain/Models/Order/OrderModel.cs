@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Order
@@ -15,7 +14,6 @@ namespace Domain.Models.Order
         public string OrderStatus { get; set; } = string.Empty;
         [ForeignKey("UserId")]
         public string UserId { get; set; }
-        public IAppUser User { get; set; }
 
         [ForeignKey("CarId")]
         public Guid CarId { get; set; }

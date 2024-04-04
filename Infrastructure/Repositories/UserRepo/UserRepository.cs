@@ -41,18 +41,20 @@ namespace Infrastructure.Repositories.UserRepo
         public async Task<IAppUser> GetUserByIdAsync(string id)
         {
             var user = await _database.Users.FindAsync(id);
-            return user ?? throw new KeyNotFoundException($"User with id {id} not found");
+            return user as IAppUser ?? throw new KeyNotFoundException($"User with id {id} not found");
         }
 
-        public async Task<ApplicationUser> GetByEmailAsync(string email)
+
+        public async Task<IAppUser> GetByEmailAsync(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
                 throw new ArgumentException("Email cannot be null or empty", nameof(email));
             }
             var user = await _database.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
-            return user ?? throw new KeyNotFoundException($"User with email {email} not found");
+            return user as IAppUser ?? throw new KeyNotFoundException($"User with email {email} not found");
         }
+
 
 
         public async Task UpdateUserAsync(ApplicationUser user)

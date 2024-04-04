@@ -12,7 +12,7 @@ namespace Infrastructure.Repositories.UserRepo
 
         Task<List<IAppUser>> GetAllUsersAsync();
 
-        Task<ApplicationUser> GetByEmailAsync(string email);
+        Task<IAppUser> GetByEmailAsync(string email);
 
         Task<bool> UpdatePasswordAsync(ApplicationUser user);
 

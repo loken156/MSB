@@ -41,28 +41,31 @@ namespace Infrastructure.Database
             // Mock data for AddressModels
             var addresses = new AddressModel[]
             {
-                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Maple Street", StreetNumber ="21" , Apartment = "Apt 3B", ZipCode = "12345", Floor = "2nd", City = "Springfield", State = "Ohio", Country = "USA", Latitude = "39.9266", Longitude = "-83.8064" },
-                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Oak Avenue", StreetNumber ="22" ,Apartment = "Apt 2A", ZipCode = "54321", Floor = "Ground Floor", City = "Willow Creek", State = "California", Country = "USA", Latitude = "37.7833", Longitude = "-122.4167" },
-                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Elm Street", StreetNumber ="23" , Apartment = "Apt 5C", ZipCode = "98765", Floor = "3rd", City = "Oakville", State = "New York", Country = "USA", Latitude = "40.7128", Longitude = "-74.0060" },
-                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Pine Street", StreetNumber ="24", Apartment = "Apt 10D", ZipCode = "67890", Floor = "4th", City = "Cedarville", State = "Texas", Country = "USA", Latitude = "31.9686", Longitude = "-99.9018" }
+                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Maple Street", StreetNumber ="21" , Apartment = "Apt 3B", ZipCode = "12345", Floor = "2nd", City = "Springfield", State = "Ohio", Country = "USA", Latitude = 39.9266, Longitude = -83.8064 },
+                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Oak Avenue", StreetNumber ="22" ,Apartment = "Apt 2A", ZipCode = "54321", Floor = "Ground Floor", City = "Willow Creek", State = "California", Country = "USA", Latitude = 37.7833, Longitude = -122.4167 },
+                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Elm Street", StreetNumber ="23" , Apartment = "Apt 5C", ZipCode = "98765", Floor = "3rd", City = "Oakville", State = "New York", Country = "USA", Latitude = 40.7128, Longitude = -74.0060 },
+                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Pine Street", StreetNumber ="24", Apartment = "Apt 10D", ZipCode = "67890", Floor = "4th", City = "Cedarville", State = "Texas", Country = "USA", Latitude = 31.9686, Longitude = -99.9018 }
             };
 
-            //for (int i = 0; i < users.Length; i++)
-            //{
-            //    users[i].Addresses = addresses[i].AddressId;
-            //}
-            modelBuilder.Entity<ApplicationUser>().HasData(users);
             for (int i = 0; i < users.Length; i++)
             {
                 addresses[i].UserId = users[i].Id;
             }
-            modelBuilder.Entity<AddressModel>().HasData(addresses);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Addresses)
                 .WithOne()
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ApplicationUser>().HasData(users);
+
+            modelBuilder.Entity<AddressModel>()
+                .HasOne<ApplicationUser>()
+                .WithMany(u => u.Addresses)
+                .HasForeignKey(a => a.UserId);
+
+            modelBuilder.Entity<AddressModel>().HasData(addresses);
 
             // Mock data for CarModels
             var cars = new CarModel[]
@@ -82,6 +85,12 @@ namespace Infrastructure.Database
                 new OrderModel { OrderId = Guid.NewGuid(), UserId = users[2].Id, OrderDate = DateTime.Now, TotalCost = 3000, OrderStatus = "Created", OrderNumber = 2101011100, CarId = cars[2].CarId},
                 new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].Id, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101, CarId = cars[3].CarId},
             };
+
+            modelBuilder.Entity<OrderModel>()
+                .HasOne<ApplicationUser>() // No navigation property here
+                .WithMany(u => u.Orders) // Assuming ApplicationUser has a collection of Orders
+                .HasForeignKey(o => o.UserId);
+
             modelBuilder.Entity<OrderModel>().HasData(orders);
 
             //Mock data for BoxModel
