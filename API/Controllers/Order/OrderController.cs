@@ -5,6 +5,8 @@ using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Order
@@ -20,6 +22,7 @@ namespace API.Controllers.Order
             _mediator = mediator;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("Add Order")]
         public async Task<ActionResult<OrderDto>> AddOrder(AddOrderCommand command)

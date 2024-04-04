@@ -36,7 +36,6 @@
     <Folder Include="Queries\Order\GetByID\" />
     <Folder Include="Queries\Warehouse\GetAll\" />
     <Folder Include="Queries\Warehouse\GetByID\" />
-    <Folder Include="Validators\" />
     <Folder Include="Commands\Employee\" />
     <Folder Include="Commands\Employee\AddEmployee\" />
     <Folder Include="Commands\Employee\DeleteEmployee\" />
