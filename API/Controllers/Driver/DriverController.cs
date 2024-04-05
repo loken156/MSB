@@ -1,10 +1,10 @@
-﻿using Application.Dto.Driver;
+﻿using Application.Dto.Car;
+using Application.Dto.Driver;
 using Application.Dto.Employee;
 using Application.Queries.Driver.GetAll;
 using Domain.Models.Driver;
 using Infrastructure.Repositories.DriverRepo;
 using Microsoft.AspNetCore.Mvc;
-using Application.Dto.Car;
 
 namespace API.Controllers.Driver
 {
@@ -13,17 +13,14 @@ namespace API.Controllers.Driver
     public class DriversController : ControllerBase
     {
         private readonly IDriverRepository _driverRepository;
-
-        public DriversController(IDriverRepository driverRepository)
-        {
-            _driverRepository = driverRepository;
-        }
         private readonly GetAllDriversQueryHandler _getAllDriversQueryHandler;
 
-        public DriversController(GetAllDriversQueryHandler getAllDriversQueryHandler)
+        public DriversController(IDriverRepository driverRepository, GetAllDriversQueryHandler getAllDriversQueryHandler)
         {
+            _driverRepository = driverRepository;
             _getAllDriversQueryHandler = getAllDriversQueryHandler;
         }
+
 
         // GET: api/Drivers
         [HttpGet]
@@ -43,7 +40,7 @@ namespace API.Controllers.Driver
                     Password = driver.Employee.Password,
                     FirstName = driver.Employee.FirstName,
                     LastName = driver.Employee.LastName,
-                    Role = driver.Employee.Role
+                    Roles = driver.Employee.Roles
                 },
                 Car = new CarDto
                 {
@@ -54,6 +51,7 @@ namespace API.Controllers.Driver
 
             return Ok(driverDtos);
         }
+
 
         // POST: api/Drivers
         [HttpPost]

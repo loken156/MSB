@@ -1,8 +1,6 @@
-﻿using System;
-using Application.Dto.Driver;
+﻿using Application.Dto.Driver;
 using Application.Dto.Employee;
 using Infrastructure.Repositories.DriverRepo;
-using MediatR;
 
 namespace Application.Queries.Driver.GetAll
 {
@@ -30,7 +28,7 @@ namespace Application.Queries.Driver.GetAll
                     Password = driver.Employee.Password,
                     FirstName = driver.Employee.FirstName,
                     LastName = driver.Employee.LastName,
-                    Role = driver.Employee.Role
+                    Roles = driver.Employee.Roles
                 },
             });
 

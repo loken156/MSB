@@ -1,7 +1,5 @@
-﻿using System;
-using Domain.Models.Address;
+﻿using Domain.Models.Driver;
 using System.ComponentModel.DataAnnotations;
-using Domain.Models.Driver;
 
 namespace Domain.Models.Employee
 {
@@ -13,7 +11,7 @@ namespace Domain.Models.Employee
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public string Role { get; set; } = string.Empty;
+        public List<string> Roles { get; set; } = new List<string>();
 
         //public ICollection<WareHouseModel> WareHouses { get; set; }
         //public ICollection<AddressModel> Addresses { get; set; }

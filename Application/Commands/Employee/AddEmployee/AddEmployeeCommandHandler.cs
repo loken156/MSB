@@ -15,7 +15,7 @@ namespace Application.Commands.Employee.AddEmployee
                     FirstName = request.NewEmployee.FirstName,
                     LastName = request.NewEmployee.LastName,
                     Email = request.NewEmployee.Email,
-                    Role = request.NewEmployee.Role,
+                    Roles = request.NewEmployee.Roles,
                     Password = request.NewEmployee.Password,
                 };
                 return employeeToCreate;

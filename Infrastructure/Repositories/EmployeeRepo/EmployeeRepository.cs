@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Domain.Models.Employee;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using Domain.Models.Employee;
 
 
 namespace Infrastructure.Repositories.EmployeeRepo
@@ -44,7 +43,7 @@ namespace Infrastructure.Repositories.EmployeeRepo
             existingEmployee.LastName = employee.LastName;
             existingEmployee.Email = employee.Email;
             existingEmployee.Password = employee.Password;
-            existingEmployee.Role = employee.Role;
+            existingEmployee.Roles = employee.Roles;
 
             // Uppdatera resten av egenskaperna om det behövs
 

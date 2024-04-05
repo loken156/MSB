@@ -1,11 +1,6 @@
-﻿using System;
-using Application.Dto.Driver;
+﻿using Application.Dto.Driver;
 using Application.Dto.Employee;
-using Application.Dto.Item;
-using Application.Queries.Driver.GetAll;
 using Infrastructure.Repositories.DriverRepo;
-using Infrastructure.Repositories.EmployeeRepo;
-using MediatR;
 
 namespace Application.Queries.Driver.GetById
 {
@@ -20,12 +15,8 @@ namespace Application.Queries.Driver.GetById
 
         public async Task<DriverDetailDto> Handle(GetDriverByIdQuery query)
         {
-            var driver = await _driverRepository.GetDriverByIdAsync(query.DriverId);
-
-            if (driver == null)
-            {
-                return null;
-            }
+            var driver = await _driverRepository.GetDriverByIdAsync(query.DriverId)
+                         ?? throw new Exception($"No driver found with id {query.DriverId}");
 
             return new DriverDetailDto
             {
@@ -38,10 +29,11 @@ namespace Application.Queries.Driver.GetById
                     Password = driver.Employee.Password,
                     FirstName = driver.Employee.FirstName,
                     LastName = driver.Employee.LastName,
-                    Role = driver.Employee.Role
+                    Roles = driver.Employee.Roles
                 }
             };
         }
+
 
     }
 }

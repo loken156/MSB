@@ -1,5 +1,7 @@
 ﻿using Domain.Models.Employee;
+using Infrastructure.Entities;
 using Infrastructure.Repositories.EmployeeRepo;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Employee
@@ -9,10 +11,14 @@ namespace API.Controllers.Employee
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _employeeRepository = employeeRepository;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         // GET: api/Employee
@@ -42,8 +48,35 @@ namespace API.Controllers.Employee
         public async Task<ActionResult<EmployeeModel>> CreateEmployee(EmployeeModel employee)
         {
             var createdEmployee = await _employeeRepository.CreateEmployeeAsync(employee);
+
+            var user = await _userManager.FindByIdAsync(createdEmployee.EmployeeId.ToString());
+
+            if (user == null)
+            {
+                return NotFound(new { Message = "User not found" });
+            }
+
+            foreach (var role in employee.Roles)
+            {
+                // Check if the role exists
+                var roleExists = await _roleManager.RoleExistsAsync(role);
+                if (!roleExists)
+                {
+                    return BadRequest(new { Message = $"Role {role} does not exist" });
+                }
+
+                // Assign the role to the new employee
+                var result = await _userManager.AddToRoleAsync(user, role);
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
+            }
+
             return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.EmployeeId }, createdEmployee);
         }
+
 
         // PUT: api/Employee/{id}
         [HttpPut("Update Employee By {id}")]
