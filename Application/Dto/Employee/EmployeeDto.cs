@@ -12,6 +12,9 @@ namespace Application.Dto.Employee
         [Required] public string FirstName { get; set; }
         [Required] public string LastName { get; set; }
         [Required] public string Role { get; set; }
+        [Required] public string PhoneNumber { get; set; }
+        [Required] public string JobTitle { get; set; }
+
 
         //public ICollection<WareHouseModel> WareHouses { get; set; }
         //public ICollection<AddressModel> Addresses { get; set; }

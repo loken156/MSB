@@ -5,6 +5,8 @@ using Application.Dto.Adress;
 using Application.Dto.Register;
 using Application.Validators.AddressValidator;
 using Application.Validators.UserValidator;
+using Application.Dto.AddShelf;
+using Application.Validators.ShelfValidator;
 
 namespace Application
 {
@@ -17,6 +19,7 @@ namespace Application
             services.AddValidatorsFromAssembly(assembly);
             services.AddTransient<IValidator<RegisterDto>, UserValidations>();
             services.AddTransient<IValidator<AddressDto>, AddressValidations>();
+            services.AddTransient<IValidator<AddShelfDto>, ShelfValidations>();
 
 
 

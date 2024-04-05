@@ -45,6 +45,9 @@ namespace Infrastructure.Repositories.EmployeeRepo
             existingEmployee.Email = employee.Email;
             existingEmployee.Password = employee.Password;
             existingEmployee.Role = employee.Role;
+            existingEmployee.PhoneNumber = employee.PhoneNumber;
+            existingEmployee.JobTitle = employee.JobTitle;
+
 
             // Uppdatera resten av egenskaperna om det behövs
 

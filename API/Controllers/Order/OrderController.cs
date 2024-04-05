@@ -4,6 +4,7 @@ using Application.Commands.Order.UpdateOrder;
 using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
+using Application.Validators.OrderValidator;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,27 +15,56 @@ namespace API.Controllers.Order
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<OrderController> _logger;
+        private readonly OrderValidator _orderValidator;
 
-        public OrderController(IMediator mediator)
+
+        public OrderController(IMediator mediator, ILogger<OrderController> logger, OrderValidator orderValidator)
         {
             _mediator = mediator;
+            _logger = logger;
+            _orderValidator = orderValidator;
         }
 
         [HttpPost]
         [Route("Add Order")]
         public async Task<ActionResult<OrderDto>> AddOrder(AddOrderCommand command)
         {
-            var order = await _mediator.Send(command);
-            var orderDto = new OrderDto
+
+            var validationResult = _orderValidator.Validate(command.NewOrder);
+            if (!validationResult.IsValid)
             {
-                OrderId = order.OrderId,
-                OrderDate = order.OrderDate,
-                TotalCost = order.TotalCost,
-                OrderStatus = order.OrderStatus,
-                UserId = order.UserId,
-                RepairNotes = order.RepairNotes
-            };
-            return CreatedAtAction(nameof(GetOrderById), new { id = orderDto.OrderId }, orderDto);
+                _logger.LogWarning("Validation failed for AddOrderCommand: {ValidationErrors}", validationResult.Errors);
+                return BadRequest(validationResult.Errors);
+            }
+
+
+            try
+            {
+                var order = await _mediator.Send(command);
+                var orderDto = new OrderDto
+                {
+                    OrderId = order.OrderId,
+                    OrderDate = order.OrderDate,
+                    TotalCost = order.TotalCost,
+                    OrderStatus = order.OrderStatus,
+                    UserId = order.UserId,
+                    RepairNotes = order.RepairNotes
+                };
+
+                _logger.LogInformation("Order added successfully: {OrderId}", orderDto.OrderId);
+                return CreatedAtAction(nameof(GetOrderById), new { id = orderDto.OrderId }, orderDto);
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding order with command: {Command}", command);
+                return StatusCode(500, "An error occurred while adding the order");
+            }
+
+
+
         }
 
         [HttpGet]

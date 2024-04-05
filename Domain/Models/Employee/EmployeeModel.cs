@@ -14,6 +14,9 @@ namespace Domain.Models.Employee
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
+        public string JobTitle { get; set; } = string.Empty;
+
 
         //public ICollection<WareHouseModel> WareHouses { get; set; }
         //public ICollection<AddressModel> Addresses { get; set; }

@@ -1,9 +1,10 @@
-﻿using Domain.Models.Order;
+﻿using Application.Dto.Order;
+using Domain.Models.Order;
 using FluentValidation;
 
 namespace Application.Validators.OrderValidator
 {
-    public class OrderValidator : AbstractValidator<OrderModel>
+    public class OrderValidator : AbstractValidator<OrderDto>
     {
         public OrderValidator()
         {

@@ -14,8 +14,8 @@ namespace Infrastructure.Repositories.WarehouseRepo
 
         public async Task<WarehouseModel> AddWarehouseAsync(WarehouseModel warehouse)
         {
-            _database.Warehouses.AddAsync(warehouse);
-            _database.SaveChangesAsync();
+            await _database.Warehouses.AddAsync(warehouse);
+            await _database.SaveChangesAsync();
 
             return await Task.FromResult(warehouse);
         }
@@ -28,6 +28,11 @@ namespace Infrastructure.Repositories.WarehouseRepo
                 await _database.SaveChangesAsync();
             }
             return warehouse;
+        }
+
+        public async Task<bool> ExistWarehouseAsync(Guid warehouseId)
+        {
+            return await _database.Warehouses.AnyAsync(w => w.WarehouseId == warehouseId);
         }
 
         public async Task<IEnumerable<WarehouseModel>> GetAllWarehousesAsync()
