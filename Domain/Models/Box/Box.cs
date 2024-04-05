@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Models.Shelf;
 
-namespace Domain.Models.BoxModel
+namespace Domain.Models.Box
 {
     public class BoxModel
     {
@@ -16,6 +17,9 @@ namespace Domain.Models.BoxModel
         public Guid OrderId { get; set; }
         public Order.OrderModel Order { get; set; }
         public string Size { get; set; } = string.Empty;
+        [ForeignKey("ShelfId")]
+        public Guid ShelfId { get; set; }
+        public ShelfModel Shelf { get; set; }
 
     }
 }
