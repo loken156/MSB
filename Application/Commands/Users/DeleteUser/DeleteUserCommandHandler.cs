@@ -1,21 +1,21 @@
-﻿using Domain.Models.User;
+﻿using Infrastructure.Entities;
 using Infrastructure.Repositories.UserRepo;
 using MediatR;
 
 namespace Application.Commands.Users.DeleteUser
 {
-    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, UserModel>
+    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ApplicationUser>
     {
         private readonly IUserRepository _userRepository;
         public DeleteUserCommandHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
-        public async Task<UserModel> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                UserModel userToDelete = await _userRepository.GetUserByIdAsync(request.Id);
+                ApplicationUser userToDelete = await _userRepository.GetUserByIdAsync(request.Id) as ApplicationUser;
 
                 if (userToDelete == null)
                 {
@@ -28,7 +28,7 @@ namespace Application.Commands.Users.DeleteUser
             }
             catch (Exception ex)
             {
-                var newException = new Exception($"An Error occurred when deleteting user with id {request.Id}", ex);
+                var newException = new Exception($"An Error occurred when deleting user with id {request.Id}", ex);
                 throw newException;
             }
         }
