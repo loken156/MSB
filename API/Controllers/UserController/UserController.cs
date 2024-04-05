@@ -1,6 +1,6 @@
 using Application.Commands.Users.DeleteUser;
 using Application.Commands.Users.UpdateUser;
-using Application.Dto.User;
+using Application.Dto.UpdateUserInfo;
 using Application.Queries.User.GetAll;
 using Application.Queries.User.GetById;
 using Infrastructure.Repositories.UserRepo;
@@ -36,7 +36,7 @@ namespace API.Controllers.UserController
 
         [HttpGet]
         [Route("GetUser by Id")]
-        public async Task<IActionResult> GetUserById(Guid UserId)
+        public async Task<IActionResult> GetUserById(string UserId)
         {
             try
             {
@@ -49,12 +49,12 @@ namespace API.Controllers.UserController
         }
         //------------------------------------------------------------------------------------
         [HttpPut]
-        [Route("(Update User")]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDto updatedUserDto, Guid updatedUserId)
+        [Route("Update User")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto updatedUserInfoDto, string updatedUserId)
         {
             try
             {
-                var command = new UpdateUserCommand(updatedUserDto, updatedUserId);
+                var command = new UpdateUserCommand(updatedUserInfoDto, updatedUserId);
                 var result = await _mediator.Send(command);
 
                 if (result == null)
@@ -70,14 +70,14 @@ namespace API.Controllers.UserController
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An Error occurred:{ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An Error occurred: {ex.Message}");
             }
         }
 
         //------------------------------------------------------------------------------------
 
         [HttpDelete("Delete User by {id}")]
-        public async Task<IActionResult> DeleteUserById(Guid id)
+        public async Task<IActionResult> DeleteUserById(string id)
         {
             var user = await _mediator.Send(new DeleteUserCommand(id));
 

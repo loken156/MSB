@@ -1,19 +1,19 @@
-﻿using Application.Dto.User;
-using Domain.Models.User;
+﻿using Application.Dto.UpdateUserInfo;
+using Infrastructure.Entities;
 using MediatR;
 
 namespace Application.Commands.Users.UpdateUser
 {
-    public class UpdateUserCommand : IRequest<UserModel>
+    public class UpdateUserCommand : IRequest<ApplicationUser>
     {
-        public UserDto UpdateUserDto { get; }
-        public Guid UserId { get; }
+        public UpdateUserInfoDto UpdateUserInfoDto { get; }
+        public string UserId { get; }
 
         public string UpdatePassword { get; set; }
 
-        public UpdateUserCommand(UserDto userDto, Guid userId)
+        public UpdateUserCommand(UpdateUserInfoDto userInfoDto, string userId)
         {
-            UpdateUserDto = userDto;
+            UpdateUserInfoDto = userInfoDto;
             UserId = userId;
         }
     }

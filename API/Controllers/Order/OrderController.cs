@@ -5,6 +5,8 @@ using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Order
@@ -20,6 +22,7 @@ namespace API.Controllers.Order
             _mediator = mediator;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("Add Order")]
         public async Task<ActionResult<OrderDto>> AddOrder(AddOrderCommand command)
@@ -37,8 +40,9 @@ namespace API.Controllers.Order
             return CreatedAtAction(nameof(GetOrderById), new { id = orderDto.OrderId }, orderDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
-        [Route("Get All Orders")]
+        [Route("GetAllOrders")]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetAllOrders()
         {
             var query = new GetAllOrdersQuery();
@@ -55,6 +59,7 @@ namespace API.Controllers.Order
             return Ok(orderDtos);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("Get Order By {id}")]
         public async Task<ActionResult<OrderDto>> GetOrderById(Guid id)
         {
@@ -78,6 +83,7 @@ namespace API.Controllers.Order
             return Ok(orderDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("Update Order By {id}")]
         public async Task<IActionResult> UpdateOrder(Guid id, OrderDto orderDto)
         {
@@ -92,6 +98,7 @@ namespace API.Controllers.Order
             return NoContent();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete("Delete Order By {id}")]
         public async Task<IActionResult> DeleteOrder(Guid id)
         {

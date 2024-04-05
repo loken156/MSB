@@ -1,4 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Dto.Adress;
+using Application.Dto.LogIn;
+using Application.Dto.Register;
+using Application.Validators.AddressValidator;
+using Application.Validators.UserValidator;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
 {
@@ -8,7 +14,10 @@ namespace Application
         {
             var assembly = typeof(DependencyInjection).Assembly;
             services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
-
+            services.AddValidatorsFromAssembly(assembly);
+            services.AddTransient<IValidator<RegisterDto>, UserValidations>();
+            services.AddTransient<IValidator<AddressDto>, AddressValidations>();
+            services.AddTransient<IValidator<LogInDto>, LogInDtoValidator>();
 
 
             return services;

@@ -1,14 +1,14 @@
-﻿using Domain.Models.User;
+﻿using Infrastructure.Entities;
 using MediatR;
 
 namespace Application.Commands.Users.DeleteUser
 {
-    public class DeleteUserCommand : IRequest<UserModel>
+    public class DeleteUserCommand : IRequest<ApplicationUser>
     {
-        public DeleteUserCommand(Guid id)
+        public DeleteUserCommand(string id)
         {
             Id = id;
         }
-        public Guid Id { get; }
+        public string Id { get; }
     }
 }
