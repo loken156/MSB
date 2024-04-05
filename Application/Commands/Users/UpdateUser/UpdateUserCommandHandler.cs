@@ -1,25 +1,20 @@
-﻿using Application.Dto.Adress;
-using Domain.Models.Address;
-using Domain.Models.User;
+﻿using Domain.Models.Address;
+using Infrastructure.Entities;
 using Infrastructure.Repositories.UserRepo;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Commands.Users.UpdateUser
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserModel>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, ApplicationUser>
     {
         private readonly IUserRepository _userRepository;
         public UpdateUserCommandHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
-        public async Task<UserModel> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUserByIdAsync(command.UserId);
+            var user = await _userRepository.GetUserByIdAsync(command.UserId) as ApplicationUser;
             if (user == null)
             {
                 throw new KeyNotFoundException("User not found");
@@ -50,7 +45,7 @@ namespace Application.Commands.Users.UpdateUser
                 addressToUpdate.StreetNumber = addressDto.StreetNumber ?? addressToUpdate.StreetNumber;
                 addressToUpdate.Apartment = addressDto.Apartment ?? addressToUpdate.Apartment;
                 addressToUpdate.ZipCode = addressDto.ZipCode ?? addressToUpdate.ZipCode;
-                addressDto.Floor = addressDto.Floor ?? addressToUpdate.Floor;
+                addressToUpdate.Floor = addressDto.Floor ?? addressToUpdate.Floor;
                 addressToUpdate.City = addressDto.City ?? addressToUpdate.City;
                 addressToUpdate.State = addressDto.State ?? addressToUpdate.State;
                 addressToUpdate.Country = addressDto.Country ?? addressToUpdate.Country;

@@ -1,14 +1,9 @@
-﻿using Domain.Models.User;
+﻿using Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Queries.User.GetByEmail
 {
-    public class GetUserByEmailQuery : IRequest<UserModel>
+    public class GetUserByEmailQuery : IRequest<IAppUser>
     {
         public string Email { get; set; }
 
