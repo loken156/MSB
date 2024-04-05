@@ -5,6 +5,8 @@ using Application.Dto.AddWarehouse;
 using Application.Dto.Warehouse;
 using Application.Queries.Warehouse.GetAll;
 using Application.Queries.Warehouse.GetByID;
+using Application.Validators.WarehouseValidator;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,22 +17,50 @@ namespace API.Controllers.Warehouse
     public class WarehouseController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<WarehouseController> _logger;
+        private readonly WareHouseValidations _wareHouseValidations;
 
-        public WarehouseController(IMediator mediator)
+        public WarehouseController(IMediator mediator, ILogger<WarehouseController> logger, WareHouseValidations validations)
         {
             _mediator = mediator;
+            _logger = logger;
+            _wareHouseValidations = validations;
         }
 
         [HttpPost("Add Warehouse")]
         public async Task<ActionResult<WarehouseDto>> AddWarehouse([FromBody] AddWarehouseCommand command)
         {
-            var warehouse = await _mediator.Send(command);
-            var addWarehouseDto = new AddWarehouseDto
+            var validationResult = _wareHouseValidations.Validate(command.NewWarehouse); // Validate the DTO inside the command
+            if (!validationResult.IsValid)
             {
-                WarehouseName = warehouse.WarehouseName
-            };
-            return CreatedAtAction(nameof(AddWarehouse), addWarehouseDto);
+                _logger.LogWarning("Validation failed for AddWarehouseCommand: {ValidationErrors}", validationResult.Errors);
+                return BadRequest(validationResult.Errors);
+            }
+
+            try
+            {
+                // This sends the command and should return a WarehouseModel, which you will then map to a WarehouseDto.
+                var warehouseModel = await _mediator.Send(command);
+                var warehouseDto = new WarehouseDto
+                {
+                    WarehouseId = warehouseModel.WarehouseId,
+                    WarehouseName = warehouseModel.WarehouseName,
+                    AddressId = warehouseModel.AddressId, // Assuming this property exists in WarehouseModel
+                    ShelfId = warehouseModel.ShelfId // Assuming this property exists in WarehouseModel
+                };
+
+                _logger.LogInformation("Warehouse added successfully: {WarehouseName}", warehouseDto.WarehouseName);
+                return CreatedAtAction(nameof(AddWarehouse), warehouseDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding warehouse with command: {Command}", command);
+                return StatusCode(500, "An error occurred while adding the warehouse");
+            }
         }
+
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteWarehouse(Guid id)
