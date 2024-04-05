@@ -1,12 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using MediatR;
-using FluentValidation;
-using Application.Dto.Adress;
+﻿using Application.Dto.Adress;
+using Application.Dto.LogIn;
 using Application.Dto.Register;
 using Application.Validators.AddressValidator;
 using Application.Validators.UserValidator;
 using Application.Dto.AddShelf;
 using Application.Validators.ShelfValidator;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
 {
@@ -22,6 +22,7 @@ namespace Application
             services.AddTransient<IValidator<AddShelfDto>, ShelfValidations>();
 
 
+            services.AddTransient<IValidator<LogInDto>, LogInDtoValidator>();
 
 
             return services;

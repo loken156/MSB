@@ -20,5 +20,6 @@ namespace Application.Dto.Employee
         //public ICollection<AddressModel> Addresses { get; set; }
         public ICollection<DriverModel> Drivers { get; set; }
 
+
     }
 }
