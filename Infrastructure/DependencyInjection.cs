@@ -33,10 +33,6 @@ namespace Infrastructure
             services.AddScoped<IBoxRepository, BoxRepository>();
             services.AddScoped<IUserService, UserService>();
 
-
-
-
-
             services.AddDbContext<MSB_Database>(options =>
                    options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
                        new MySqlServerVersion(new Version(8, 0, 21)))

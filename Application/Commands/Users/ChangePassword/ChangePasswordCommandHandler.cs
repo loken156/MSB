@@ -1,19 +1,20 @@
 ﻿using Application.Commands.Users.ChangePassword;
-using Domain.Interfaces;
+using Infrastructure.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, bool>
 {
-    private readonly IUserService _userService;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public ChangePasswordCommandHandler(IUserService userService)
+    public ChangePasswordCommandHandler(UserManager<ApplicationUser> userManager)
     {
-        _userService = userService;
+        _userManager = userManager;
     }
 
     public async Task<bool> Handle(ChangePasswordCommand command, CancellationToken cancellationToken)
     {
-        var user = await _userService.FindByIdAsync(command.UserId);
+        var user = await _userManager.FindByIdAsync(command.UserId);
         if (user == null)
         {
             // User not found, handle accordingly
@@ -21,9 +22,9 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
         }
 
         // Attempt to change the password
-        var result = await _userService.ChangePasswordAsync(user, command.CurrentPassword, command.NewPassword);
+        var result = await _userManager.ChangePasswordAsync(user, command.CurrentPassword, command.NewPassword);
 
         // Return the result of the update attempt
-        return result;
+        return result.Succeeded;
     }
 }
