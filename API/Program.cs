@@ -3,7 +3,9 @@ using Infrastructure;
 using Infrastructure.Database;
 using Infrastructure.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -14,10 +16,21 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Adds logging to the console.
 builder.Logging.AddDebug(); // Adds logging to the debug window.
 
-builder.Services.AddControllers().AddJsonOptions(options =>
+// Add global authorization filter
+builder.Services.AddControllers(options =>
 {
-    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    var policy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
 });
+
+//builder.Services.AddControllers().AddJsonOptions(options =>
+//{
+//    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+//});
+
+
 
 //builder.Services.AddAuthentication(options =>
 //{
@@ -61,9 +74,12 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        ValidateIssuer = true, // Add this line
+        ValidateAudience = true, // Change this line
         ValidateLifetime = true,
-        ValidateAudience = false
+        ValidIssuer = builder.Configuration["JwtSettings:Issuer"], // Change this line
+        ValidAudience = builder.Configuration["JwtSettings:Audience"], // Change this line
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"])) // Change this line
     };
 });
 
@@ -76,8 +92,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<MSB_Database>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddControllers();
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -88,12 +102,14 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-        Name = "Authorization",
+        // Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer"
     });
 
+    // Telling Swaggeat this API requires a Bearer token
+    // so you don't need to add "Bearer" to each endpoint
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {

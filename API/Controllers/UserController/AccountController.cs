@@ -3,6 +3,7 @@ using Application.Dto.Register;
 using Domain.Models.Address;
 using FluentValidation;
 using Infrastructure.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -33,6 +34,7 @@ namespace API.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterDto model)
         {
@@ -79,48 +81,7 @@ namespace API.Controllers
             return BadRequest(result.Errors);
         }
 
-        //[HttpPost("Login")]
-        //public async Task<IActionResult> Login(LogInDto model)
-        //{
-        //    var validationResult = _loginValidator.Validate(model);
-        //    if (!validationResult.IsValid)
-        //    {
-        //        return BadRequest(validationResult.Errors);
-        //    }
-
-        //    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-
-        //    if (result.Succeeded)
-        //    {
-        //        _logger.LogInformation("User logged in: {Email}", model.Email);
-
-        //        // Generate JWT
-        //        var tokenHandler = new JwtSecurityTokenHandler();
-        //        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
-        //        Console.WriteLine($"Jwt:Key in AccountController: {_configuration["Jwt:Key"]}"); // remove in prod
-
-        //        var tokenDescriptor = new SecurityTokenDescriptor
-        //        {
-        //            Subject = new ClaimsIdentity(new Claim[]
-        //            {
-        //        new Claim(ClaimTypes.Name, model.Email)
-        //            }),
-        //            Expires = DateTime.UtcNow.AddDays(1),
-        //            Issuer = _configuration["Jwt:Issuer"],
-        //            Audience = _configuration["Jwt:Audience"],
-        //            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //        };
-        //        var token = tokenHandler.CreateToken(tokenDescriptor);
-        //        var tokenString = tokenHandler.WriteToken(token);
-
-        //        // Return the token
-        //        return Ok(new { Token = tokenString });
-        //    }
-
-        //    _logger.LogWarning("Invalid login attempt for user: {Email}", model.Email);
-        //    return Unauthorized(new { Message = "Invalid login attempt" });
-        //}
-
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LogInDto model)
         {
@@ -138,7 +99,13 @@ namespace API.Controllers
 
                 // Generate JWT
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+                string secretKey = _configuration["JwtSettings:SecretKey"];
+                if (secretKey == null)
+                {
+                    _logger.LogError("JwtSettings:SecretKey is not set in the configuration.");
+                    return Unauthorized(new { Message = "Internal server error." });
+                }
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
@@ -146,11 +113,10 @@ namespace API.Controllers
                     {
                 new Claim(ClaimTypes.Name, model.Email)
                     }),
-                    // Adjust the expiration time as needed
-                    Expires = DateTime.UtcNow.AddDays(1), // Change this line
-                    Issuer = _configuration["Jwt:Issuer"],
-                    Audience = _configuration["Jwt:Audience"], // Ensure this matches your configuration
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    Issuer = _configuration["JwtSettings:Issuer"],
+                    Audience = _configuration["JwtSettings:Audience"],
+                    SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
@@ -162,10 +128,6 @@ namespace API.Controllers
             _logger.LogWarning("Invalid login attempt for user: {Email}", model.Email);
             return Unauthorized(new { Message = "Invalid login attempt" });
         }
-
-
-
-
 
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()

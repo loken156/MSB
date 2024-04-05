@@ -20,8 +20,6 @@ namespace Application
             services.AddTransient<IValidator<LogInDto>, LogInDtoValidator>();
 
 
-
-
             return services;
         }
 
