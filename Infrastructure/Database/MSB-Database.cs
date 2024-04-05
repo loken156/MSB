@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Address;
+using Domain.Models.Admin;
 using Domain.Models.BoxModel;
 using Domain.Models.Car;
 using Domain.Models.Driver;
@@ -25,6 +26,7 @@ namespace Infrastructure.Database
         public virtual DbSet<WarehouseModel> Warehouses { get; set; }
         public virtual DbSet<ShelfModel> Shelves { get; set; }
         public virtual DbSet<BoxModel> Boxes { get; set; }
+        public virtual DbSet<AdminModel> Admins { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Mock data for UserModels
@@ -85,10 +87,12 @@ namespace Infrastructure.Database
                 new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].Id, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101, CarId = cars[3].CarId},
             };
 
-            modelBuilder.Entity<OrderModel>()
-                .HasOne<ApplicationUser>() // No navigation property here
-                .WithMany(u => u.Orders) // Assuming ApplicationUser has a collection of Orders
-                .HasForeignKey(o => o.UserId);
+            // Needs fixing after implementing Identity
+
+            //modelBuilder.Entity<OrderModel>()
+            //    .HasOne<ApplicationUser>() // No navigation property here
+            //    .WithMany(u => u.Orders) // Assuming ApplicationUser has a collection of Orders
+            //    .HasForeignKey(o => o.UserId);
 
             modelBuilder.Entity<OrderModel>().HasData(orders);
 

@@ -10,5 +10,6 @@ namespace Domain.Interfaces
         string FirstName { get; set; }
         string LastName { get; set; }
         ICollection<AddressModel> Addresses { get; set; }
+        string Role { get; set; }
     }
 }

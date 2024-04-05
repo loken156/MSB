@@ -1,6 +1,4 @@
-﻿using System;
-using Domain.Models.Driver;
-using Domain.Models.Order;
+﻿using Domain.Models.Driver;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +20,7 @@ namespace Infrastructure.Repositories.DriverRepo
 
         public async Task<DriverModel> GetDriverByIdAsync(Guid id)
         {
-            return await _database.Drivers.FirstOrDefaultAsync(d => d.DriverId == id);
+            return await _database.Drivers.FirstOrDefaultAsync(d => d.Id == id.ToString());
         }
 
         public void AddDriver(DriverModel driver)

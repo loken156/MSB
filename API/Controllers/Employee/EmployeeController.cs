@@ -1,4 +1,5 @@
-﻿using Domain.Models.Employee;
+﻿using Application.Dto.Employee;
+using Domain.Models.Employee;
 using Infrastructure.Entities;
 using Infrastructure.Repositories.EmployeeRepo;
 using Microsoft.AspNetCore.Identity;
@@ -45,36 +46,40 @@ namespace API.Controllers.Employee
         // POST: api/Employee
         [HttpPost]
         [Route("Add Employee")]
-        public async Task<ActionResult<EmployeeModel>> CreateEmployee(EmployeeModel employee)
+        public async Task<ActionResult<EmployeeDto>> CreateEmployee(EmployeeDto employeeDto)
         {
+            var employee = new EmployeeModel
+            {
+                Id = employeeDto.EmployeeId.ToString(),
+                UserName = employeeDto.Email,
+                Email = employeeDto.Email,
+                FirstName = employeeDto.FirstName,
+                LastName = employeeDto.LastName,
+                Role = "Employee",
+                Department = employeeDto.Department,
+                Position = employeeDto.Position,
+                HireDate = employeeDto.HireDate,
+                WarehouseId = employeeDto.WarehouseId
+            };
+
             var createdEmployee = await _employeeRepository.CreateEmployeeAsync(employee);
 
-            var user = await _userManager.FindByIdAsync(createdEmployee.EmployeeId.ToString());
+            var user = await _userManager.FindByIdAsync(createdEmployee.Id);
 
             if (user == null)
             {
                 return NotFound(new { Message = "User not found" });
             }
 
-            foreach (var role in employee.Roles)
+            // Assign the "Employee" role to the new employee
+            var result = await _userManager.AddToRoleAsync(user, "Employee");
+
+            if (!result.Succeeded)
             {
-                // Check if the role exists
-                var roleExists = await _roleManager.RoleExistsAsync(role);
-                if (!roleExists)
-                {
-                    return BadRequest(new { Message = $"Role {role} does not exist" });
-                }
-
-                // Assign the role to the new employee
-                var result = await _userManager.AddToRoleAsync(user, role);
-
-                if (!result.Succeeded)
-                {
-                    return BadRequest(result.Errors);
-                }
+                return BadRequest(result.Errors);
             }
 
-            return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.EmployeeId }, createdEmployee);
+            return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.Id }, createdEmployee);
         }
 
 

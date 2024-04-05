@@ -2,12 +2,12 @@
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Infrastructure.Repositories.EmployeeRepo
 {
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly MSB_Database _database;
+
         public EmployeeRepository(MSB_Database mSB_Database)
         {
             _database = mSB_Database;
@@ -36,21 +36,20 @@ namespace Infrastructure.Repositories.EmployeeRepo
 
             if (existingEmployee == null)
             {
-                return null;
+                throw new Exception($"No employee found with ID {id}");
             }
 
             existingEmployee.FirstName = employee.FirstName;
             existingEmployee.LastName = employee.LastName;
             existingEmployee.Email = employee.Email;
-            existingEmployee.Password = employee.Password;
-            existingEmployee.Roles = employee.Roles;
 
-            // Uppdatera resten av egenskaperna om det behövs
+            // Update the rest of the properties if needed
 
             await _database.SaveChangesAsync();
 
             return existingEmployee;
         }
+
 
         public async Task<bool> DeleteEmployeeAsync(Guid id)
         {
@@ -66,18 +65,5 @@ namespace Infrastructure.Repositories.EmployeeRepo
 
             return true;
         }
-        public async Task<EmployeeModel> GetEmployeeByIdAsync(Guid employeeId)
-        {
-            try
-            {
-                EmployeeModel employee = await _database.Employees.FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
-                return employee;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error occurred while fetching employee by ID", ex);
-            }
-        }
-
     }
 }

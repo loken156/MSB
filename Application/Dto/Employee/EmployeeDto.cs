@@ -1,4 +1,5 @@
-using Domain.Models.Driver;
+using Application.Dto.Driver;
+using Domain.Models.Warehouse;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Employee
@@ -11,9 +12,11 @@ namespace Application.Dto.Employee
         [Required] public string FirstName { get; set; } = string.Empty;
         [Required] public string LastName { get; set; } = string.Empty;
         [Required] public List<string> Roles { get; set; } = new List<string>();
-
-        //public ICollection<WareHouseModel> WareHouses { get; set; }
-        //public ICollection<AddressModel> Addresses { get; set; }
-        public ICollection<DriverModel> Drivers { get; set; } = new List<DriverModel>();
+        [Required] public string Department { get; set; }
+        [Required] public string Position { get; set; }
+        [Required] public DateTime HireDate { get; set; }
+        [Required] public Guid WarehouseId { get; set; }
+        public WarehouseModel Warehouse { get; set; }
+        public DriverDto Driver { get; set; }
     }
 }
