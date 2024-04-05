@@ -25,9 +25,9 @@ namespace Domain.Models.Order
         // public int RepairId { get; set; }
         // public Repair.RepairDto Repair { get; set; }
 
-        // [ForeignKey("WarehouseId")]
-        // public int WarehouseId { get; set; }
-        // public Warehouse.WarehouseDto Warehouse { get; set; }
+        [ForeignKey("WarehouseId")]
+        public Guid WarehouseId { get; set; }
+        public Warehouse.WarehouseModel Warehouse { get; set; }
 
         //[ForeignKey("AdressId")] // Return Address
         //public int AdressId { get; set; }

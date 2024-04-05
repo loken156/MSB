@@ -1,6 +1,8 @@
 ﻿using Application.Commands.Shelf.AddShelf;
 using Application.Commands.Shelf.DeleteShelf;
 using Application.Commands.Shelf.UpdateShelf;
+using Application.Dto.AddShelf;
+using Application.Dto.Box;
 using Application.Dto.Shelf;
 using Application.Queries.Shelf.GetAll;
 using Application.Queries.Shelf.GetByID;
@@ -20,10 +22,10 @@ namespace API.Controllers.Shelf
             _mediator = mediator;
         }
 
-        [HttpPost]
-        [Route("Add Shelf")]
-        public async Task<ActionResult<ShelfDto>> AddShelf(AddShelfCommand command)
+        [HttpPost("Add Shelf")]
+        public async Task<ActionResult<ShelfDto>> AddShelf([FromBody] AddShelfAndBoxesDto requestData)
         {
+            var command = new AddShelfCommand(requestData.NewShelf, requestData.WarehouseId, requestData.Boxes);
             var shelf = await _mediator.Send(command);
             var shelfDto = new ShelfDto
             {
@@ -35,6 +37,8 @@ namespace API.Controllers.Shelf
             };
             return CreatedAtAction(nameof(GetShelfById), new { id = shelfDto.ShelfId }, shelfDto);
         }
+
+
 
         [HttpGet]
         [Route("Get All Shelves")]

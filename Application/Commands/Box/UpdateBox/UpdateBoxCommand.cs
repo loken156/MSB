@@ -1,5 +1,5 @@
 ﻿using Application.Dto.Box;
-using Domain.Models.BoxModel;
+using Domain.Models.Box;
 using MediatR;
 
 namespace Application.Commands.Box.UpdateBox
