@@ -25,7 +25,6 @@ namespace Infrastructure.Database
         public virtual DbSet<WarehouseModel> Warehouses { get; set; }
         public virtual DbSet<ShelfModel> Shelves { get; set; }
         public virtual DbSet<BoxModel> Boxes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Mock data for UserModels

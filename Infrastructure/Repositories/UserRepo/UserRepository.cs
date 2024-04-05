@@ -8,17 +8,10 @@ namespace Infrastructure.Repositories.UserRepo
     public class UserRepository : IUserRepository
     {
         private readonly MSB_Database _database;
+
         public UserRepository(MSB_Database mSB_Database)
         {
             _database = mSB_Database;
-        }
-
-        public async Task<ApplicationUser> AddUserAsync(ApplicationUser user)
-        {
-            await _database.Users.AddAsync(user);
-            await _database.SaveChangesAsync();
-
-            return user;
         }
 
         public async Task DeleteUserAsync(string id)
@@ -44,7 +37,6 @@ namespace Infrastructure.Repositories.UserRepo
             return user as IAppUser ?? throw new KeyNotFoundException($"User with id {id} not found");
         }
 
-
         public async Task<IAppUser> GetByEmailAsync(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -54,8 +46,6 @@ namespace Infrastructure.Repositories.UserRepo
             var user = await _database.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
             return user as IAppUser ?? throw new KeyNotFoundException($"User with email {email} not found");
         }
-
-
 
         public async Task UpdateUserAsync(ApplicationUser user)
         {

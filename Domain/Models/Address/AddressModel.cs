@@ -5,7 +5,6 @@ namespace Domain.Models.Address
 {
     public class AddressModel
     {
-
         [Key]
         public Guid AddressId { get; set; }
         [ForeignKey("UserId")]
@@ -20,6 +19,5 @@ namespace Domain.Models.Address
         public string Country { get; set; } = string.Empty;
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-
     }
 }

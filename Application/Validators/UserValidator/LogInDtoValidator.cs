@@ -7,9 +7,8 @@ namespace Application.Validators.UserValidator
     {
         public LogInDtoValidator()
         {
-            RuleFor(x => x.Email).NotEmpty().EmailAddress();
-            RuleFor(x => x.Password).NotEmpty();
+            RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Email can not be empty");
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Password can not be empty");
         }
     }
-
 }

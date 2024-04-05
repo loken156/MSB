@@ -12,14 +12,11 @@ namespace Infrastructure.Services
         {
             _userManager = userManager;
         }
-
         public async Task<IAppUser> FindByIdAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             return user as IAppUser;
         }
-
-
         public async Task<bool> ChangePasswordAsync(IAppUser user, string currentPassword, string newPassword)
         {
             var result = await _userManager.ChangePasswordAsync((ApplicationUser)user, currentPassword, newPassword);
