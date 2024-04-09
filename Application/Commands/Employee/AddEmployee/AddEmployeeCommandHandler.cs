@@ -25,7 +25,12 @@ namespace Application.Commands.Employee.AddEmployee
                 };
 
                 // Save the new employee to the database
-                await _employeeRepository.CreateEmployeeAsync(employeeToCreate);
+                var result = await _employeeRepository.CreateEmployeeAsync(employeeToCreate);
+
+                if (result == null)
+                {
+                    throw new Exception("Failed to save the new employee to the database.");
+                }
 
                 return employeeToCreate;
             }
@@ -35,6 +40,7 @@ namespace Application.Commands.Employee.AddEmployee
                 throw newException;
             }
         }
+
 
     }
 }

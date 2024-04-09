@@ -50,7 +50,7 @@ namespace API.Controllers.UserController
         //------------------------------------------------------------------------------------
         [HttpPut]
         [Route("Update User")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto updatedUserInfoDto, string updatedUserId)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto updatedUserInfoDto, [FromQuery] string updatedUserId)
         {
             try
             {
@@ -73,6 +73,7 @@ namespace API.Controllers.UserController
                 return StatusCode(StatusCodes.Status500InternalServerError, $"An Error occurred: {ex.Message}");
             }
         }
+
 
         //------------------------------------------------------------------------------------
 
