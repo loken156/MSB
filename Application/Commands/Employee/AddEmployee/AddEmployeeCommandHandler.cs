@@ -1,11 +1,18 @@
 ﻿using Domain.Models.Employee;
+using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
 
 namespace Application.Commands.Employee.AddEmployee
 {
     public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommand, EmployeeModel>
     {
-        public Task<EmployeeModel> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
+        private readonly IEmployeeRepository _employeeRepository;
+        public AddEmployeeCommandHandler(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+        }
+
+        public async Task<EmployeeModel> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -16,7 +23,11 @@ namespace Application.Commands.Employee.AddEmployee
                     Email = request.NewEmployee.Email,
                     // Initialize other properties as needed
                 };
-                return Task.FromResult(employeeToCreate);
+
+                // Save the new employee to the database
+                await _employeeRepository.CreateEmployeeAsync(employeeToCreate);
+
+                return employeeToCreate;
             }
             catch (Exception ex)
             {
@@ -24,5 +35,6 @@ namespace Application.Commands.Employee.AddEmployee
                 throw newException;
             }
         }
+
     }
 }
