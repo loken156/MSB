@@ -1,9 +1,10 @@
-﻿namespace Domain.Interfaces
+﻿using Domain.Models.Results;
+
+namespace Domain.Interfaces
 {
     public interface IUserService
     {
         Task<IAppUser> FindByIdAsync(string userId);
-        Task<bool> ChangePasswordAsync(IAppUser user, string currentPassword, string newPassword);
-
+        Task<PasswordChangeResult> ChangePasswordAsync(string userId, string currentPassword, string newPassword);
     }
 }

@@ -34,6 +34,7 @@ namespace Infrastructure.Database
                 .HasOne<ApplicationUser>()
                 .WithMany(u => u.Addresses)
                 .HasForeignKey(a => a.UserId);
+
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Addresses)
                 .WithOne()
