@@ -21,9 +21,9 @@ namespace API.Controllers.Driver
 
         // GET: api/Drivers
         [HttpGet]
-        public ActionResult<IEnumerable<DriverDetailDto>> GetDrivers()
+        public async Task<ActionResult<IEnumerable<DriverDetailDto>>> GetDrivers()
         {
-            var drivers = _driverRepository.GetAllDrivers();
+            var drivers = await _driverRepository.GetAllDrivers();
 
             var driverDtos = drivers.Select(driver => new DriverDetailDto
             {
@@ -35,6 +35,7 @@ namespace API.Controllers.Driver
 
             return Ok(driverDtos);
         }
+
 
         // POST: api/Drivers
         [HttpPost]
@@ -91,7 +92,7 @@ namespace API.Controllers.Driver
                 LicenseNumber = driverDto.LicenseNumber
             };
 
-            _driverRepository.UpdateDriver(driver);
+            await _driverRepository.UpdateDriver(driver);
 
             var user = await _userManager.FindByIdAsync(driver.Id);
 
@@ -159,6 +160,14 @@ namespace API.Controllers.Driver
             };
 
             return Ok(driverDto);
+        }
+
+        [HttpGet("AvailablePickupTimes")]
+        public async Task<IActionResult> GetAvailablePickupTimes()
+        {
+            var drivers = await _driverRepository.GetAllDrivers();
+            var availableTimes = drivers.SelectMany(d => d.Availability).ToList();
+            return Ok(availableTimes);
         }
     }
 }

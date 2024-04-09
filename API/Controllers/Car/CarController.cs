@@ -5,6 +5,7 @@ using Application.Dto.Car;
 using Application.Dto.Driver;
 using Application.Queries.Car;
 using Application.Queries.Car.GetById;
+using Domain.Models;
 using Domain.Models.Car;
 using Domain.Models.Driver;
 using Infrastructure.Repositories.CarRepo;
@@ -142,8 +143,8 @@ namespace API.Controllers.Car
             return Ok(car);
         }
 
-        [HttpPost("{driverId}/take-order")]
-        public async Task<IActionResult> TakeOrder(Guid driverId, [FromBody] Guid orderId)
+        [HttpPost("{driverId}/take-order/{startTime}/{endTime}")]
+        public async Task<IActionResult> TakeOrder(Guid driverId, [FromBody] Guid orderId, DateTime startTime, DateTime endTime)
         {
             var driver = await _driverRepository.GetDriverByIdAsync(driverId); ;
             if (driver == null)
@@ -157,12 +158,14 @@ namespace API.Controllers.Car
                 return NotFound("Order not found.");
             }
 
+            var pickupTimeSlot = new TimeSlot { StartTime = startTime, EndTime = endTime };
+
             // Assign the order to the driver
-            // You need to implement this in your repository
-            await _driverRepository.AssignOrderToDriver(driver, orderId);
+            await _driverRepository.AssignOrderToDriver(driver, orderId, pickupTimeSlot);
 
             return Ok("Order successfully assigned to the driver.");
         }
+
 
         private CarModel MapToCarModel(CarDto carDto)
         {

@@ -23,6 +23,7 @@ namespace Domain.Models.Driver
         public CarModel CurrentCar { get; set; }
         public ICollection<OrderModel> Orders { get; set; }
         public string LicenseNumber { get; set; } = string.Empty;
+        public ICollection<TimeSlot> Availability { get; set; }
     }
 }
 
