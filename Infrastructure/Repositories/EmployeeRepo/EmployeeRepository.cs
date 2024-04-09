@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories.EmployeeRepo
             return await _database.Employees.ToListAsync();
         }
 
-        public async Task<EmployeeModel> GetEmployeeAsync(Guid id)
+        public async Task<EmployeeModel> GetEmployeeByIdAsync(Guid id)
         {
             return await _database.Employees.FindAsync(id);
         }

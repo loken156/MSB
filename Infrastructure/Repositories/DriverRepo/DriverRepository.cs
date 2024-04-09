@@ -44,6 +44,25 @@ namespace Infrastructure.Repositories.DriverRepo
             _database.Drivers.Remove(driver);
             _database.SaveChanges();
         }
+        public async Task AssignOrderToDriver(DriverModel driver, Guid orderId)
+        {
+            // Find the specific order
+            var order = driver.Orders.FirstOrDefault(o => o.OrderId == orderId);
+            if (order == null)
+            {
+                // Handle the case when the order is not found
+                // For example, you can throw an exception
+                throw new Exception($"Order with ID {orderId} not found.");
+            }
+
+            // Perform the operation on the order
+            // For example, if you want to update the order status, you can do:
+            order.OrderStatus = "Assigned to driver";
+
+            _database.Drivers.Update(driver);
+            await _database.SaveChangesAsync();
+        }
+
     }
 }
 

@@ -9,6 +9,5 @@ namespace Infrastructure.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public ICollection<AddressModel> Addresses { get; set; }
-        public string Role { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.Dto.Driver;
+﻿using Application.Dto.Car;
+using Application.Dto.Driver;
 using Application.Dto.Employee;
 using Infrastructure.Repositories.DriverRepo;
 
@@ -19,21 +20,25 @@ namespace Application.Queries.Driver.GetAll
 
             var driverDtos = drivers.Select(driver => new DriverDetailDto
             {
-                DriverId = driver.DriverId,
-                EmployeeId = driver.EmployeeId,
+                DriverId = Guid.Parse(driver.Id),
+                LicenseNumber = driver.LicenseNumber,
+                Car = new CarDto
+                {
+                    CarId = driver.CurrentCarId,
+                    // Map other properties of CarDto here
+                },
                 Employee = new EmployeeDto
                 {
-                    EmployeeId = driver.Employee.EmployeeId,
-                    Email = driver.Employee.Email,
-                    Password = driver.Employee.Password,
-                    FirstName = driver.Employee.FirstName,
-                    LastName = driver.Employee.LastName,
-                    Roles = driver.Employee.Roles
+                    EmployeeId = Guid.Parse(driver.Id),
+                    Email = driver.Email,
+                    FirstName = driver.FirstName,
+                    LastName = driver.LastName,
+                    // Map other properties of EmployeeDto here
                 },
+                // Map other properties of DriverDetailDto here
             });
 
             return driverDtos;
         }
     }
 }
-

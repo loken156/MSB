@@ -35,7 +35,7 @@ namespace API.Controllers.Employee
         [HttpGet("Get Employee By {id}")]
         public async Task<ActionResult<EmployeeModel>> GetEmployee(Guid id)
         {
-            var employee = await _employeeRepository.GetEmployeeAsync(id);
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
             if (employee == null)
             {
                 return NotFound();

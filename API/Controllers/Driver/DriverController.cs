@@ -47,7 +47,6 @@ namespace API.Controllers.Driver
                 Email = driverDto.EmployeeId.ToString(), // Assuming EmployeeId is used as Email
                 FirstName = "", // Add appropriate value
                 LastName = "", // Add appropriate value
-                Role = "Driver",
                 CurrentCarId = driverDto.CarId,
                 LicenseNumber = driverDto.LicenseNumber
             };
@@ -74,7 +73,7 @@ namespace API.Controllers.Driver
 
         // PUT: api/Drivers/5
         [HttpPut("{id}")]
-        public IActionResult PutDriver(Guid id, DriverDto driverDto)
+        public async Task<IActionResult> PutDriver(Guid id, DriverDto driverDto)
         {
             if (id != driverDto.DriverId)
             {
@@ -88,15 +87,36 @@ namespace API.Controllers.Driver
                 Email = driverDto.EmployeeId.ToString(), // Assuming EmployeeId is used as Email
                 FirstName = "", // Add appropriate value
                 LastName = "", // Add appropriate value
-                Role = "Driver",
                 CurrentCarId = driverDto.CarId,
                 LicenseNumber = driverDto.LicenseNumber
             };
 
             _driverRepository.UpdateDriver(driver);
 
+            var user = await _userManager.FindByIdAsync(driver.Id);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = "User not found" });
+            }
+
+            // Check if the user is already in the "Driver" role
+            var isInRole = await _userManager.IsInRoleAsync(user, "Driver");
+
+            if (!isInRole)
+            {
+                // If not, assign the "Driver" role to the user
+                var result = await _userManager.AddToRoleAsync(user, "Driver");
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
+            }
+
             return NoContent();
         }
+
 
         // DELETE: api/Drivers/5
         [HttpDelete("{id}")]

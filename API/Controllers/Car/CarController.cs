@@ -9,8 +9,8 @@ using Domain.Models.Car;
 using Domain.Models.Driver;
 using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.DriverRepo;
-using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Repositories.OrderRepo;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace API.Controllers.Car
@@ -104,10 +104,7 @@ namespace API.Controllers.Car
             var driverModel = MapToDriverModel(driverDto);
 
             // Add driver to car
-            car.Drivers.Add(driverModel);
-
-            // Update car in repository
-            await _carRepository.UpdateCar(car);
+            await _carRepository.AssignDriverToCar(car, driverModel);
 
             return Ok(car);
         }
@@ -116,13 +113,13 @@ namespace API.Controllers.Car
         public async Task<IActionResult> DeleteDriverFromCar(Guid carId)
         {
             var car = await _carRepository.GetCarById(carId);
-            if (car == null || car.Drivers == null)
+            if (car == null)
             {
                 return NotFound();
             }
 
-            car.Drivers = null;
-            await _carRepository.UpdateCar(car);
+            // Remove driver from car
+            await _carRepository.RemoveDriverFromCar(car);
 
             return NoContent();
         }
@@ -138,7 +135,8 @@ namespace API.Controllers.Car
 
             var driverModel = MapToDriverModel(driverDto);
 
-            car.Drivers = (ICollection<DriverModel>)driverModel;
+            // Change the driver for the car
+            car.DriverId = Guid.Parse(driverModel.Id);
             await _carRepository.UpdateCar(car);
 
             return Ok(car);
@@ -160,9 +158,8 @@ namespace API.Controllers.Car
             }
 
             // Assign the order to the driver
-            driver.OrderId = orderId;
-
-            await _driverRepository.UpdateDriver(driver);
+            // You need to implement this in your repository
+            await _driverRepository.AssignOrderToDriver(driver, orderId);
 
             return Ok("Order successfully assigned to the driver.");
         }
@@ -183,9 +180,8 @@ namespace API.Controllers.Car
         {
             return new DriverModel
             {
-                DriverId = driverDto.DriverId,
-                EmployeeId = driverDto.EmployeeId,
-
+                Id = driverDto.DriverId.ToString(),
+                // Initialize other properties as needed
             };
         }
     }

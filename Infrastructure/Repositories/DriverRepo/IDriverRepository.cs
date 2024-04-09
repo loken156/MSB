@@ -1,5 +1,4 @@
-﻿using System;
-using Domain.Models.Driver;
+﻿using Domain.Models.Driver;
 
 namespace Infrastructure.Repositories.DriverRepo
 {
@@ -10,6 +9,7 @@ namespace Infrastructure.Repositories.DriverRepo
         void DeleteDriver(Guid id);
         Task<DriverModel> GetDriverByIdAsync(Guid driverId);
         Task UpdateDriver(DriverModel driver);
+        Task AssignOrderToDriver(DriverModel driver, Guid orderId);
     }
 }
 

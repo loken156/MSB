@@ -92,8 +92,11 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Initialize roles
-var roleManager = app.Services.GetRequiredService<RoleManager<IdentityRole>>();
-await Infrastructure.Identity.RoleInitializer.InitializeAsync(roleManager);
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await Infrastructure.Identity.RoleInitializer.InitializeAsync(roleManager);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -6,7 +6,7 @@ namespace Application.Dto.Repair
     public class RepairDto
     {
         [Key]
-        public int? RepairId { get; set; }
+        public Guid RepairId { get; set; }
 
         public int Amount { get; set; }
 

@@ -5,20 +5,18 @@ namespace Application.Commands.Employee.AddEmployee
 {
     public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommand, EmployeeModel>
     {
-        public async Task<EmployeeModel> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
+        public Task<EmployeeModel> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 EmployeeModel employeeToCreate = new()
                 {
-                    EmployeeId = Guid.NewGuid(),
                     FirstName = request.NewEmployee.FirstName,
                     LastName = request.NewEmployee.LastName,
                     Email = request.NewEmployee.Email,
-                    Roles = request.NewEmployee.Roles,
-                    Password = request.NewEmployee.Password,
+                    // Initialize other properties as needed
                 };
-                return employeeToCreate;
+                return Task.FromResult(employeeToCreate);
             }
             catch (Exception ex)
             {
