@@ -1,5 +1,5 @@
-﻿using System;
-using Domain.Models.Car;
+﻿using Domain.Models.Car;
+using System;
 
 namespace Infrastructure.Repositories.CarRepo
 {
@@ -12,4 +12,3 @@ namespace Infrastructure.Repositories.CarRepo
         Task AddCar(CarModel carModel);
     }
 }
-

@@ -1,6 +1,6 @@
-﻿using System;
-using Domain.Models.Employee;
+﻿using Domain.Models.Employee;
 using MediatR;
+using System;
 
 namespace Application.Queries.Employee.GetById
 {
@@ -15,4 +15,3 @@ namespace Application.Queries.Employee.GetById
         public Guid Id { get; }
     }
 }
-

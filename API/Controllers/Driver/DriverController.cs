@@ -1,10 +1,10 @@
-﻿using Application.Dto.Driver;
+﻿using Application.Dto.Car;
+using Application.Dto.Driver;
 using Application.Dto.Employee;
 using Application.Queries.Driver.GetAll;
 using Domain.Models.Driver;
 using Infrastructure.Repositories.DriverRepo;
 using Microsoft.AspNetCore.Mvc;
-using Application.Dto.Car;
 
 namespace API.Controllers.Driver
 {

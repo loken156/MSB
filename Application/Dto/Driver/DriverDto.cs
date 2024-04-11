@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Application.Dto.Car;
 using Application.Dto.Employee;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Driver
 {

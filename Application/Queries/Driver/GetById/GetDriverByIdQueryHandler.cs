@@ -1,11 +1,11 @@
-﻿using System;
-using Application.Dto.Driver;
+﻿using Application.Dto.Driver;
 using Application.Dto.Employee;
 using Application.Dto.Item;
 using Application.Queries.Driver.GetAll;
 using Infrastructure.Repositories.DriverRepo;
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
+using System;
 
 namespace Application.Queries.Driver.GetById
 {

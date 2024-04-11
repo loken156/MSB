@@ -1,6 +1,6 @@
+using Domain.Models.Driver;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Models.Driver;
 
 namespace Application.Dto.Employee
 {

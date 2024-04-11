@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Models.Car;
+﻿using Domain.Models.Car;
 using Domain.Models.Employee;
 using Domain.Models.Order;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Driver
 {
@@ -19,4 +19,3 @@ namespace Domain.Models.Driver
         public OrderModel Order { get; set; }
     }
 }
-

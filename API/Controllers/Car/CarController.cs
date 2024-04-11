@@ -9,8 +9,8 @@ using Domain.Models.Car;
 using Domain.Models.Driver;
 using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.DriverRepo;
-using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Repositories.OrderRepo;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace API.Controllers.Car
@@ -190,4 +190,3 @@ namespace API.Controllers.Car
         }
     }
 }
-

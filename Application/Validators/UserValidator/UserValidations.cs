@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Dto.Adress;
+﻿using Application.Dto.Adress;
 using Application.Dto.LogIn;
 using Application.Dto.Register;
 using Application.Validators.AddressValidator;
 using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Validators.UserValidator
 {

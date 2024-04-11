@@ -1,5 +1,5 @@
-﻿using System;
-using Domain.Models.Driver;
+﻿using Domain.Models.Driver;
+using System;
 
 namespace Infrastructure.Repositories.DriverRepo
 {
@@ -12,4 +12,3 @@ namespace Infrastructure.Repositories.DriverRepo
         Task UpdateDriver(DriverModel driver);
     }
 }
-

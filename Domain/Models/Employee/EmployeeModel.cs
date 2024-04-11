@@ -1,7 +1,7 @@
-﻿using System;
-using Domain.Models.Address;
-using System.ComponentModel.DataAnnotations;
+﻿using Domain.Models.Address;
 using Domain.Models.Driver;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models.Employee
 {
@@ -23,4 +23,3 @@ namespace Domain.Models.Employee
         public ICollection<DriverModel> Drivers { get; set; }
     }
 }
-

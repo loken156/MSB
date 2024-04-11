@@ -1,8 +1,8 @@
-﻿using System;
-using Domain.Models.Driver;
+﻿using Domain.Models.Driver;
 using Domain.Models.Order;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Infrastructure.Repositories.DriverRepo
 {
@@ -48,4 +48,3 @@ namespace Infrastructure.Repositories.DriverRepo
         }
     }
 }
-

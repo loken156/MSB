@@ -1,8 +1,8 @@
-﻿using System;
-using Application.Dto.Driver;
+﻿using Application.Dto.Driver;
 using Application.Dto.Employee;
 using Infrastructure.Repositories.DriverRepo;
 using MediatR;
+using System;
 
 namespace Application.Queries.Driver.GetAll
 {
@@ -38,4 +38,3 @@ namespace Application.Queries.Driver.GetAll
         }
     }
 }
-

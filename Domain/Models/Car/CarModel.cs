@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Domain.Models.Driver;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Models.Driver;
 
 namespace Domain.Models.Car
 {
@@ -16,4 +16,3 @@ namespace Domain.Models.Car
         public ICollection<DriverModel> Drivers { get; set; }
     }
 }
-

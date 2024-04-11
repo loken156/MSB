@@ -1,10 +1,10 @@
-﻿using Application.Dto.Adress;
+﻿using Application.Dto.AddShelf;
+using Application.Dto.Adress;
 using Application.Dto.LogIn;
 using Application.Dto.Register;
 using Application.Validators.AddressValidator;
-using Application.Validators.UserValidator;
-using Application.Dto.AddShelf;
 using Application.Validators.ShelfValidator;
+using Application.Validators.UserValidator;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 

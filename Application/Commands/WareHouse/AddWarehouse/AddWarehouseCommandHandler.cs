@@ -17,7 +17,7 @@ namespace Application.Commands.Warehouse.AddWarehouse
             {
                 WarehouseId = Guid.NewGuid(),
                 WarehouseName = request.NewWarehouse.WarehouseName,
-                AdressId = request.NewWarehouse.AddressId,
+                AddressId = request.NewWarehouse.AddressId,
                 ShelfId = request.NewWarehouse.ShelfId
             };
 
@@ -27,4 +27,3 @@ namespace Application.Commands.Warehouse.AddWarehouse
         }
     }
 }
-

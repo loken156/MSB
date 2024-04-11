@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Domain.Models.Employee;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using Domain.Models.Employee;
+using System;
 
 
 namespace Infrastructure.Repositories.EmployeeRepo

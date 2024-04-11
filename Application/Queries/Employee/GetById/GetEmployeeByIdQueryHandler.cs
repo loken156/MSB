@@ -1,7 +1,7 @@
-﻿using System;
-using Domain.Models.Employee;
+﻿using Domain.Models.Employee;
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
+using System;
 
 namespace Application.Queries.Employee.GetById
 {
@@ -30,4 +30,3 @@ namespace Application.Queries.Employee.GetById
         }
     }
 }
-

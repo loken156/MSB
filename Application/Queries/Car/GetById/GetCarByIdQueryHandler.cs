@@ -1,8 +1,8 @@
-﻿using System;
-using Domain.Models.Car;
+﻿using Domain.Models.Car;
 using Infrastructure.Database;
 using Infrastructure.Repositories.CarRepo;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Application.Queries.Car.GetById
 {
@@ -23,4 +23,3 @@ namespace Application.Queries.Car.GetById
         }
     }
 }
-
