@@ -15,12 +15,8 @@ namespace Application.Commands.Users.DeleteUser
         {
             try
             {
-                ApplicationUser userToDelete = await _userRepository.GetUserByIdAsync(request.Id) as ApplicationUser;
-
-                if (userToDelete == null)
-                {
-                    throw new InvalidOperationException("No user with the given id was found");
-                }
+                ApplicationUser userToDelete = await _userRepository.GetUserByIdAsync(request.Id) as ApplicationUser
+                                               ?? throw new InvalidOperationException("No user with the given id was found");
 
                 await _userRepository.DeleteUserAsync(request.Id);
 

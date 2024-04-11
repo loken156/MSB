@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Models.Box;
 
 namespace Domain.Models.Shelf
 {
@@ -16,8 +17,9 @@ namespace Domain.Models.Shelf
         public Guid WarehouseId { get; set; }
         public Warehouse.WarehouseModel Warehouse { get; set; }
 
-        // [ForeignKey("BoxID")]
-        // public Guid BoxID { get; set; }
+        [ForeignKey("BoxID")]
+        public Guid BoxID { get; set; }
+        public ICollection<BoxModel> Boxes { get; set; }
         // public Address Address { get; set; }
 
         // [ForeignKey("ItemID")]

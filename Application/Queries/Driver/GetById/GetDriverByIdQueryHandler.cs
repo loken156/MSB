@@ -1,47 +1,41 @@
-﻿using Application.Dto.Driver;
+﻿using Application.Dto.Car;
+using Application.Dto.Driver;
 using Application.Dto.Employee;
-using Application.Dto.Item;
-using Application.Queries.Driver.GetAll;
+using Application.Queries.Driver.GetById;
 using Infrastructure.Repositories.DriverRepo;
-using Infrastructure.Repositories.EmployeeRepo;
-using MediatR;
-using System;
 
-namespace Application.Queries.Driver.GetById
+public class GetDriverByIdQueryHandler
 {
-    public class GetDriverByIdQueryHandler
+    private readonly IDriverRepository _driverRepository;
+
+    public GetDriverByIdQueryHandler(IDriverRepository driverRepository)
     {
-        private readonly IDriverRepository _driverRepository;
+        _driverRepository = driverRepository;
+    }
 
-        public GetDriverByIdQueryHandler(IDriverRepository driverRepository)
+    public async Task<DriverDetailDto> Handle(GetDriverByIdQuery query)
+    {
+        var driver = await _driverRepository.GetDriverByIdAsync(query.DriverId)
+                         ?? throw new Exception($"No driver found with id {query.DriverId}");
+
+        return new DriverDetailDto
         {
-            _driverRepository = driverRepository;
-        }
-
-        public async Task<DriverDetailDto> Handle(GetDriverByIdQuery query)
-        {
-            var driver = await _driverRepository.GetDriverByIdAsync(query.DriverId);
-
-            if (driver == null)
+            DriverId = Guid.Parse(driver.Id),
+            LicenseNumber = driver.LicenseNumber,
+            Car = new CarDto
             {
-                return null;
-            }
-
-            return new DriverDetailDto
+                CarId = driver.CurrentCarId,
+                // Map other properties of CarDto here
+            },
+            Employee = new EmployeeDto
             {
-                DriverId = driver.DriverId,
-                EmployeeId = driver.EmployeeId,
-                Employee = new EmployeeDto
-                {
-                    EmployeeId = driver.Employee.EmployeeId,
-                    Email = driver.Employee.Email,
-                    Password = driver.Employee.Password,
-                    FirstName = driver.Employee.FirstName,
-                    LastName = driver.Employee.LastName,
-                    Role = driver.Employee.Role
-                }
-            };
-        }
-
+                EmployeeId = Guid.Parse(driver.Id),
+                Email = driver.Email,
+                FirstName = driver.FirstName,
+                LastName = driver.LastName,
+                // Map other properties of EmployeeDto here
+            },
+            // Map other properties of DriverDetailDto here
+        };
     }
 }

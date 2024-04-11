@@ -1,6 +1,8 @@
 ﻿using Application.Commands.Shelf.AddShelf;
 using Application.Commands.Shelf.DeleteShelf;
 using Application.Commands.Shelf.UpdateShelf;
+using Application.Dto.AddShelf;
+using Application.Dto.Box;
 using Application.Dto.Shelf;
 using Application.Queries.Shelf.GetAll;
 using Application.Queries.Shelf.GetByID;
@@ -25,9 +27,8 @@ namespace API.Controllers.Shelf
             _shelfValidations = shelfValidations;
         }
 
-        [HttpPost]
-        [Route("Add Shelf")]
-        public async Task<ActionResult<ShelfDto>> AddShelf(AddShelfCommand command)
+        [HttpPost("Add Shelf")]
+        public async Task<ActionResult<ShelfDto>> AddShelf([FromBody] AddShelfAndBoxesDto requestData)
         {
             _logger.LogInformation("Adding a new shelf with command: {Command}", command);
             var validationResult = _shelfValidations.Validate(command.NewShelf);
@@ -58,6 +59,8 @@ namespace API.Controllers.Shelf
             }
 
         }
+
+
 
         [HttpGet]
         [Route("Get All Shelves")]

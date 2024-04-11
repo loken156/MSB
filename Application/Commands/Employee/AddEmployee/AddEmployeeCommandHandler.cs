@@ -1,25 +1,37 @@
 ﻿using Domain.Models.Employee;
+using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
 
 namespace Application.Commands.Employee.AddEmployee
 {
     public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommand, EmployeeModel>
     {
+        private readonly IEmployeeRepository _employeeRepository;
+        public AddEmployeeCommandHandler(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+        }
+
         public async Task<EmployeeModel> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 EmployeeModel employeeToCreate = new()
                 {
-                    EmployeeId = Guid.NewGuid(),
                     FirstName = request.NewEmployee.FirstName,
                     LastName = request.NewEmployee.LastName,
                     Email = request.NewEmployee.Email,
-                    Role = request.NewEmployee.Role,
-                    Password = request.NewEmployee.Password,
-                    PhoneNumber = request.NewEmployee.PhoneNumber,
-                    JobTitle = request.NewEmployee.JobTitle
+                    // Initialize other properties as needed
                 };
+
+                // Save the new employee to the database
+                var result = await _employeeRepository.CreateEmployeeAsync(employeeToCreate);
+
+                if (result == null)
+                {
+                    throw new Exception("Failed to save the new employee to the database.");
+                }
+
                 return employeeToCreate;
             }
             catch (Exception ex)
@@ -28,5 +40,7 @@ namespace Application.Commands.Employee.AddEmployee
                 throw newException;
             }
         }
+
+
     }
 }

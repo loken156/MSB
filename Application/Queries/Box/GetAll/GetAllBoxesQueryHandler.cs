@@ -1,4 +1,4 @@
-﻿using Domain.Models.BoxModel;
+﻿using Domain.Models.Box;
 using Infrastructure.Repositories.BoxRepo;
 using MediatR;
 

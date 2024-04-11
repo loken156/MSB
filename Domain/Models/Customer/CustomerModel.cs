@@ -1,10 +1,10 @@
 ﻿using Domain.Interfaces;
 using Domain.Models.Address;
-using Domain.Models.Warehouse;
+using Domain.Models.Order;
 
-namespace Domain.Models.Employee
+namespace Domain.Models.Customer
 {
-    public class EmployeeModel : IAppUser
+    public class CustomerModel : IAppUser
     {
         public string Id { get; set; }
         public string UserName { get; set; }
@@ -13,10 +13,8 @@ namespace Domain.Models.Employee
         public string LastName { get; set; }
         public ICollection<AddressModel> Addresses { get; set; }
         public string Role { get; set; }
-        public string Department { get; set; }
-        public string Position { get; set; }
-        public DateTime HireDate { get; set; }
-        public Guid WarehouseId { get; set; }
-        public WarehouseModel Warehouse { get; set; }
+        public ICollection<OrderModel> Orders { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string MembershipLevel { get; set; }
     }
 }

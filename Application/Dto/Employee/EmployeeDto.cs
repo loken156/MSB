@@ -1,25 +1,23 @@
-using Domain.Models.Driver;
+using Application.Dto.Driver;
+using Domain.Models.Warehouse;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Models.Driver;
 
 namespace Application.Dto.Employee
 {
     public class EmployeeDto
     {
-        [Required] public Guid EmployeeId { get; set; }
-        [Required] public string Email { get; set; }
-        [Required] public string Password { get; set; }
-        [Required] public string FirstName { get; set; }
-        [Required] public string LastName { get; set; }
-        [Required] public string Role { get; set; }
-        [Required] public string PhoneNumber { get; set; }
-        [Required] public string JobTitle { get; set; }
-
-
-        //public ICollection<WareHouseModel> WareHouses { get; set; }
-        //public ICollection<AddressModel> Addresses { get; set; }
-        public ICollection<DriverModel> Drivers { get; set; }
-
+        [Required] public string Email { get; set; } = string.Empty;
+        [Required] public string Password { get; set; } = string.Empty;
+        [Required] public string FirstName { get; set; } = string.Empty;
+        [Required] public string LastName { get; set; } = string.Empty;
+        [Required] public List<string> Roles { get; set; } = new List<string>();
+        [Required] public string Department { get; set; }
+        [Required] public string Position { get; set; }
+        [Required] public DateTime HireDate { get; set; }
+        [Required] public Guid WarehouseId { get; set; }
+        public WarehouseModel Warehouse { get; set; }
+        public DriverDto Driver { get; set; }
 
     }
 }

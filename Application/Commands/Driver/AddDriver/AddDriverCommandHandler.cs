@@ -14,8 +14,7 @@ namespace Application.Commands.Driver.AddDriver
         {
             var driver = new DriverModel
             {
-                DriverId = command.DriverId,
-                EmployeeId = command.EmployeeId,
+                Id = command.DriverId.ToString(),
                 // Initialize other properties as needed
             };
             _driverRepository.AddDriver(driver);

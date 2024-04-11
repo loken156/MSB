@@ -12,9 +12,9 @@ namespace Application.Dto.Order
         public string? OrderStatus { get; set; }
         [Required] public string UserId { get; set; }
         public UserDto User { get; set; }
-        [Required] public Guid CarId { get; set; } // Commented out to avoid error
+        [Required] public Guid CarId { get; set; }
         public Guid RepairId { get; set; }
-        // [Required] public int WarehouseId { get; set; } // Commented out to avoid error
+        [Required] public Guid WarehouseId { get; set; }
         // [Required] public int AdressId { get; set; } // Commented out to avoid error
         public string RepairNotes { get; set; } = "No notes";
     }

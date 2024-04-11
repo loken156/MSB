@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Car;
+using Domain.Models.Driver;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,13 +23,14 @@ namespace Infrastructure.Repositories.CarRepo
 
         public async Task<IEnumerable<CarModel>> GetAllCars()
         {
-            return await _database.Cars.Include(c => c.Drivers).ToListAsync();
+            return await _database.Cars.Include(c => c.Driver).ToListAsync();
         }
 
-        public async Task<CarModel> GetCarById(Guid carId)
+        public async Task<CarModel?> GetCarById(Guid carId)
         {
-            return await _database.Cars.Include(c => c.Drivers).FirstOrDefaultAsync(c => c.CarId == carId);
+            return await _database.Cars.Include(c => c.Driver).FirstOrDefaultAsync(c => c.CarId == carId);
         }
+
 
         public async Task UpdateCar(CarModel car)
         {
@@ -41,6 +43,21 @@ namespace Infrastructure.Repositories.CarRepo
             _database.Cars.Remove(car);
             await _database.SaveChangesAsync();
         }
+
+        public async Task AssignDriverToCar(CarModel car, DriverModel driver)
+        {
+            car.DriverId = Guid.Parse(driver.Id);
+            _database.Cars.Update(car);
+            await _database.SaveChangesAsync();
+        }
+
+        public async Task RemoveDriverFromCar(CarModel car)
+        {
+            car.DriverId = null;
+            _database.Cars.Update(car);
+            await _database.SaveChangesAsync();
+        }
+
     }
 
 }

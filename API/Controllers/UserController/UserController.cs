@@ -3,6 +3,7 @@ using Application.Commands.Users.UpdateUser;
 using Application.Dto.UpdateUserInfo;
 using Application.Queries.User.GetAll;
 using Application.Queries.User.GetById;
+using Domain.Interfaces;
 using Infrastructure.Repositories.UserRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,14 @@ namespace API.Controllers.UserController
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IUserRepository userRepository)
+        public UserController(IMediator mediator, IConfiguration configuration, IUserRepository userRepository, IUserService userService)
         {
             _configuration = configuration;
             _mediator = mediator;
             _userRepository = userRepository;
+            _userService = userService;
         }
         //------------------------------------------------------------------------------------
 
@@ -50,7 +53,7 @@ namespace API.Controllers.UserController
         //------------------------------------------------------------------------------------
         [HttpPut]
         [Route("Update User")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto updatedUserInfoDto, string updatedUserId)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto updatedUserInfoDto, [FromQuery] string updatedUserId)
         {
             try
             {
@@ -74,6 +77,7 @@ namespace API.Controllers.UserController
             }
         }
 
+
         //------------------------------------------------------------------------------------
 
         [HttpDelete("Delete User by {id}")]
@@ -88,5 +92,17 @@ namespace API.Controllers.UserController
             return NotFound();
         }
         //------------------------------------------------------------------------------------
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(string userId, string currentPassword, string newPassword)
+        {
+            var result = await _userService.ChangePasswordAsync(userId, currentPassword, newPassword);
+            if (result.Succeeded)
+            {
+                return Ok("Password changed successfully");
+            }
+
+            return BadRequest(result.Errors);
+        }
     }
 }

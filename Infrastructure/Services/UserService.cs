@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces;
+using Domain.Models.Results;
 using Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -17,10 +18,25 @@ namespace Infrastructure.Services
             var user = await _userManager.FindByIdAsync(userId);
             return user as IAppUser;
         }
-        public async Task<bool> ChangePasswordAsync(IAppUser user, string currentPassword, string newPassword)
+        public async Task<PasswordChangeResult> ChangePasswordAsync(string userId, string currentPassword, string newPassword)
         {
-            var result = await _userManager.ChangePasswordAsync((ApplicationUser)user, currentPassword, newPassword);
-            return result.Succeeded;
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new PasswordChangeResult
+                {
+                    Succeeded = false,
+                    Errors = new[] { "User not found" }
+                };
+            }
+
+            var identityResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+            return new PasswordChangeResult
+            {
+                Succeeded = identityResult.Succeeded,
+                Errors = identityResult.Errors.Select(e => e.Description)
+            };
         }
     }
 }
