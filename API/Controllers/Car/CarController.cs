@@ -166,7 +166,6 @@ namespace API.Controllers.Car
             return Ok("Order successfully assigned to the driver.");
         }
 
-
         private CarModel MapToCarModel(CarDto carDto)
         {
             return new CarModel
