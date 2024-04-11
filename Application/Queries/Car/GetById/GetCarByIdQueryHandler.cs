@@ -1,8 +1,6 @@
-﻿using System;
-using Domain.Models.Car;
+﻿using Domain.Models.Car;
 using Infrastructure.Database;
 using Infrastructure.Repositories.CarRepo;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.Car.GetById
 {
@@ -19,8 +17,10 @@ namespace Application.Queries.Car.GetById
 
         public async Task<CarModel> Handle(GetCarByIdQuery query)
         {
-            return await _database.Cars.FindAsync(query.CarId);
+            return await _database.Cars.FindAsync(query.CarId)
+                   ?? throw new Exception($"No car found with id {query.CarId}");
         }
+
     }
 }
 

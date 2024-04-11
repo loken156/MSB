@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\User\**" />
+    <EmbeddedResource Remove="Models\User\**" />
+    <None Remove="Models\User\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\Driver\" />
     <Folder Include="Models\Employee\" />
     <Folder Include="Models\Car\" />
-    <Folder Include="Models\User\" />
   </ItemGroup>
 
   <ItemGroup>

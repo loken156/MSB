@@ -1,13 +1,16 @@
 ﻿using Application.Commands.Order.AddOrder;
 using Application.Commands.Order.DeleteOrder;
 using Application.Commands.Order.UpdateOrder;
+using Application.Commands.Shelf.AddShelf;
 using Application.Dto.Order;
+using Application.Dto.Shelf;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace API.Controllers.Order
 {
@@ -25,8 +28,9 @@ namespace API.Controllers.Order
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("Add Order")]
-        public async Task<ActionResult<OrderDto>> AddOrder(AddOrderCommand command)
+        public async Task<ActionResult<OrderDto>> AddOrder(OrderDto orderdto, [FromQuery] Guid warehouseId)
         {
+            var command = new AddOrderCommand(orderdto, warehouseId);
             var order = await _mediator.Send(command);
             var orderDto = new OrderDto
             {
@@ -35,6 +39,7 @@ namespace API.Controllers.Order
                 TotalCost = order.TotalCost,
                 OrderStatus = order.OrderStatus,
                 UserId = order.UserId,
+                WarehouseId = order.WarehouseId,
                 RepairNotes = order.RepairNotes
             };
             return CreatedAtAction(nameof(GetOrderById), new { id = orderDto.OrderId }, orderDto);

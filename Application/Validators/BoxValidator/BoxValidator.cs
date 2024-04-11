@@ -1,4 +1,4 @@
-﻿using Domain.Models.BoxModel;
+﻿using Domain.Models.Box;
 using FluentValidation;
 
 namespace Application.Validators.BoxValidator

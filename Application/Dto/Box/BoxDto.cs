@@ -15,10 +15,7 @@ namespace Application.Dto.Box
         [ForeignKey("OrderId")]
         [Required] public OrderModel Order { get; set; }
         [Required] public string Size { get; set; }
-
-
-
-
+        public Guid ShelfId { get; set; }
 
     }
 }

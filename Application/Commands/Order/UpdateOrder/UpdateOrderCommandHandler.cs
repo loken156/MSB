@@ -15,17 +15,26 @@ namespace Application.Commands.Order.UpdateOrder
 
         public async Task<OrderModel> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
-            OrderModel orderToUpdate = new OrderModel
-            {
-                OrderId = request.Order.OrderId,
-                OrderDate = request.Order.OrderDate,
-                TotalCost = request.Order.TotalCost,
-                OrderStatus = request.Order.OrderStatus,
-                UserId = request.Order.UserId,
-                RepairNotes = request.Order.RepairNotes
-            };
+            // Retrieve the existing order from the database
+            var orderToUpdate = await _orderRepository.GetOrderByIdAsync(request.Order.OrderId);
 
+            if (orderToUpdate == null)
+            {
+                // Handle the case where the order doesn't exist
+                // This might involve throwing an exception, returning null, or something else
+                throw new Exception($"Order with ID {request.Order.OrderId} not found");
+            }
+
+            // Update the properties of the order
+            orderToUpdate.OrderDate = request.Order.OrderDate;
+            orderToUpdate.TotalCost = request.Order.TotalCost;
+            orderToUpdate.OrderStatus = request.Order.OrderStatus;
+            orderToUpdate.UserId = request.Order.UserId;
+            orderToUpdate.RepairNotes = request.Order.RepairNotes;
+
+            // Save the updated order to the database
             return await _orderRepository.UpdateOrderAsync(orderToUpdate);
         }
+
     }
 }
