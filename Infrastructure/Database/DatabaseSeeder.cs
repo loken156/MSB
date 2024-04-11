@@ -1,5 +1,5 @@
 ﻿using Domain.Models.Address;
-using Domain.Models.BoxModel;
+using Domain.Models.Box;
 using Domain.Models.Car;
 using Domain.Models.Order;
 using Domain.Models.Shelf;

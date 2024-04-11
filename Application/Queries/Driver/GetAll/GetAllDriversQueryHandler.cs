@@ -14,9 +14,9 @@ namespace Application.Queries.Driver.GetAll
             _driverRepository = driverRepository;
         }
 
-        public IEnumerable<DriverDetailDto> Handle(GetAllDriversQuery query)
+        public async Task<IEnumerable<DriverDetailDto>> Handle(GetAllDriversQuery query)
         {
-            var drivers = _driverRepository.GetAllDrivers();
+            var drivers = await _driverRepository.GetAllDrivers();
 
             var driverDtos = drivers.Select(driver => new DriverDetailDto
             {

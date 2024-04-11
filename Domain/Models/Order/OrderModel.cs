@@ -24,7 +24,7 @@ namespace Domain.Models.Order
         //public Repair.RepairDto Repair { get; set; }
 
         [ForeignKey("WarehouseId")]
-        public int WarehouseId { get; set; }
+        public Guid WarehouseId { get; set; }
         public Warehouse.WarehouseModel Warehouse { get; set; }
 
         [ForeignKey("AdressId")] // Return Address

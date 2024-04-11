@@ -1,6 +1,6 @@
 ﻿using Domain.Models.Address;
 using Domain.Models.Admin;
-using Domain.Models.BoxModel;
+using Domain.Models.Box;
 using Domain.Models.Car;
 using Domain.Models.Driver;
 using Domain.Models.Employee;
