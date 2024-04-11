@@ -19,17 +19,17 @@ namespace Domain.Models.Order
         public Guid CarId { get; set; }
         public Car.CarModel Car { get; set; }
 
-        // [ForeignKey("RepairId")]
-        // public int RepairId { get; set; }
-        // public Repair.RepairDto Repair { get; set; }
+        //[ForeignKey("RepairId")]
+        //public int RepairId { get; set; }
+        //public Repair.RepairDto Repair { get; set; }
 
         [ForeignKey("WarehouseId")]
         public Guid WarehouseId { get; set; }
         public Warehouse.WarehouseModel Warehouse { get; set; }
 
-        //[ForeignKey("AdressId")] // Return Address
-        //public int AdressId { get; set; }
-        //public Address.AddressModel Address { get; set; } // Inconsistency in naming/namespace Address(Model)/UserModel
+        [ForeignKey("AdressId")] // Return Address
+        public int AdressId { get; set; }
+        public Address.AddressModel Address { get; set; }
 
         public string RepairNotes { get; set; } = "No notes";
 

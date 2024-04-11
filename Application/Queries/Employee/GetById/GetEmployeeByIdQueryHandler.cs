@@ -1,5 +1,4 @@
-﻿using System;
-using Domain.Models.Employee;
+﻿using Domain.Models.Employee;
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
 

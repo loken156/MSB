@@ -1,23 +1,22 @@
-﻿using System;
+﻿using Domain.Interfaces;
 using Domain.Models.Address;
-using System.ComponentModel.DataAnnotations;
-using Domain.Models.Driver;
+using Domain.Models.Warehouse;
 
 namespace Domain.Models.Employee
 {
-    public class EmployeeModel
+    public class EmployeeModel : IAppUser
     {
-        [Key]
-        public Guid EmployeeId { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-        public string Role { get; set; } = string.Empty;
-
-        //public ICollection<WareHouseModel> WareHouses { get; set; }
-        //public ICollection<AddressModel> Addresses { get; set; }
-        public ICollection<DriverModel> Drivers { get; set; }
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public ICollection<AddressModel> Addresses { get; set; }
+        public string Role { get; set; }
+        public string Department { get; set; }
+        public string Position { get; set; }
+        public DateTime HireDate { get; set; }
+        public Guid WarehouseId { get; set; }
+        public WarehouseModel Warehouse { get; set; }
     }
 }
-

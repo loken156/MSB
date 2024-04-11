@@ -5,12 +5,13 @@ using Application.Dto.Car;
 using Application.Dto.Driver;
 using Application.Queries.Car;
 using Application.Queries.Car.GetById;
+using Domain.Models;
 using Domain.Models.Car;
 using Domain.Models.Driver;
 using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.DriverRepo;
-using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Repositories.OrderRepo;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace API.Controllers.Car
@@ -104,10 +105,7 @@ namespace API.Controllers.Car
             var driverModel = MapToDriverModel(driverDto);
 
             // Add driver to car
-            car.Drivers.Add(driverModel);
-
-            // Update car in repository
-            await _carRepository.UpdateCar(car);
+            await _carRepository.AssignDriverToCar(car, driverModel);
 
             return Ok(car);
         }
@@ -116,13 +114,13 @@ namespace API.Controllers.Car
         public async Task<IActionResult> DeleteDriverFromCar(Guid carId)
         {
             var car = await _carRepository.GetCarById(carId);
-            if (car == null || car.Drivers == null)
+            if (car == null)
             {
                 return NotFound();
             }
 
-            car.Drivers = null;
-            await _carRepository.UpdateCar(car);
+            // Remove driver from car
+            await _carRepository.RemoveDriverFromCar(car);
 
             return NoContent();
         }
@@ -138,14 +136,15 @@ namespace API.Controllers.Car
 
             var driverModel = MapToDriverModel(driverDto);
 
-            car.Drivers = (ICollection<DriverModel>)driverModel;
+            // Change the driver for the car
+            car.DriverId = Guid.Parse(driverModel.Id);
             await _carRepository.UpdateCar(car);
 
             return Ok(car);
         }
 
-        [HttpPost("{driverId}/take-order")]
-        public async Task<IActionResult> TakeOrder(Guid driverId, [FromBody] Guid orderId)
+        [HttpPost("{driverId}/take-order/{startTime}/{endTime}")]
+        public async Task<IActionResult> TakeOrder(Guid driverId, [FromBody] Guid orderId, DateTime startTime, DateTime endTime)
         {
             var driver = await _driverRepository.GetDriverByIdAsync(driverId); ;
             if (driver == null)
@@ -159,10 +158,10 @@ namespace API.Controllers.Car
                 return NotFound("Order not found.");
             }
 
-            // Assign the order to the driver
-            driver.OrderId = orderId;
+            var pickupTimeSlot = new TimeSlot { StartTime = startTime, EndTime = endTime };
 
-            await _driverRepository.UpdateDriver(driver);
+            // Assign the order to the driver
+            await _driverRepository.AssignOrderToDriver(driver, orderId, pickupTimeSlot);
 
             return Ok("Order successfully assigned to the driver.");
         }
@@ -183,9 +182,8 @@ namespace API.Controllers.Car
         {
             return new DriverModel
             {
-                DriverId = driverDto.DriverId,
-                EmployeeId = driverDto.EmployeeId,
-
+                Id = driverDto.DriverId.ToString(),
+                // Initialize other properties as needed
             };
         }
     }
