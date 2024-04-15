@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
 {
-    public class MSB_Database : IdentityDbContext<ApplicationUser>
+    public class MSB_Database : IdentityDbContext<ApplicationUser>, IMSBDatabase
     {
         public MSB_Database(DbContextOptions<MSB_Database> options) : base(options) { }
 

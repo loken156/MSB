@@ -1,15 +1,14 @@
 ﻿using Domain.Models.Car;
-using Infrastructure.Database;
 using Infrastructure.Repositories.CarRepo;
 
 namespace Application.Queries.Car.GetById
 {
     public class GetCarByIdQueryHandler
     {
-        private readonly MSB_Database _database;
+        private readonly IMSBDatabase _database;
         private readonly ICarRepository _carRepository;
 
-        public GetCarByIdQueryHandler(ICarRepository carRepository, MSB_Database database)
+        public GetCarByIdQueryHandler(ICarRepository carRepository, IMSBDatabase database)
         {
             _carRepository = carRepository;
             _database = database;
