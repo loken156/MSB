@@ -28,7 +28,7 @@ namespace API.Controllers.Warehouse
         }
 
         [HttpPost("Add Warehouse")]
-        public async Task<ActionResult<WarehouseDto>> AddWarehouse([FromBody] AddWarehouseCommand command)
+        public async Task<IActionResult> AddWarehouse([FromBody] AddWarehouseCommand command)
         {
             var validationResult = _wareHouseValidations.Validate(command.NewWarehouse); // Validate the DTO inside the command
             if (!validationResult.IsValid)
@@ -65,52 +65,89 @@ namespace API.Controllers.Warehouse
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteWarehouse(Guid id)
         {
-            await _mediator.Send(new DeleteWarehouseCommand(id));
-            return NoContent();
+            try
+            {
+                await _mediator.Send(new DeleteWarehouseCommand(id));
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(e, "Error deleting warehouse with id: {Id}", id);
+                return StatusCode(500, "An error occurred while deleting the warehouse");
+            }
+
         }
 
         [HttpPut("Update Warehouse")]
         public async Task<ActionResult<WarehouseDto>> UpdateWarehouse([FromBody] UpdateWarehouseCommand command)
         {
-            var warehouse = await _mediator.Send(command);
-            var warehouseDto = new WarehouseDto
+            try
             {
-                WarehouseId = warehouse.WarehouseId,
-                WarehouseName = warehouse.WarehouseName
-            };
-            return Ok(warehouseDto);
+                var warehouse = await _mediator.Send(command);
+                var warehouseDto = new WarehouseDto
+                {
+                    WarehouseId = warehouse.WarehouseId,
+                    WarehouseName = warehouse.WarehouseName
+                };
+                return Ok(warehouseDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating warehouse with command: {Command}", command);
+                return StatusCode(500, "An error occurred while updating the warehouse");
+            }
+            
         }
 
         [HttpGet("Get All WareHouses")]
         public async Task<ActionResult<IEnumerable<WarehouseDto>>> GetAllWarehouses()
         {
-            var query = new GetAllWarehousesQuery();
-            var warehouses = await _mediator.Send(query);
-            var warehouseDtos = warehouses.Select(warehouse => new WarehouseDto
+            try
             {
-                WarehouseId = warehouse.WarehouseId,
-                WarehouseName = warehouse.WarehouseName
-            });
-            return Ok(warehouseDtos);
+                var query = new GetAllWarehousesQuery();
+                var warehouses = await _mediator.Send(query);
+                var warehouseDtos = warehouses.Select(warehouse => new WarehouseDto
+                {
+                    WarehouseId = warehouse.WarehouseId,
+                    WarehouseName = warehouse.WarehouseName
+                });
+                return Ok(warehouseDtos);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while getting all warehouses");
+                return StatusCode(500, "An error occurred while getting all warehouses");
+            }
+
         }
 
         [HttpGet("Get Warehouse By {id}")]
         public async Task<ActionResult<WarehouseDto>> GetWarehouseById(Guid id)
         {
-            var query = new GetWarehouseByIdQuery(id);
-            var warehouse = await _mediator.Send(query);
-
-            if (warehouse == null)
+            try
             {
-                return NotFound();
+                var query = new GetWarehouseByIdQuery(id);
+                var warehouse = await _mediator.Send(query);
+
+                if (warehouse == null)
+                {
+                    return NotFound();
+                }
+
+                var warehouseDto = new WarehouseDto
+                {
+                    WarehouseId = warehouse.WarehouseId,
+                    WarehouseName = warehouse.WarehouseName
+                };
+                return Ok(warehouseDto);
             }
-
-            var warehouseDto = new WarehouseDto
+            catch (Exception ex)
             {
-                WarehouseId = warehouse.WarehouseId,
-                WarehouseName = warehouse.WarehouseName
-            };
-            return Ok(warehouseDto);
+                _logger.LogError(ex, "Error while getting warehouse by id");
+                return StatusCode(500, "An error occurred while getting warehouse by id");
+            }
+            
         }
     }
 }

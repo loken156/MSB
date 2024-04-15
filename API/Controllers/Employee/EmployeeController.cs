@@ -1,7 +1,10 @@
-﻿using Application.Dto.Employee;
+﻿using Application.Commands.Employee.AddEmployee;
+using Application.Dto.Employee;
+using Application.Validators.EmployeeValidator;
 using Domain.Models.Employee;
 using Infrastructure.Entities;
 using Infrastructure.Repositories.EmployeeRepo;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +17,18 @@ namespace API.Controllers.Employee
         private readonly IEmployeeRepository _employeeRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IMediator _mediator;
+        private readonly ILogger<EmployeeController> _logger;
+        private readonly EmployeeValidations _employeeValidations;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, Mediator mediator, ILogger<EmployeeController> logger, EmployeeValidations validations)
         {
             _employeeRepository = employeeRepository;
             _userManager = userManager;
             _roleManager = roleManager;
+            _mediator = mediator;
+            _logger = logger;
+            _employeeValidations = validations;
         }
 
         // GET: api/Employee
@@ -46,40 +55,29 @@ namespace API.Controllers.Employee
         // POST: api/Employee
         [HttpPost]
         [Route("Add Employee")]
-        public async Task<ActionResult<EmployeeDto>> CreateEmployee(EmployeeDto employeeDto)
+        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeDto employeeDto)
         {
-            var employee = new EmployeeModel
+            _logger.LogInformation("Starting to create new employee: {Email}", employeeDto.Email);
+
+            try
             {
-                Id = employeeDto.EmployeeId.ToString(),
-                UserName = employeeDto.Email,
-                Email = employeeDto.Email,
-                FirstName = employeeDto.FirstName,
-                LastName = employeeDto.LastName,
-                Role = "Employee",
-                Department = employeeDto.Department,
-                Position = employeeDto.Position,
-                HireDate = employeeDto.HireDate,
-                WarehouseId = employeeDto.WarehouseId
-            };
+                var command = new AddEmployeeCommand(employeeDto);
+                var createdEmployee = await _mediator.Send(command);
 
-            var createdEmployee = await _employeeRepository.CreateEmployeeAsync(employee);
+                if (createdEmployee == null)
+                {
+                    _logger.LogWarning("Failed to create employee: {Email}", employeeDto.Email);
+                    return BadRequest(new { Message = "Failed to create employee" });
+                }
 
-            var user = await _userManager.FindByIdAsync(createdEmployee.Id);
-
-            if (user == null)
-            {
-                return NotFound(new { Message = "User not found" });
+                _logger.LogInformation("Employee created successfully: {Id}", createdEmployee.Id);
+                return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.Id }, createdEmployee);
             }
-
-            // Assign the "Employee" role to the new employee
-            var result = await _userManager.AddToRoleAsync(user, "Employee");
-
-            if (!result.Succeeded)
+            catch (Exception ex)
             {
-                return BadRequest(result.Errors);
+                _logger.LogError(ex, "Error creating employee: {Email}", employeeDto.Email);
+                return StatusCode(500, new { Message = "Internal server error" });
             }
-
-            return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.Id }, createdEmployee);
         }
 
 

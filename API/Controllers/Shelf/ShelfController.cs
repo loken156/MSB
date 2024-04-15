@@ -28,7 +28,7 @@ namespace API.Controllers.Shelf
         }
 
         [HttpPost("Add Shelf")]
-        public async Task<ActionResult<ShelfDto>> AddShelf([FromBody] AddShelfAndBoxesDto requestData)
+        public async Task<IActionResult> AddShelf([FromBody] AddShelfCommand command)
         {
             _logger.LogInformation("Adding a new shelf with command: {Command}", command);
             var validationResult = _shelfValidations.Validate(command.NewShelf);
