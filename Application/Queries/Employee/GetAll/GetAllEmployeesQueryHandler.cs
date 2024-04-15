@@ -1,6 +1,4 @@
-﻿using System;
-using Domain.Models.Employee;
-using Infrastructure.Database;
+﻿using Domain.Models.Employee;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +6,9 @@ namespace Application.Queries.Employee.GetAll
 {
     public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery, List<EmployeeModel>>
     {
-        private readonly MSB_Database _database;
+        private readonly IMSBDatabase _database;
 
-        public GetAllEmployeesQueryHandler(MSB_Database database)
+        public GetAllEmployeesQueryHandler(IMSBDatabase database)
         {
             _database = database;
         }
