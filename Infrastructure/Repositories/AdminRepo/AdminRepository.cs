@@ -19,7 +19,7 @@ public class AdminRepository : IAdminRepository
 
     public async Task<AdminModel> GetAdminAsync(Guid id)
     {
-        return await _database.Admins.FindAsync(id);
+        return await _database.Admins.FindAsync(id.ToString());
     }
 
     public async Task<AdminModel> CreateAdminAsync(AdminModel admin)
@@ -38,7 +38,7 @@ public class AdminRepository : IAdminRepository
 
     public async Task<bool> DeleteAdminAsync(Guid id)
     {
-        var admin = await _database.Admins.FindAsync(id);
+        var admin = await _database.Admins.FindAsync(id.ToString());
         if (admin == null)
         {
             return false;

@@ -12,7 +12,7 @@ namespace Domain.Models.Admin
         public string LastName { get; set; }
         public ICollection<AddressModel> Addresses { get; set; }
         public string Role { get; set; }
-        public ICollection<string> Permissions { get; set; }
+        public IList<string> Permissions { get; set; }
 
         // Example Permissions:
         // 1.	ManageUsers: This permission allows the admin to create, update, delete, and view users.
