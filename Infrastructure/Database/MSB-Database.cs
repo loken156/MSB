@@ -41,6 +41,8 @@ namespace Infrastructure.Database
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<DriverModel>().OwnsMany(d => d.Availability);
+
             // DatabaseSeeder.Seed(modelBuilder); // Uncomment this line to seed the database with mock data
 
             base.OnModelCreating(modelBuilder);
