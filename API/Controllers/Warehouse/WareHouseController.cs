@@ -96,7 +96,7 @@ namespace API.Controllers.Warehouse
                 _logger.LogError(ex, "Error updating warehouse with command: {Command}", command);
                 return StatusCode(500, "An error occurred while updating the warehouse");
             }
-            
+
         }
 
         [HttpGet("Get All WareHouses")]
@@ -147,7 +147,7 @@ namespace API.Controllers.Warehouse
                 _logger.LogError(ex, "Error while getting warehouse by id");
                 return StatusCode(500, "An error occurred while getting warehouse by id");
             }
-            
+
         }
     }
 }

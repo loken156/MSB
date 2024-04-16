@@ -23,7 +23,7 @@ namespace Application
             services.AddTransient<IValidator<AddressDto>, AddressValidations>();
             services.AddTransient<IValidator<AddShelfDto>, ShelfValidations>();
             services.AddTransient<IValidator<EmployeeDto>, EmployeeValidations>();
-            
+
 
 
             services.AddTransient<IValidator<LogInDto>, LogInDtoValidator>();

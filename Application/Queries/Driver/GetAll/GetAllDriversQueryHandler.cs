@@ -29,13 +29,13 @@ namespace Application.Queries.Driver.GetAll
                 },
                 Employee = new EmployeeDto
                 {
-                    
+
                     Email = driver.Email,
                     FirstName = driver.FirstName,
                     LastName = driver.LastName,
-                    
+
                 },
-               
+
             });
 
             return driverDtos;

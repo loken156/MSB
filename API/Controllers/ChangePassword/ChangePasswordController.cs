@@ -13,7 +13,7 @@ namespace API.Controllers.ChangePassword
     public class ChangePasswordController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<ChangePasswordController> _logger; 
+        private readonly ILogger<ChangePasswordController> _logger;
 
         public ChangePasswordController(IMediator mediator, Logger<ChangePasswordController> logger)
         {
@@ -45,7 +45,7 @@ namespace API.Controllers.ChangePassword
             }
 
 
-            
+
         }
     }
 }

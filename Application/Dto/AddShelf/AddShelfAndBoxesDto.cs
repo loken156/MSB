@@ -1,5 +1,5 @@
-﻿using System;
-using Application.Dto.Box;
+﻿using Application.Dto.Box;
+using System;
 
 namespace Application.Dto.AddShelf
 {
@@ -10,4 +10,3 @@ namespace Application.Dto.AddShelf
         public IEnumerable<BoxDto> Boxes { get; set; }
     }
 }
-

@@ -92,7 +92,7 @@ namespace API.Controllers.Address
         [HttpGet("Get Address By {id}")]
         public async Task<ActionResult<AddressDto>> GetAddressById(Guid id)
         {
-            try 
+            try
             {
                 var query = new GetAddressByIdQuery(id);
                 var address = await _mediator.Send(query);

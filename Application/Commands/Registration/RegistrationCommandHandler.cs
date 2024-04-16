@@ -23,7 +23,7 @@ namespace Application.Commands.Registration
             _signInManager = signInManager;
         }
 
-        public async Task<IdentityResult> Handle(RegistrationCommand request, CancellationToken cancellationToken )
+        public async Task<IdentityResult> Handle(RegistrationCommand request, CancellationToken cancellationToken)
         {
             var user = new ApplicationUser
             {
@@ -57,8 +57,8 @@ namespace Application.Commands.Registration
             }
 
             return result;
-        
-        } 
+
+        }
 
 
 

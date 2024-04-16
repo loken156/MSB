@@ -115,7 +115,7 @@ namespace API.Controllers.Car
 
 
 
-            
+
         }
 
         [HttpPut("{carId}")]
@@ -133,7 +133,7 @@ namespace API.Controllers.Car
                 _logger.LogError(ex, "Error updating car with id: {id}", carId);
                 return StatusCode(500, "An error occurred while updating the car");
             }
-          
+
         }
 
 
@@ -151,7 +151,7 @@ namespace API.Controllers.Car
                 _logger.LogError(ex, "Error deleting car with id: {id}", carId);
                 return StatusCode(500, "An error occurred while deleting the car");
             }
-            
+
         }
 
         [HttpPost("{carId}/drivers")]

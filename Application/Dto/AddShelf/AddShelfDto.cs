@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Application.Dto.Box;
+﻿using Application.Dto.Box;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.AddShelf
 {

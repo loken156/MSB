@@ -12,7 +12,7 @@ namespace API.Controllers
     {
         private readonly IAdminRepository _adminRepository;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger <AdminController> _logger;
+        private readonly ILogger<AdminController> _logger;
 
 
         public AdminController(IAdminRepository adminRepository, UserManager<IdentityUser> userManager, ILogger<AdminController> logger)
@@ -26,7 +26,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AdminModel>>> GetAdmins()
         {
-            try 
+            try
             {
                 var admins = await _adminRepository.GetAdminsAsync();
                 return Ok(admins);
@@ -70,34 +70,34 @@ namespace API.Controllers
             try
             {
                 var admin = new AdminModel
-            {
-                Id = adminDto.AdminId.ToString(),
-                UserName = adminDto.Email,
-                Email = adminDto.Email,
-                FirstName = adminDto.FirstName,
-                LastName = adminDto.LastName,
-                Role = "Admin",
-                Permissions = adminDto.Permissions
-            };
+                {
+                    Id = adminDto.AdminId.ToString(),
+                    UserName = adminDto.Email,
+                    Email = adminDto.Email,
+                    FirstName = adminDto.FirstName,
+                    LastName = adminDto.LastName,
+                    Role = "Admin",
+                    Permissions = adminDto.Permissions
+                };
 
-            var createdAdmin = await _adminRepository.CreateAdminAsync(admin);
+                var createdAdmin = await _adminRepository.CreateAdminAsync(admin);
 
-            var user = await _userManager.FindByIdAsync(createdAdmin.Id);
+                var user = await _userManager.FindByIdAsync(createdAdmin.Id);
 
-            if (user == null)
-            {
-                return NotFound(new { Message = "User not found" });
-            }
+                if (user == null)
+                {
+                    return NotFound(new { Message = "User not found" });
+                }
 
-            // Assign the "Admin" role to the new admin
-            var result = await _userManager.AddToRoleAsync(user, "Admin");
+                // Assign the "Admin" role to the new admin
+                var result = await _userManager.AddToRoleAsync(user, "Admin");
 
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
 
-            return CreatedAtAction(nameof(GetAdmin), new { id = createdAdmin.Id }, createdAdmin);
+                return CreatedAtAction(nameof(GetAdmin), new { id = createdAdmin.Id }, createdAdmin);
 
             }
             catch (Exception e)
@@ -108,7 +108,7 @@ namespace API.Controllers
 
 
 
-            
+
         }
 
         // PUT: api/Admin/{id}
