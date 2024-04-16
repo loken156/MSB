@@ -29,6 +29,10 @@
     <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
   </ItemGroup>
 
+  <Target Name="FormatCode" BeforeTargets="BeforeBuild">
+   <Exec Command="dotnet format" />
+  </Target>
+
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />

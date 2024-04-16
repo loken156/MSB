@@ -11,4 +11,3 @@ namespace Application.Queries.Driver.GetById
         }
     }
 }
-

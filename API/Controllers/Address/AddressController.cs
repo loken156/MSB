@@ -22,86 +22,138 @@ namespace API.Controllers.Address
         private readonly IConfiguration _configuration;
         private readonly AddressRepository _addressRepository;
         private readonly AddressValidations _addressValidations;
+        private readonly ILogger _logger;
 
-        public AddressController(IMediator mediator, IConfiguration configuration, AddressRepository addressRepository, AddressValidations validationRules)
+        public AddressController(IMediator mediator, IConfiguration configuration, AddressRepository addressRepository, AddressValidations validationRules, ILogger logger)
         {
             _mediator = mediator;
             _configuration = configuration;
             _addressRepository = addressRepository;
             _addressValidations = validationRules;
+            _logger = logger;
         }
 
         [HttpPost]
         [Route("Add Address")]
         public async Task<ActionResult<AddressDto>> AddAddress(AddAddressCommand command)
         {
-            var adressDto = new AddressDto
+
+            try
             {
-                StreetName = command.NewAddress.StreetName,
-                StreetNumber = command.NewAddress.StreetNumber,
-                Apartment = command.NewAddress.Apartment,
-                ZipCode = command.NewAddress.ZipCode,
-                Floor = command.NewAddress.Floor,
-                City = command.NewAddress.City,
-                State = command.NewAddress.State,
-                Country = command.NewAddress.Country,
-            };
+                var adressDto = new AddressDto
+                {
+                    StreetName = command.NewAddress.StreetName,
+                    StreetNumber = command.NewAddress.StreetNumber,
+                    Apartment = command.NewAddress.Apartment,
+                    ZipCode = command.NewAddress.ZipCode,
+                    Floor = command.NewAddress.Floor,
+                    City = command.NewAddress.City,
+                    State = command.NewAddress.State,
+                    Country = command.NewAddress.Country,
+                };
 
 
-            var validationResult = _addressValidations.Validate(adressDto);
-            if (!validationResult.IsValid)
+                var validationResult = _addressValidations.Validate(adressDto);
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
+
+                var address = await _mediator.Send(command);
+                return CreatedAtAction(nameof(GetAddressById), new { id = address.AddressId }, address);
+            }
+            catch (Exception ex)
             {
-                return BadRequest(validationResult.Errors);
+                _logger.LogError(ex, "Error while adding address");
+                return StatusCode(500, "An error occurred while adding an Address");
             }
 
-            var address = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetAddressById), new { id = address.AddressId }, address);
         }
 
         [HttpGet]
         [Route("Get All Addresses")]
         public async Task<ActionResult<IEnumerable<AddressDto>>> GetAllAddresses()
         {
-            var query = new GetAllAddressesQuery();
-            var addresses = await _mediator.Send(query);
-            return Ok(addresses);
+            try
+            {
+                var query = new GetAllAddressesQuery();
+                var addresses = await _mediator.Send(query);
+                return Ok(addresses);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while getting all addresses");
+                return StatusCode(500, "An error occurred while getting all addresses");
+            }
+
+
         }
 
         [HttpGet("Get Address By {id}")]
         public async Task<ActionResult<AddressDto>> GetAddressById(Guid id)
         {
-            var query = new GetAddressByIdQuery(id);
-            var address = await _mediator.Send(query);
-
-            if (address == null)
+            try
             {
-                return NotFound();
+                var query = new GetAddressByIdQuery(id);
+                var address = await _mediator.Send(query);
+
+                if (address == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(address);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while getting address by id");
+                return StatusCode(500, "An error occurred while getting address by id");
             }
 
-            return Ok(address);
+
         }
 
         [HttpPut("Update Address By {id}")]
         public async Task<IActionResult> UpdateAddress(Guid id, AddressModel address)
         {
-            if (id != address.AddressId)
+            try
             {
-                return BadRequest();
+                if (id != address.AddressId)
+                {
+                    return BadRequest();
+                }
+
+                var command = new UpdateAddressCommand(address);
+                var updatedAddress = await _mediator.Send(command);
+
+                return Ok("Update successful");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating address with id: {id}", id);
+                return StatusCode(500, "An error occurred while updating the address");
             }
 
-            var command = new UpdateAddressCommand(address);
-            var updatedAddress = await _mediator.Send(command);
 
-            return NoContent();
         }
 
         [HttpDelete("Delete Address By {id}")]
         public async Task<IActionResult> DeleteAddress(Guid id)
         {
-            var command = new DeleteAddressCommand(id);
-            await _mediator.Send(command);
+            try
+            {
+                var command = new DeleteAddressCommand(id);
+                await _mediator.Send(command);
 
-            return NoContent();
+                return Ok("Deletion Successful");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting address with id: {id}", id);
+                return StatusCode(500, "An error occurred while deleting the address");
+            }
+
         }
     }
 }

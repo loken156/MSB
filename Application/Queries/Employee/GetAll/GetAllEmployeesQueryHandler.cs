@@ -1,8 +1,8 @@
-﻿using System;
-using Domain.Models.Employee;
+﻿using Domain.Models.Employee;
 using Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Application.Queries.Employee.GetAll
 {
@@ -21,4 +21,3 @@ namespace Application.Queries.Employee.GetAll
         }
     }
 }
-
