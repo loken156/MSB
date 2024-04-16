@@ -72,7 +72,7 @@ namespace API.Controllers.Warehouse
             }
             catch (Exception ex)
             {
-                _logger.LogError(e, "Error deleting warehouse with id: {Id}", id);
+                _logger.LogError(ex, "Error deleting warehouse with id: {Id}", id);
                 return StatusCode(500, "An error occurred while deleting the warehouse");
             }
 

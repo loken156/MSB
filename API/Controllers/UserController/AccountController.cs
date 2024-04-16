@@ -40,31 +40,39 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterDto RegDto)
+        public async Task<IActionResult> Register(RegisterDto regDto)
         {
             try
             {
-                var validationResult = _registerValidator.Validate(RegDto);
+                var validationResult = _registerValidator.Validate(regDto);
                 if (!validationResult.IsValid)
                 {
                     return BadRequest(validationResult.Errors);
                 }
-                var comman = new RegistrationCommand(RegDto);
-                var result = await _mediator.Send(comman);
+
+                // Instantiate the command with RegDto from the method parameter
+                var command = new RegistrationCommand(regDto);
+                var result = await _mediator.Send(command);
+
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User registered: {Email}", RegDto.Email);
+                    _logger.LogInformation("User registered: {Email}", regDto.Email);
                     return Ok(new { Message = "User registered successfully." });
+                }
+                else
+                {
+                    // Log the reasons for failure
+                    _logger.LogWarning("Registration failed: {Email}, Errors: {Errors}", regDto.Email, result.Errors);
+                    return BadRequest(new { Message = "Registration failed.", Errors = result.Errors });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while registering the user: {Email}", RegDto.Email);
+                _logger.LogError(ex, "An error occurred while registering the user: {Email}", regDto.Email);
                 return StatusCode(500, new { Message = "Internal server error." });
             }
-
-            
         }
+
 
         [AllowAnonymous]
         [HttpPost("Login")]

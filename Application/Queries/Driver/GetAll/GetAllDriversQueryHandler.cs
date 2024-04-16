@@ -29,13 +29,13 @@ namespace Application.Queries.Driver.GetAll
                 },
                 Employee = new EmployeeDto
                 {
-                    EmployeeId = Guid.Parse(driver.Id),
+                    
                     Email = driver.Email,
                     FirstName = driver.FirstName,
                     LastName = driver.LastName,
-                    // Map other properties of EmployeeDto here
+                    
                 },
-                // Map other properties of DriverDetailDto here
+               
             });
 
             return driverDtos;
