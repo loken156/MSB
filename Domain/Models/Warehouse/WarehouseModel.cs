@@ -1,5 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Models.Address;
+using Domain.Models.Shelf;
 
 namespace Domain.Models.Warehouse
 {
@@ -9,14 +13,12 @@ namespace Domain.Models.Warehouse
         public Guid WarehouseId { get; set; }
         public string WarehouseName { get; set; } = string.Empty;
 
-        // Commented out to avoid errors
-
-        [ForeignKey("AdressId")] // Return Address
+        // Address relationship
+        [ForeignKey("AddressId")]
         public Guid AddressId { get; set; }
-        public Address.AddressModel Address { get; set; } // Inconsistency in naming/namespace Address(Model)/UserModel
+        public virtual AddressModel Address { get; set; }
 
-        [ForeignKey("ShelfId")] // Return Shelf
-        public Guid ShelfId { get; set; }
-        public Shelf.ShelfModel Shelf { get; set; } // Fix before pushing
+        // Shelves relationship
+        public virtual ICollection<ShelfModel> Shelves { get; set; } = new List<ShelfModel>();
     }
 }

@@ -46,7 +46,7 @@ namespace API.Controllers.Warehouse
                     WarehouseId = warehouseModel.WarehouseId,
                     WarehouseName = warehouseModel.WarehouseName,
                     AddressId = warehouseModel.AddressId, // Assuming this property exists in WarehouseModel
-                    ShelfId = warehouseModel.ShelfId // Assuming this property exists in WarehouseModel
+                   
                 };
 
                 _logger.LogInformation("Warehouse added successfully: {WarehouseName}", warehouseDto.WarehouseName);
