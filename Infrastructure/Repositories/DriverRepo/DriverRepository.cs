@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories.DriverRepo
 
         public void DeleteDriver(Guid id)
         {
-            var driver = _database.Drivers.Find(id);
+            var driver = _database.Drivers.Find(id.ToString());
             if (driver == null)
                 return;
 
