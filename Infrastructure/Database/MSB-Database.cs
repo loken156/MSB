@@ -40,7 +40,20 @@ namespace Infrastructure.Database
                 .WithOne()
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            // Configure one-to-many relationship between ShelfModel and BoxModel
+            modelBuilder.Entity<ShelfModel>()
+                .HasMany(s => s.Boxes) // Shelf has many Boxes
+                .WithOne(b => b.Shelf) // Each Box belongs to one Shelf
+                .HasForeignKey(b => b.ShelfId) // Box holds the foreign key
+                .OnDelete(DeleteBehavior.Cascade); // Optional: Configures cascade delete
 
+            // Example of configuring other relationships
+            modelBuilder.Entity<WarehouseModel>()
+                .HasMany(w => w.Shelves) // Warehouse has many Shelves
+                .WithOne(s => s.Warehouse) // Each Shelf belongs to one Warehouse
+                .HasForeignKey(s => s.WarehouseId); // ForeignKey in ShelfModel
+            
             // DatabaseSeeder.Seed(modelBuilder); // Uncomment this line to seed the database with mock data
 
             base.OnModelCreating(modelBuilder);
