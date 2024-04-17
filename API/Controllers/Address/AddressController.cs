@@ -6,8 +6,7 @@ using Application.Queries.Address.GetAll;
 using Application.Queries.Address.GetByID;
 using Application.Validators.AddressValidator;
 using Domain.Models.Address;
-using FluentValidation;
-using Infrastructure.Repositories.OrderRepo;
+using Infrastructure.Repositories.AddressRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,10 +19,10 @@ namespace API.Controllers.Address
 
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
-        private readonly AddressRepository _addressRepository;
-        private readonly AddressValidations _addressValidations;
+        private readonly IAddressRepository _addressRepository;
+        private readonly IAddressValidations _addressValidations;
 
-        public AddressController(IMediator mediator, IConfiguration configuration, AddressRepository addressRepository, AddressValidations validationRules)
+        public AddressController(IMediator mediator, IConfiguration configuration, IAddressRepository addressRepository, IAddressValidations validationRules)
         {
             _mediator = mediator;
             _configuration = configuration;

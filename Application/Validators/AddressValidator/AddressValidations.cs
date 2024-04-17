@@ -1,14 +1,9 @@
 ﻿using Application.Dto.Adress;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Validators.AddressValidator
 {
-    public class AddressValidations : AbstractValidator<AddressDto>
+    public class AddressValidations : AbstractValidator<AddressDto>, IAddressValidations
     {
         public AddressValidations()
         {
