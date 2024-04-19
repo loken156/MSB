@@ -41,7 +41,7 @@ namespace Infrastructure.Repositories.EmployeeRepo
 
             existingEmployee.FirstName = employee.FirstName;
             existingEmployee.LastName = employee.LastName;
-            existingEmployee.Email = employee.Email;
+            existingEmployee.EmployeeEmail = employee.EmployeeEmail;
 
             // Update the rest of the properties if needed
 

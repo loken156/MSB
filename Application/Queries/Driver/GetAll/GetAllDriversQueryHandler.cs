@@ -30,7 +30,7 @@ namespace Application.Queries.Driver.GetAll
                 Employee = new EmployeeDto
                 {
 
-                    Email = driver.Email,
+                    Email = driver.EmployeeEmail,
                     FirstName = driver.FirstName,
                     LastName = driver.LastName,
 

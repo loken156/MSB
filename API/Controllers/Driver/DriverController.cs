@@ -46,7 +46,7 @@ namespace API.Controllers.Driver
             {
                 Id = driverDto.DriverId.ToString(),
                 UserName = driverDto.EmployeeId.ToString(), // Assuming EmployeeId is used as UserName
-                Email = driverDto.EmployeeId.ToString(), // Assuming EmployeeId is used as Email
+                EmployeeEmail = driverDto.EmployeeId.ToString(), // Assuming EmployeeId is used as EmployeeEmail
                 FirstName = "", // Add appropriate value
                 LastName = "", // Add appropriate value
                 CurrentCarId = driverDto.CarId,
@@ -86,7 +86,7 @@ namespace API.Controllers.Driver
             {
                 Id = driverDto.DriverId.ToString(),
                 UserName = driverDto.EmployeeId.ToString(), // Assuming EmployeeId is used as UserName
-                Email = driverDto.EmployeeId.ToString(), // Assuming EmployeeId is used as Email
+                EmployeeEmail = driverDto.EmployeeId.ToString(), // Assuming EmployeeId is used as EmployeeEmail
                 FirstName = "", // Add appropriate value
                 LastName = "", // Add appropriate value
                 CurrentCarId = driverDto.CarId,

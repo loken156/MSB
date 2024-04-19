@@ -76,7 +76,7 @@ namespace API.Controllers
                 {
                     Id = adminDto.AdminId.ToString(),
                     UserName = adminDto.Email,
-                    Email = adminDto.Email,
+                    EmployeeEmail = adminDto.Email,
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
@@ -105,7 +105,7 @@ namespace API.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error creating admin with email: {Email}", adminDto.Email);
+                _logger.LogError(e, "Error creating admin with email: {EmployeeEmail}", adminDto.Email);
                 return StatusCode(500, "An error occurred while creating the admin");
             }
 
@@ -131,7 +131,7 @@ namespace API.Controllers
                 {
                     Id = adminDto.AdminId.ToString(),
                     UserName = adminDto.Email,
-                    Email = adminDto.Email,
+                    EmployeeEmail = adminDto.Email,
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",

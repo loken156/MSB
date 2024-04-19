@@ -56,19 +56,19 @@ namespace API.Controllers
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User registered: {Email}", regDto.Email);
+                    _logger.LogInformation("User registered: {EmployeeEmail}", regDto.Email);
                     return Ok(new { Message = "User registered successfully." });
                 }
                 else
                 {
                     // Log the reasons for failure
-                    _logger.LogWarning("Registration failed: {Email}, Errors: {Errors}", regDto.Email, result.Errors);
+                    _logger.LogWarning("Registration failed: {EmployeeEmail}, Errors: {Errors}", regDto.Email, result.Errors);
                     return BadRequest(new { Message = "Registration failed.", Errors = result.Errors });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while registering the user: {Email}", regDto.Email);
+                _logger.LogError(ex, "An error occurred while registering the user: {EmployeeEmail}", regDto.Email);
                 return StatusCode(500, new { Message = "Internal server error." });
             }
         }
@@ -88,7 +88,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User logged in: {Email}", model.Email);
+                _logger.LogInformation("User logged in: {EmployeeEmail}", model.Email);
 
                 // Generate JWT
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -118,7 +118,7 @@ namespace API.Controllers
                 return Ok(new { Token = tokenString });
             }
 
-            _logger.LogWarning("Invalid login attempt for user: {Email}", model.Email);
+            _logger.LogWarning("Invalid login attempt for user: {EmployeeEmail}", model.Email);
             return Unauthorized(new { Message = "Invalid login attempt" });
         }
 

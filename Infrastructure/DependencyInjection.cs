@@ -32,7 +32,7 @@ namespace Infrastructure
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IShelfRepository, ShelfRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<RoleManager<IdentityRole>>();
 
             services.AddDbContext<MSB_Database>(options =>

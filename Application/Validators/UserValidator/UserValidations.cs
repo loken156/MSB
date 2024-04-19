@@ -18,8 +18,8 @@ namespace Application.Validators.UserValidator
         {
 
             RuleFor(user => user.Email)
-               .NotEmpty().WithMessage("Email is required.")
-               .EmailAddress().WithMessage("Email is not in a correct format.");
+               .NotEmpty().WithMessage("EmployeeEmail is required.")
+               .EmailAddress().WithMessage("EmployeeEmail is not in a correct format.");
 
 
             RuleFor(user => user.Password)

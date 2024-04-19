@@ -1,12 +1,14 @@
 ﻿using Application.Commands.Employee.AddEmployee;
 using Application.Dto.Employee;
 using Application.Validators.EmployeeValidator;
+using Domain.Interfaces;
 using Domain.Models.Employee;
 using Infrastructure.Entities;
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using IEmployeeService = Application.Services.Employee.IEmployeeService;
 
 namespace API.Controllers.Employee
 {
@@ -20,8 +22,11 @@ namespace API.Controllers.Employee
         private readonly IMediator _mediator;
         private readonly ILogger<EmployeeController> _logger;
         private readonly EmployeeValidations _employeeValidations;
+        private readonly IEmployeeService _employeeService;
+     
 
-        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, Mediator mediator, ILogger<EmployeeController> logger, EmployeeValidations validations)
+        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, Mediator mediator,
+            ILogger<EmployeeController> logger, EmployeeValidations validations, IEmployeeService employeeService)
         {
             _employeeRepository = employeeRepository;
             _userManager = userManager;
@@ -29,6 +34,7 @@ namespace API.Controllers.Employee
             _mediator = mediator;
             _logger = logger;
             _employeeValidations = validations;
+            _employeeService = employeeService;
         }
 
         // GET: api/Employee
@@ -55,9 +61,9 @@ namespace API.Controllers.Employee
         // POST: api/Employee
         [HttpPost]
         [Route("Add Employee")]
-        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeDto employeeDto)
+        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeDto employeeDto, bool isAdmin)
         {
-            _logger.LogInformation("Starting to create new employee: {Email}", employeeDto.Email);
+            _logger.LogInformation("Starting to create new employee: {EmployeeEmail}", employeeDto.Email);
 
             try
             {
@@ -66,8 +72,13 @@ namespace API.Controllers.Employee
 
                 if (createdEmployee == null)
                 {
-                    _logger.LogWarning("Failed to create employee: {Email}", employeeDto.Email);
+                    _logger.LogWarning("Failed to create employee: {EmployeeEmail}", employeeDto.Email);
                     return BadRequest(new { Message = "Failed to create employee" });
+                }
+
+                if (isAdmin)
+                {
+                    await _employeeService.AssignRole(employeeDto.Email, "Admin");
                 }
 
                 _logger.LogInformation("Employee created successfully: {Id}", createdEmployee.Id);
@@ -75,7 +86,7 @@ namespace API.Controllers.Employee
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating employee: {Email}", employeeDto.Email);
+                _logger.LogError(ex, "Error creating employee: {EmployeeEmail}", employeeDto.Email);
                 return StatusCode(500, new { Message = "Internal server error" });
             }
         }
@@ -104,5 +115,9 @@ namespace API.Controllers.Employee
             }
             return NoContent();
         }
+
+        
+
+
     }
 }

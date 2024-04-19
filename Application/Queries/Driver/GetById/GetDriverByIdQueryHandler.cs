@@ -30,7 +30,7 @@ public class GetDriverByIdQueryHandler
             Employee = new EmployeeDto
             {
 
-                Email = driver.Email,
+                Email = driver.EmployeeEmail,
                 FirstName = driver.FirstName,
                 LastName = driver.LastName,
                 // Map other properties of EmployeeDto here
