@@ -49,16 +49,15 @@ namespace Infrastructure.Database
             modelBuilder.Entity<CarModel>().HasData(cars);
 
             // Mock data for OrderModels
-            var orders = new OrderModel[]
-            {
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[0].Id, OrderDate = DateTime.Now, TotalCost = 1000, OrderStatus = "Created", OrderNumber = 2101011000, CarId = cars[0].CarId},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[1].Id, OrderDate = DateTime.Now, TotalCost = 2000, OrderStatus = "Created", OrderNumber = 2101011001, CarId = cars[1].CarId},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[2].Id, OrderDate = DateTime.Now, TotalCost = 3000, OrderStatus = "Created", OrderNumber = 2101011100, CarId = cars[2].CarId},
-                new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].Id, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101, CarId = cars[3].CarId},
-            };
+               var orders = new OrderModel[]
+               {
+                  new OrderModel { OrderId = Guid.NewGuid(), UserId = users[0].Id, OrderDate = DateTime.Now, TotalCost = 1000, OrderStatus = "Created", OrderNumber = 2101011000, CarId = cars[0].CarId, AddressId = addresses[0].AddressId },
+                  new OrderModel { OrderId = Guid.NewGuid(), UserId = users[1].Id, OrderDate = DateTime.Now, TotalCost = 2000, OrderStatus = "Created", OrderNumber = 2101011001, CarId = cars[1].CarId, AddressId = addresses[1].AddressId },
+                  new OrderModel { OrderId = Guid.NewGuid(), UserId = users[2].Id, OrderDate = DateTime.Now, TotalCost = 3000, OrderStatus = "Created", OrderNumber = 2101011100, CarId = cars[2].CarId, AddressId = addresses[2].AddressId },
+                  new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].Id, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101, CarId = cars[3].CarId, AddressId = addresses[3].AddressId },
+               };
 
-            modelBuilder.Entity<OrderModel>().HasData(orders);
-
+                            modelBuilder.Entity<OrderModel>().HasData(orders);
             //Mock data for BoxModel
             var boxes = new BoxModel[]
             {

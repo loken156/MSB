@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces;
 using Domain.Models.Address;
+using Domain.Models.Order;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Entities
@@ -8,6 +9,7 @@ namespace Infrastructure.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public ICollection<OrderModel> Orders { get; set; }
         public ICollection<AddressModel> Addresses { get; set; }
     }
 }
