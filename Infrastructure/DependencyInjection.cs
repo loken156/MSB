@@ -2,6 +2,7 @@
 using Infrastructure.Database;
 using Infrastructure.Repositories.AddressRepo;
 using Infrastructure.Repositories.BoxRepo;
+using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.DriverRepo;
 using Infrastructure.Repositories.EmployeeRepo;
 using Infrastructure.Repositories.OrderRepo;
@@ -33,8 +34,17 @@ namespace Infrastructure
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IShelfRepository, ShelfRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
+            services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<RoleManager<IdentityRole>>();
+            services.AddScoped<IMessageSender>(provider =>
+                 new EmailNotificationService(
+                     smtpServer: "smtp.example.com",
+                     port: 587, // SMTP port (587 for TLS)
+                     senderEmail: "your-email@example.com",
+                     senderPassword: "your-email-password")
+             );
+
             services.AddScoped<INotificationService, MessagingNotificationService>();
             services.AddDbContext<MSB_Database>(options =>
                    options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
@@ -42,13 +52,7 @@ namespace Infrastructure
                    .EnableSensitiveDataLogging()
 
             );
-            services.AddScoped<INotificationService>(provider =>
-                new EmailNotificationService(
-                    smtpServer: "smtp.example.com",
-                    port: 587, // SMTP port (587 for TLS)
-                    senderEmail: "your-email@example.com",
-                    senderPassword: "your-email-password")
-            );
+
 
             return services;
 

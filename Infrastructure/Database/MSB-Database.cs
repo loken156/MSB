@@ -158,7 +158,13 @@ namespace Infrastructure.Database
                 new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 4, ShelfColumn = 4, Occupancy = true ,WarehouseId = warehouses[3].WarehouseId},
             };
             modelBuilder.Entity<ShelfModel>().HasData(shelves);
+            modelBuilder.Entity<WarehouseModel>()
+             .HasOne(w => w.Shelf)
+             .WithOne(s => s.Warehouse)
+             .HasForeignKey<ShelfModel>(s => s.WarehouseId);
+
 
             base.OnModelCreating(modelBuilder);
         }
     }
+}

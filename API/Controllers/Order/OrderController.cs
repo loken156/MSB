@@ -7,6 +7,8 @@ using Application.Dto.Order;
 using Application.Dto.Shelf;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
+using Domain.Models.Notification;
+using Infrastructure.Services.Notification;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -36,12 +38,16 @@ namespace API.Controllers.Order
         {
             var command = new AddOrderCommand(orderdto, warehouseId);
             var order = await _mediator.Send(command);
-            var notification = new NotificationDto
+
+            var notification = new NotificationModel
             {
                 UserId = order.UserId,
                 Message = "Your order has been accepted."
             };
+
+
             await _notificationService.SendNotification(notification);
+
             var orderDto = new OrderDto
             {
                 OrderId = order.OrderId,

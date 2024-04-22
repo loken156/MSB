@@ -12,7 +12,7 @@ namespace Infrastructure.Services.Notification
             _messageSender = messageSender;
         }
 
-        public async Task SendNotification(NotificatioginModel notification)
+        public async Task SendNotification(NotificationModel notification)
         {
             // Send notification via messaging service
             await _messageSender.SendMessage(notification.UserId, notification.Message);

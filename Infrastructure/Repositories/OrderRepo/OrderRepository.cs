@@ -9,9 +9,11 @@ namespace Infrastructure.Repositories.OrderRepo
     public class OrderRepository : IOrderRepository
     {
         private readonly MSB_Database _database;
-        public OrderRepository(MSB_Database mSB_Database)
+        private readonly INotificationService _notificationService;
+        public OrderRepository(MSB_Database mSB_Database, INotificationService notificationService)
         {
             _database = mSB_Database;
+            _notificationService = notificationService;
         }
 
         public async Task<OrderModel> AddOrderAsync(OrderModel order)
