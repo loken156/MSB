@@ -1,8 +1,8 @@
 ﻿using System;
 namespace Infrastructure.Services.Notification
 {
-	public interface INotificationService
-	{
-	}
+    public interface INotificationService
+    {
+    }
 }
 
