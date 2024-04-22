@@ -30,8 +30,6 @@
     <Folder Include="Dto\User\" />
     <Folder Include="Queries\User\GetAll\" />
     <Folder Include="Queries\User\GetById\" />
-    <Folder Include="Validators\ShelfValidator\" />
-    <Folder Include="Validators\WarehouseValidator\" />
     <Folder Include="Queries\Order\GetAll\" />
     <Folder Include="Queries\Order\GetByID\" />
     <Folder Include="Queries\Warehouse\GetAll\" />

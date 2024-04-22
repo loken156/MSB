@@ -2,6 +2,8 @@
 using Domain.Models.Address;
 using Domain.Models.Car;
 using Domain.Models.Order;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Driver
 {
@@ -26,4 +28,3 @@ namespace Domain.Models.Driver
         public ICollection<TimeSlot> Availability { get; set; }
     }
 }
-

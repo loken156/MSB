@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using Domain.Models.Driver;
+using System;
 
 namespace Infrastructure.Repositories.DriverRepo
 {
@@ -13,4 +14,3 @@ namespace Infrastructure.Repositories.DriverRepo
         Task AssignOrderToDriver(DriverModel driver, Guid orderId, TimeSlot pickupTimeSlot);
     }
 }
-

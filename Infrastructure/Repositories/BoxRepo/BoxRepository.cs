@@ -1,4 +1,4 @@
-﻿using Domain.Models.Box;
+using Domain.Models.Box;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-﻿using Application.Dto.Adress;
+using Application.Dto.Adress;
 using FluentValidation;
 
 namespace Application.Validators.AddressValidator

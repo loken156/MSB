@@ -1,8 +1,10 @@
-﻿using Application.Dto.LogIn;
+﻿using Application.Commands.Registration;
+using Application.Dto.LogIn;
 using Application.Dto.Register;
 using Domain.Models.Address;
 using FluentValidation;
 using Infrastructure.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +25,9 @@ namespace API.Controllers
         private readonly IValidator<RegisterDto> _registerValidator;
         private readonly IValidator<LogInDto> _loginValidator;
         private readonly IConfiguration _configuration;
+        private readonly IMediator _mediator;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger, IValidator<RegisterDto> registerValidator, IValidator<LogInDto> loginValidator, IConfiguration configuration)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger, IValidator<RegisterDto> registerValidator, IValidator<LogInDto> loginValidator, IConfiguration configuration, Mediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,54 +35,44 @@ namespace API.Controllers
             _registerValidator = registerValidator;
             _loginValidator = loginValidator;
             _configuration = configuration;
+            _mediator = mediator;
         }
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterDto model)
+        public async Task<IActionResult> Register(RegisterDto regDto)
         {
-            var validationResult = _registerValidator.Validate(model);
-            if (!validationResult.IsValid)
+            try
             {
-                return BadRequest(validationResult.Errors);
-            }
+                var validationResult = _registerValidator.Validate(regDto);
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
 
-            var user = new ApplicationUser
+                // Instantiate the command with RegDto from the method parameter
+                var command = new RegistrationCommand(regDto);
+                var result = await _mediator.Send(command);
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User registered: {Email}", regDto.Email);
+                    return Ok(new { Message = "User registered successfully." });
+                }
+                else
+                {
+                    // Log the reasons for failure
+                    _logger.LogWarning("Registration failed: {Email}, Errors: {Errors}", regDto.Email, result.Errors);
+                    return BadRequest(new { Message = "Registration failed.", Errors = result.Errors });
+                }
+            }
+            catch (Exception ex)
             {
-                UserName = model.Email,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber,
-                Addresses = new List<AddressModel>
-        {
-            new AddressModel
-            {
-                StreetName = model.Address.StreetName,
-                StreetNumber = model.Address.StreetNumber,
-                Apartment = model.Address.Apartment,
-                ZipCode = model.Address.ZipCode,
-                Floor = model.Address.Floor,
-                City = model.Address.City,
-                State = model.Address.State,
-                Country = model.Address.Country,
-                Latitude = model.Address.Latitude,
-                Longitude = model.Address.Longitude
+                _logger.LogError(ex, "An error occurred while registering the user: {Email}", regDto.Email);
+                return StatusCode(500, new { Message = "Internal server error." });
             }
         }
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                _logger.LogInformation("User registered: {Email}", model.Email);
-                return Ok(new { Message = "Registration successful" });
-            }
-
-            _logger.LogWarning("Registration failed for user: {Email}", model.Email);
-            return BadRequest(result.Errors);
-        }
 
         [AllowAnonymous]
         [HttpPost("Login")]
