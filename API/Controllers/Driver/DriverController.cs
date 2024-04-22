@@ -1,5 +1,4 @@
-﻿using Application.Dto.Car;
-using Application.Dto.Driver;
+﻿using Application.Dto.Driver;
 using Domain.Models.Driver;
 using Infrastructure.Repositories.DriverRepo;
 using Microsoft.AspNetCore.Identity;

@@ -1,5 +1,6 @@
-﻿using Domain.Interfaces;
+using Domain.Interfaces;
 using Domain.Models.Address;
+using Domain.Models.Order;
 using Domain.Models.Warehouse;
 
 namespace Domain.Models.Employee
@@ -11,8 +12,8 @@ namespace Domain.Models.Employee
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
         public ICollection<AddressModel> Addresses { get; set; }
+        public ICollection<OrderModel> Orders { get; set; }
         public string Role { get; set; }
         public string Department { get; set; }
         public string Position { get; set; }
@@ -20,4 +21,5 @@ namespace Domain.Models.Employee
         public Guid WarehouseId { get; set; }
         public WarehouseModel Warehouse { get; set; }
     }
+
 }

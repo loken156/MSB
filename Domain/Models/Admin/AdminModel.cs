@@ -1,5 +1,6 @@
-﻿using Domain.Interfaces;
+using Domain.Interfaces;
 using Domain.Models.Address;
+using Domain.Models.Order;
 
 namespace Domain.Models.Admin
 {
@@ -11,6 +12,7 @@ namespace Domain.Models.Admin
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public ICollection<AddressModel> Addresses { get; set; }
+        public ICollection<OrderModel> Orders { get; set; }
         public string Role { get; set; }
         public ICollection<string> Permissions { get; set; }
 
