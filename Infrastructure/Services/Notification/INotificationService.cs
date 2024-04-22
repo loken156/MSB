@@ -1,5 +1,5 @@
-﻿using System;
-using Domain.Models.Notification;
+﻿using Domain.Models.Notification;
+using System;
 
 namespace Infrastructure.Services.Notification
 {
@@ -8,4 +8,3 @@ namespace Infrastructure.Services.Notification
         Task SendNotification(NotificationModel notification);
     }
 }
-

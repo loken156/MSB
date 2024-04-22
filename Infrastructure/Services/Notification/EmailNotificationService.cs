@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Domain.Models.Notification;
+using System;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Domain.Models.Notification;
 namespace Infrastructure.Services.Notification
 {
     public class EmailNotificationService : INotificationService
@@ -37,5 +37,3 @@ namespace Infrastructure.Services.Notification
 
     }
 }
-
-

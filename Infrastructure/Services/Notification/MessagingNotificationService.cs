@@ -1,10 +1,10 @@
-﻿using System;
-using Domain.Models.Notification;
+﻿using Domain.Models.Notification;
+using System;
 
 namespace Infrastructure.Services.Notification
 {
     public class MessagingNotificationService : INotificationService
-	{
+    {
         private readonly IMessageSender _messageSender; // Implement IMessageSender according to your messaging service
 
         public MessagingNotificationService(IMessageSender messageSender)
@@ -19,4 +19,3 @@ namespace Infrastructure.Services.Notification
         }
     }
 }
-

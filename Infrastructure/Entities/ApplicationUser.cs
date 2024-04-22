@@ -13,4 +13,3 @@ namespace Infrastructure.Entities
         public ICollection<AddressModel> Addresses { get; set; }
     }
 }
-

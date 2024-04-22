@@ -47,7 +47,7 @@ namespace Infrastructure
                     smtpServer: "smtp.example.com",
                     port: 587, // SMTP port (587 for TLS)
                     senderEmail: "your-email@example.com",
-                    senderPassword: "your-email-password" )
+                    senderPassword: "your-email-password")
             );
 
             return services;
