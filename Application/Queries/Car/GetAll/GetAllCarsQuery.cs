@@ -6,4 +6,3 @@ namespace Application.Queries.Car
 
     }
 }
-

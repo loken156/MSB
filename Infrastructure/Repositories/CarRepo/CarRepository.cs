@@ -2,6 +2,7 @@
 using Domain.Models.Driver;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Infrastructure.Repositories.CarRepo
 {
@@ -60,4 +61,3 @@ namespace Infrastructure.Repositories.CarRepo
     }
 
 }
-
