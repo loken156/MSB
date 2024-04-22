@@ -23,4 +23,3 @@ namespace Application.Queries.Car.GetById
 
     }
 }
-

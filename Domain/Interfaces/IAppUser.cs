@@ -1,4 +1,4 @@
-﻿using Domain.Models.Address;
+using Domain.Models.Address;
 using Domain.Models.Order;
 
 namespace Domain.Interfaces

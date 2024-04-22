@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+using Domain.Interfaces;
 using Domain.Models.Address;
 using Domain.Models.Car;
 using Domain.Models.Order;
@@ -27,4 +27,3 @@ namespace Domain.Models.Driver
         public ICollection<TimeSlot> Availability { get; set; }
     }
 }
-

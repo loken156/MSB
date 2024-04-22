@@ -2,6 +2,7 @@
 using Application.Commands.Order.DeleteOrder;
 using Application.Commands.Order.UpdateOrder;
 using Application.Commands.Shelf.AddShelf;
+using Application.Dto.Notification;
 using Application.Dto.Order;
 using Application.Dto.Shelf;
 using Application.Queries.Order.GetAll;
@@ -19,10 +20,13 @@ namespace API.Controllers.Order
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly INotificationService _notificationService;
 
-        public OrderController(IMediator mediator)
+        public OrderController(IMediator mediator, INotificationService notificationService)
         {
             _mediator = mediator;
+            _notificationService = notificationService;
+
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -32,6 +36,12 @@ namespace API.Controllers.Order
         {
             var command = new AddOrderCommand(orderdto, warehouseId);
             var order = await _mediator.Send(command);
+            var notification = new NotificationDto
+            {
+                UserId = order.UserId,
+                Message = "Your order has been accepted."
+            };
+            await _notificationService.SendNotification(notification);
             var orderDto = new OrderDto
             {
                 OrderId = order.OrderId,

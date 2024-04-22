@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models
 {
@@ -10,3 +10,4 @@ namespace Domain.Models
         public DateTime EndTime { get; set; }
     }
 }
+

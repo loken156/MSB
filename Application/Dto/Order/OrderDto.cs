@@ -1,4 +1,4 @@
-﻿using Application.Dto.User;
+using Application.Dto.User;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Order

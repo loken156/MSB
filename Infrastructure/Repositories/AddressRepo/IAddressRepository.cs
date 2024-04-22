@@ -12,4 +12,3 @@ namespace Infrastructure.Repositories.AddressRepo
         Task DeleteAddressAsync(Guid addressId);
     }
 }
-

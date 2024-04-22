@@ -15,4 +15,3 @@ namespace Domain.Models.Car
         public DriverModel Driver { get; set; }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+using Domain.Interfaces;
 using Domain.Models.Address;
 using Domain.Models.Order;
 using Microsoft.AspNetCore.Identity;
@@ -13,3 +13,4 @@ namespace Infrastructure.Entities
         public ICollection<AddressModel> Addresses { get; set; }
     }
 }
+

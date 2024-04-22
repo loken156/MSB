@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+using Domain.Interfaces;
 using Domain.Models.Address;
 using Domain.Models.Order;
 using Domain.Models.Warehouse;
@@ -21,4 +21,5 @@ namespace Domain.Models.Employee
         public Guid WarehouseId { get; set; }
         public WarehouseModel Warehouse { get; set; }
     }
+
 }
