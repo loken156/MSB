@@ -10,4 +10,3 @@ namespace Domain.Models
         public DateTime EndTime { get; set; }
     }
 }
-
