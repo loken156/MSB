@@ -1,4 +1,5 @@
-﻿using Domain.Models.Address;
+using Domain.Models.Address;
+using Domain.Models.Order;
 
 namespace Domain.Interfaces
 {
@@ -10,5 +11,6 @@ namespace Domain.Interfaces
         string FirstName { get; set; }
         string LastName { get; set; }
         ICollection<AddressModel> Addresses { get; set; }
+        ICollection<OrderModel> Orders { get; set; }
     }
 }

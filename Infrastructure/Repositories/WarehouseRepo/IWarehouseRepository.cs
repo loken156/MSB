@@ -9,5 +9,7 @@ namespace Infrastructure.Repositories.WarehouseRepo
         Task<IEnumerable<WarehouseModel>> GetAllWarehousesAsync();
         Task<WarehouseModel> GetWarehouseByIdAsync(Guid warehouseId);
         Task<WarehouseModel> UpdateWarehouseAsync(WarehouseModel warehouse);
+
+        Task<bool> ExistWarehouseAsync(Guid warehouseId);
     }
 }

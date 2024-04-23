@@ -13,25 +13,39 @@ namespace API.Controllers.ChangePassword
     public class ChangePasswordController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<ChangePasswordController> _logger;
 
-        public ChangePasswordController(IMediator mediator)
+        public ChangePasswordController(IMediator mediator, Logger<ChangePasswordController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPut]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
-            var command = new ChangePasswordCommand(changePasswordDto.UserId, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
-            var result = await _mediator.Send(command);
-            if (result)
+            try
             {
-                return Ok(new { Message = "Password changed successfully" });
+                var command = new ChangePasswordCommand(changePasswordDto.UserId, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
+                var result = await _mediator.Send(command);
+                if (result)
+                {
+                    return Ok(new { Message = "Password changed successfully" });
+                }
+                else
+                {
+                    return BadRequest(new { Message = "Failed to change password" });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest(new { Message = "Failed to change password" });
+                _logger.LogError(ex, "Error while changing password");
+                return StatusCode(500, new { Message = "Internal server error" });
+
             }
+
+
+
         }
     }
 }

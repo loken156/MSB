@@ -1,4 +1,4 @@
-﻿using Domain.Models.Admin;
+using Domain.Models.Admin;
 using Infrastructure.Database;
 using Infrastructure.Repositories.AdminRepo;
 using Microsoft.EntityFrameworkCore;

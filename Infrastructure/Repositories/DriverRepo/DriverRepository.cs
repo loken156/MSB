@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+using Domain.Models;
 using Domain.Models.Driver;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -78,4 +78,3 @@ namespace Infrastructure.Repositories.DriverRepo
 
     }
 }
-

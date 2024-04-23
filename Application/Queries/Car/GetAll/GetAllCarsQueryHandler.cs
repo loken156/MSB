@@ -1,4 +1,4 @@
-﻿using Domain.Models.Car;
+using Domain.Models.Car;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.Car
@@ -19,4 +19,3 @@ namespace Application.Queries.Car
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Domain.Models.Employee;
+using Domain.Models.Employee;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,4 +19,3 @@ namespace Application.Queries.Employee.GetAll
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Domain.Models.Car;
+using Domain.Models.Car;
 using Infrastructure.Repositories.CarRepo;
 
 namespace Application.Queries.Car.GetById
@@ -22,4 +22,3 @@ namespace Application.Queries.Car.GetById
 
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Domain.Models.Employee;
+using Domain.Models.Employee;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
