@@ -48,3 +48,4 @@ namespace Infrastructure.Database
             base.OnModelCreating(modelBuilder);
         }
     }
+}
