@@ -1,8 +1,6 @@
 ﻿using Domain.Models.Car;
 using Infrastructure.Database;
-using Infrastructure.Repositories.CarRepo;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Application.Queries.Car
 {

@@ -5,7 +5,6 @@ using Application.Dto.Box;
 using Application.Queries.Box.GetAll;
 using Application.Queries.Box.GetByID;
 using Application.Validators.BoxValidator;
-using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

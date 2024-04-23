@@ -1,5 +1,4 @@
-﻿using System;
-namespace Application.Queries.Driver.GetById
+﻿namespace Application.Queries.Driver.GetById
 {
     public class GetDriverByIdQuery
     {

@@ -3,7 +3,6 @@
 using Infrastructure.Database;
 using Infrastructure.Repositories.AddressRepo;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace Infrastructure.Repositories.OrderRepo
 {

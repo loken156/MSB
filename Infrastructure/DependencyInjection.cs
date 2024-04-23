@@ -2,7 +2,6 @@
 using Infrastructure.Database;
 using Infrastructure.Repositories.AddressRepo;
 using Infrastructure.Repositories.BoxRepo;
-using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.DriverRepo;
 using Infrastructure.Repositories.EmployeeRepo;
 using Infrastructure.Repositories.OrderRepo;
@@ -34,9 +33,12 @@ namespace Infrastructure
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IShelfRepository, ShelfRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
+<<<<<<< HEAD
             services.AddScoped<IEmployeeService, EmployeeService>();
+=======
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IUserService, UserService>();
+>>>>>>> origin/development
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<IMessageSender>(provider =>
                  new EmailNotificationService(

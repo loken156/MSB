@@ -1,5 +1,4 @@
-﻿using System;
-namespace Application.Queries.Car
+﻿namespace Application.Queries.Car
 {
     public class GetAllCarsQuery
     {

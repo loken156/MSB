@@ -1,10 +1,7 @@
 ﻿using Domain.Models.Employee;
-using Infrastructure.Database;
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace Application.Queries.Employee.GetAll
 {

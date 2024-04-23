@@ -1,5 +1,4 @@
-﻿using System;
-namespace Application.Queries.Car.GetById
+﻿namespace Application.Queries.Car.GetById
 {
     public class GetCarByIdQuery
     {

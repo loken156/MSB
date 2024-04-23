@@ -1,6 +1,4 @@
-﻿using Application.Commands.Box.AddBox;
-using Application.Dto.Box;
-using Domain.Models.Box;
+﻿using Application.Dto.Box;
 using FluentValidation;
 
 namespace Application.Validators.BoxValidator

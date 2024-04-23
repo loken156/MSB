@@ -1,19 +1,15 @@
 ﻿using Application.Commands.Employee.AddEmployee;
 using Application.Commands.Employee.DeleteEmployee;
 using Application.Commands.Employee.UpdateEmployee;
-using Application.Dto.AddShelf;
 using Application.Dto.Employee;
 using Application.Queries.Employee.GetAll;
 using Application.Queries.Employee.GetById;
 using Application.Validators.EmployeeValidator;
-using Domain.Interfaces;
-using Domain.Models.Employee;
 using Infrastructure.Entities;
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using IEmployeeServices = Application.Services.Employee.IEmployeeServices;
 
 namespace API.Controllers.Employee

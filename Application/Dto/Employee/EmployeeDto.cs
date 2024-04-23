@@ -1,5 +1,4 @@
 using Application.Dto.Driver;
-using Domain.Models.Driver;
 using Domain.Models.Warehouse;
 using System.ComponentModel.DataAnnotations;
 
