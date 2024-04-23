@@ -1,14 +1,19 @@
 ﻿using Application.Commands.Order.AddOrder;
 using Application.Commands.Order.DeleteOrder;
 using Application.Commands.Order.UpdateOrder;
+using Application.Commands.Shelf.AddShelf;
+using Application.Dto.Notification;
 using Application.Dto.Order;
+using Application.Dto.Shelf;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
-using Application.Validators.OrderValidator;
+using Domain.Models.Notification;
+using Infrastructure.Services.Notification;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace API.Controllers.Order
 {
@@ -17,57 +22,43 @@ namespace API.Controllers.Order
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<OrderController> _logger;
-        private readonly OrderValidator _orderValidator;
+        private readonly INotificationService _notificationService;
 
-
-        public OrderController(IMediator mediator, ILogger<OrderController> logger, OrderValidator orderValidator)
+        public OrderController(IMediator mediator, INotificationService notificationService)
         {
             _mediator = mediator;
-            _logger = logger;
-            _orderValidator = orderValidator;
+            _notificationService = notificationService;
+
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("Add Order")]
-        public async Task<IActionResult> AddOrder(AddOrderCommand command, [FromQuery] Guid warehouseId)
+        public async Task<ActionResult<OrderDto>> AddOrder(OrderDto orderdto, [FromQuery] Guid warehouseId)
         {
+            var command = new AddOrderCommand(orderdto, warehouseId);
+            var order = await _mediator.Send(command);
 
-            var validationResult = _orderValidator.Validate(command.NewOrder);
-            if (!validationResult.IsValid)
+            var notification = new NotificationModel
             {
-                _logger.LogWarning("Validation failed for AddOrderCommand: {ValidationErrors}", validationResult.Errors);
-                return BadRequest(validationResult.Errors);
-            }
+                UserId = order.UserId,
+                Message = "Your order has been accepted."
+            };
 
 
-            try
+            await _notificationService.SendNotification(notification);
+
+            var orderDto = new OrderDto
             {
-                var order = await _mediator.Send(command);
-                var orderDto = new OrderDto
-                {
-                    OrderId = order.OrderId,
-                    OrderDate = order.OrderDate,
-                    TotalCost = order.TotalCost,
-                    OrderStatus = order.OrderStatus,
-                    UserId = order.UserId,
-                    RepairNotes = order.RepairNotes
-                };
-
-                _logger.LogInformation("Order added successfully: {OrderId}", orderDto.OrderId);
-                return CreatedAtAction(nameof(GetOrderById), new { id = orderDto.OrderId }, orderDto);
-
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error adding order with command: {Command}", command);
-                return StatusCode(500, "An error occurred while adding the order");
-            }
-
-
-
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate,
+                TotalCost = order.TotalCost,
+                OrderStatus = order.OrderStatus,
+                UserId = order.UserId,
+                WarehouseId = order.WarehouseId,
+                RepairNotes = order.RepairNotes
+            };
+            return CreatedAtAction(nameof(GetOrderById), new { id = orderDto.OrderId }, orderDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

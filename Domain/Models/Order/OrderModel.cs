@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Order
@@ -27,8 +27,8 @@ namespace Domain.Models.Order
         public Guid WarehouseId { get; set; }
         public Warehouse.WarehouseModel Warehouse { get; set; }
 
-        [ForeignKey("AdressId")] // Return Address
-        public int AdressId { get; set; }
+        [ForeignKey("AddressId")] // Return Address
+        public Guid AddressId { get; set; }
         public Address.AddressModel Address { get; set; }
 
         public string RepairNotes { get; set; } = "No notes";

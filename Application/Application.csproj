@@ -63,15 +63,16 @@
     <Folder Include="Commands\WareHouse\AddWarehouse\" />
     <Folder Include="Commands\WareHouse\DeleteWarehouse\" />
     <Folder Include="Commands\WareHouse\UpdateWarehouse\" />
+    <Folder Include="Dto\Notification\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -110,5 +111,6 @@
     <None Remove="Commands\WareHouse\AddWarehouse\" />
     <None Remove="Commands\WareHouse\DeleteWarehouse\" />
     <None Remove="Commands\WareHouse\UpdateWarehouse\" />
+    <None Remove="Dto\Notification\" />
   </ItemGroup>
 </Project>

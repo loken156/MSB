@@ -1,4 +1,4 @@
-﻿using Application.Dto.User;
+using Application.Dto.User;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Order
@@ -15,7 +15,7 @@ namespace Application.Dto.Order
         [Required] public Guid CarId { get; set; }
         public Guid RepairId { get; set; }
         [Required] public Guid WarehouseId { get; set; }
-        // [Required] public int AdressId { get; set; } // Commented out to avoid error
+        [Required] public Guid AdressId { get; set; }
         public string RepairNotes { get; set; } = "No notes";
     }
 }
