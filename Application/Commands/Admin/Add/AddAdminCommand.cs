@@ -13,5 +13,5 @@ namespace Application.Commands.Admin.Add
         public Guid AdminId { get; set; }
 
     }
-    
+
 }

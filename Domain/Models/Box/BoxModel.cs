@@ -1,5 +1,5 @@
-﻿using Domain.Models.Shelf;
-using Domain.Models.Order;
+﻿using Domain.Models.Order;
+using Domain.Models.Shelf;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

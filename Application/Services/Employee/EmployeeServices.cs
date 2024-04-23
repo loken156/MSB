@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Employee
 {
-    public class EmployeeService : IEmployeeService
+    public class EmployeeServices : IEmployeeServices
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public EmployeeService(UserManager<ApplicationUser> userManager)
+        public EmployeeServices(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }

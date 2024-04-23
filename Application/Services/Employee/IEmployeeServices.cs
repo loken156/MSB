@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Employee
 {
-    public interface IEmployeeService
+    public interface IEmployeeServices
     {
         Task AssignRole(string employeeEmail, string roleName);
     }

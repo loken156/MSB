@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Domain.Models.Address;
+using Domain.Models.Shelf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Models.Address;
-using Domain.Models.Shelf;
 
 namespace Domain.Models.Warehouse
 {
