@@ -29,7 +29,7 @@ public class GetDriverByIdQueryHandler
             },
             Employee = new EmployeeDto
             {
-                EmployeeId = Guid.Parse(driver.Id),
+
                 Email = driver.Email,
                 FirstName = driver.FirstName,
                 LastName = driver.LastName,

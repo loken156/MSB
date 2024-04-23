@@ -6,6 +6,7 @@ using Application.Dto.Box;
 using Application.Dto.Shelf;
 using Application.Queries.Shelf.GetAll;
 using Application.Queries.Shelf.GetByID;
+using Application.Validators.ShelfValidator;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,26 +17,47 @@ namespace API.Controllers.Shelf
     public class ShelfController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<ShelfController> _logger;
+        private readonly ShelfValidations _shelfValidations;
 
-        public ShelfController(IMediator mediator)
+        public ShelfController(IMediator mediator, ILogger<ShelfController> logger, ShelfValidations shelfValidations)
         {
             _mediator = mediator;
+            _logger = logger;
+            _shelfValidations = shelfValidations;
         }
 
         [HttpPost("Add Shelf")]
-        public async Task<ActionResult<ShelfDto>> AddShelf([FromBody] AddShelfAndBoxesDto requestData)
+        public async Task<IActionResult> AddShelf([FromBody] AddShelfCommand command)
         {
-            var command = new AddShelfCommand(requestData.NewShelf, requestData.WarehouseId, requestData.Boxes);
-            var shelf = await _mediator.Send(command);
-            var shelfDto = new ShelfDto
+            _logger.LogInformation("Adding a new shelf with command: {Command}", command);
+            var validationResult = _shelfValidations.Validate(command.NewShelf);
+            if (!validationResult.IsValid)
             {
-                ShelfId = shelf.ShelfId,
-                ShelfRow = shelf.ShelfRow,
-                ShelfColumn = shelf.ShelfColumn,
-                Occupancy = shelf.Occupancy,
-                WarehouseId = shelf.WarehouseId
-            };
-            return CreatedAtAction(nameof(GetShelfById), new { id = shelfDto.ShelfId }, shelfDto);
+                _logger.LogWarning("Validation failed for AddShelfCommand: {ValidationErrors}", validationResult.Errors);
+                return BadRequest(validationResult.Errors);
+            }
+            try
+            {
+                var shelf = await _mediator.Send(command);
+                var shelfDto = new ShelfDto
+                {
+                    ShelfId = shelf.ShelfId,
+                    ShelfRow = shelf.ShelfRow,
+                    ShelfColumn = shelf.ShelfColumn,
+                    Occupancy = shelf.Occupancy,
+                    WarehouseId = shelf.WarehouseId
+                };
+
+                _logger.LogInformation("Shelf added successfully: {ShelfId}", shelfDto.ShelfId);
+                return CreatedAtAction(nameof(GetShelfById), new { id = shelfDto.ShelfId }, shelfDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding shelf with command: {Command}", command);
+                return StatusCode(500, "An error occurred while adding the shelf");
+            }
+
         }
 
 

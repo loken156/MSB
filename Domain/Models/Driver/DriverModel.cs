@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+using Domain.Interfaces;
 using Domain.Models.Address;
 using Domain.Models.Car;
 using Domain.Models.Order;
@@ -17,6 +17,7 @@ namespace Domain.Models.Driver
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
         public ICollection<AddressModel> Addresses { get; set; }
         public string Role { get; set; }
         public Guid CurrentCarId { get; set; }
@@ -26,4 +27,3 @@ namespace Domain.Models.Driver
         public ICollection<TimeSlot> Availability { get; set; }
     }
 }
-

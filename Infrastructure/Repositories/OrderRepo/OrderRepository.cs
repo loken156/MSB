@@ -1,5 +1,7 @@
-﻿using Domain.Models.Order;
+﻿using Domain.Models.Notification;
+using Domain.Models.Order;
 using Infrastructure.Database;
+using Infrastructure.Services.Notification;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.OrderRepo
@@ -7,9 +9,11 @@ namespace Infrastructure.Repositories.OrderRepo
     public class OrderRepository : IOrderRepository
     {
         private readonly MSB_Database _database;
-        public OrderRepository(MSB_Database mSB_Database)
+        private readonly INotificationService _notificationService;
+        public OrderRepository(MSB_Database mSB_Database, INotificationService notificationService)
         {
             _database = mSB_Database;
+            _notificationService = notificationService;
         }
 
         public async Task<OrderModel> AddOrderAsync(OrderModel order)
@@ -34,6 +38,17 @@ namespace Infrastructure.Repositories.OrderRepo
         {
             _database.Orders.Update(order);
             await _database.SaveChangesAsync();
+
+            if (order.OrderStatus == "Delivered")
+            {
+                // Send notification to user that order has been delivered to warehouse
+                var notification = new NotificationModel
+                {
+                    UserId = order.UserId,
+                    Message = "Your order has been delivered to the warehouse."
+                };
+                await _notificationService.SendNotification(notification);
+            }
 
             return order;
         }
