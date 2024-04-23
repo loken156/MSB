@@ -1,5 +1,4 @@
-﻿using System;
-namespace Infrastructure.Services.Notification
+﻿namespace Infrastructure.Services.Notification
 {
     public interface IMessageSender
     {

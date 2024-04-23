@@ -88,4 +88,3 @@ namespace Tests.Application.Shelf.CommandHandlers
 
     }
 }
-

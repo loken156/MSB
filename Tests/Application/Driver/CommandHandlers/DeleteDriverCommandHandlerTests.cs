@@ -50,4 +50,3 @@ namespace Tests.Application.Driver.CommandHandlers
         }
     }
 }
-

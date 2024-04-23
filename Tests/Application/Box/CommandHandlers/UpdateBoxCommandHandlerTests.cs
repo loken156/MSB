@@ -41,4 +41,3 @@ namespace Tests.Application.Box.CommandHandlers
         }
     }
 }
-

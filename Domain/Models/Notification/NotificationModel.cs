@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces;
-namespace Domain.Models.Notification
+﻿namespace Domain.Models.Notification
 {
     public class NotificationModel
     {

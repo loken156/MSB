@@ -1,12 +1,6 @@
-﻿using Domain.Models.Car;
-using Infrastructure.Repositories.CarRepo;
+﻿using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.DriverRepo;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Commands.DriverCar
 {

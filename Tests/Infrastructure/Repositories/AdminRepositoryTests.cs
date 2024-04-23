@@ -1,12 +1,6 @@
 ﻿using Domain.Models.Admin;
 using Infrastructure.Database;
-using Infrastructure.Repositories.AdminRepo;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Tests.Infrastructure.Repositories
 {

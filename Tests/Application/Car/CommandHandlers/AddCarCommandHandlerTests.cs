@@ -55,4 +55,3 @@ namespace Tests.Application.Car.CommandHandlers
         }
     }
 }
-

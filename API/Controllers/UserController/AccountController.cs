@@ -1,7 +1,6 @@
 ﻿using Application.Commands.Registration;
 using Application.Dto.LogIn;
 using Application.Dto.Register;
-using Domain.Models.Address;
 using FluentValidation;
 using Infrastructure.Entities;
 using MediatR;

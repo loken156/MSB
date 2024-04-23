@@ -42,4 +42,3 @@ namespace Tests.Application.Warehouse.CommandHandlers
         }
     }
 }
-

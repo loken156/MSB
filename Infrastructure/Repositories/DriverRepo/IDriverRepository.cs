@@ -1,6 +1,5 @@
 ﻿using Domain.Models;
 using Domain.Models.Driver;
-using System;
 
 namespace Infrastructure.Repositories.DriverRepo
 {

@@ -1,10 +1,7 @@
 ﻿using Application.Commands.Order.AddOrder;
 using Application.Commands.Order.DeleteOrder;
 using Application.Commands.Order.UpdateOrder;
-using Application.Commands.Shelf.AddShelf;
-using Application.Dto.Notification;
 using Application.Dto.Order;
-using Application.Dto.Shelf;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
 using Domain.Models.Notification;
@@ -13,7 +10,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace API.Controllers.Order
 {

@@ -1,5 +1,4 @@
 ﻿using Application.Dto.Order;
-using Domain.Models.Order;
 using FluentValidation;
 
 namespace Application.Validators.OrderValidator

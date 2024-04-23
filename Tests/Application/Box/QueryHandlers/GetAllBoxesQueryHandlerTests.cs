@@ -54,5 +54,3 @@ namespace Tests.Application.Box.QueryHandlers
         }
     }
 }
-
-
