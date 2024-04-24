@@ -18,14 +18,15 @@ namespace Infrastructure.Repositories.BoxRepo
             if (shelf != null)
             {
                 box.ShelfId = shelfId;
-                await _database.Boxes.AddAsync(box);
+                _database.Boxes.AddAsync(box);
                 await _database.SaveChangesAsync();
             }
             return box;
         }
 
 
-        public async Task DeleteBoxAsync(Guid boxId)
+
+        async Task IBoxRepository.DeleteBoxAsync(Guid boxId)
         {
             var box = await _database.Boxes.FindAsync(boxId);
             if (box != null)
@@ -33,25 +34,27 @@ namespace Infrastructure.Repositories.BoxRepo
                 _database.Boxes.Remove(box);
                 await _database.SaveChangesAsync();
             }
+
+
         }
 
-        public async Task<IEnumerable<BoxModel>> GetAllBoxesAsync()
+
+        async Task<IEnumerable<BoxModel>> IBoxRepository.GetAllBoxesAsync()
         {
             return await _database.Boxes.ToListAsync();
         }
 
-        public async Task<BoxModel> GetBoxByIdAsync(Guid boxId)
+        async Task<BoxModel> IBoxRepository.GetBoxByIdAsync(Guid boxId)
         {
             return await _database.Boxes.FindAsync(boxId);
         }
 
-        public async Task<BoxModel> UpdateBoxAsync(BoxModel box)
+        async Task<BoxModel> IBoxRepository.UpdateBoxAsync(BoxModel box)
         {
             _database.Boxes.Update(box);
             await _database.SaveChangesAsync();
 
             return box;
         }
-
     }
 }

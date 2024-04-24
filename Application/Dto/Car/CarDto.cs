@@ -1,4 +1,3 @@
-using Application.Dto.Driver;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Car
@@ -11,10 +10,7 @@ namespace Application.Dto.Car
         [Required] public string Type { get; set; }
         [Required] public string Availability { get; set; }
 
-        public class CarDetailDto : CarDto
-        {
-            public DriverDto Driver { get; set; }
-        }
+
 
     }
 }

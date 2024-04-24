@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories.EmployeeRepo
 
         public async Task<EmployeeModel> GetEmployeeByIdAsync(Guid id)
         {
-            return await _database.Employees.FindAsync(id.ToString());
+            return await _database.Employees.FindAsync(id);
         }
 
         public async Task<EmployeeModel> CreateEmployeeAsync(EmployeeModel employee)
@@ -32,7 +32,7 @@ namespace Infrastructure.Repositories.EmployeeRepo
 
         public async Task<EmployeeModel> UpdateEmployeeAsync(Guid id, EmployeeModel employee)
         {
-            var existingEmployee = await _database.Employees.FindAsync(id.ToString());
+            var existingEmployee = await _database.Employees.FindAsync(id);
 
             if (existingEmployee == null)
             {
@@ -41,8 +41,7 @@ namespace Infrastructure.Repositories.EmployeeRepo
 
             existingEmployee.FirstName = employee.FirstName;
             existingEmployee.LastName = employee.LastName;
-            existingEmployee.Email = employee.Email;
-            existingEmployee.UserName = employee.UserName;
+            existingEmployee.EmployeeEmail = employee.EmployeeEmail;
 
             // Update the rest of the properties if needed
 
@@ -54,7 +53,7 @@ namespace Infrastructure.Repositories.EmployeeRepo
 
         public async Task<bool> DeleteEmployeeAsync(Guid id)
         {
-            var employee = await _database.Employees.FindAsync(id.ToString());
+            var employee = await _database.Employees.FindAsync(id);
 
             if (employee == null)
             {

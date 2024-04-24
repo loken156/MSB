@@ -1,4 +1,5 @@
 using Domain.Models.Car;
+using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.Car
@@ -6,9 +7,9 @@ namespace Application.Queries.Car
     public class GetAllCarsQueryHandler
     {
 
-        private readonly IMSBDatabase _database;
+        private readonly MSB_Database _database;
 
-        public GetAllCarsQueryHandler(IMSBDatabase database)
+        public GetAllCarsQueryHandler(MSB_Database database)
         {
             _database = database;
         }
