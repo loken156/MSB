@@ -16,8 +16,8 @@ namespace Infrastructure.Repositories.OrderRepo
 
         public async Task<AddressModel> AddAddressAsync(AddressModel address)
         {
-           await _database.Addresses.AddAsync(address);
-           await _database.SaveChangesAsync();
+            await _database.Addresses.AddAsync(address);
+            await _database.SaveChangesAsync();
 
             return await Task.FromResult(address);
         }

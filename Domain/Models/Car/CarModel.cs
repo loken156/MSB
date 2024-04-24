@@ -11,7 +11,7 @@ namespace Domain.Models.Car
         public double Volume { get; set; }
         public string Type { get; set; }
         public string Availability { get; set; }
-        
+
 
 
         public Guid? DriverId { get; set; }

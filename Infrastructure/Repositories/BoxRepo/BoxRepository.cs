@@ -35,11 +35,11 @@ namespace Infrastructure.Repositories.BoxRepo
                 _database.Boxes.Remove(box);
                 await _database.SaveChangesAsync();
             }
-            
-         
+
+
         }
 
-        
+
         async Task<IEnumerable<BoxModel>> IBoxRepository.GetAllBoxesAsync()
         {
             return await _database.Boxes.ToListAsync();
@@ -53,7 +53,7 @@ namespace Infrastructure.Repositories.BoxRepo
         async Task<BoxModel> IBoxRepository.UpdateBoxAsync(BoxModel box)
         {
             _database.Boxes.Update(box);
-           await _database.SaveChangesAsync();
+            await _database.SaveChangesAsync();
 
             return box;
         }

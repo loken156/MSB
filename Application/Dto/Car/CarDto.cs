@@ -10,7 +10,7 @@ namespace Application.Dto.Car
         [Required] public string Type { get; set; }
         [Required] public string Availability { get; set; }
 
-      
+
 
     }
 }
