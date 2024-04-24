@@ -1,6 +1,4 @@
 ﻿using Domain.Models.Car;
-using Domain.Models.Driver;
-
 namespace Infrastructure.Repositories.CarRepo
 {
     public interface ICarRepository
@@ -10,7 +8,6 @@ namespace Infrastructure.Repositories.CarRepo
         Task UpdateCar(CarModel car);
         Task DeleteCar(CarModel car);
         Task AddCar(CarModel carModel);
-        Task AssignDriverToCar(CarModel car, DriverModel driver);
         Task RemoveDriverFromCar(CarModel car);
     }
 }

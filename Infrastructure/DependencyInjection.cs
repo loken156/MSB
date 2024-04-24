@@ -2,7 +2,7 @@
 using Infrastructure.Database;
 using Infrastructure.Repositories.AddressRepo;
 using Infrastructure.Repositories.BoxRepo;
-using Infrastructure.Repositories.DriverRepo;
+using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.EmployeeRepo;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Repositories.ShelfRepo;
@@ -23,7 +23,6 @@ namespace Infrastructure
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IDriverRepository, DriverRepository>();
 
             services.AddDbContext<MSB_Database>(options =>
                    options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
@@ -33,12 +32,12 @@ namespace Infrastructure
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IShelfRepository, ShelfRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
-<<<<<<< HEAD
+
             services.AddScoped<IEmployeeService, EmployeeService>();
-=======
+
             services.AddScoped<ICarRepository, CarRepository>();
-            services.AddScoped<IUserService, UserService>();
->>>>>>> origin/development
+         
+
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<IMessageSender>(provider =>
                  new EmailNotificationService(

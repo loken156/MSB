@@ -1,5 +1,6 @@
-﻿using Domain.Models.Driver;
+﻿
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata;
 
 namespace Domain.Models.Car
 {
@@ -10,8 +11,10 @@ namespace Domain.Models.Car
         public double Volume { get; set; }
         public string Type { get; set; }
         public string Availability { get; set; }
+        
+
 
         public Guid? DriverId { get; set; }
-        public DriverModel Driver { get; set; }
+        public string Employee { get; set; }
     }
 }
