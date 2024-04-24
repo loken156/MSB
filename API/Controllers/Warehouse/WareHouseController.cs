@@ -1,12 +1,10 @@
 ﻿using Application.Commands.Warehouse.AddWarehouse;
 using Application.Commands.Warehouse.DeleteWarehouse;
 using Application.Commands.Warehouse.UpdateWarehouse;
-using Application.Dto.AddWarehouse;
 using Application.Dto.Warehouse;
 using Application.Queries.Warehouse.GetAll;
 using Application.Queries.Warehouse.GetByID;
 using Application.Validators.WarehouseValidator;
-using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,7 +44,7 @@ namespace API.Controllers.Warehouse
                     WarehouseId = warehouseModel.WarehouseId,
                     WarehouseName = warehouseModel.WarehouseName,
                     AddressId = warehouseModel.AddressId, // Assuming this property exists in WarehouseModel
-                    ShelfId = warehouseModel.ShelfId // Assuming this property exists in WarehouseModel
+
                 };
 
                 _logger.LogInformation("Warehouse added successfully: {WarehouseName}", warehouseDto.WarehouseName);

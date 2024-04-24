@@ -17,14 +17,14 @@ namespace API.Controllers.UserController
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
-        private readonly IUserService _userService;
+        private readonly IEmployeeService _employeeService;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IUserRepository userRepository, IUserService userService)
+        public UserController(IMediator mediator, IConfiguration configuration, IUserRepository userRepository, IEmployeeService employeeService)
         {
             _configuration = configuration;
             _mediator = mediator;
             _userRepository = userRepository;
-            _userService = userService;
+            _employeeService = employeeService;
         }
         //------------------------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ namespace API.Controllers.UserController
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(string userId, string currentPassword, string newPassword)
         {
-            var result = await _userService.ChangePasswordAsync(userId, currentPassword, newPassword);
+            var result = await _employeeService.ChangePasswordAsync(userId, currentPassword, newPassword);
             if (result.Succeeded)
             {
                 return Ok("Password changed successfully");

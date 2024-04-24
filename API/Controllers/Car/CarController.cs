@@ -2,18 +2,14 @@
 using Application.Commands.Car.DeleteCar;
 using Application.Commands.Car.UpdateCar;
 using Application.Dto.Car;
-using Application.Dto.Driver;
 using Application.Queries.Car;
 using Application.Queries.Car.GetById;
 using Domain.Models;
 using Domain.Models.Car;
-using Domain.Models.Driver;
 using Infrastructure.Repositories.CarRepo;
-using Infrastructure.Repositories.DriverRepo;
 using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace API.Controllers.Car
@@ -23,7 +19,6 @@ namespace API.Controllers.Car
     public class CarController : ControllerBase
     {
         private readonly ICarRepository _carRepository;
-        private readonly IDriverRepository _driverRepository;
         private readonly GetAllCarsQueryHandler _getAllCarsQueryHandler;
         private readonly GetCarByIdQueryHandler _getCarByIdQueryHandler;
         private readonly AddCarCommandHandler _addCarCommandHandler;
@@ -34,10 +29,9 @@ namespace API.Controllers.Car
         private readonly IMediator _mediator;
 
 
-        public CarController(ICarRepository carRepository, IDriverRepository driverRepository, GetAllCarsQueryHandler getAllCarsQueryHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, AddCarCommandHandler addCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, IOrderRepository orderRepository)
+        public CarController(ICarRepository carRepository, GetAllCarsQueryHandler getAllCarsQueryHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, AddCarCommandHandler addCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, IOrderRepository orderRepository)
         {
             _carRepository = carRepository;
-            _driverRepository = driverRepository;
             _getAllCarsQueryHandler = getAllCarsQueryHandler;
             _getCarByIdQueryHandler = getCarByIdQueryHandler;
             _addCarCommandHandler = addCarCommandHandler;
@@ -154,23 +148,7 @@ namespace API.Controllers.Car
 
         }
 
-        [HttpPost("{carId}/drivers")]
-        [Route("Add driver to car")]
-        public async Task<IActionResult> AddDriverToCar(Guid carId, [FromBody] DriverDto driverDto)
-        {
-            var car = await _carRepository.GetCarById(carId);
-            if (car == null)
-            {
-                return NotFound();
-            }
 
-            var driverModel = MapToDriverModel(driverDto);
-
-            // Add driver to car
-            await _carRepository.AssignDriverToCar(car, driverModel);
-
-            return Ok(car);
-        }
 
         [HttpDelete("{carId}/drivers")]
         [Route("Delete driver from car")]
@@ -196,48 +174,31 @@ namespace API.Controllers.Car
             }
         }
 
-        [HttpPut("{carId}/drivers")]
-        [Route("Change driver for car")]
-        public async Task<IActionResult> ChangeDriverForCar(Guid carId, [FromBody] DriverDto driverDto)
-        {
-            var car = await _carRepository.GetCarById(carId);
-            if (car == null)
-            {
-                return NotFound();
-            }
 
-            var driverModel = MapToDriverModel(driverDto);
 
-            // Change the driver for the car
-            car.DriverId = Guid.Parse(driverModel.Id);
-            await _carRepository.UpdateCar(car);
+        //[HttpPost("{driverId}/take-order/{startTime}/{endTime}")]
+        //[Route("Take order")]
+        //public async Task<IActionResult> TakeOrder(Guid driverId, [FromBody] Guid orderId, DateTime startTime, DateTime endTime)
+        //{
+        //    var driver = await _driverRepository.GetDriverByIdAsync(driverId); ;
+        //    if (driver == null)
+        //    {
+        //        return NotFound("Driver not found.");
+        //    }
 
-            return Ok(car);
-        }
+        //    var order = await _orderRepository.GetOrderByIdAsync(orderId);
+        //    if (order == null)
+        //    {
+        //        return NotFound("Order not found.");
+        //    }
 
-        [HttpPost("{driverId}/take-order/{startTime}/{endTime}")]
-        [Route("Take order")]
-        public async Task<IActionResult> TakeOrder(Guid driverId, [FromBody] Guid orderId, DateTime startTime, DateTime endTime)
-        {
-            var driver = await _driverRepository.GetDriverByIdAsync(driverId); ;
-            if (driver == null)
-            {
-                return NotFound("Driver not found.");
-            }
+        //    var pickupTimeSlot = new TimeSlot { StartTime = startTime, EndTime = endTime };
 
-            var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            if (order == null)
-            {
-                return NotFound("Order not found.");
-            }
+        //    // Assign the order to the driver
+        //    await _driverRepository.AssignOrderToDriver(driver, orderId, pickupTimeSlot);
 
-            var pickupTimeSlot = new TimeSlot { StartTime = startTime, EndTime = endTime };
-
-            // Assign the order to the driver
-            await _driverRepository.AssignOrderToDriver(driver, orderId, pickupTimeSlot);
-
-            return Ok("Order successfully assigned to the driver.");
-        }
+        //    return Ok("Order successfully assigned to the driver.");
+        //}
 
         private CarModel MapToCarModel(CarDto carDto)
         {
@@ -251,13 +212,6 @@ namespace API.Controllers.Car
             };
         }
 
-        private DriverModel MapToDriverModel(DriverDto driverDto)
-        {
-            return new DriverModel
-            {
-                Id = driverDto.DriverId.ToString(),
-                // Initialize other properties as needed
-            };
-        }
+
     }
 }

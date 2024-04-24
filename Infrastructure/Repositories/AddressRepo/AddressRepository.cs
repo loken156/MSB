@@ -3,7 +3,6 @@
 using Infrastructure.Database;
 using Infrastructure.Repositories.AddressRepo;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace Infrastructure.Repositories.OrderRepo
 {
@@ -17,8 +16,8 @@ namespace Infrastructure.Repositories.OrderRepo
 
         public async Task<AddressModel> AddAddressAsync(AddressModel address)
         {
-            _database.Addresses.AddAsync(address);
-            _database.SaveChangesAsync();
+            await _database.Addresses.AddAsync(address);
+            await _database.SaveChangesAsync();
 
             return await Task.FromResult(address);
         }
@@ -36,7 +35,7 @@ namespace Infrastructure.Repositories.OrderRepo
         public async Task<AddressModel> UpdateAddressAsync(AddressModel address)
         {
             _database.Addresses.Update(address);
-            _database.SaveChangesAsync();
+            await _database.SaveChangesAsync();
 
             return address;
         }

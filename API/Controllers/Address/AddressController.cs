@@ -6,7 +6,6 @@ using Application.Queries.Address.GetAll;
 using Application.Queries.Address.GetByID;
 using Application.Validators.AddressValidator;
 using Domain.Models.Address;
-using FluentValidation;
 using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

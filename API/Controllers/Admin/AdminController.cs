@@ -1,6 +1,7 @@
 ﻿using Application.Dto.Admin;
 using Domain.Models.Admin;
 using Infrastructure.Repositories.AdminRepo;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,15 @@ namespace API.Controllers
         private readonly IAdminRepository _adminRepository;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<AdminController> _logger;
+        private readonly Mediator _mediator;
 
 
-        public AdminController(IAdminRepository adminRepository, UserManager<IdentityUser> userManager, ILogger<AdminController> logger)
+        public AdminController(IAdminRepository adminRepository, UserManager<IdentityUser> userManager, ILogger<AdminController> logger, Mediator mediator)
         {
             _adminRepository = adminRepository;
             _userManager = userManager;
             _logger = logger;
+            _mediator = mediator;
         }
 
         // GET: api/Admin
@@ -73,7 +76,7 @@ namespace API.Controllers
                 {
                     Id = adminDto.AdminId.ToString(),
                     UserName = adminDto.Email,
-                    Email = adminDto.Email,
+                    EmployeeEmail = adminDto.Email,
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
@@ -102,7 +105,7 @@ namespace API.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error creating admin with email: {Email}", adminDto.Email);
+                _logger.LogError(e, "Error creating admin with email: {EmployeeEmail}", adminDto.Email);
                 return StatusCode(500, "An error occurred while creating the admin");
             }
 
@@ -128,7 +131,7 @@ namespace API.Controllers
                 {
                     Id = adminDto.AdminId.ToString(),
                     UserName = adminDto.Email,
-                    Email = adminDto.Email,
+                    EmployeeEmail = adminDto.Email,
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",

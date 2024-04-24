@@ -17,8 +17,7 @@ namespace Application.Commands.Warehouse.AddWarehouse
             {
                 WarehouseId = Guid.NewGuid(),
                 WarehouseName = request.NewWarehouse.WarehouseName,
-                AddressId = request.NewWarehouse.AddressId,
-                ShelfId = request.NewWarehouse.ShelfId
+                AddressId = request.NewWarehouse.AddressId
             };
 
             var createdWarehouse = await _warehouseRepository.AddWarehouseAsync(warehouseToCreate);
