@@ -1,12 +1,16 @@
 ﻿using Application.Commands.Employee.AddEmployee;
+using Application.Commands.Employee.DeleteEmployee;
+using Application.Commands.Employee.UpdateEmployee;
 using Application.Dto.Employee;
+using Application.Queries.Employee.GetAll;
+using Application.Queries.Employee.GetById;
 using Application.Validators.EmployeeValidator;
-using Domain.Models.Employee;
 using Infrastructure.Entities;
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using IEmployeeServices = Application.Services.Employee.IEmployeeServices;
 
 namespace API.Controllers.Employee
 {
@@ -20,8 +24,11 @@ namespace API.Controllers.Employee
         private readonly IMediator _mediator;
         private readonly ILogger<EmployeeController> _logger;
         private readonly EmployeeValidations _employeeValidations;
+        private readonly IEmployeeServices _employeeService;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, Mediator mediator, ILogger<EmployeeController> logger, EmployeeValidations validations)
+
+        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, Mediator mediator,
+            ILogger<EmployeeController> logger, EmployeeValidations validations, IEmployeeServices employeeService)
         {
             _employeeRepository = employeeRepository;
             _userManager = userManager;
@@ -29,22 +36,31 @@ namespace API.Controllers.Employee
             _mediator = mediator;
             _logger = logger;
             _employeeValidations = validations;
+            _employeeService = employeeService;
         }
 
         // GET: api/Employee
         [HttpGet]
         [Route("Get All Employees")]
-        public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployees()
         {
-            var employees = await _employeeRepository.GetEmployeesAsync();
-            return Ok(employees);
+            try
+            {
+                var employees = await _mediator.Send(new GetAllEmployeesQuery());
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting all employees");
+                return StatusCode(500, new { Message = "Internal server error" });
+            }
         }
 
         // GET: api/Employee/{id}
         [HttpGet("Get Employee By {id}")]
-        public async Task<ActionResult<EmployeeModel>> GetEmployee(Guid id)
+        public async Task<ActionResult<EmployeeDto>> GetEmployeeById(Guid id)
         {
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
+            var employee = await _mediator.Send(new GetEmployeeByIdQuery(id));
             if (employee == null)
             {
                 return NotFound();
@@ -55,9 +71,9 @@ namespace API.Controllers.Employee
         // POST: api/Employee
         [HttpPost]
         [Route("Add Employee")]
-        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeDto employeeDto)
+        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeDto employeeDto, bool isAdmin)
         {
-            _logger.LogInformation("Starting to create new employee: {Email}", employeeDto.Email);
+            _logger.LogInformation("Starting to create new employee: {EmployeeEmail}", employeeDto.Email);
 
             try
             {
@@ -66,16 +82,21 @@ namespace API.Controllers.Employee
 
                 if (createdEmployee == null)
                 {
-                    _logger.LogWarning("Failed to create employee: {Email}", employeeDto.Email);
+                    _logger.LogWarning("Failed to create employee: {EmployeeEmail}", employeeDto.Email);
                     return BadRequest(new { Message = "Failed to create employee" });
                 }
 
+                if (isAdmin)
+                {
+                    await _employeeService.AssignRole(employeeDto.Email, "Admin");
+                }
+
                 _logger.LogInformation("Employee created successfully: {Id}", createdEmployee.Id);
-                return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.Id }, createdEmployee);
+                return CreatedAtAction(nameof(GetEmployees), new { id = createdEmployee.Id }, createdEmployee);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating employee: {Email}", employeeDto.Email);
+                _logger.LogError(ex, "Error creating employee: {EmployeeEmail}", employeeDto.Email);
                 return StatusCode(500, new { Message = "Internal server error" });
             }
         }
@@ -83,26 +104,55 @@ namespace API.Controllers.Employee
 
         // PUT: api/Employee/{id}
         [HttpPut("Update Employee By {id}")]
-        public async Task<IActionResult> UpdateEmployee(Guid id, EmployeeModel employee)
+        public async Task<IActionResult> UpdateEmployee(Guid id, EmployeeDto employeeDto)
         {
-            var updatedEmployee = await _employeeRepository.UpdateEmployeeAsync(id, employee);
-            if (updatedEmployee == null)
+            try
             {
-                return NotFound();
+                var command = new UpdateEmployeeCommand(employeeDto, id);
+                var updatedEmployee = await _mediator.Send(command);
+                if (updatedEmployee == null)
+                {
+                    return NotFound();
+                }
+                return Ok(new { Message = "Update successful." });
+
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating employee: {EmployeeEmail}", employeeDto.Email);
+                return StatusCode(500, new { Message = "Internal server error" });
+            }
         }
 
         // DELETE: api/Employee/{id}
         [HttpDelete("Delete Employee By {id}")]
         public async Task<IActionResult> DeleteEmployee(Guid id)
         {
-            var result = await _employeeRepository.DeleteEmployeeAsync(id);
-            if (!result)
+
+            try
             {
-                return NotFound();
+                var command = new DeleteEmployeeCommand(id);
+                var deletedEmployee = await _mediator.Send(command);
+                if (deletedEmployee == null)
+                {
+                    return NotFound();
+                }
+                _logger.LogInformation("Employee deleted successfully: {Id}", id);
+                return Ok(new { Message = "Employee deleted successfully." });
+
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting employee: {EmployeeId}", id);
+                return StatusCode(500, new { Message = "Internal server error" });
+
+            }
+
+
         }
+
+
+
+
     }
 }

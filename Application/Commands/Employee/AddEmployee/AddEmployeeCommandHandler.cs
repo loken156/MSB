@@ -20,7 +20,7 @@ namespace Application.Commands.Employee.AddEmployee
                 {
                     FirstName = request.NewEmployee.FirstName,
                     LastName = request.NewEmployee.LastName,
-                    Email = request.NewEmployee.Email,
+                    EmployeeEmail = request.NewEmployee.Email,
                     // Initialize other properties as needed
                 };
 

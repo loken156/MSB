@@ -18,7 +18,7 @@ namespace Application.Commands.Employee.UpdateEmployee
                 throw new KeyNotFoundException("Employee not found");
             }
 
-            employee.Email = command.UpdateEmployeeDto.Email ?? employee.Email;
+            employee.EmployeeEmail = command.UpdateEmployeeDto.Email ?? employee.EmployeeEmail;
             employee.FirstName = command.UpdateEmployeeDto.FirstName ?? employee.FirstName;
             employee.LastName = command.UpdateEmployeeDto.LastName ?? employee.LastName;
             await _employeeRepository.UpdateEmployeeAsync(command.EmployeeId, employee);
