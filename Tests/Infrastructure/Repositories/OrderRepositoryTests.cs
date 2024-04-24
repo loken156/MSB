@@ -1,12 +1,21 @@
 ﻿using Domain.Models.Order;
 using Infrastructure.Database;
 using Infrastructure.Repositories.OrderRepo;
+using Infrastructure.Services.Notification;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace Tests.Infrastructure.Repositories
 {
     public class OrderRepositoryTests
     {
+        private readonly Mock<INotificationService> _notificationServiceMock;
+
+        public OrderRepositoryTests()
+        {
+            _notificationServiceMock = new Mock<INotificationService>();
+        }
+
         [Fact]
         public async Task GetAllOrdersAsync_ReturnsAllOrders()
         {
@@ -26,7 +35,7 @@ namespace Tests.Infrastructure.Repositories
             }
             using (var context = new MSB_Database(options))
             {
-                var orderRepository = new OrderRepository(context);
+                var orderRepository = new OrderRepository(context, _notificationServiceMock.Object);
 
                 // Act
                 var result = await orderRepository.GetAllOrdersAsync();
@@ -52,7 +61,7 @@ namespace Tests.Infrastructure.Repositories
             }
             using (var context = new MSB_Database(options))
             {
-                var orderRepository = new OrderRepository(context);
+                var orderRepository = new OrderRepository(context, _notificationServiceMock.Object);
 
                 // Act
                 var result = await orderRepository.GetOrderByIdAsync(orderId);
@@ -72,7 +81,7 @@ namespace Tests.Infrastructure.Repositories
             var order = new OrderModel { OrderId = Guid.NewGuid(), OrderNumber = 1, OrderDate = DateTime.Now, TotalCost = 100.0m, UserId = Guid.NewGuid().ToString(), CarId = Guid.NewGuid(), WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
-                var orderRepository = new OrderRepository(context);
+                var orderRepository = new OrderRepository(context, _notificationServiceMock.Object);
 
                 // Act
                 var result = await orderRepository.AddOrderAsync(order);
@@ -100,7 +109,7 @@ namespace Tests.Infrastructure.Repositories
             }
             using (var context = new MSB_Database(options))
             {
-                var orderRepository = new OrderRepository(context);
+                var orderRepository = new OrderRepository(context, _notificationServiceMock.Object);
 
                 // Act
                 var result = await orderRepository.UpdateOrderAsync(updatedOrder);
@@ -127,7 +136,7 @@ namespace Tests.Infrastructure.Repositories
             }
             using (var context = new MSB_Database(options))
             {
-                var orderRepository = new OrderRepository(context);
+                var orderRepository = new OrderRepository(context, _notificationServiceMock.Object);
 
                 // Act
                 await orderRepository.DeleteOrderAsync(orderId);

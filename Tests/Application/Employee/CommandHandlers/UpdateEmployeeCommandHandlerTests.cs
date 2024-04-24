@@ -15,7 +15,7 @@ namespace Tests.Application.Employee.CommandHandlers
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             var handler = new UpdateEmployeeCommandHandler(mockEmployeeRepository.Object);
             var employeeId = Guid.NewGuid();
-            var employeeDto = new EmployeeDto { EmployeeId = employeeId, FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
+            var employeeDto = new EmployeeDto { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
             var command = new UpdateEmployeeCommand(employeeDto, employeeId);
 
             // Set up GetEmployeeByIdAsync to return a non-null value
@@ -36,7 +36,7 @@ namespace Tests.Application.Employee.CommandHandlers
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             var handler = new UpdateEmployeeCommandHandler(mockEmployeeRepository.Object);
             var employeeId = Guid.NewGuid();
-            var employeeDto = new EmployeeDto { EmployeeId = employeeId, FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
+            var employeeDto = new EmployeeDto { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
             var command = new UpdateEmployeeCommand(employeeDto, employeeId);
 
             // Set up GetEmployeeByIdAsync to return a non-null value
@@ -59,7 +59,7 @@ namespace Tests.Application.Employee.CommandHandlers
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(updatedEmployee);
             var employeeId = Guid.NewGuid();
-            var employeeDto = new EmployeeDto { EmployeeId = employeeId, FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
+            var employeeDto = new EmployeeDto { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
             var handler = new UpdateEmployeeCommandHandler(mockEmployeeRepository.Object);
             var command = new UpdateEmployeeCommand(employeeDto, employeeId);
 
@@ -78,7 +78,7 @@ namespace Tests.Application.Employee.CommandHandlers
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync((EmployeeModel?)null);
             var employeeId = Guid.NewGuid();
-            var employeeDto = new EmployeeDto { EmployeeId = employeeId, FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
+            var employeeDto = new EmployeeDto { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
             var handler = new UpdateEmployeeCommandHandler(mockEmployeeRepository.Object);
             var command = new UpdateEmployeeCommand(employeeDto, employeeId);
 

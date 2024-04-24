@@ -4,6 +4,7 @@ using Domain.Models.Admin;
 using Infrastructure.Repositories.AdminRepo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace Tests.API.Controllers
@@ -12,13 +13,15 @@ namespace Tests.API.Controllers
     {
         private readonly Mock<IAdminRepository> _adminRepositoryMock;
         private readonly Mock<UserManager<IdentityUser>> _userManagerMock;
+        private readonly Mock<ILogger<AdminController>> _loggerMock;
         private readonly AdminController _controller;
 
         public AdminControllerTests()
         {
             _adminRepositoryMock = new Mock<IAdminRepository>();
             _userManagerMock = new Mock<UserManager<IdentityUser>>(Mock.Of<IUserStore<IdentityUser>>(), null, null, null, null, null, null, null, null);
-            _controller = new AdminController(_adminRepositoryMock.Object, _userManagerMock.Object);
+            _loggerMock = new Mock<ILogger<AdminController>>();
+            _controller = new AdminController(_adminRepositoryMock.Object, _userManagerMock.Object, _loggerMock.Object);
         }
 
         [Fact]
