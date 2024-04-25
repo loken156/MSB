@@ -2,7 +2,6 @@
 using Domain.Models.Admin;
 using Domain.Models.Box;
 using Domain.Models.Car;
-using Domain.Models.Driver;
 using Domain.Models.Employee;
 using Domain.Models.Order;
 using Domain.Models.Shelf;
@@ -15,7 +14,6 @@ public interface IMSBDatabase
     DbSet<ApplicationUser> Users { get; set; }
     DbSet<EmployeeModel> Employees { get; set; }
     DbSet<AddressModel> Addresses { get; set; }
-    DbSet<DriverModel> Drivers { get; set; }
     DbSet<CarModel> Cars { get; set; }
     DbSet<OrderModel> Orders { get; set; }
     DbSet<WarehouseModel> Warehouses { get; set; }

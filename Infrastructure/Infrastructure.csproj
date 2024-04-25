@@ -38,7 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Repositories\EmployeeRepo\" />
-    <Folder Include="Repositories\DriverRepo\" />
     <Folder Include="Repositories\CarRepo\" />
     <Folder Include="Services\Notification\" />
   </ItemGroup>

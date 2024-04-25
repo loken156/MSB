@@ -9,6 +9,8 @@ namespace Infrastructure.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string EmployeeEmail { get; set; } // Implement the missing property
+
         public ICollection<OrderModel> Orders { get; set; }
         public ICollection<AddressModel> Addresses { get; set; }
     }

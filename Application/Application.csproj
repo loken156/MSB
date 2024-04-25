@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Queries\Driver\**" />
+    <EmbeddedResource Remove="Queries\Driver\**" />
+    <None Remove="Queries\Driver\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Dto\Box\.cs" />
     <Compile Remove="Dto\Box\Bo.cs" />
     <Compile Remove="Dto\Box\Box.cs" />
@@ -21,7 +27,6 @@
     <Folder Include="Commands\Users\UpdateUser\" />
     <Folder Include="Dto\Employee\" />
     <Folder Include="Dto\Item\" />
-    <Folder Include="Dto\Driver\" />
     <Folder Include="Dto\Car\" />
     <Folder Include="Dto\Shelf\" />
     <Folder Include="Dto\PaymentMethod\" />
@@ -41,13 +46,6 @@
     <Folder Include="Queries\Employee\" />
     <Folder Include="Queries\Employee\GetAll\" />
     <Folder Include="Queries\Employee\GetById\" />
-    <Folder Include="Commands\Driver\" />
-    <Folder Include="Commands\Driver\AddDriver\" />
-    <Folder Include="Commands\Driver\DeleteDriver\" />
-    <Folder Include="Commands\Driver\UpdateDriver\" />
-    <Folder Include="Queries\Driver\" />
-    <Folder Include="Queries\Driver\GetAll\" />
-    <Folder Include="Queries\Driver\GetById\" />
     <Folder Include="Queries\Car\" />
     <Folder Include="Queries\Car\GetAll\" />
     <Folder Include="Queries\Car\GetById\" />
@@ -90,12 +88,7 @@
     <None Remove="Queries\Employee\GetAll\" />
     <None Remove="Queries\Employee\GetById\" />
     <None Remove="Commands\Driver\" />
-    <None Remove="Commands\Driver\AddDriver\" />
-    <None Remove="Commands\Driver\DeleteDriver\" />
-    <None Remove="Commands\Driver\UpdateDriver\" />
     <None Remove="Queries\Driver\" />
-    <None Remove="Queries\Driver\GetAll\" />
-    <None Remove="Queries\Driver\GetById\" />
     <None Remove="Queries\Car\" />
     <None Remove="Queries\Car\GetAll\" />
     <None Remove="Queries\Car\GetById\" />
