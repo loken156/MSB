@@ -55,7 +55,8 @@ namespace Tests.Application.Employee.CommandHandlers
             // Arrange
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             mockEmployeeRepository.Setup(repo => repo.CreateEmployeeAsync(It.IsAny<EmployeeModel>()))
-                .ReturnsAsync((EmployeeModel)null);
+                .ReturnsAsync(new EmployeeModel());
+
             var handler = new AddEmployeeCommandHandler(mockEmployeeRepository.Object);
             var command = new AddEmployeeCommand(new EmployeeDto { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" });
 

@@ -111,7 +111,7 @@ namespace Tests.API.Controllers
         {
             // Arrange
             var id = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAddressByIdQuery>(), default)).Returns(Task.FromResult<AddressModel>(null));
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAddressByIdQuery>(), default)).ReturnsAsync(new AddressModel());
 
             // Act
             var result = await _controller.GetAddressById(id);

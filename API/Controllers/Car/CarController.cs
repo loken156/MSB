@@ -28,7 +28,7 @@ namespace API.Controllers.Car
         private readonly IMediator _mediator;
 
 
-        public CarController(ICarRepository carRepository, GetAllCarsQueryHandler getAllCarsQueryHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, AddCarCommandHandler addCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, IOrderRepository orderRepository)
+        public CarController(ICarRepository carRepository, GetAllCarsQueryHandler getAllCarsQueryHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, AddCarCommandHandler addCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, IOrderRepository orderRepository, ILogger<CarController> logger, IMediator mediator)
         {
             _carRepository = carRepository;
             _getAllCarsQueryHandler = getAllCarsQueryHandler;
@@ -37,7 +37,8 @@ namespace API.Controllers.Car
             _deleteCarCommandHandler = deleteCarCommandHandler;
             _updateCarCommandHandler = updateCarCommandHandler;
             _orderRepository = orderRepository;
-
+            _logger = logger;
+            _mediator = mediator;
         }
 
         [HttpGet("{carId}")]

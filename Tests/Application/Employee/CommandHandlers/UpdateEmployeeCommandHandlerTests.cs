@@ -76,7 +76,7 @@ namespace Tests.Application.Employee.CommandHandlers
             // Arrange
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((EmployeeModel?)null);
+                .ReturnsAsync(new EmployeeModel());
             var employeeId = Guid.NewGuid();
             var employeeDto = new EmployeeDto { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
             var handler = new UpdateEmployeeCommandHandler(mockEmployeeRepository.Object);

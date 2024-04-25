@@ -69,7 +69,7 @@ namespace Tests.Application.Employee.CommandHandlers
             // Arrange
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((EmployeeModel)null);
+                .ReturnsAsync(new EmployeeModel());
             var handler = new DeleteEmployeeCommandHandler(mockEmployeeRepository.Object);
             var command = new DeleteEmployeeCommand(Guid.NewGuid());
 

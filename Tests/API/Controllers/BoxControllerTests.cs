@@ -88,7 +88,7 @@ namespace Tests.API.Controllers
         {
             // Arrange
             var id = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetBoxByIdQuery>(), default)).ReturnsAsync((BoxModel)null);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetBoxByIdQuery>(), default)).ReturnsAsync(new BoxModel());
 
             // Act
             var result = await _controller.GetBoxById(id);
