@@ -1,16 +1,21 @@
 name: Pull Request Checks
 
 on:
-  pull_request:
+ pull_request:
     branches: [development, production]
 
 jobs:
-  deploy:
+ deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set line endings to CRLF
+        run: |
+          git config --global core.autocrlf true
+          git config --global core.eol crlf
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
