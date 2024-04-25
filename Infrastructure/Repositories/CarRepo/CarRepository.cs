@@ -22,12 +22,12 @@ namespace Infrastructure.Repositories.CarRepo
 
         public async Task<IEnumerable<CarModel>> GetAllCars()
         {
-            return await _database.Cars.Include(c => c.Employee).ToListAsync();
+            return await _database.Cars.ToListAsync();
         }
 
         public async Task<CarModel?> GetCarById(Guid carId)
         {
-            return await _database.Cars.Include(c => c.Employee).FirstOrDefaultAsync(c => c.CarId == carId);
+            return await _database.Cars.FirstOrDefaultAsync(c => c.CarId == carId);
         }
 
 

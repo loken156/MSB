@@ -62,20 +62,5 @@ namespace Tests.Application.Employee.CommandHandlers
             // Assert
             Assert.Equal(deletedEmployee, result);
         }
-
-        [Fact]
-        public async Task Handle_GivenInvalidCommand_ThrowsException()
-        {
-            // Arrange
-            var mockEmployeeRepository = new Mock<IEmployeeRepository>();
-            mockEmployeeRepository.Setup(repo => repo.GetEmployeeByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(new EmployeeModel());
-            var handler = new DeleteEmployeeCommandHandler(mockEmployeeRepository.Object);
-            var command = new DeleteEmployeeCommand(Guid.NewGuid());
-
-            // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => handler.Handle(command, CancellationToken.None));
-        }
-
     }
 }

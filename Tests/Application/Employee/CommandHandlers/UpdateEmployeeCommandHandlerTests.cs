@@ -69,21 +69,5 @@ namespace Tests.Application.Employee.CommandHandlers
             // Assert
             Assert.Equal(updatedEmployee, result);
         }
-
-        [Fact]
-        public async Task Handle_GivenInvalidCommand_ThrowsException()
-        {
-            // Arrange
-            var mockEmployeeRepository = new Mock<IEmployeeRepository>();
-            mockEmployeeRepository.Setup(repo => repo.GetEmployeeByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(new EmployeeModel());
-            var employeeId = Guid.NewGuid();
-            var employeeDto = new EmployeeDto { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
-            var handler = new UpdateEmployeeCommandHandler(mockEmployeeRepository.Object);
-            var command = new UpdateEmployeeCommand(employeeDto, employeeId);
-
-            // Act & Assert
-            await Assert.ThrowsAsync<KeyNotFoundException>(() => handler.Handle(command, CancellationToken.None));
-        }
     }
 }

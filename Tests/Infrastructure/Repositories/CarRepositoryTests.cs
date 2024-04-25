@@ -14,7 +14,7 @@ namespace Tests.Infrastructure.Repositories
             var options = new DbContextOptionsBuilder<MSB_Database>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            var car = new CarModel { CarId = Guid.NewGuid(), Volume = 100, Type = "TestCar", Availability = "Available" };
+            var car = new CarModel { CarId = Guid.NewGuid(), Volume = 100, Type = "TestCar", Availability = "Available", Employee = "TestEmployee" };
             using (var context = new MSB_Database(options))
             {
                 var carRepository = new CarRepository(context);
@@ -36,8 +36,8 @@ namespace Tests.Infrastructure.Repositories
                 .Options;
             var cars = new List<CarModel>
             {
-                new CarModel { CarId = Guid.NewGuid(), Volume = 100, Type = "TestCar1", Availability = "Available" },
-                new CarModel { CarId = Guid.NewGuid(), Volume = 200, Type = "TestCar2", Availability = "Unavailable" },
+                new CarModel { CarId = Guid.NewGuid(), Volume = 100, Type = "TestCar1", Availability = "Available", Employee = "TestEmployee1" },
+                new CarModel { CarId = Guid.NewGuid(), Volume = 200, Type = "TestCar2", Availability = "Unavailable", Employee = "TestEmployee2" },
             };
             using (var context = new MSB_Database(options))
             {
@@ -64,7 +64,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var carId = Guid.NewGuid();
-            var expectedCar = new CarModel { CarId = carId, Volume = 100, Type = "TestCar", Availability = "Available" };
+            var expectedCar = new CarModel { CarId = carId, Volume = 100, Type = "TestCar", Availability = "Available", Employee = "TestEmployee" };
             using (var context = new MSB_Database(options))
             {
                 context.Cars.Add(expectedCar);
@@ -78,7 +78,7 @@ namespace Tests.Infrastructure.Repositories
                 var result = await carRepository.GetCarById(carId);
 
                 // Assert
-                Assert.Equal(expectedCar.CarId, result.CarId);
+                Assert.Equal(expectedCar.CarId, result?.CarId);
             }
         }
 
@@ -90,8 +90,8 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var carId = Guid.NewGuid();
-            var originalCar = new CarModel { CarId = carId, Volume = 100, Type = "OriginalCar", Availability = "Available" };
-            var updatedCar = new CarModel { CarId = carId, Volume = 200, Type = "UpdatedCar", Availability = "Unavailable" };
+            var originalCar = new CarModel { CarId = carId, Volume = 100, Type = "OriginalCar", Availability = "Available", Employee = "TestEmployee" };
+            var updatedCar = new CarModel { CarId = carId, Volume = 200, Type = "UpdatedCar", Availability = "Unavailable", Employee = "TestEmployee" };
             using (var context = new MSB_Database(options))
             {
                 context.Cars.Add(originalCar);
@@ -118,7 +118,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var carId = Guid.NewGuid();
-            var car = new CarModel { CarId = carId, Volume = 100, Type = "TestCar", Availability = "Available" };
+            var car = new CarModel { CarId = carId, Volume = 100, Type = "TestCar", Availability = "Available", Employee = "TestEmployee" };
             using (var context = new MSB_Database(options))
             {
                 context.Cars.Add(car);
