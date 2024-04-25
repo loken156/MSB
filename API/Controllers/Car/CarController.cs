@@ -4,7 +4,6 @@ using Application.Commands.Car.UpdateCar;
 using Application.Dto.Car;
 using Application.Queries.Car;
 using Application.Queries.Car.GetById;
-using Domain.Models;
 using Domain.Models.Car;
 using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.OrderRepo;
