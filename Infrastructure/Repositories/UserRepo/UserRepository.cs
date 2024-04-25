@@ -41,7 +41,7 @@ namespace Infrastructure.Repositories.UserRepo
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                throw new ArgumentException("Email cannot be null or empty", nameof(email));
+                throw new ArgumentException("EmployeeEmail cannot be null or empty", nameof(email));
             }
             var user = await _database.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
             return user as IAppUser ?? throw new KeyNotFoundException($"User with email {email} not found");

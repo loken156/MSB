@@ -33,6 +33,10 @@
     <Folder Include="Dto\Repair\" />
     <Folder Include="Dto\Transaction\" />
     <Folder Include="Dto\User\" />
+    <Folder Include="Commands\Admin\Delete\" />
+    <Folder Include="Commands\Admin\Update\" />
+    <Folder Include="Queries\Admin\GetAll\" />
+    <Folder Include="Queries\Admin\GetById\" />
     <Folder Include="Queries\User\GetAll\" />
     <Folder Include="Queries\User\GetById\" />
     <Folder Include="Queries\Order\GetAll\" />

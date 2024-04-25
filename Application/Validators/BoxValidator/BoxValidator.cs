@@ -1,13 +1,13 @@
-﻿using Domain.Models.Box;
+﻿using Application.Dto.Box;
 using FluentValidation;
 
 namespace Application.Validators.BoxValidator
 {
-    public class BoxValidator : AbstractValidator<BoxModel>
+    public class BoxValidator : AbstractValidator<BoxDto>
     {
         public BoxValidator()
         {
-            RuleFor(box => box.BoxId)
+            RuleFor(command => command.BoxId)
                 .NotEmpty().WithMessage("Box ID can't be empty");
 
             RuleFor(box => box.Type)
