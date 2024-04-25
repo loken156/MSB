@@ -1,19 +1,22 @@
 ﻿using Application.Queries.Employee.GetAll;
 using Domain.Models.Employee;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repositories.EmployeeRepo;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace Tests.Application.Employee.QueryHandlers
 {
     public class GetAllEmployeesQueryHandlerTests
     {
-        private readonly Mock<IMSBDatabase> _mockDatabase;
+        private readonly Mock<IEmployeeRepository> _mockEmployeeRepository;
         private readonly GetAllEmployeesQueryHandler _handler;
+        private readonly Mock<ILogger<GetAllEmployeesQueryHandler>> _logger;
 
         public GetAllEmployeesQueryHandlerTests()
         {
-            _mockDatabase = new Mock<IMSBDatabase>();
-            _handler = new GetAllEmployeesQueryHandler(_mockDatabase.Object);
+            _mockEmployeeRepository = new Mock<IEmployeeRepository>();
+            _logger = new Mock<ILogger<GetAllEmployeesQueryHandler>>();
+            _handler = new GetAllEmployeesQueryHandler(_mockEmployeeRepository.Object, _logger.Object);
         }
 
         [Fact]
@@ -22,43 +25,25 @@ namespace Tests.Application.Employee.QueryHandlers
             // Arrange
             var employees = new List<EmployeeModel>
             {
-                new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" },
-                new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "Jane", LastName = "Doe", Email = "jane.doe@example.com" }
-            }.AsQueryable();
-
-            var mockSet = new Mock<DbSet<EmployeeModel>>();
-            mockSet.As<IQueryable<EmployeeModel>>().Setup(m => m.Provider).Returns(employees.Provider);
-            mockSet.As<IQueryable<EmployeeModel>>().Setup(m => m.Expression).Returns(employees.Expression);
-            mockSet.As<IQueryable<EmployeeModel>>().Setup(m => m.ElementType).Returns(employees.ElementType);
-            mockSet.As<IQueryable<EmployeeModel>>().Setup(m => m.GetEnumerator()).Returns(employees.GetEnumerator());
-            mockSet.As<IAsyncEnumerable<EmployeeModel>>().Setup(d => d.GetAsyncEnumerator(new CancellationToken()))
-                .Returns(new TestAsyncEnumerator<EmployeeModel>(employees.GetEnumerator()));
-
-            _mockDatabase.Setup(m => m.Employees).Returns(mockSet.Object);
+                new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "John", LastName = "Doe", EmployeeEmail = "john.doe@example.com" },
+                new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "Jane", LastName = "Doe", EmployeeEmail = "jane.doe@example.com" }
+            };
+            _mockEmployeeRepository.Setup(m => m.GetEmployeesAsync()).ReturnsAsync(employees);
 
             // Act
             var result = await _handler.Handle(new GetAllEmployeesQuery(), default);
 
             // Assert
-            Assert.Equal(employees.Count(), result.Count);
+            Assert.Equal(employees.Count, result.Count);
         }
 
         [Fact]
         public async Task Handle_MapsEmployeeModelCorrectly()
         {
             // Arrange
-            var employee = new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
-            var employees = new List<EmployeeModel> { employee }.AsQueryable();
-
-            var mockSet = new Mock<DbSet<EmployeeModel>>();
-            mockSet.As<IQueryable<EmployeeModel>>().Setup(m => m.Provider).Returns(employees.Provider);
-            mockSet.As<IQueryable<EmployeeModel>>().Setup(m => m.Expression).Returns(employees.Expression);
-            mockSet.As<IQueryable<EmployeeModel>>().Setup(m => m.ElementType).Returns(employees.ElementType);
-            mockSet.As<IQueryable<EmployeeModel>>().Setup(m => m.GetEnumerator()).Returns(employees.GetEnumerator());
-            mockSet.As<IAsyncEnumerable<EmployeeModel>>().Setup(d => d.GetAsyncEnumerator(new CancellationToken()))
-                .Returns(new TestAsyncEnumerator<EmployeeModel>(employees.GetEnumerator()));
-
-            _mockDatabase.Setup(m => m.Employees).Returns(mockSet.Object);
+            var employee = new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "John", LastName = "Doe", EmployeeEmail = "john.doe@example.com" };
+            var employees = new List<EmployeeModel> { employee };
+            _mockEmployeeRepository.Setup(m => m.GetEmployeesAsync()).ReturnsAsync(employees);
 
             // Act
             var result = await _handler.Handle(new GetAllEmployeesQuery(), default);
@@ -68,31 +53,7 @@ namespace Tests.Application.Employee.QueryHandlers
             Assert.Equal(employee.Id, employeeDto.Id);
             Assert.Equal(employee.FirstName, employeeDto.FirstName);
             Assert.Equal(employee.LastName, employeeDto.LastName);
-            Assert.Equal(employee.Email, employeeDto.Email);
-        }
-
-
-        public class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
-        {
-            private readonly IEnumerator<T> _inner;
-
-            public TestAsyncEnumerator(IEnumerator<T> inner)
-            {
-                _inner = inner;
-            }
-
-            public T Current => _inner.Current;
-
-            public ValueTask DisposeAsync()
-            {
-                _inner.Dispose();
-                return new ValueTask();
-            }
-
-            public ValueTask<bool> MoveNextAsync()
-            {
-                return new ValueTask<bool>(_inner.MoveNext());
-            }
+            Assert.Equal(employee.EmployeeEmail, employeeDto.EmployeeEmail);
         }
     }
 }

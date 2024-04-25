@@ -54,7 +54,7 @@ namespace Tests.Application.Employee.CommandHandlers
         public async Task Handle_GivenValidCommand_ReturnsUpdatedEmployeeModel()
         {
             // Arrange
-            var updatedEmployee = new EmployeeModel { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
+            var updatedEmployee = new EmployeeModel { FirstName = "John", LastName = "Doe", EmployeeEmail = "john.doe@example.com" };
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(updatedEmployee);

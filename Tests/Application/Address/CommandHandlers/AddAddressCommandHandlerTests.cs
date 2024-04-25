@@ -1,15 +1,24 @@
 ﻿using Application.Commands.Address.AddAddress;
 using Domain.Models.Address;
+using Infrastructure.Repositories.AddressRepo;
+using Moq;
 
 namespace Tests.Application.Address.CommandHandlers
 {
     public class AddAddressCommandHandlerTests
     {
+        private readonly Mock<IAddressRepository> _addressRepositoryMock;
+
+        public AddAddressCommandHandlerTests()
+        {
+            _addressRepositoryMock = new Mock<IAddressRepository>();
+        }
+
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsCorrectAddressModel()
         {
             // Arrange
-            var handler = new AddAddressCommandHandler();
+            var handler = new AddAddressCommandHandler(_addressRepositoryMock.Object);
             var command = new AddAddressCommand(new AddressModel
             {
                 StreetName = "Test Street",
@@ -23,7 +32,6 @@ namespace Tests.Application.Address.CommandHandlers
                 Latitude = 12.34,
                 Longitude = 56.78
             });
-
 
             // Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -45,12 +53,12 @@ namespace Tests.Application.Address.CommandHandlers
         public async Task Handle_GivenNullValues_ReturnsAddressModelWithEmptyStrings()
         {
             // Arrange
-            var handler = new AddAddressCommandHandler();
+            var handler = new AddAddressCommandHandler(_addressRepositoryMock.Object);
             var command = new AddAddressCommand(new AddressModel
             {
-                StreetName = null,
-                StreetNumber = null,
-                ZipCode = null
+                StreetName = string.Empty,
+                StreetNumber = string.Empty,
+                ZipCode = string.Empty
             });
 
             // Act

@@ -1,81 +1,46 @@
 ﻿using Application.Queries.Car;
 using Domain.Models.Car;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repositories.CarRepo;
 using Moq;
 
 namespace Tests.Application.Car.QueryHandlers
 {
     public class GetAllCarsQueryHandlerTests
     {
+        private readonly Mock<ICarRepository> _mockCarRepository;
+        private readonly GetAllCarsQueryHandler _handler;
+
+        public GetAllCarsQueryHandlerTests()
+        {
+            _mockCarRepository = new Mock<ICarRepository>();
+            _handler = new GetAllCarsQueryHandler(_mockCarRepository.Object);
+        }
+
         [Fact]
         public async Task Handle_GivenValidQuery_AccessesCarsOnDatabase()
         {
             // Arrange
-            var data = new List<CarModel>
+            var cars = new List<CarModel>
             {
                 new CarModel { CarId = Guid.NewGuid(), Volume = 1000, Type = "Type1", Availability = "Available" }
-            }.AsQueryable();
-
-            var mockSet = new Mock<DbSet<CarModel>>();
-            mockSet.As<IQueryable<CarModel>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<CarModel>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<CarModel>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<CarModel>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
-            mockSet.As<IAsyncEnumerable<CarModel>>().Setup(d => d.GetAsyncEnumerator(new CancellationToken()))
-                .Returns(new TestAsyncEnumerator<CarModel>(data.GetEnumerator()));
-
-            var mockContext = new Mock<IMSBDatabase>();
-            mockContext.Setup(c => c.Cars).Returns(mockSet.Object);
-
-            var handler = new GetAllCarsQueryHandler(mockContext.Object);
-            var query = new GetAllCarsQuery();
+            };
+            _mockCarRepository.Setup(m => m.GetAllCars()).ReturnsAsync(cars);
 
             // Act
-            var result = await handler.Handle(query);
+            var result = await _handler.Handle(new GetAllCarsQuery());
 
             // Assert
-            Assert.Equal(data.ToList(), result);
+            Assert.Equal(cars, result);
         }
 
         [Fact]
         public async Task Handle_GivenInvalidQuery_ThrowsException()
         {
             // Arrange
-            var mockSet = new Mock<DbSet<CarModel>>();
-            mockSet.As<IAsyncEnumerable<CarModel>>().Setup(m => m.GetAsyncEnumerator(default)).Throws<Exception>();
-
-            var mockContext = new Mock<IMSBDatabase>();
-            mockContext.Setup(c => c.Cars).Returns(mockSet.Object);
-
-            var handler = new GetAllCarsQueryHandler(mockContext.Object);
-            var query = new GetAllCarsQuery();
+            _mockCarRepository.Setup(m => m.GetAllCars()).Throws<Exception>();
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => handler.Handle(query));
-        }
-    }
-
-    // Using this class to mock the GetSyncEnumerator() method of DbSet<CarModel> so that ToListAsync() works correctly in the tests
-    public class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
-    {
-        private readonly IEnumerator<T> _inner;
-
-        public TestAsyncEnumerator(IEnumerator<T> inner)
-        {
-            _inner = inner;
-        }
-
-        public T Current => _inner.Current;
-
-        public ValueTask DisposeAsync()
-        {
-            _inner.Dispose();
-            return new ValueTask();
-        }
-
-        public ValueTask<bool> MoveNextAsync()
-        {
-            return new ValueTask<bool>(_inner.MoveNext());
+            await Assert.ThrowsAsync<Exception>(() => _handler.Handle(new GetAllCarsQuery()));
         }
     }
 }

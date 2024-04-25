@@ -5,9 +5,11 @@ using Application.Commands.Box.UpdateBox;
 using Application.Dto.Box;
 using Application.Queries.Box.GetAll;
 using Application.Queries.Box.GetByID;
+using Application.Validators.BoxValidator;
 using Domain.Models.Box;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace Tests.API.Controllers
@@ -16,11 +18,15 @@ namespace Tests.API.Controllers
     {
         private readonly Mock<IMediator> _mediatorMock;
         private readonly BoxController _controller;
+        private readonly Mock<ILogger<BoxController>> _loggerMock;
+        private readonly Mock<BoxValidator> _validatorMock;
 
         public BoxControllerTests()
         {
             _mediatorMock = new Mock<IMediator>();
-            _controller = new BoxController(_mediatorMock.Object);
+            _loggerMock = new Mock<ILogger<BoxController>>();
+            _validatorMock = new Mock<BoxValidator>();
+            _controller = new BoxController(_mediatorMock.Object, _loggerMock.Object, _validatorMock.Object);
         }
 
         [Fact]

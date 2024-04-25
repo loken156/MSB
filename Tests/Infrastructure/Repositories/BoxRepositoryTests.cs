@@ -16,7 +16,6 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
-            // Shelf should not be needed here after the new logic implemntation for the warehouse -> shelf relationship has been added
             var shelfId = Guid.NewGuid();
             var shelf = new ShelfModel { ShelfId = shelfId, ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
 
@@ -25,7 +24,7 @@ namespace Tests.Infrastructure.Repositories
             {
                 context.Shelves.Add(shelf);
                 await context.SaveChangesAsync();
-                var boxRepository = new BoxRepository(context);
+                IBoxRepository boxRepository = new BoxRepository(context);
 
                 // Act
                 var result = await boxRepository.AddBoxAsync(box, shelfId);
@@ -35,7 +34,6 @@ namespace Tests.Infrastructure.Repositories
                 Assert.Single(context.Boxes);
             }
         }
-
 
         [Fact]
         public async Task DeleteBoxAsync_DeletesBoxFromDatabase()
@@ -53,7 +51,7 @@ namespace Tests.Infrastructure.Repositories
             }
             using (var context = new MSB_Database(options))
             {
-                var boxRepository = new BoxRepository(context);
+                IBoxRepository boxRepository = new BoxRepository(context);
 
                 // Act
                 await boxRepository.DeleteBoxAsync(boxId);
@@ -82,7 +80,7 @@ namespace Tests.Infrastructure.Repositories
             }
             using (var context = new MSB_Database(options))
             {
-                var boxRepository = new BoxRepository(context);
+                IBoxRepository boxRepository = new BoxRepository(context);
 
                 // Act
                 var result = await boxRepository.GetAllBoxesAsync();
@@ -108,7 +106,7 @@ namespace Tests.Infrastructure.Repositories
             }
             using (var context = new MSB_Database(options))
             {
-                var boxRepository = new BoxRepository(context);
+                IBoxRepository boxRepository = new BoxRepository(context);
 
                 // Act
                 var result = await boxRepository.GetBoxByIdAsync(boxId);
@@ -135,7 +133,7 @@ namespace Tests.Infrastructure.Repositories
             }
             using (var context = new MSB_Database(options))
             {
-                var boxRepository = new BoxRepository(context);
+                IBoxRepository boxRepository = new BoxRepository(context);
 
                 // Act
                 var result = await boxRepository.UpdateBoxAsync(updatedBox);

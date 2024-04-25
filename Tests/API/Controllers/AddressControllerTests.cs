@@ -8,10 +8,11 @@ using Application.Queries.Address.GetByID;
 using Application.Validators.AddressValidator;
 using Domain.Models.Address;
 using FluentValidation.Results;
-using Infrastructure.Repositories.AddressRepo;
+using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace Tests.API.Controllers
@@ -20,21 +21,24 @@ namespace Tests.API.Controllers
     {
         private readonly Mock<IMediator> _mediatorMock;
         private readonly Mock<IConfiguration> _configurationMock;
-        private readonly Mock<IAddressRepository> _addressRepositoryMock;
-        private readonly Mock<IAddressValidations> _addressValidationsMock;
+        private readonly Mock<AddressRepository> _addressRepositoryMock;
+        private readonly Mock<AddressValidations> _addressValidationsMock;
+        private readonly Mock<ILogger<AddressController>> _loggerMock;
         private readonly AddressController _controller;
 
         public AddressControllerTests()
         {
             _mediatorMock = new Mock<IMediator>();
             _configurationMock = new Mock<IConfiguration>();
-            _addressRepositoryMock = new Mock<IAddressRepository>();
-            _addressValidationsMock = new Mock<IAddressValidations>();
+            _addressRepositoryMock = new Mock<AddressRepository>();
+            _addressValidationsMock = new Mock<AddressValidations>();
+            _loggerMock = new Mock<ILogger<AddressController>>();
             _controller = new AddressController(
                 _mediatorMock.Object,
                 _configurationMock.Object,
                 _addressRepositoryMock.Object,
-                _addressValidationsMock.Object);
+                _addressValidationsMock.Object,
+                _loggerMock.Object);
         }
 
         [Fact]
@@ -107,7 +111,7 @@ namespace Tests.API.Controllers
         {
             // Arrange
             var id = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAddressByIdQuery>(), default)).ReturnsAsync((AddressModel)null);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAddressByIdQuery>(), default)).Returns(Task.FromResult<AddressModel>(null));
 
             // Act
             var result = await _controller.GetAddressById(id);
