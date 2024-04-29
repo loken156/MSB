@@ -79,7 +79,7 @@ namespace API.Controllers
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
-                    Permissions = adminDto.Permissions
+                    // Permissions = adminDto.Permissions
                 };
 
                 var createdAdmin = await _adminRepository.CreateAdminAsync(admin);
@@ -134,7 +134,7 @@ namespace API.Controllers
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
-                    Permissions = adminDto.Permissions
+                    // Permissions = adminDto.Permissions
                 };
 
                 var updatedAdmin = await _adminRepository.UpdateAdminAsync(id, admin);

@@ -19,6 +19,10 @@ namespace Application.Queries.Car.GetById
             {
                 var carId = request.CarId;
                 var car = await _carRepository.GetCarById(carId);
+                if (car == null)
+                {
+                    throw new KeyNotFoundException($"A car with the id {carId} was not found.");
+                }
                 return car;
             }
             catch (Exception ex)
@@ -27,5 +31,6 @@ namespace Application.Queries.Car.GetById
                 throw new Exception("Error occurred while fetching car by ID", ex);
             }
         }
+
     }
 }
