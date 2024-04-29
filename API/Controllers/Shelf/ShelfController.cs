@@ -55,10 +55,7 @@ namespace API.Controllers.Shelf
                 _logger.LogError(ex, "Error adding shelf with command: {Command}", command);
                 return StatusCode(500, "An error occurred while adding the shelf");
             }
-
         }
-
-
 
         [HttpGet]
         [Route("Get All Shelves")]

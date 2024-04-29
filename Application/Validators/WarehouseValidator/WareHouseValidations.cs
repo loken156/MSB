@@ -5,7 +5,6 @@ namespace Application.Validators.WarehouseValidator
 {
     public class WareHouseValidations : AbstractValidator<AddWarehouseDto>
     {
-
         public WareHouseValidations()
         {
             RuleFor(warehouse => warehouse.WarehouseName)
@@ -16,9 +15,9 @@ namespace Application.Validators.WarehouseValidator
             RuleFor(warehouse => warehouse.AddressId)
                 .NotEmpty().WithMessage("Address ID is required.");
 
-            RuleFor(warehouse => warehouse.ShelfId)
-                .NotEmpty().WithMessage("Shelf ID is required.");
+            RuleFor(warehouse => warehouse.ShelfIds)
+                .NotEmpty().WithMessage("At least one Shelf ID is required.")
+                .Must(ids => ids.All(id => id != Guid.Empty)).WithMessage("Shelf IDs must not be empty.");
         }
-
     }
 }

@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Queries\Driver\**" />
+    <EmbeddedResource Remove="Queries\Driver\**" />
+    <None Remove="Queries\Driver\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Dto\Box\.cs" />
     <Compile Remove="Dto\Box\Bo.cs" />
     <Compile Remove="Dto\Box\Box.cs" />

@@ -1,22 +1,21 @@
-﻿using Domain.Models.Car;
-using Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
+using Domain.Models.Car;
+using Infrastructure.Repositories.CarRepo;
 
 namespace Application.Queries.Car
 {
     public class GetAllCarsQueryHandler
     {
+        private readonly ICarRepository _carRepository;
 
-        private readonly MSB_Database _database;
-
-        public GetAllCarsQueryHandler(MSB_Database database)
+        public GetAllCarsQueryHandler(ICarRepository carRepository)
         {
-            _database = database;
+            _carRepository = carRepository;
         }
 
         public async Task<List<CarModel>> Handle(GetAllCarsQuery query)
         {
-            return await _database.Cars.ToListAsync();
+            var cars = await _carRepository.GetAllCars();
+            return cars.ToList();
         }
     }
 }

@@ -14,10 +14,9 @@ namespace API.Controllers
         private readonly IAdminRepository _adminRepository;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<AdminController> _logger;
-        private readonly Mediator _mediator;
+        private readonly IMediator _mediator;
 
-
-        public AdminController(IAdminRepository adminRepository, UserManager<IdentityUser> userManager, ILogger<AdminController> logger, Mediator mediator)
+        public AdminController(IAdminRepository adminRepository, UserManager<IdentityUser> userManager, ILogger<AdminController> logger, IMediator mediator)
         {
             _adminRepository = adminRepository;
             _userManager = userManager;
@@ -80,7 +79,7 @@ namespace API.Controllers
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
-                    Permissions = adminDto.Permissions
+                    // Permissions = adminDto.Permissions
                 };
 
                 var createdAdmin = await _adminRepository.CreateAdminAsync(admin);
@@ -135,7 +134,7 @@ namespace API.Controllers
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
-                    Permissions = adminDto.Permissions
+                    // Permissions = adminDto.Permissions
                 };
 
                 var updatedAdmin = await _adminRepository.UpdateAdminAsync(id, admin);

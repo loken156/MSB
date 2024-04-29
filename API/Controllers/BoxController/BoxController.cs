@@ -4,7 +4,7 @@ using Application.Commands.Box.UpdateBox;
 using Application.Dto.Box;
 using Application.Queries.Box.GetAll;
 using Application.Queries.Box.GetByID;
-using Application.Validators.BoxValidator;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +17,9 @@ namespace API.Controllers.BoxController
     {
         private readonly IMediator _mediator;
         private readonly ILogger<BoxController> _logger;
-        private readonly BoxValidator _boxValidator;
+        private readonly IValidator<BoxDto> _boxValidator;
 
-        public BoxController(IMediator mediator, ILogger<BoxController> logger, BoxValidator boxValidator)
+        public BoxController(IMediator mediator, ILogger<BoxController> logger, IValidator<BoxDto> boxValidator)
         {
             _mediator = mediator;
             _logger = logger;
@@ -31,7 +31,6 @@ namespace API.Controllers.BoxController
         public async Task<ActionResult<BoxDto>> AddBox(AddBoxCommand command)
         {
             _logger.LogInformation("Attempting to add a new box");
-
 
             ValidationResult validationResult = _boxValidator.Validate(command.NewBox);
             if (!validationResult.IsValid)
@@ -59,8 +58,6 @@ namespace API.Controllers.BoxController
                 return StatusCode(500, "An internal error occurred. Please try again later.");
             }
         }
-
-
 
         [HttpGet]
         [Route("Get All Boxes")]
@@ -137,10 +134,10 @@ namespace API.Controllers.BoxController
                 return StatusCode(500, "An error occurred while retrieving the box. Please try again later.");
             }
         }
+
         [HttpPut("Update Box By {id}")]
         public async Task<IActionResult> UpdateBox(Guid id, BoxDto boxDto)
         {
-
             // Inject ILogger via constructor or method injection to use it here
             _logger.LogInformation("Starting update of box with ID {BoxId}", id);
 
@@ -170,9 +167,6 @@ namespace API.Controllers.BoxController
                 _logger.LogError(ex, "Error occurred while updating box with ID {BoxId}", id);
                 return StatusCode(500, "An error occurred while updating the box. Please try again later.");
             }
-
-
-
         }
 
         [HttpDelete("Delete Box By {id}")]
@@ -191,9 +185,6 @@ namespace API.Controllers.BoxController
                 _logger.LogError(ex, "Error occurred while deleting the box with ID {BoxId}", id);
                 return StatusCode(500, "An error occurred whíle deleting the box. Please try again later.");
             }
-
-
         }
-
     }
 }

@@ -1,6 +1,5 @@
-﻿using Infrastructure.Repositories.CarRepo;
+using Infrastructure.Repositories.CarRepo;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Application.Commands.DriverCar
 {

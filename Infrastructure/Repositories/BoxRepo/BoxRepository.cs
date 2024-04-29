@@ -1,6 +1,5 @@
-﻿using Domain.Models.Box;
+using Domain.Models.Box;
 using Infrastructure.Database;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.BoxRepo

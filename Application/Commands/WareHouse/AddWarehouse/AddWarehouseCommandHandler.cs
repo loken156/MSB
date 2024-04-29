@@ -1,4 +1,5 @@
-﻿using Domain.Models.Warehouse;
+﻿using Domain.Models.Shelf;
+using Domain.Models.Warehouse;
 using Infrastructure.Repositories.WarehouseRepo;
 using MediatR;
 
@@ -17,7 +18,8 @@ namespace Application.Commands.Warehouse.AddWarehouse
             {
                 WarehouseId = Guid.NewGuid(),
                 WarehouseName = request.NewWarehouse.WarehouseName,
-                AddressId = request.NewWarehouse.AddressId
+                AddressId = request.NewWarehouse.AddressId,
+                Shelves = new List<ShelfModel>()
             };
 
             var createdWarehouse = await _warehouseRepository.AddWarehouseAsync(warehouseToCreate);
