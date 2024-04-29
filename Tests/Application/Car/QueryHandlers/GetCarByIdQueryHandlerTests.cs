@@ -1,22 +1,19 @@
 ﻿using Application.Queries.Car.GetById;
 using Domain.Models.Car;
 using Infrastructure.Repositories.CarRepo;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 
 namespace Tests.Application.Car.QueryHandlers
 {
     public class GetCarByIdQueryHandlerTests
     {
-        private readonly Mock<IMSBDatabase> _mockContext;
         private readonly Mock<ICarRepository> _mockCarRepository;
         private readonly GetCarByIdQueryHandler _handler;
 
         public GetCarByIdQueryHandlerTests()
         {
-            _mockContext = new Mock<IMSBDatabase>();
             _mockCarRepository = new Mock<ICarRepository>();
-            _handler = new GetCarByIdQueryHandler(_mockCarRepository.Object, _mockContext.Object);
+            _handler = new GetCarByIdQueryHandler(_mockCarRepository.Object);
         }
 
         [Fact]
@@ -27,12 +24,8 @@ namespace Tests.Application.Car.QueryHandlers
             var car = new CarModel { CarId = carId };
             _mockCarRepository.Setup(m => m.GetCarById(carId)).ReturnsAsync(car);
 
-            var mockSet = new Mock<DbSet<CarModel>>();
-            mockSet.Setup(m => m.FindAsync(carId)).ReturnsAsync(car);
-            _mockContext.Setup(m => m.Cars).Returns(mockSet.Object);
-
             // Act
-            var result = await _handler.Handle(new GetCarByIdQuery(carId));
+            var result = await _handler.Handle(new GetCarByIdQuery(carId), CancellationToken.None);
 
             // Assert
             Assert.Equal(car, result);
@@ -45,12 +38,8 @@ namespace Tests.Application.Car.QueryHandlers
             var carId = Guid.NewGuid();
             _mockCarRepository.Setup(m => m.GetCarById(carId)).ReturnsAsync((CarModel?)null);
 
-            var mockSet = new Mock<DbSet<CarModel>>();
-            mockSet.Setup(m => m.FindAsync(carId)).ReturnsAsync((CarModel?)null);
-            _mockContext.Setup(m => m.Cars).Returns(mockSet.Object);
-
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => _handler.Handle(new GetCarByIdQuery(carId)));
+            await Assert.ThrowsAsync<Exception>(() => _handler.Handle(new GetCarByIdQuery(carId), CancellationToken.None));
         }
     }
 }

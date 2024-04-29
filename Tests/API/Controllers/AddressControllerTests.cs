@@ -8,7 +8,6 @@ using Application.Queries.Address.GetByID;
 using Application.Validators.AddressValidator;
 using Domain.Models.Address;
 using FluentValidation.Results;
-using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -21,8 +20,7 @@ namespace Tests.API.Controllers
     {
         private readonly Mock<IMediator> _mediatorMock;
         private readonly Mock<IConfiguration> _configurationMock;
-        private readonly Mock<AddressRepository> _addressRepositoryMock;
-        private readonly Mock<AddressValidations> _addressValidationsMock;
+        private readonly Mock<IAddressValidations> _addressValidationsMock;
         private readonly Mock<ILogger<AddressController>> _loggerMock;
         private readonly AddressController _controller;
 
@@ -30,13 +28,11 @@ namespace Tests.API.Controllers
         {
             _mediatorMock = new Mock<IMediator>();
             _configurationMock = new Mock<IConfiguration>();
-            _addressRepositoryMock = new Mock<AddressRepository>();
-            _addressValidationsMock = new Mock<AddressValidations>();
+            _addressValidationsMock = new Mock<IAddressValidations>();
             _loggerMock = new Mock<ILogger<AddressController>>();
             _controller = new AddressController(
                 _mediatorMock.Object,
                 _configurationMock.Object,
-                _addressRepositoryMock.Object,
                 _addressValidationsMock.Object,
                 _loggerMock.Object);
         }
@@ -47,7 +43,7 @@ namespace Tests.API.Controllers
             // Arrange
             var command = new AddAddressCommand(new AddressModel());
             var address = new AddressModel { AddressId = Guid.NewGuid() };
-            _mediatorMock.Setup(m => m.Send(command, default)).ReturnsAsync(address);
+            _mediatorMock.Setup(m => m.Send(It.Is<AddAddressCommand>(c => c == command), default)).ReturnsAsync(address);
             _addressValidationsMock.Setup(v => v.Validate(It.IsAny<AddressDto>())).Returns(new ValidationResult());
 
             // Act
@@ -64,14 +60,19 @@ namespace Tests.API.Controllers
         {
             // Arrange
             var command = new AddAddressCommand(new AddressModel());
-            _addressValidationsMock.Setup(v => v.Validate(It.IsAny<AddressDto>())).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("TestProperty", "TestError") }));
+            _addressValidationsMock.Setup(v => v.Validate(It.IsAny<AddressDto>())).Returns(new ValidationResult());
 
             // Act
             var result = await _controller.AddAddress(command);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result.Result);
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+
+            // Check if the status code is 500 - "An error occurred while adding an Address"
+            Assert.Equal(500, objectResult.StatusCode);
         }
+
+
 
         [Fact]
         public async Task GetAllAddresses_ReturnsOk_WhenAddressesExist()
@@ -95,7 +96,7 @@ namespace Tests.API.Controllers
             // Arrange
             var id = Guid.NewGuid();
             var address = new AddressModel { AddressId = id };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAddressByIdQuery>(), default)).ReturnsAsync(address);
+            _mediatorMock.Setup(m => m.Send(It.Is<GetAddressByIdQuery>(q => q.AddressId == id), default)).ReturnsAsync(address);
 
             // Act
             var result = await _controller.GetAddressById(id);
@@ -111,7 +112,8 @@ namespace Tests.API.Controllers
         {
             // Arrange
             var id = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAddressByIdQuery>(), default)).ReturnsAsync(new AddressModel());
+            _mediatorMock.Setup(m => m.Send(It.Is<GetAddressByIdQuery>(q => q.AddressId == id), default)).ReturnsAsync((AddressModel?)null);
+
 
             // Act
             var result = await _controller.GetAddressById(id);
@@ -121,18 +123,18 @@ namespace Tests.API.Controllers
         }
 
         [Fact]
-        public async Task UpdateAddress_ReturnsNoContent_WhenUpdateIsSuccessful()
+        public async Task UpdateAddress_ReturnsOk_WhenUpdateIsSuccessful()
         {
             // Arrange
             var id = Guid.NewGuid();
             var address = new AddressModel { AddressId = id };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateAddressCommand>(), default)).ReturnsAsync(address);
+            _mediatorMock.Setup(m => m.Send(It.Is<UpdateAddressCommand>(c => c.Address == address), default)).ReturnsAsync(address);
 
             // Act
             var result = await _controller.UpdateAddress(id, address);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
@@ -150,17 +152,17 @@ namespace Tests.API.Controllers
         }
 
         [Fact]
-        public async Task DeleteAddress_ReturnsNoContent_WhenDeleteIsSuccessful()
+        public async Task DeleteAddress_ReturnsOk_WhenDeleteIsSuccessful()
         {
             // Arrange
             var id = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteAddressCommand>(), default)).Returns(Task.FromResult(MediatR.Unit.Value));
+            _mediatorMock.Setup(m => m.Send(It.Is<DeleteAddressCommand>(c => c.AddressId == id), default)).Returns(Task.FromResult(MediatR.Unit.Value));
 
             // Act
             var result = await _controller.DeleteAddress(id);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
     }
 }

@@ -5,8 +5,9 @@ using Application.Commands.Box.UpdateBox;
 using Application.Dto.Box;
 using Application.Queries.Box.GetAll;
 using Application.Queries.Box.GetByID;
-using Application.Validators.BoxValidator;
 using Domain.Models.Box;
+using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,13 +20,13 @@ namespace Tests.API.Controllers
         private readonly Mock<IMediator> _mediatorMock;
         private readonly BoxController _controller;
         private readonly Mock<ILogger<BoxController>> _loggerMock;
-        private readonly Mock<BoxValidator> _validatorMock;
+        private readonly Mock<IValidator<BoxDto>> _validatorMock;
 
         public BoxControllerTests()
         {
             _mediatorMock = new Mock<IMediator>();
             _loggerMock = new Mock<ILogger<BoxController>>();
-            _validatorMock = new Mock<BoxValidator>();
+            _validatorMock = new Mock<IValidator<BoxDto>>();
             _controller = new BoxController(_mediatorMock.Object, _loggerMock.Object, _validatorMock.Object);
         }
 
@@ -39,15 +40,17 @@ namespace Tests.API.Controllers
             var box = new BoxModel { BoxId = boxDto.BoxId };
             _mediatorMock.Setup(m => m.Send(command, default)).ReturnsAsync(box);
 
+            var validationResult = new ValidationResult();
+            _validatorMock.Setup(v => v.Validate(boxDto)).Returns(validationResult);
+
             // Act
             var result = await _controller.AddBox(command);
 
             // Assert
             var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
-            var returnValue = Assert.IsType<BoxDto>(createdAtActionResult.Value);
+            var returnValue = Assert.IsType<BoxModel>(createdAtActionResult.Value);
             Assert.Equal(box.BoxId, returnValue.BoxId);
         }
-
 
         [Fact]
         public async Task GetAllBoxes_ReturnsOk_WhenBoxesExist()
@@ -88,14 +91,15 @@ namespace Tests.API.Controllers
         {
             // Arrange
             var id = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetBoxByIdQuery>(), default)).ReturnsAsync(new BoxModel());
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetBoxByIdQuery>(), default)).ReturnsAsync((BoxModel)null);
 
             // Act
             var result = await _controller.GetBoxById(id);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result.Result);
+            Assert.IsType<NotFoundObjectResult>(result.Result);
         }
+
 
         [Fact]
         public async Task UpdateBox_ReturnsNoContent_WhenBoxIsUpdated()

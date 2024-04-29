@@ -105,7 +105,7 @@ namespace Tests.API.Controllers
         }
 
         [Fact]
-        public async Task UpdateAdmin_ReturnsNoContent_WhenAdminIsUpdated()
+        public async Task UpdateAdmin_ReturnsOk_WhenAdminIsUpdated()
         {
             // Arrange
             var id = Guid.NewGuid();
@@ -117,8 +117,9 @@ namespace Tests.API.Controllers
             var result = await _controller.UpdateAdmin(id, adminDto);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
+
 
         [Fact]
         public async Task DeleteAdmin_ReturnsNoContent_WhenAdminIsDeleted()

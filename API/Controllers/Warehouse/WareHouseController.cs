@@ -1,10 +1,11 @@
 ﻿using Application.Commands.Warehouse.AddWarehouse;
 using Application.Commands.Warehouse.DeleteWarehouse;
 using Application.Commands.Warehouse.UpdateWarehouse;
+using Application.Dto.AddWarehouse;
 using Application.Dto.Warehouse;
 using Application.Queries.Warehouse.GetAll;
 using Application.Queries.Warehouse.GetByID;
-using Application.Validators.WarehouseValidator;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,9 @@ namespace API.Controllers.Warehouse
     {
         private readonly IMediator _mediator;
         private readonly ILogger<WarehouseController> _logger;
-        private readonly WareHouseValidations _wareHouseValidations;
+        private readonly IValidator<AddWarehouseDto> _wareHouseValidations;
 
-        public WarehouseController(IMediator mediator, ILogger<WarehouseController> logger, WareHouseValidations validations)
+        public WarehouseController(IMediator mediator, ILogger<WarehouseController> logger, IValidator<AddWarehouseDto> validations)
         {
             _mediator = mediator;
             _logger = logger;
@@ -43,8 +44,8 @@ namespace API.Controllers.Warehouse
                 {
                     WarehouseId = warehouseModel.WarehouseId,
                     WarehouseName = warehouseModel.WarehouseName,
-                    AddressId = warehouseModel.AddressId, // Assuming this property exists in WarehouseModel
-
+                    AddressId = warehouseModel.AddressId,
+                    ShelfIds = warehouseModel.Shelves.Select(shelf => shelf.ShelfId).ToList(), // Updated to support multiple shelves
                 };
 
                 _logger.LogInformation("Warehouse added successfully: {WarehouseName}", warehouseDto.WarehouseName);
@@ -56,6 +57,7 @@ namespace API.Controllers.Warehouse
                 return StatusCode(500, "An error occurred while adding the warehouse");
             }
         }
+
 
 
 

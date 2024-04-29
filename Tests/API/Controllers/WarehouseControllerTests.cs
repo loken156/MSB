@@ -6,9 +6,10 @@ using Application.Dto.AddWarehouse;
 using Application.Dto.Warehouse;
 using Application.Queries.Warehouse.GetAll;
 using Application.Queries.Warehouse.GetByID;
-using Application.Validators.WarehouseValidator;
+using Domain.Models.Shelf;
 using Domain.Models.Warehouse;
 using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -21,45 +22,58 @@ namespace Tests.API.Controllers
         private readonly Mock<IMediator> _mediatorMock;
         private readonly WarehouseController _controller;
         private readonly Mock<ILogger<WarehouseController>> _loggerMock;
-        private readonly Mock<WareHouseValidations> _validationsMock;
+        private readonly Mock<IValidator<AddWarehouseDto>> _validationsMock;
 
         public WarehouseControllerTests()
         {
             _mediatorMock = new Mock<IMediator>();
             _loggerMock = new Mock<ILogger<WarehouseController>>();
-            _validationsMock = new Mock<WareHouseValidations>();
+            _validationsMock = new Mock<IValidator<AddWarehouseDto>>();
             _controller = new WarehouseController(_mediatorMock.Object, _loggerMock.Object, _validationsMock.Object);
         }
 
-
-        // Not working correctly anymore since WarehouseController is changed
         [Fact]
-        public async Task AddWarehouse_ReturnsCreatedAtAction_WhenWarehouseIsCreated()
+        public async Task AddWarehouse_ReturnsCreatedAtActionResult_WhenWarehouseIsSuccessfullyAdded()
         {
             // Arrange
-            var addWarehouseDto = new AddWarehouseDto { WarehouseName = "Test Warehouse", AddressId = Guid.NewGuid(), ShelfId = Guid.NewGuid() };
-            var command = new AddWarehouseCommand(addWarehouseDto);
-            var warehouse = new WarehouseModel { WarehouseId = Guid.NewGuid(), WarehouseName = "Test Warehouse" };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<AddWarehouseCommand>(), default)).ReturnsAsync(warehouse);
+            var mediatorMock = new Mock<IMediator>();
+            var loggerMock = new Mock<ILogger<WarehouseController>>();
+            var validatorMock = new Mock<IValidator<AddWarehouseDto>>();
+            var warehouseController = new WarehouseController(mediatorMock.Object, loggerMock.Object, validatorMock.Object);
 
-            // Set up a mock validation result that indicates the validation passed
-            var validationResult = new FluentValidation.Results.ValidationResult();
-            _validationsMock.As<IValidator<AddWarehouseDto>>().Setup(v => v.Validate(It.IsAny<ValidationContext<AddWarehouseDto>>())).Returns(validationResult);
+            var newWarehouseDto = new AddWarehouseDto
+            {
+                WarehouseName = "Test Warehouse",
+                AddressId = Guid.NewGuid()
+            };
+
+            var addWarehouseCommand = new AddWarehouseCommand(newWarehouseDto);
+
+            var validationResult = new ValidationResult();
+
+            validatorMock.Setup(v => v.Validate(newWarehouseDto)).Returns(validationResult);
+
+            var warehouseModel = new WarehouseModel
+            {
+                WarehouseId = Guid.NewGuid(),
+                WarehouseName = "Test Warehouse",
+                AddressId = newWarehouseDto.AddressId,
+                Shelves = new List<ShelfModel>()
+            };
+
+            mediatorMock.Setup(m => m.Send(addWarehouseCommand, It.IsAny<CancellationToken>())).ReturnsAsync(warehouseModel);
 
             // Act
-            var result = await _controller.AddWarehouse(command);
+            var result = await warehouseController.AddWarehouse(addWarehouseCommand);
 
             // Assert
             var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
-            var returnValue = Assert.IsType<WarehouseDto>(createdAtActionResult.Value);
-            Assert.Equal(addWarehouseDto.WarehouseName, returnValue.WarehouseName);
-            Assert.Equal(addWarehouseDto.AddressId, returnValue.AddressId);
-            Assert.Equal(addWarehouseDto.ShelfId, returnValue.ShelfId);
+            var returnedWarehouseDto = Assert.IsType<WarehouseDto>(createdAtActionResult.Value);
+            Assert.Equal(warehouseModel.WarehouseId, returnedWarehouseDto.WarehouseId);
+            Assert.Equal(warehouseModel.WarehouseName, returnedWarehouseDto.WarehouseName);
+            Assert.Equal(warehouseModel.AddressId, returnedWarehouseDto.AddressId);
+            Assert.Equal(warehouseModel.Shelves.Select(shelf => shelf.ShelfId), returnedWarehouseDto.ShelfIds);
         }
-
-
-
-
 
         [Fact]
         public async Task GetAllWarehouses_ReturnsOk_WhenWarehousesExist()
@@ -99,7 +113,8 @@ namespace Tests.API.Controllers
         {
             // Arrange
             var id = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetWarehouseByIdQuery>(), default)).ReturnsAsync((WarehouseModel)null);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetWarehouseByIdQuery>(), default)).Returns(Task.FromResult<WarehouseModel>(null));
+
 
             // Act
             var result = await _controller.GetWarehouseById(id);
