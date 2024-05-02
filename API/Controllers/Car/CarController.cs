@@ -23,7 +23,6 @@ namespace API.Controllers.Car
         }
 
         [HttpGet("{carId}")]
-        [Route("Get car by id")]
         public async Task<IActionResult> GetCarById(Guid carId)
         {
             try
@@ -83,7 +82,6 @@ namespace API.Controllers.Car
         }
 
         [HttpPut("{carId}")]
-        [Route("Update Car")]
         public async Task<IActionResult> UpdateCar(Guid carId, [FromBody] CarDto carDto)
         {
             try

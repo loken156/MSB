@@ -85,7 +85,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpGet("Get Address By {id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<AddressDto>> GetAddressById(Guid id)
         {
             try
@@ -109,7 +109,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpPut("Update Address By {id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAddress(Guid id, AddressModel address)
         {
             try
@@ -134,7 +134,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpDelete("Delete Address By {id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(Guid id)
         {
             try
