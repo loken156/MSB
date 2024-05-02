@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces;
 using Infrastructure.Database;
 using Infrastructure.Repositories.AddressRepo;
+using Infrastructure.Repositories.AdminRepo;
 using Infrastructure.Repositories.BoxRepo;
 using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.EmployeeRepo;
@@ -32,11 +33,9 @@ namespace Infrastructure
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IShelfRepository, ShelfRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
-
             services.AddScoped<IEmployeeService, EmployeeService>();
-
             services.AddScoped<ICarRepository, CarRepository>();
-
+            services.AddScoped<IAdminRepository, AdminRepository>();
 
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<IMessageSender>(provider =>

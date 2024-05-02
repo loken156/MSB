@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Admin;
+using Infrastructure.Entities;
 using Infrastructure.Repositories.AdminRepo;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -8,9 +9,9 @@ namespace Application.Commands.Admin.Add
     public class AddAdminCommandHandler : IRequestHandler<AddAdminCommand, AdminModel>
     {
         private readonly IAdminRepository _adminRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AddAdminCommandHandler(IAdminRepository adminRepository, UserManager<IdentityUser> userManager)
+        public AddAdminCommandHandler(IAdminRepository adminRepository, UserManager<ApplicationUser> userManager)
         {
             _adminRepository = adminRepository;
             _userManager = userManager;
