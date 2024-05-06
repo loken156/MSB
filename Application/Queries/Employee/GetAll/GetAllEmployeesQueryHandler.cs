@@ -1,23 +1,35 @@
-﻿using Domain.Models.Employee;
-using Infrastructure.Database;
+using Domain.Models.Employee;
+using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Queries.Employee.GetAll
 {
     public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery, List<EmployeeModel>>
     {
-        private readonly MSB_Database _database;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly ILogger<GetAllEmployeesQueryHandler> _logger;
 
-        public GetAllEmployeesQueryHandler(MSB_Database database)
+
+        public GetAllEmployeesQueryHandler(IEmployeeRepository employeeRepository, ILogger<GetAllEmployeesQueryHandler> logger)
         {
-            _database = database;
+            _employeeRepository = employeeRepository;
+            _logger = logger;
         }
 
-        public async Task<List<EmployeeModel>> Handle(GetAllEmployeesQuery query, CancellationToken cancellationToken)
+        public async Task<List<EmployeeModel>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
         {
-            return await _database.Employees.ToListAsync();
+            try
+            {
+                var employees = await _employeeRepository.GetEmployeesAsync();
+                return employees.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error in GetAllEmployeesQueryHandler");
+                throw;
+            }
         }
     }
 }

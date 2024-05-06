@@ -4,7 +4,6 @@ using Application.Dto.UpdateUserInfo;
 using Application.Queries.User.GetAll;
 using Application.Queries.User.GetById;
 using Domain.Interfaces;
-using Infrastructure.Repositories.UserRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,27 +14,31 @@ namespace API.Controllers.UserController
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IConfiguration _configuration;
-        private readonly IUserRepository _userRepository;
-        private readonly IUserService _userService;
+        private readonly ILogger<UserController> _logger;
+        private readonly IEmployeeService _employeeService;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IUserRepository userRepository, IUserService userService)
+        public UserController(IMediator mediator, ILogger<UserController> logger, IEmployeeService employeeService)
         {
-            _configuration = configuration;
             _mediator = mediator;
-            _userRepository = userRepository;
-            _userService = userService;
+            _logger = logger;
+            _employeeService = employeeService;
         }
-        //------------------------------------------------------------------------------------
 
         [HttpGet]
         [Route("Get all users")]
         public async Task<IActionResult> GetAllUsers()
         {
-            return Ok(await _mediator.Send(new GetAllUsersQuery()));
+            try
+            {
+                var users = await _mediator.Send(new GetAllUsersQuery());
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting all users");
+                return StatusCode(500, "Internal server error");
+            }
         }
-
-        //------------------------------------------------------------------------------------
 
         [HttpGet]
         [Route("GetUser by Id")]
@@ -43,14 +46,20 @@ namespace API.Controllers.UserController
         {
             try
             {
-                return Ok(await _mediator.Send(new GetUserByIdQuery(UserId)));
+                var user = await _mediator.Send(new GetUserByIdQuery(UserId));
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                _logger.LogError(ex, "Error getting user by id: {id}", UserId);
+                return StatusCode(500, "Internal server error");
             }
         }
-        //------------------------------------------------------------------------------------
+
         [HttpPut]
         [Route("Update User")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto updatedUserInfoDto, [FromQuery] string updatedUserId)
@@ -67,36 +76,38 @@ namespace API.Controllers.UserController
 
                 return Ok(result);
             }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An Error occurred: {ex.Message}");
+                _logger.LogError(ex, "Error updating user with id: {id}", updatedUserId);
+                return StatusCode(500, "An error occurred while updating the user");
             }
         }
-
-
-        //------------------------------------------------------------------------------------
 
         [HttpDelete("Delete User by {id}")]
         public async Task<IActionResult> DeleteUserById(string id)
         {
-            var user = await _mediator.Send(new DeleteUserCommand(id));
-
-            if (user == null)
+            try
             {
+                var user = await _mediator.Send(new DeleteUserCommand(id));
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
                 return NoContent();
             }
-            return NotFound();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting user with id: {id}", id);
+                return StatusCode(500, "An error occurred while deleting the user");
+            }
         }
-        //------------------------------------------------------------------------------------
 
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(string userId, string currentPassword, string newPassword)
         {
-            var result = await _userService.ChangePasswordAsync(userId, currentPassword, newPassword);
+            var result = await _employeeService.ChangePasswordAsync(userId, currentPassword, newPassword);
             if (result.Succeeded)
             {
                 return Ok("Password changed successfully");

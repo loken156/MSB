@@ -1,5 +1,4 @@
 ﻿using Domain.Models.Notification;
-using System;
 
 namespace Infrastructure.Services.Notification
 {

@@ -1,7 +1,6 @@
 ﻿using Application.Commands.Registration;
 using Application.Dto.LogIn;
 using Application.Dto.Register;
-using Domain.Models.Address;
 using FluentValidation;
 using Infrastructure.Entities;
 using MediatR;
@@ -27,7 +26,7 @@ namespace API.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMediator _mediator;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger, IValidator<RegisterDto> registerValidator, IValidator<LogInDto> loginValidator, IConfiguration configuration, Mediator mediator)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger, IValidator<RegisterDto> registerValidator, IValidator<LogInDto> loginValidator, IConfiguration configuration, IMediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;

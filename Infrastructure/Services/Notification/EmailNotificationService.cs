@@ -1,8 +1,6 @@
 ﻿using Domain.Models.Notification;
-using System;
 using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
 namespace Infrastructure.Services.Notification
 {
     public class EmailNotificationService : INotificationService, IMessageSender

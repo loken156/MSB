@@ -1,24 +1,35 @@
-﻿using Domain.Models.Car;
-using Infrastructure.Database;
+using Domain.Models.Car;
 using Infrastructure.Repositories.CarRepo;
+using MediatR;
 
 namespace Application.Queries.Car.GetById
 {
-    public class GetCarByIdQueryHandler
+    public class GetCarByIdQueryHandler : IRequestHandler<GetCarByIdQuery, CarModel>
     {
-        private readonly MSB_Database _database;
         private readonly ICarRepository _carRepository;
 
-        public GetCarByIdQueryHandler(ICarRepository carRepository, MSB_Database database)
+        public GetCarByIdQueryHandler(ICarRepository carRepository)
         {
             _carRepository = carRepository;
-            _database = database;
         }
 
-        public async Task<CarModel> Handle(GetCarByIdQuery query)
+        public async Task<CarModel> Handle(GetCarByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _database.Cars.FindAsync(query.CarId)
-                   ?? throw new Exception($"No car found with id {query.CarId}");
+            try
+            {
+                var carId = request.CarId;
+                var car = await _carRepository.GetCarById(carId);
+                if (car == null)
+                {
+                    throw new KeyNotFoundException($"A car with the id {carId} was not found.");
+                }
+                return car;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions accordingly
+                throw new Exception("Error occurred while fetching car by ID", ex);
+            }
         }
 
     }

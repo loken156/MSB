@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Box;
+using Domain.Models.Warehouse;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,20 +12,15 @@ namespace Domain.Models.Shelf
 
         public int ShelfRow { get; set; }
         public int ShelfColumn { get; set; }
-        public bool Occupancy { get; set; }
+        public bool Occupancy { get; set; } // Indicates if the shelf is occupied
 
-        [ForeignKey("WarehouseId")]
+        // ForeignKey and Navigation Property for Warehouse
+        [ForeignKey("Warehouse")]
         public Guid WarehouseId { get; set; }
-        public Warehouse.WarehouseModel Warehouse { get; set; }
+        public virtual WarehouseModel Warehouse { get; set; }
 
-        [ForeignKey("BoxID")]
-        public Guid BoxID { get; set; }
-        public ICollection<BoxModel> Boxes { get; set; }
-        // public Address Address { get; set; }
-
-        // [ForeignKey("ItemID")]
-        // public Guid ItemID { get; set; }
-        // public Address Address { get; set; }
-
+        // Relationship to Boxes
+        // Assuming a Shelf can have multiple Boxes
+        public virtual ICollection<BoxModel> Boxes { get; set; } = new List<BoxModel>();
     }
 }

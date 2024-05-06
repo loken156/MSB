@@ -1,4 +1,4 @@
-﻿using Domain.Models.Box;
+using Domain.Models.Box;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,15 +12,10 @@ namespace Infrastructure.Repositories.BoxRepo
             _database = mSB_database;
         }
 
-        public async Task<BoxModel> AddBoxAsync(BoxModel box, Guid shelfId)
+        public async Task<BoxModel> AddBoxAsync(BoxModel box)
         {
-            var shelf = await _database.Shelves.FindAsync(shelfId);
-            if (shelf != null)
-            {
-                box.ShelfId = shelfId;
-                _database.Boxes.AddAsync(box);
-                await _database.SaveChangesAsync();
-            }
+            await _database.Boxes.AddAsync(box);
+            await _database.SaveChangesAsync();
             return box;
         }
 
@@ -34,7 +29,10 @@ namespace Infrastructure.Repositories.BoxRepo
                 _database.Boxes.Remove(box);
                 await _database.SaveChangesAsync();
             }
+
+
         }
+
 
         async Task<IEnumerable<BoxModel>> IBoxRepository.GetAllBoxesAsync()
         {
@@ -49,7 +47,7 @@ namespace Infrastructure.Repositories.BoxRepo
         async Task<BoxModel> IBoxRepository.UpdateBoxAsync(BoxModel box)
         {
             _database.Boxes.Update(box);
-            _database.SaveChangesAsync();
+            await _database.SaveChangesAsync();
 
             return box;
         }

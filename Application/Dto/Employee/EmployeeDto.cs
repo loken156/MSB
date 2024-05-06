@@ -1,5 +1,3 @@
-using Application.Dto.Driver;
-using Domain.Models.Driver;
 using Domain.Models.Warehouse;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,7 +17,6 @@ namespace Application.Dto.Employee
         [Required] public DateTime HireDate { get; set; }
         [Required] public Guid WarehouseId { get; set; }
         public WarehouseModel Warehouse { get; set; }
-        public DriverDto Driver { get; set; }
 
     }
 }

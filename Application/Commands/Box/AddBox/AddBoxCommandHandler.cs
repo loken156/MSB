@@ -1,23 +1,42 @@
-﻿using Domain.Models.Box;
+﻿using Application.Dto.Box;
+using AutoMapper;
+using Domain.Models.Box;
+using Infrastructure.Repositories.BoxRepo;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Commands.Box.AddBox
 {
-    public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxModel>
+    public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxDto>
     {
-        public async Task<BoxModel> Handle(AddBoxCommand request, CancellationToken cancellationToken)
+        private readonly IBoxRepository _boxRepository;
+        private readonly ILogger<AddBoxCommandHandler> _logger;
+        private readonly IMapper _mapper;
+
+        public AddBoxCommandHandler(IBoxRepository boxRepository, ILogger<AddBoxCommandHandler> logger, IMapper mapper)
         {
-            BoxModel boxToCreate = new()
+            _boxRepository = boxRepository;
+            _logger = logger;
+            _mapper = mapper;
+        }
+
+
+        public async Task<BoxDto> Handle(AddBoxCommand request, CancellationToken cancellationToken)
+        {
+            
+            try
             {
-                BoxId = Guid.NewGuid(),
-                Type = request.NewBox.Type,
-                TimesUsed = request.NewBox.TimesUsed,
-                Stock = request.NewBox.Stock,
-                ImageUrl = request.NewBox.ImageUrl,
-                UserNotes = request.NewBox.UserNotes,
-                Size = request.NewBox.Size
-            };
-            return boxToCreate;
+                var boxModel = _mapper.Map<BoxModel>(request.NewBox);
+                await _boxRepository.AddBoxAsync(boxModel);
+                var boxDto = _mapper.Map<BoxDto>(boxModel);
+                return boxDto;
+
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, "Error adding box");
+                throw;
+            }
         }
     }
 }

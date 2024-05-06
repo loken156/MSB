@@ -1,4 +1,4 @@
-﻿using Application.Commands.Address.AddAddress;
+using Application.Commands.Address.AddAddress;
 using Application.Commands.Address.DeleteAddress;
 using Application.Commands.Address.UpdateAddress;
 using Application.Dto.Adress;
@@ -6,8 +6,6 @@ using Application.Queries.Address.GetAll;
 using Application.Queries.Address.GetByID;
 using Application.Validators.AddressValidator;
 using Domain.Models.Address;
-using FluentValidation;
-using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,52 +18,36 @@ namespace API.Controllers.Address
 
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
-        private readonly AddressRepository _addressRepository;
-        private readonly AddressValidations _addressValidations;
-        private readonly ILogger _logger;
+        private readonly IAddressValidations _addressValidations;
+        private readonly ILogger<AddressController> _logger;
 
-        public AddressController(IMediator mediator, IConfiguration configuration, AddressRepository addressRepository, AddressValidations validationRules, ILogger logger)
+        public AddressController(IMediator mediator, IConfiguration configuration, IAddressValidations validationRules, ILogger<AddressController> logger)
         {
             _mediator = mediator;
             _configuration = configuration;
-            _addressRepository = addressRepository;
             _addressValidations = validationRules;
             _logger = logger;
         }
 
         [HttpPost]
         [Route("Add Address")]
-        public async Task<ActionResult<AddressDto>> AddAddress(AddAddressCommand command)
+        public async Task<ActionResult<AddressDto>> AddAddress([FromBody] AddAddressCommand command)
         {
 
             try
             {
-                var adressDto = new AddressDto
-                {
-                    StreetName = command.NewAddress.StreetName,
-                    StreetNumber = command.NewAddress.StreetNumber,
-                    Apartment = command.NewAddress.Apartment,
-                    ZipCode = command.NewAddress.ZipCode,
-                    Floor = command.NewAddress.Floor,
-                    City = command.NewAddress.City,
-                    State = command.NewAddress.State,
-                    Country = command.NewAddress.Country,
-                };
-
-
-                var validationResult = _addressValidations.Validate(adressDto);
+                var validationResult = _addressValidations.Validate(command.NewAddress);
                 if (!validationResult.IsValid)
                 {
                     return BadRequest(validationResult.Errors);
                 }
-
-                var address = await _mediator.Send(command);
-                return CreatedAtAction(nameof(GetAddressById), new { id = address.AddressId }, address);
+                var addressDto = await _mediator.Send(command);
+                return CreatedAtAction(nameof(GetAddressById), new { id = addressDto.AddressId }, addressDto);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while adding address");
-                return StatusCode(500, "An error occurred while adding an Address");
+                return StatusCode(500, "An error occurred while adding address");
             }
 
         }
@@ -89,7 +71,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpGet("Get Address By {id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<AddressDto>> GetAddressById(Guid id)
         {
             try
@@ -113,7 +95,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpPut("Update Address By {id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAddress(Guid id, AddressModel address)
         {
             try
@@ -138,7 +120,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpDelete("Delete Address By {id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(Guid id)
         {
             try

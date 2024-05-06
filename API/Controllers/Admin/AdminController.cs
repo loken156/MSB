@@ -1,6 +1,7 @@
 ﻿using Application.Dto.Admin;
 using Domain.Models.Admin;
 using Infrastructure.Repositories.AdminRepo;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,14 @@ namespace API.Controllers
         private readonly IAdminRepository _adminRepository;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<AdminController> _logger;
+        private readonly IMediator _mediator;
 
-
-        public AdminController(IAdminRepository adminRepository, UserManager<IdentityUser> userManager, ILogger<AdminController> logger)
+        public AdminController(IAdminRepository adminRepository, UserManager<IdentityUser> userManager, ILogger<AdminController> logger, IMediator mediator)
         {
             _adminRepository = adminRepository;
             _userManager = userManager;
             _logger = logger;
+            _mediator = mediator;
         }
 
         // GET: api/Admin
@@ -77,7 +79,7 @@ namespace API.Controllers
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
-                    Permissions = adminDto.Permissions
+                    // Permissions = adminDto.Permissions
                 };
 
                 var createdAdmin = await _adminRepository.CreateAdminAsync(admin);
@@ -132,7 +134,7 @@ namespace API.Controllers
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
-                    Permissions = adminDto.Permissions
+                    // Permissions = adminDto.Permissions
                 };
 
                 var updatedAdmin = await _adminRepository.UpdateAdminAsync(id, admin);

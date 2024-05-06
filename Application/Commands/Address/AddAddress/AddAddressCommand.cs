@@ -1,14 +1,16 @@
-﻿using Domain.Models.Address;
+﻿using Application.Dto.Adress;
+using Domain.Models.Address;
 using MediatR;
 
 namespace Application.Commands.Address.AddAddress
 {
-    public class AddAddressCommand : IRequest<AddressModel>
+    public class AddAddressCommand : IRequest<AddressDto>
     {
-        public AddAddressCommand(AddressModel newAddress)
+        public AddressDto NewAddress { get; }
+        public AddAddressCommand(AddressDto newAddress)
         {
             NewAddress = newAddress;
         }
-        public AddressModel NewAddress { get; }
+        
     }
 }

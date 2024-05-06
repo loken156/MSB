@@ -1,8 +1,6 @@
 ﻿using Application.Commands.Shelf.AddShelf;
 using Application.Commands.Shelf.DeleteShelf;
 using Application.Commands.Shelf.UpdateShelf;
-using Application.Dto.AddShelf;
-using Application.Dto.Box;
 using Application.Dto.Shelf;
 using Application.Queries.Shelf.GetAll;
 using Application.Queries.Shelf.GetByID;
@@ -57,10 +55,7 @@ namespace API.Controllers.Shelf
                 _logger.LogError(ex, "Error adding shelf with command: {Command}", command);
                 return StatusCode(500, "An error occurred while adding the shelf");
             }
-
         }
-
-
 
         [HttpGet]
         [Route("Get All Shelves")]
