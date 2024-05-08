@@ -1,4 +1,3 @@
-using Application.Dto.User;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Order
@@ -15,6 +14,7 @@ namespace Application.Dto.Order
         //public Guid RepairId { get; set; }
         [Required] public Guid WarehouseId { get; set; }
         [Required] public Guid AdressId { get; set; }
+
         public string RepairNotes { get; set; } = "No notes";
     }
 }

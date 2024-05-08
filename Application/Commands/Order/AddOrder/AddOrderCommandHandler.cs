@@ -1,4 +1,5 @@
-﻿using Domain.Models.Order;
+﻿using AutoMapper;
+using Domain.Models.Order;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Repositories.WarehouseRepo;
 using MediatR;
@@ -9,37 +10,25 @@ namespace Application.Commands.Order.AddOrder
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IWarehouseRepository _warehouseRepository;
-        public AddOrderCommandHandler(IOrderRepository orderRepository, IWarehouseRepository warehouseRepository)
+        private readonly IMapper _mapper;
+        public AddOrderCommandHandler(IOrderRepository orderRepository, IWarehouseRepository warehouseRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _warehouseRepository = warehouseRepository;
+            _mapper = mapper;
         }
         public async Task<OrderModel> Handle(AddOrderCommand request, CancellationToken cancellationToken)
         {
-
             var warehouse = await _warehouseRepository.GetWarehouseByIdAsync(request.WarehouseId);
             if (warehouse == null)
             {
                 throw new Exception("Warehouse not found");
             }
 
-            request.NewOrder.WarehouseId = request.WarehouseId;
+            // Use AutoMapper to map OrderDto to OrderModel
+            var orderToCreate = _mapper.Map<OrderModel>(request.NewOrder);
+            orderToCreate.OrderId = Guid.NewGuid(); // Ensure OrderId is set to a new GUID
 
-            OrderModel orderToCreate = new()
-            {
-                OrderId = Guid.NewGuid(),
-                OrderDate = request.NewOrder.OrderDate,
-                TotalCost = request.NewOrder.TotalCost,
-                OrderStatus = request.NewOrder.OrderStatus ?? string.Empty,
-                UserId = request.NewOrder.UserId,
-                // User = request.NewOrder.User, // You'll need to map from UserDto to UserModel
-                // CarId = request.NewOrder.CarId, // Uncomment if you want to set CarId
-                // RepairId = request.NewOrder.RepairId, // Uncomment if you want to set RepairId
-                WarehouseId = request.NewOrder.WarehouseId,
-                // AdressId = request.NewOrder.AdressId,
-                // Address = request.NewOrder.Address, // You'll need to map from AddressDto to AddressModel
-                RepairNotes = request.NewOrder.RepairNotes ?? "No notes"
-            };
             var createdOrder = await _orderRepository.AddOrderAsync(orderToCreate);
 
             return createdOrder;

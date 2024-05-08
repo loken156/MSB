@@ -1,9 +1,11 @@
 ﻿using Application.Commands.Order.AddOrder;
 using Application.Commands.Order.DeleteOrder;
 using Application.Commands.Order.UpdateOrder;
+using Application.Dto.Box;
 using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
+using AutoMapper;
 using Domain.Models.Notification;
 using Infrastructure.Services.Notification;
 using MediatR;
@@ -20,22 +22,24 @@ namespace API.Controllers.Order
         private readonly IMediator _mediator;
         private readonly INotificationService _notificationService;
         private readonly ILogger<OrderController> _logger;
+        private readonly IMapper _mapper;
 
-        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger)
+        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper)
         {
             _mediator = mediator;
             _notificationService = notificationService;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("Add Order")]
-        public async Task<ActionResult<OrderDto>> AddOrder(OrderDto orderdto, [FromQuery] Guid warehouseId)
+        public async Task<ActionResult<OrderDto>> AddOrder(OrderDto orderDto, [FromQuery] Guid warehouseId)
         {
             try
             {
-                var command = new AddOrderCommand(orderdto, warehouseId);
+                var command = new AddOrderCommand(orderDto, warehouseId);
                 var order = await _mediator.Send(command);
 
                 var notification = new NotificationModel
@@ -46,21 +50,27 @@ namespace API.Controllers.Order
 
                 await _notificationService.SendNotification(notification);
 
-                var orderDto = new OrderDto
+                var newBoxDto = new BoxDto
                 {
+                    BoxId = Guid.NewGuid(),
                     OrderId = order.OrderId,
-                    OrderDate = order.OrderDate,
-                    TotalCost = order.TotalCost,
-                    OrderStatus = order.OrderStatus,
-                    UserId = order.UserId,
-                    WarehouseId = order.WarehouseId,
-                    RepairNotes = order.RepairNotes
+                    Type = "YourBoxType", // Example: "Standard"
+                    TimesUsed = 0, // Assuming it's a new box
+                    Stock = 1, // Assuming you're adding one box
+                    ImageUrl = "YourImageUrl", // Provide an image URL if available
+                    UserNotes = "YourNotes", // Any notes related to the box
+                    Size = "YourSize", // Example: "Large"
+                    ShelfId = Guid.NewGuid(), // Assign an appropriate ShelfId
                 };
-                return CreatedAtAction(nameof(GetOrderById), new { id = orderDto.OrderId }, orderDto);
+
+
+                // Assuming you want to map the result back to OrderDto before returning
+                var resultDto = _mapper.Map<OrderDto>(order); // Use AutoMapper to map OrderModel back to OrderDto
+                return CreatedAtAction(nameof(GetOrderById), new { id = resultDto.OrderId }, resultDto);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error adding order with command: {Command}", orderdto);
+                _logger.LogError(ex, "Error adding order with command: {Command}", orderDto);
                 return StatusCode(500, "An error occurred while adding the order");
             }
         }
