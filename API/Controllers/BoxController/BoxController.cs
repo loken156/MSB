@@ -4,6 +4,7 @@ using Application.Commands.Box.UpdateBox;
 using Application.Dto.Box;
 using Application.Queries.Box.GetAll;
 using Application.Queries.Box.GetByID;
+using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -18,21 +19,24 @@ namespace API.Controllers.BoxController
         private readonly IMediator _mediator;
         private readonly ILogger<BoxController> _logger;
         private readonly IValidator<BoxDto> _boxValidator;
+        private readonly IMapper _mapper;
 
-        public BoxController(IMediator mediator, ILogger<BoxController> logger, IValidator<BoxDto> boxValidator)
+        public BoxController(IMediator mediator, ILogger<BoxController> logger, IValidator<BoxDto> boxValidator, IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
             _boxValidator = boxValidator;
+            _mapper = mapper;
         }
 
         [HttpPost]
         [Route("Add Box")]
-        public async Task<ActionResult<BoxDto>> AddBox(AddBoxCommand command)
+        public async Task<ActionResult<BoxDto>> AddBox([FromBody] BoxDto newBoxDto)
         {
             _logger.LogInformation("Attempting to add a new box");
 
-            ValidationResult validationResult = _boxValidator.Validate(command.NewBox);
+            // Validate the DTO
+            ValidationResult validationResult = _boxValidator.Validate(newBoxDto);
             if (!validationResult.IsValid)
             {
                 _logger.LogWarning("Validation failed for adding box: {Errors}", validationResult.Errors.Select(e => e.ErrorMessage));
@@ -41,16 +45,15 @@ namespace API.Controllers.BoxController
 
             try
             {
-                var box = await _mediator.Send(command);
+                // Create the command with the DTO from the request
+                var command = new AddBoxCommand(newBoxDto);
 
-                if (box == null)
-                {
-                    _logger.LogError("Failed to create a new box, mediator returned null");
-                    return BadRequest("Could not create box, data may be incorrect.");
-                }
+                // Send the command to the handler through MediatR
+                var boxDto = await _mediator.Send(command);
 
-                _logger.LogInformation("Box added successfully with ID {BoxId}", box.BoxId);
-                return CreatedAtAction(nameof(GetBoxById), new { id = box.BoxId }, box);
+                // If successful, return the created box DTO
+                _logger.LogInformation("Box added successfully with ID {BoxId}", boxDto.BoxId);
+                return CreatedAtAction(nameof(GetBoxById), new { id = boxDto.BoxId }, boxDto);
             }
             catch (Exception ex)
             {
@@ -58,6 +61,7 @@ namespace API.Controllers.BoxController
                 return StatusCode(500, "An internal error occurred. Please try again later.");
             }
         }
+
 
         [HttpGet]
         [Route("Get All Boxes")]
@@ -84,7 +88,7 @@ namespace API.Controllers.BoxController
                     Stock = box.Stock,
                     ImageUrl = box.ImageUrl,
                     UserNotes = box.UserNotes,
-                    Order = box.Order,
+                    OrderId = box.OrderId,
                     Size = box.Size,
                 }).ToList();
 

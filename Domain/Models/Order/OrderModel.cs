@@ -1,3 +1,4 @@
+using Domain.Models.Box;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,22 +17,26 @@ namespace Domain.Models.Order
         public string UserId { get; set; }
 
         [ForeignKey("CarId")]
-        public Guid CarId { get; set; }
-        public Car.CarModel Car { get; set; }
+        public Guid? CarId { get; set; } 
+        public Car.CarModel? Car { get; set; }
 
         //[ForeignKey("RepairId")]
         //public int RepairId { get; set; }
         //public Repair.RepairDto Repair { get; set; }
 
-        [ForeignKey("WarehouseId")]
-        public Guid WarehouseId { get; set; }
-        public Warehouse.WarehouseModel Warehouse { get; set; }
+        //[ForeignKey("WarehouseId")]
+        //public Guid WarehouseId { get; set; }
+        //public Warehouse.WarehouseModel Warehouse { get; set; }
+
+        [ForeignKey("BoxID")]
+        public Guid BoxId { get; set; }
 
         [ForeignKey("AddressId")] // Return Address
         public Guid AddressId { get; set; }
         public Address.AddressModel Address { get; set; }
 
         public string RepairNotes { get; set; } = "No notes";
-
+        
+        public ICollection<BoxModel> Boxes { get; set; } = new List<BoxModel>();
     }
 }

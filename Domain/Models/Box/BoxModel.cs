@@ -22,10 +22,13 @@ namespace Domain.Models.Box
 
         [ForeignKey("OrderId")]
         public Guid OrderId { get; set; }
+        public virtual OrderModel Order { get; set; }
 
         public string Size { get; set; } = string.Empty;
 
         [ForeignKey("ShelfId")]
         public Guid ShelfId { get; set; }
+
+        public virtual ShelfModel Shelf { get; set; }
     }
 }
