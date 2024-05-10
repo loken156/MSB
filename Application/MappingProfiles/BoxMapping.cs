@@ -1,11 +1,7 @@
 ﻿using Application.Dto.Box;
+using Application.Dto.Order;
 using AutoMapper;
 using Domain.Models.Box;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.MappingProfiles
 {
@@ -13,7 +9,8 @@ namespace Application.MappingProfiles
     {
         public BoxMapping()
         {
-            CreateMap<BoxModel,BoxDto>().ReverseMap();
+            CreateMap<BoxModel, BoxDto>().ReverseMap();
+            CreateMap<BoxModel, AddBoxToOrderDto>().ReverseMap();
         }
     }
 }

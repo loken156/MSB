@@ -1,13 +1,7 @@
-﻿using Application.Dto.Shelf;
-using Domain.Models.Shelf;
-using Org.BouncyCastle.Asn1.Esf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Dto.AddShelf;
+using Application.Dto.Shelf;
 using AutoMapper;
+using Domain.Models.Shelf;
 
 namespace Application.MappingProfiles
 {
@@ -16,6 +10,7 @@ namespace Application.MappingProfiles
         public ShelfMapping()
         {
             CreateMap<ShelfModel, ShelfDto>().ReverseMap();
+            CreateMap<ShelfModel, AddShelfDto>().ReverseMap();
         }
 
     }

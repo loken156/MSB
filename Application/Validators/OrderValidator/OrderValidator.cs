@@ -24,7 +24,7 @@ namespace Application.Validators.OrderValidator
             RuleFor(order => order.UserId)
                 .NotEmpty().WithMessage("User Id cannot be empty");
 
-            //RuleFor(order => order.AdressId)
+            //RuleFor(order => order.AddressId)
             //    .NotEmpty().WithMessage("Address Id cannot be empty");
 
             RuleFor(order => order.RepairNotes)

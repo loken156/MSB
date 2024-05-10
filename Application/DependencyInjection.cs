@@ -1,9 +1,9 @@
-﻿using Application.Dto.Adress;
+﻿using Application.Dto.AddShelf;
+using Application.Dto.Adress;
 using Application.Dto.Box;
 using Application.Dto.Employee;
 using Application.Dto.LogIn;
 using Application.Dto.Register;
-using Application.Dto.Shelf;
 using Application.Validators.AddressValidator;
 using Application.Validators.BoxValidator;
 using Application.Validators.EmployeeValidator;
@@ -24,7 +24,7 @@ namespace Application
             services.AddTransient<IValidator<RegisterDto>, UserValidations>();
             services.AddTransient<IValidator<AddressDto>, AddressValidations>();
             services.AddTransient<IValidator<BoxDto>, BoxValidator>();
-            services.AddTransient<IValidator<ShelfDto>, ShelfValidations>();
+            services.AddTransient<IValidator<AddShelfDto>, ShelfValidations>();
             services.AddTransient<IValidator<EmployeeDto>, EmployeeValidations>();
             services.AddTransient<IValidator<LogInDto>, LogInDtoValidator>();
 

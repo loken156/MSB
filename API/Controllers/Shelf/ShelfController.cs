@@ -6,6 +6,7 @@ using Application.Queries.Shelf.GetAll;
 using Application.Queries.Shelf.GetByID;
 using Application.Validators.ShelfValidator;
 using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

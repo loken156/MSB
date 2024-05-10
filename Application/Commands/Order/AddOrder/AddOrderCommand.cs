@@ -6,13 +6,13 @@ namespace Application.Commands.Order.AddOrder
 {
     public class AddOrderCommand : IRequest<OrderModel>
     {
-        public AddOrderCommand(OrderDto newOrder, Guid warehouseId)
+        public AddOrderCommand(AddOrderDto newOrder, Guid warehouseId)
         {
             NewOrder = newOrder;
             WarehouseId = warehouseId;
 
         }
-        public OrderDto NewOrder { get; }
+        public AddOrderDto NewOrder { get; }
         public Guid WarehouseId { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Application.Dto.Shelf;
+﻿using Application.Dto.AddShelf;
 using Domain.Models.Shelf;
 using MediatR;
 
@@ -6,13 +6,13 @@ namespace Application.Commands.Shelf.AddShelf
 {
     public class AddShelfCommand : IRequest<ShelfModel>
     {
-        public AddShelfCommand(ShelfDto newShelf, string warehouseName)
+        public AddShelfCommand(AddShelfDto newShelf, string warehouseName)
         {
             NewShelf = newShelf;
             WarehouseName = warehouseName;
         }
 
-        public ShelfDto NewShelf { get; }
+        public AddShelfDto NewShelf { get; }
         public string WarehouseName { get; }
 
 
