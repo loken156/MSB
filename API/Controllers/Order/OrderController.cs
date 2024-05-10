@@ -1,7 +1,6 @@
 ﻿using Application.Commands.Order.AddOrder;
 using Application.Commands.Order.DeleteOrder;
 using Application.Commands.Order.UpdateOrder;
-using Application.Dto.Box;
 using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
@@ -50,20 +49,6 @@ namespace API.Controllers.Order
 
                 await _notificationService.SendNotification(notification);
 
-                var newBoxDto = new BoxDto
-                {
-                    BoxId = Guid.NewGuid(),
-                    OrderId = order.OrderId,
-                    Type = "YourBoxType", // Example: "Standard"
-                    TimesUsed = 0, // Assuming it's a new box
-                    Stock = 1, // Assuming you're adding one box
-                    ImageUrl = "YourImageUrl", // Provide an image URL if available
-                    UserNotes = "YourNotes", // Any notes related to the box
-                    Size = "YourSize", // Example: "Large"
-                    ShelfId = Guid.NewGuid(), // Assign an appropriate ShelfId
-                };
-
-
                 // Assuming you want to map the result back to OrderDto before returning
                 var resultDto = _mapper.Map<OrderDto>(order); // Use AutoMapper to map OrderModel back to OrderDto
                 return CreatedAtAction(nameof(GetOrderById), new { id = resultDto.OrderId }, resultDto);
@@ -74,6 +59,7 @@ namespace API.Controllers.Order
                 return StatusCode(500, "An error occurred while adding the order");
             }
         }
+
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
