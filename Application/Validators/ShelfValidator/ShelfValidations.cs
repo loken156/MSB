@@ -1,10 +1,10 @@
-﻿using Application.Dto.AddShelf;
+﻿using Application.Dto.Shelf;
 using FluentValidation;
 using Infrastructure.Repositories.WarehouseRepo;
 
 namespace Application.Validators.ShelfValidator
 {
-    public class ShelfValidations : AbstractValidator<AddShelfDto>
+    public class ShelfValidations : AbstractValidator<ShelfDto>
     {
 
         private readonly IWarehouseRepository _warehouseRepository;

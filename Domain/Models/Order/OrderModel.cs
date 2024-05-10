@@ -1,6 +1,7 @@
 using Domain.Models.Box;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Domain.Models.Order
 {
@@ -16,8 +17,11 @@ namespace Domain.Models.Order
         [ForeignKey("UserId")]
         public string UserId { get; set; }
 
+
         [ForeignKey("CarId")]
-        public Guid? CarId { get; set; } 
+        [JsonIgnore]
+        public Guid? CarId { get; set; }
+        [JsonIgnore]
         public Car.CarModel? Car { get; set; }
 
         //[ForeignKey("RepairId")]
@@ -28,7 +32,8 @@ namespace Domain.Models.Order
         //public Guid WarehouseId { get; set; }
         //public Warehouse.WarehouseModel Warehouse { get; set; }
 
-        [ForeignKey("BoxID")]
+        [ForeignKey("BoxID")] // Return Box
+        [JsonIgnore]
         public Guid BoxId { get; set; }
 
         [ForeignKey("AddressId")] // Return Address
@@ -36,7 +41,7 @@ namespace Domain.Models.Order
         public Address.AddressModel Address { get; set; }
 
         public string RepairNotes { get; set; } = "No notes";
-        
+
         public ICollection<BoxModel> Boxes { get; set; } = new List<BoxModel>();
     }
 }

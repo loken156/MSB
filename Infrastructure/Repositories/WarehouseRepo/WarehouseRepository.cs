@@ -44,6 +44,12 @@ namespace Infrastructure.Repositories.WarehouseRepo
         {
             return await _database.Warehouses.FindAsync(id);
         }
+
+        public async Task<WarehouseModel?> GetWarehouseByNameAsync(string warehouseName)
+        {
+            return await _database.Warehouses.FirstOrDefaultAsync(w => w.WarehouseName == warehouseName);
+        }
+
         public async Task<WarehouseModel> UpdateWarehouseAsync(WarehouseModel warehouse)
         {
             _database.Entry(warehouse).State = EntityState.Modified;

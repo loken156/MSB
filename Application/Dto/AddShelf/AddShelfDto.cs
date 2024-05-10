@@ -1,5 +1,4 @@
-﻿using Application.Dto.Box;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.AddShelf
 {
@@ -9,6 +8,6 @@ namespace Application.Dto.AddShelf
         [Required] public int ShelfColumn { get; set; }
         [Required] public bool Occupancy { get; set; }
         [Required] public Guid WarehouseId { get; set; }
-        public IEnumerable<BoxDto> Boxes { get; set; }
+
     }
 }
