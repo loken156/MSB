@@ -36,6 +36,7 @@ namespace Infrastructure
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<ILabelPrinterService, LabelPrinterService>();
 
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<IMessageSender>(provider =>
