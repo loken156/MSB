@@ -27,6 +27,8 @@ namespace Infrastructure.Repositories.BoxRepo
                 _database.Boxes.Remove(box);
                 await _database.SaveChangesAsync();
             }
+
+
         }
 
         public async Task<IEnumerable<BoxModel>> GetAllBoxesAsync()

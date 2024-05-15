@@ -73,6 +73,7 @@ namespace Tests.API.Controllers
             Assert.Equal(boxes.Count, returnValue.Count());
         }
 
+
         [Fact]
         public async Task GetBoxById_ReturnsOk_WhenBoxExists()
         {
@@ -103,6 +104,7 @@ namespace Tests.API.Controllers
             // Assert
             Assert.IsType<NotFoundObjectResult>(result.Result);
         }
+
 
         [Fact]
         public async Task UpdateBox_ReturnsNoContent_WhenBoxIsUpdated()

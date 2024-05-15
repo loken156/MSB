@@ -29,6 +29,7 @@ namespace Tests.Application.Order.QueryHandlers
                 TotalCost = 100,
                 UserId = "1",
                 CarId = Guid.NewGuid(),
+                WarehouseId = Guid.NewGuid()
             };
             _mockOrderRepository.Setup(m => m.GetOrderByIdAsync(orderId)).ReturnsAsync(order);
 
@@ -42,6 +43,7 @@ namespace Tests.Application.Order.QueryHandlers
             Assert.Equal(order.TotalCost, result.TotalCost);
             Assert.Equal(order.UserId, result.UserId);
             Assert.Equal(order.CarId, result.CarId);
+            Assert.Equal(order.WarehouseId, result.WarehouseId);
         }
 
         [Fact]

@@ -23,7 +23,7 @@ public class GetUserByEmailQueryHandler : IRequestHandler<GetUserByEmailQuery, I
 
         if (user == null)
         {
-            throw new KeyNotFoundException($"User with Email '{request.Email}' couldn't be found");
+            throw new KeyNotFoundException($"User with EmployeeEmail '{request.Email}' couldn't be found");
         }
 
         return user;

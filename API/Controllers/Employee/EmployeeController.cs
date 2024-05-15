@@ -73,7 +73,7 @@ namespace API.Controllers.Employee
         [Route("Add Employee")]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeDto employeeDto, bool isAdmin)
         {
-            _logger.LogInformation("Starting to create new employee: {Email}", employeeDto.Email);
+            _logger.LogInformation("Starting to create new employee: {EmployeeEmail}", employeeDto.Email);
 
             try
             {
@@ -82,7 +82,7 @@ namespace API.Controllers.Employee
 
                 if (createdEmployee == null)
                 {
-                    _logger.LogWarning("Failed to create employee: {Email}", employeeDto.Email);
+                    _logger.LogWarning("Failed to create employee: {EmployeeEmail}", employeeDto.Email);
                     return BadRequest(new { Message = "Failed to create employee" });
                 }
 
@@ -96,7 +96,7 @@ namespace API.Controllers.Employee
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating employee: {Email}", employeeDto.Email);
+                _logger.LogError(ex, "Error creating employee: {EmployeeEmail}", employeeDto.Email);
                 return StatusCode(500, new { Message = "Internal server error" });
             }
         }

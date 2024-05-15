@@ -3,6 +3,7 @@ using Domain.Models.Order;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Repositories.WarehouseRepo;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Commands.Order.AddOrder
 {
@@ -35,6 +36,22 @@ namespace Application.Commands.Order.AddOrder
             orderToCreate.OrderId = Guid.NewGuid(); // Ensure OrderId is set to a new GUID
 
             var createdOrder = await _orderRepository.AddOrderAsync(orderToCreate);
+
+            // Add label
+            var label = new LabelModel
+            {
+                OrderNumber = createdOrder.OrderNumber.ToString(),
+                OrderDate = createdOrder.OrderDate,
+            };
+            try
+            {
+                await _labelPrinterService.PrintLabelAsync(label);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Failed to print label for order {createdOrder.OrderId}");
+                throw;
+            }
 
             return createdOrder;
         }

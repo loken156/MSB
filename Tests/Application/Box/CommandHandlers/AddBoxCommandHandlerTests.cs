@@ -36,6 +36,10 @@ namespace Tests.Application.Box.CommandHandlers
 
             var command = new AddBoxCommand(newBoxDto);
 
+            var handler = new AddBoxCommandHandler(mockBoxRepository.Object, mockLogger.Object);
+            var newBox = new BoxDto { Type = "Type1", TimesUsed = 1, Stock = 10, ImageUrl = "http://example.com", UserNotes = "Note", Size = "Large" };
+            var command = new AddBoxCommand(newBox, Guid.NewGuid());
+
             // Act
             var result = await _handler.Handle(command, new CancellationToken());
 

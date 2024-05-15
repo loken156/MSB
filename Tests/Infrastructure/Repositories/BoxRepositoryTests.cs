@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Box;
+using Domain.Models.Shelf;
 using Infrastructure.Database;
 using Infrastructure.Repositories.BoxRepo;
 using Microsoft.EntityFrameworkCore;

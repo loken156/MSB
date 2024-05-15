@@ -7,6 +7,7 @@ using Application.Queries.Address.GetAll;
 using Application.Queries.Address.GetByID;
 using Application.Validators.AddressValidator;
 using Domain.Models.Address;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -47,9 +48,29 @@ namespace Tests.API.Controllers
             var result = await _controller.AddAddress(command);
 
             // Assert
+            var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            var returnValue = Assert.IsType<AddressModel>(createdAtActionResult.Value);
+            Assert.Equal(address, returnValue);
+        }
+
+        [Fact]
+        public async Task AddAddress_ReturnsBadRequest_WhenModelStateIsInvalid()
+        {
+            // Arrange
+            var command = new AddAddressCommand(new AddressModel());
+            _addressValidationsMock.Setup(v => v.Validate(It.IsAny<AddressDto>())).Returns(new ValidationResult());
+
+            // Act
+            var result = await _controller.AddAddress(command);
+
+            // Assert
             var objectResult = Assert.IsType<ObjectResult>(result.Result);
+
+            // Check if the status code is 500 - "An error occurred while adding an Address"
             Assert.Equal(500, objectResult.StatusCode);
         }
+
+
 
         [Fact]
         public async Task GetAllAddresses_Returns500_WhenExceptionIsThrown()
@@ -111,6 +132,32 @@ namespace Tests.API.Controllers
             Assert.Equal(500, objectResult.StatusCode);
         }
 
-    }
+        [Fact]
+        public async Task UpdateAddress_ReturnsBadRequest_WhenIdDoesNotMatchAddressId()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var address = new AddressModel { AddressId = Guid.NewGuid() };
 
+            // Act
+            var result = await _controller.UpdateAddress(id, address);
+
+            // Assert
+            Assert.IsType<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteAddress_ReturnsOk_WhenDeleteIsSuccessful()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            _mediatorMock.Setup(m => m.Send(It.Is<DeleteAddressCommand>(c => c.AddressId == id), default)).Returns(Task.FromResult(MediatR.Unit.Value));
+
+            // Act
+            var result = await _controller.DeleteAddress(id);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+    }
 }

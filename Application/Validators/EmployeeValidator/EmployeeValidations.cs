@@ -17,9 +17,9 @@ namespace Application.Validators.EmployeeValidator
                 .NotEmpty().WithMessage("Last Name cannot be empty")
                 .MaximumLength(50).WithMessage("Last Name can't be longer than 50 characters");
 
-            // Validation for Email
+            // Validation for EmployeeEmail
             RuleFor(employee => employee.Email)
-                .NotEmpty().WithMessage("Email cannot be empty")
+                .NotEmpty().WithMessage("EmployeeEmail cannot be empty")
                 .EmailAddress().WithMessage("Invalid email address");
 
             // Validation for PhoneNumber

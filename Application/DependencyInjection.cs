@@ -33,6 +33,5 @@ namespace Application
 
             return services;
         }
-
     }
 }
