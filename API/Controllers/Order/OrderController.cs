@@ -34,7 +34,7 @@ namespace API.Controllers.Order
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("Add Order")]
-        public async Task<ActionResult<OrderDto>> AddOrder(OrderDto orderDto, [FromQuery] Guid warehouseId)
+        public async Task<ActionResult<OrderDto>> AddOrder(AddOrderDto orderDto, [FromQuery] Guid warehouseId)
         {
             try
             {

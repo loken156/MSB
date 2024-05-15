@@ -19,9 +19,7 @@ namespace Infrastructure.Repositories.BoxRepo
             return box;
         }
 
-
-
-        async Task IBoxRepository.DeleteBoxAsync(Guid boxId)
+        public async Task DeleteBoxAsync(Guid boxId)
         {
             var box = await _database.Boxes.FindAsync(boxId);
             if (box != null)
@@ -29,27 +27,24 @@ namespace Infrastructure.Repositories.BoxRepo
                 _database.Boxes.Remove(box);
                 await _database.SaveChangesAsync();
             }
-
-
         }
 
-
-        async Task<IEnumerable<BoxModel>> IBoxRepository.GetAllBoxesAsync()
+        public async Task<IEnumerable<BoxModel>> GetAllBoxesAsync()
         {
             return await _database.Boxes.ToListAsync();
         }
 
-        async Task<BoxModel> IBoxRepository.GetBoxByIdAsync(Guid boxId)
+        public async Task<BoxModel> GetBoxByIdAsync(Guid boxId)
         {
             return await _database.Boxes.FindAsync(boxId);
         }
 
-        async Task<BoxModel> IBoxRepository.UpdateBoxAsync(BoxModel box)
+        public async Task<BoxModel> UpdateBoxAsync(BoxModel box)
         {
             _database.Boxes.Update(box);
             await _database.SaveChangesAsync();
-
             return box;
         }
     }
+
 }

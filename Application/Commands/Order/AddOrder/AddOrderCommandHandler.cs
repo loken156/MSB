@@ -1,5 +1,4 @@
-﻿using Application.Commands.Box.AddBox;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Models.Order;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Repositories.WarehouseRepo;
@@ -25,30 +24,21 @@ namespace Application.Commands.Order.AddOrder
         public async Task<OrderModel> Handle(AddOrderCommand request, CancellationToken cancellationToken)
         {
             var warehouse = await _warehouseRepository.GetWarehouseByIdAsync(request.WarehouseId);
+
             if (warehouse == null)
             {
                 throw new Exception("Warehouse not found");
             }
 
-            // Use AutoMapper to map OrderDto to OrderModel
+            // Use AutoMapper to map AddOrderDto to OrderModel
             var orderToCreate = _mapper.Map<OrderModel>(request.NewOrder);
             orderToCreate.OrderId = Guid.NewGuid(); // Ensure OrderId is set to a new GUID
 
             var createdOrder = await _orderRepository.AddOrderAsync(orderToCreate);
 
-            // Process each BoxDto in the request
-            foreach (var boxDto in request.NewOrder.Boxes)
-            {
-                // Ensure each box is associated with the newly created order
-                boxDto.OrderId = createdOrder.OrderId;
-
-                // Create an AddBoxCommand for each box
-                var addBoxCommand = new AddBoxCommand(boxDto);
-                await _mediator.Send(addBoxCommand, cancellationToken);
-            }
-
             return createdOrder;
         }
+
     }
 
 }
