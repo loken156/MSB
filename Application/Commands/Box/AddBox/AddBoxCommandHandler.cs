@@ -23,7 +23,7 @@ namespace Application.Commands.Box.AddBox
 
         public async Task<BoxDto> Handle(AddBoxCommand request, CancellationToken cancellationToken)
         {
-            
+
             try
             {
                 var boxModel = _mapper.Map<BoxModel>(request.NewBox);

@@ -11,6 +11,6 @@ namespace Application.Commands.Address.AddAddress
         {
             NewAddress = newAddress;
         }
-        
+
     }
 }

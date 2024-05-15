@@ -18,8 +18,8 @@ namespace Application.Commands.Address.AddAddress
 
         public async Task<AddressDto> Handle(AddAddressCommand request, CancellationToken cancellationToken)
         {
-            var addressmodel = _mapper.Map<AddressModel>(request.NewAddress); 
-            
+            var addressmodel = _mapper.Map<AddressModel>(request.NewAddress);
+
             await _addressRepository.AddAddressAsync(addressmodel);
 
             var addressDto = _mapper.Map<AddressDto>(addressmodel);

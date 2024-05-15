@@ -11,7 +11,7 @@ namespace Application.Commands.Box.AddBox
         {
             NewBox = newBox;
         }
-        
-        
+
+
     }
 }
