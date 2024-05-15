@@ -1,7 +1,4 @@
-using Application.Dto.Driver;
-using Application.Dto.Employee;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Dto.Car
 {
@@ -13,10 +10,7 @@ namespace Application.Dto.Car
         [Required] public string Type { get; set; }
         [Required] public string Availability { get; set; }
 
-        public class CarDetailDto : CarDto
-        {
-            public DriverDto Driver { get; set; }
-        }
+
 
     }
 }

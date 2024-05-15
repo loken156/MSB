@@ -1,6 +1,5 @@
 ﻿using Domain.Models.Address;
 using Infrastructure.Repositories.AddressRepo;
-using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 
 namespace Application.Queries.Address.GetAll

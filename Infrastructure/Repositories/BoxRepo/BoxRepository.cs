@@ -1,4 +1,4 @@
-﻿using Domain.Models.Box;
+using Domain.Models.Box;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,7 +34,10 @@ namespace Infrastructure.Repositories.BoxRepo
                 _database.Boxes.Remove(box);
                 await _database.SaveChangesAsync();
             }
+
+
         }
+
 
         async Task<IEnumerable<BoxModel>> IBoxRepository.GetAllBoxesAsync()
         {
@@ -49,7 +52,7 @@ namespace Infrastructure.Repositories.BoxRepo
         async Task<BoxModel> IBoxRepository.UpdateBoxAsync(BoxModel box)
         {
             _database.Boxes.Update(box);
-            _database.SaveChangesAsync();
+            await _database.SaveChangesAsync();
 
             return box;
         }

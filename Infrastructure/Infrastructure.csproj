@@ -37,9 +37,19 @@
     <None Remove="Services\Notification\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\" />
     <Folder Include="Repositories\EmployeeRepo\" />
-    <Folder Include="Repositories\DriverRepo\" />
     <Folder Include="Repositories\CarRepo\" />
     <Folder Include="Services\Notification\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Interop.bpac">
+      <HintPath>Resources\Interop.bpac.DLL</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Resources\MagnificientStoreBuddies.lbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

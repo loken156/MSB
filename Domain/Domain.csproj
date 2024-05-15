@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Driver\" />
     <Folder Include="Models\Employee\" />
     <Folder Include="Models\Car\" />
   </ItemGroup>

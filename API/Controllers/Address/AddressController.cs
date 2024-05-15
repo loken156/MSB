@@ -1,4 +1,4 @@
-﻿using Application.Commands.Address.AddAddress;
+using Application.Commands.Address.AddAddress;
 using Application.Commands.Address.DeleteAddress;
 using Application.Commands.Address.UpdateAddress;
 using Application.Dto.Adress;
@@ -6,8 +6,6 @@ using Application.Queries.Address.GetAll;
 using Application.Queries.Address.GetByID;
 using Application.Validators.AddressValidator;
 using Domain.Models.Address;
-using FluentValidation;
-using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,15 +18,13 @@ namespace API.Controllers.Address
 
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
-        private readonly AddressRepository _addressRepository;
-        private readonly AddressValidations _addressValidations;
+        private readonly IAddressValidations _addressValidations;
         private readonly ILogger _logger;
 
-        public AddressController(IMediator mediator, IConfiguration configuration, AddressRepository addressRepository, AddressValidations validationRules, ILogger logger)
+        public AddressController(IMediator mediator, IConfiguration configuration, IAddressValidations validationRules, ILogger logger)
         {
             _mediator = mediator;
             _configuration = configuration;
-            _addressRepository = addressRepository;
             _addressValidations = validationRules;
             _logger = logger;
         }
@@ -89,7 +85,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpGet("Get Address By {id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<AddressDto>> GetAddressById(Guid id)
         {
             try
@@ -113,7 +109,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpPut("Update Address By {id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAddress(Guid id, AddressModel address)
         {
             try
@@ -138,7 +134,7 @@ namespace API.Controllers.Address
 
         }
 
-        [HttpDelete("Delete Address By {id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(Guid id)
         {
             try
