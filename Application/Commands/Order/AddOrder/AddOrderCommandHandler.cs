@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Domain.Interfaces;
+using Domain.Models.Label;
 using Domain.Models.Order;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Repositories.WarehouseRepo;
@@ -13,13 +15,17 @@ namespace Application.Commands.Order.AddOrder
         private readonly IWarehouseRepository _warehouseRepository;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
+        private readonly ILogger<AddOrderCommandHandler> _logger;
+        private readonly ILabelPrinterService _labelPrinterService;
 
-        public AddOrderCommandHandler(IOrderRepository orderRepository, IWarehouseRepository warehouseRepository, IMapper mapper, IMediator mediator)
+        public AddOrderCommandHandler(IOrderRepository orderRepository, IWarehouseRepository warehouseRepository, IMapper mapper, IMediator mediator, ILogger<AddOrderCommandHandler> logger, ILabelPrinterService labelPrinterService)
         {
             _orderRepository = orderRepository;
             _warehouseRepository = warehouseRepository;
             _mapper = mapper;
             _mediator = mediator;
+            _logger = logger;
+            _labelPrinterService = labelPrinterService;
         }
 
         public async Task<OrderModel> Handle(AddOrderCommand request, CancellationToken cancellationToken)
