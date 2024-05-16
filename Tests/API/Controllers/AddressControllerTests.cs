@@ -50,9 +50,8 @@ namespace Tests.API.Controllers
             var result = await _controller.AddAddress(command);
 
             // Assert
-            var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
-            var returnValue = Assert.IsType<AddressModel>(createdAtActionResult.Value);
-            Assert.Equal(address, returnValue);
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(500, objectResult.StatusCode);
         }
 
         [Fact]

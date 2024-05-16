@@ -59,7 +59,7 @@ namespace Tests.Application.Box.CommandHandlers
             var newBoxDto = new BoxDto();
             var newBoxModel = new BoxModel { BoxId = Guid.NewGuid() }; // Ensure the BoxModel has a non-empty ID
             _mockMapper.Setup(m => m.Map<BoxModel>(It.IsAny<BoxDto>())).Returns(newBoxModel);
-            _mockMapper.Setup(m => m.Map<BoxDto>(It.IsAny<BoxModel>())).Returns(newBoxDto);
+            _mockMapper.Setup(m => m.Map<BoxDto>(It.IsAny<BoxModel>())).Returns<BoxModel>(src => new BoxDto { BoxId = src.BoxId });
             _mockBoxRepository.Setup(repo => repo.AddBoxAsync(It.IsAny<BoxModel>())).ReturnsAsync(newBoxModel);
 
             var command = new AddBoxCommand(newBoxDto);
@@ -69,6 +69,7 @@ namespace Tests.Application.Box.CommandHandlers
 
             // Assert
             Assert.NotEqual(Guid.Empty, result.BoxId);
+
         }
     }
 }
