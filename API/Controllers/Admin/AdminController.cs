@@ -75,7 +75,7 @@ namespace API.Controllers
                 {
                     Id = adminDto.AdminId.ToString(),
                     UserName = adminDto.Email,
-                    EmployeeEmail = adminDto.Email,
+                    Email = adminDto.Email,
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",
@@ -130,7 +130,7 @@ namespace API.Controllers
                 {
                     Id = adminDto.AdminId.ToString(),
                     UserName = adminDto.Email,
-                    EmployeeEmail = adminDto.Email,
+                    Email = adminDto.Email,
                     FirstName = adminDto.FirstName,
                     LastName = adminDto.LastName,
                     Role = "Admin",

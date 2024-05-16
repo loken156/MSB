@@ -1,6 +1,6 @@
 ﻿using Application.Commands.Shelf.AddShelf;
 using Application.Dto.AddShelf;
-using Application.Dto.Box;
+using AutoMapper;
 using Domain.Models.Shelf;
 using Domain.Models.Warehouse;
 using Infrastructure.Repositories.ShelfRepo;
@@ -11,55 +11,65 @@ namespace Tests.Application.Shelf.CommandHandlers
 {
     public class AddShelfCommandHandlerTests
     {
+        private readonly Mock<IShelfRepository> _mockShelfRepository;
+        private readonly Mock<IWarehouseRepository> _mockWarehouseRepository;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly AddShelfCommandHandler _handler;
+
+        public AddShelfCommandHandlerTests()
+        {
+            _mockShelfRepository = new Mock<IShelfRepository>();
+            _mockWarehouseRepository = new Mock<IWarehouseRepository>();
+            _mockMapper = new Mock<IMapper>();
+            _handler = new AddShelfCommandHandler(_mockShelfRepository.Object, _mockWarehouseRepository.Object, _mockMapper.Object);
+
+            // Setup default behaviors for mapper
+            _mockMapper.Setup(m => m.Map<ShelfModel>(It.IsAny<AddShelfDto>())).Returns(new ShelfModel());
+        }
+
         [Fact]
-        public async Task Handle_GivenValidCommand_CallsGetWarehouseByIdAsyncOnRepository()
+        public async Task Handle_GivenValidCommand_CallsGetWarehouseByNameAsyncOnRepository()
         {
             // Arrange
-            var mockShelfRepository = new Mock<IShelfRepository>();
-            var mockWarehouseRepository = new Mock<IWarehouseRepository>();
-            mockWarehouseRepository.Setup(repo => repo.GetWarehouseByIdAsync(It.IsAny<Guid>()))
+            var warehouseName = "TestWarehouse";
+            _mockWarehouseRepository.Setup(repo => repo.GetWarehouseByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync(new WarehouseModel());
-            var handler = new AddShelfCommandHandler(mockShelfRepository.Object, mockWarehouseRepository.Object);
-            var command = new AddShelfCommand(new AddShelfDto { ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid(), Boxes = new List<BoxDto>() }, Guid.NewGuid(), new List<BoxDto>());
+            var command = new AddShelfCommand(new AddShelfDto(), warehouseName);
 
             // Act
-            await handler.Handle(command, CancellationToken.None);
+            await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            mockWarehouseRepository.Verify(repo => repo.GetWarehouseByIdAsync(command.WarehouseId), Times.Once);
+            _mockWarehouseRepository.Verify(repo => repo.GetWarehouseByNameAsync(warehouseName), Times.Once);
         }
 
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {
             // Arrange
-            var mockShelfRepository = new Mock<IShelfRepository>();
-            var mockWarehouseRepository = new Mock<IWarehouseRepository>();
-            mockWarehouseRepository.Setup(repo => repo.GetWarehouseByIdAsync(It.IsAny<Guid>()))
+            var warehouseName = "InvalidWarehouse";
+            _mockWarehouseRepository.Setup(repo => repo.GetWarehouseByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync((WarehouseModel)null);
-            var handler = new AddShelfCommandHandler(mockShelfRepository.Object, mockWarehouseRepository.Object);
-            var command = new AddShelfCommand(new AddShelfDto { ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid(), Boxes = new List<BoxDto>() }, Guid.NewGuid(), new List<BoxDto>());
+            var command = new AddShelfCommand(new AddShelfDto(), warehouseName);
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => handler.Handle(command, CancellationToken.None));
+            await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
         }
 
         [Fact]
         public async Task Handle_GivenValidCommand_CallsAddShelfAsyncOnRepository()
         {
             // Arrange
-            var mockShelfRepository = new Mock<IShelfRepository>();
-            var mockWarehouseRepository = new Mock<IWarehouseRepository>();
-            mockWarehouseRepository.Setup(repo => repo.GetWarehouseByIdAsync(It.IsAny<Guid>()))
+            var warehouseName = "TestWarehouse";
+            _mockWarehouseRepository.Setup(repo => repo.GetWarehouseByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync(new WarehouseModel());
-            var handler = new AddShelfCommandHandler(mockShelfRepository.Object, mockWarehouseRepository.Object);
-            var command = new AddShelfCommand(new AddShelfDto { ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid(), Boxes = new List<BoxDto>() }, Guid.NewGuid(), new List<BoxDto>());
+            var command = new AddShelfCommand(new AddShelfDto(), warehouseName);
 
             // Act
-            await handler.Handle(command, CancellationToken.None);
+            await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            mockShelfRepository.Verify(repo => repo.AddShelfAsync(It.IsAny<ShelfModel>()), Times.Once);
+            _mockShelfRepository.Verify(repo => repo.AddShelfAsync(It.IsAny<ShelfModel>()), Times.Once);
         }
 
         [Fact]
@@ -67,17 +77,14 @@ namespace Tests.Application.Shelf.CommandHandlers
         {
             // Arrange
             var createdShelf = new ShelfModel { ShelfId = Guid.NewGuid() };
-            var mockShelfRepository = new Mock<IShelfRepository>();
-            mockShelfRepository.Setup(repo => repo.AddShelfAsync(It.IsAny<ShelfModel>()))
+            _mockShelfRepository.Setup(repo => repo.AddShelfAsync(It.IsAny<ShelfModel>()))
                 .ReturnsAsync(createdShelf);
-            var mockWarehouseRepository = new Mock<IWarehouseRepository>();
-            mockWarehouseRepository.Setup(repo => repo.GetWarehouseByIdAsync(It.IsAny<Guid>()))
+            _mockWarehouseRepository.Setup(repo => repo.GetWarehouseByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync(new WarehouseModel());
-            var handler = new AddShelfCommandHandler(mockShelfRepository.Object, mockWarehouseRepository.Object);
-            var command = new AddShelfCommand(new AddShelfDto { ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid(), Boxes = new List<BoxDto>() }, Guid.NewGuid(), new List<BoxDto>());
+            var command = new AddShelfCommand(new AddShelfDto(), "TestWarehouse");
 
             // Act
-            var result = await handler.Handle(command, CancellationToken.None);
+            var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.Equal(createdShelf, result);

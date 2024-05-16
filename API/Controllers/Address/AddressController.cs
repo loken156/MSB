@@ -19,9 +19,9 @@ namespace API.Controllers.Address
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IAddressValidations _addressValidations;
-        private readonly ILogger _logger;
+        private readonly ILogger<AddressController> _logger;
 
-        public AddressController(IMediator mediator, IConfiguration configuration, IAddressValidations validationRules, ILogger logger)
+        public AddressController(IMediator mediator, IConfiguration configuration, IAddressValidations validationRules, ILogger<AddressController> logger)
         {
             _mediator = mediator;
             _configuration = configuration;
@@ -31,37 +31,23 @@ namespace API.Controllers.Address
 
         [HttpPost]
         [Route("Add Address")]
-        public async Task<ActionResult<AddressDto>> AddAddress(AddAddressCommand command)
+        public async Task<ActionResult<AddressDto>> AddAddress([FromBody] AddAddressCommand command)
         {
 
             try
             {
-                var adressDto = new AddressDto
-                {
-                    StreetName = command.NewAddress.StreetName,
-                    StreetNumber = command.NewAddress.StreetNumber,
-                    Apartment = command.NewAddress.Apartment,
-                    ZipCode = command.NewAddress.ZipCode,
-                    Floor = command.NewAddress.Floor,
-                    City = command.NewAddress.City,
-                    State = command.NewAddress.State,
-                    Country = command.NewAddress.Country,
-                };
-
-
-                var validationResult = _addressValidations.Validate(adressDto);
+                var validationResult = _addressValidations.Validate(command.NewAddress);
                 if (!validationResult.IsValid)
                 {
                     return BadRequest(validationResult.Errors);
                 }
-
-                var address = await _mediator.Send(command);
-                return CreatedAtAction(nameof(GetAddressById), new { id = address.AddressId }, address);
+                var addressDto = await _mediator.Send(command);
+                return CreatedAtAction(nameof(GetAddressById), new { id = addressDto.AddressId }, addressDto);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while adding address");
-                return StatusCode(500, "An error occurred while adding an Address");
+                return StatusCode(500, "An error occurred while adding address");
             }
 
         }

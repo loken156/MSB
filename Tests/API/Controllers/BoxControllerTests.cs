@@ -5,6 +5,7 @@ using Application.Commands.Box.UpdateBox;
 using Application.Dto.Box;
 using Application.Queries.Box.GetAll;
 using Application.Queries.Box.GetByID;
+using AutoMapper;
 using Domain.Models.Box;
 using FluentValidation;
 using FluentValidation.Results;
@@ -21,13 +22,19 @@ namespace Tests.API.Controllers
         private readonly BoxController _controller;
         private readonly Mock<ILogger<BoxController>> _loggerMock;
         private readonly Mock<IValidator<BoxDto>> _validatorMock;
+        private readonly Mock<IMapper> _mapperMock;
 
         public BoxControllerTests()
         {
             _mediatorMock = new Mock<IMediator>();
             _loggerMock = new Mock<ILogger<BoxController>>();
             _validatorMock = new Mock<IValidator<BoxDto>>();
-            _controller = new BoxController(_mediatorMock.Object, _loggerMock.Object, _validatorMock.Object);
+            _mapperMock = new Mock<IMapper>();
+            _controller = new BoxController(_mediatorMock.Object, _loggerMock.Object, _validatorMock.Object, _mapperMock.Object);
+
+            // General setup for IMediator to return a BoxDto asynchronously, if needed
+            _mediatorMock.Setup(m => m.Send(It.IsAny<IRequest<BoxDto>>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new BoxDto { /* Initialize properties as needed */ });
         }
 
         [Fact]
@@ -35,21 +42,19 @@ namespace Tests.API.Controllers
         {
             // Arrange
             var boxDto = new BoxDto { BoxId = Guid.NewGuid() };
-            var shelfId = Guid.NewGuid();
-            var command = new AddBoxCommand(boxDto, shelfId);
-            var box = new BoxModel { BoxId = boxDto.BoxId };
-            _mediatorMock.Setup(m => m.Send(command, default)).ReturnsAsync(box);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<AddBoxCommand>(), default)).ReturnsAsync(boxDto);
+            _mapperMock.Setup(m => m.Map<BoxDto>(It.IsAny<BoxModel>())).Returns(boxDto);
 
             var validationResult = new ValidationResult();
             _validatorMock.Setup(v => v.Validate(boxDto)).Returns(validationResult);
 
             // Act
-            var result = await _controller.AddBox(command);
+            var result = await _controller.AddBox(boxDto);
 
             // Assert
             var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
-            var returnValue = Assert.IsType<BoxModel>(createdAtActionResult.Value);
-            Assert.Equal(box.BoxId, returnValue.BoxId);
+            var returnValue = Assert.IsType<BoxDto>(createdAtActionResult.Value);
+            Assert.Equal(boxDto.BoxId, returnValue.BoxId);
         }
 
         [Fact]

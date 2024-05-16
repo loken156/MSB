@@ -2,6 +2,8 @@ namespace Application.Dto.Adress
 {
     public class AddressDto
     {
+        public Guid AddressId { get; set; }
+        public string? UserId { get; set; }
         public string? StreetName { get; set; }
         public string? StreetNumber { get; set; }
         public string? Apartment { get; set; }

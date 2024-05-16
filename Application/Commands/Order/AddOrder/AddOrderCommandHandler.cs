@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using AutoMapper;
+using Domain.Interfaces;
 using Domain.Models.Label;
 using Domain.Models.Order;
 using Infrastructure.Repositories.OrderRepo;
@@ -12,41 +13,34 @@ namespace Application.Commands.Order.AddOrder
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IWarehouseRepository _warehouseRepository;
-        private readonly ILabelPrinterService _labelPrinterService;
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
         private readonly ILogger<AddOrderCommandHandler> _logger;
-        public AddOrderCommandHandler(IOrderRepository orderRepository, IWarehouseRepository warehouseRepository, ILabelPrinterService labelPrinterService, ILogger<AddOrderCommandHandler> logger)
+        private readonly ILabelPrinterService _labelPrinterService;
+
+        public AddOrderCommandHandler(IOrderRepository orderRepository, IWarehouseRepository warehouseRepository, IMapper mapper, IMediator mediator, ILogger<AddOrderCommandHandler> logger, ILabelPrinterService labelPrinterService)
         {
             _orderRepository = orderRepository;
             _warehouseRepository = warehouseRepository;
-            _labelPrinterService = labelPrinterService;
+            _mapper = mapper;
+            _mediator = mediator;
             _logger = logger;
+            _labelPrinterService = labelPrinterService;
         }
+
         public async Task<OrderModel> Handle(AddOrderCommand request, CancellationToken cancellationToken)
         {
-
             var warehouse = await _warehouseRepository.GetWarehouseByIdAsync(request.WarehouseId);
+
             if (warehouse == null)
             {
                 throw new Exception("Warehouse not found");
             }
 
-            request.NewOrder.WarehouseId = request.WarehouseId;
+            // Use AutoMapper to map AddOrderDto to OrderModel
+            var orderToCreate = _mapper.Map<OrderModel>(request.NewOrder);
+            orderToCreate.OrderId = Guid.NewGuid(); // Ensure OrderId is set to a new GUID
 
-            OrderModel orderToCreate = new()
-            {
-                OrderId = Guid.NewGuid(),
-                OrderDate = request.NewOrder.OrderDate,
-                TotalCost = request.NewOrder.TotalCost,
-                OrderStatus = request.NewOrder.OrderStatus ?? string.Empty,
-                UserId = request.NewOrder.UserId,
-                // User = request.NewOrder.User, // You'll need to map from UserDto to UserModel
-                // CarId = request.NewOrder.CarId, // Uncomment if you want to set CarId
-                // RepairId = request.NewOrder.RepairId, // Uncomment if you want to set RepairId
-                WarehouseId = request.NewOrder.WarehouseId,
-                // AdressId = request.NewOrder.AdressId,
-                // Address = request.NewOrder.Address, // You'll need to map from AddressDto to AddressModel
-                RepairNotes = request.NewOrder.RepairNotes ?? "No notes"
-            };
             var createdOrder = await _orderRepository.AddOrderAsync(orderToCreate);
 
             // Add label
@@ -67,5 +61,7 @@ namespace Application.Commands.Order.AddOrder
 
             return createdOrder;
         }
+
     }
+
 }

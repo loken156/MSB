@@ -24,10 +24,10 @@ namespace Application.Validators.ShelfValidator
             RuleFor(x => x.Occupancy)
                   .Equal(false).WithMessage("New shelf cannot already be occupied");
 
-            RuleFor(x => x.WarehouseId)
-            .MustAsync(async (warehouseId, cancellationToken) =>
-                await _warehouseRepository.ExistWarehouseAsync(warehouseId))
-            .WithMessage("Warehouse with the given id does not exist");
+            //RuleFor(x => x.WarehouseId)
+            //.MustAsync(async (warehouseId, cancellationToken) =>
+            //    await _warehouseRepository.ExistWarehouseAsync(warehouseId))
+            //.WithMessage("Warehouse with the given id does not exist");
 
         }
 

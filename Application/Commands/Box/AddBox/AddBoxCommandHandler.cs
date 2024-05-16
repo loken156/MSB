@@ -1,41 +1,35 @@
-﻿using Domain.Models.Box;
+﻿using Application.Dto.Box;
+using AutoMapper;
+using Domain.Models.Box;
 using Infrastructure.Repositories.BoxRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Commands.Box.AddBox
 {
-    public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxModel>
+    public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxDto>
     {
         private readonly IBoxRepository _boxRepository;
         private readonly ILogger<AddBoxCommandHandler> _logger;
+        private readonly IMapper _mapper;
 
-        public AddBoxCommandHandler(IBoxRepository boxRepository, ILogger<AddBoxCommandHandler> logger)
+        public AddBoxCommandHandler(IBoxRepository boxRepository, ILogger<AddBoxCommandHandler> logger, IMapper mapper)
         {
             _boxRepository = boxRepository;
             _logger = logger;
+            _mapper = mapper;
         }
 
 
-        public async Task<BoxModel> Handle(AddBoxCommand request, CancellationToken cancellationToken)
+        public async Task<BoxDto> Handle(AddBoxCommand request, CancellationToken cancellationToken)
         {
-            var boxToCreate = new BoxModel
-            {
-                BoxId = Guid.NewGuid(),
-                Type = request.NewBox.Type,
-                TimesUsed = request.NewBox.TimesUsed,
-                Stock = request.NewBox.Stock,
-                ImageUrl = request.NewBox.ImageUrl,
-                UserNotes = request.NewBox.UserNotes,
-                Order = request.NewBox.Order,
-                Size = request.NewBox.Size,
-                ShelfId = request.ShelfId
-            };
 
             try
             {
-                var createdBox = await _boxRepository.AddBoxAsync(boxToCreate, request.ShelfId);
-                return createdBox;
+                var boxModel = _mapper.Map<BoxModel>(request.NewBox);
+                await _boxRepository.AddBoxAsync(boxModel);
+                var boxDto = _mapper.Map<BoxDto>(boxModel);
+                return boxDto;
 
             }
             catch (Exception exception)

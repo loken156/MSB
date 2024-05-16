@@ -26,7 +26,7 @@ namespace Tests.Application.Employee.QueryHandlers
                 Id = employeeId.ToString(),
                 FirstName = "John",
                 LastName = "Doe",
-                EmployeeEmail = "john.doe@example.com",
+                Email = "john.doe@example.com",
                 Department = "IT",
                 Position = "Developer",
                 HireDate = DateTime.Now,
@@ -41,7 +41,7 @@ namespace Tests.Application.Employee.QueryHandlers
             Assert.Equal(employee.Id, result.Id.ToString());
             Assert.Equal(employee.FirstName, result.FirstName);
             Assert.Equal(employee.LastName, result.LastName);
-            Assert.Equal(employee.EmployeeEmail, result.EmployeeEmail);
+            Assert.Equal(employee.Email, result.Email);
             Assert.Equal(employee.Department, result.Department);
             Assert.Equal(employee.Position, result.Position);
             Assert.Equal(employee.HireDate, result.HireDate);

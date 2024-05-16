@@ -1,40 +1,31 @@
-﻿using Domain.Models.Address;
+﻿using Application.Dto.Adress;
+using AutoMapper;
+using Domain.Models.Address;
 using Infrastructure.Repositories.AddressRepo;
 using MediatR;
 
 namespace Application.Commands.Address.AddAddress
 {
-    public class AddAddressCommandHandler : IRequestHandler<AddAddressCommand, AddressModel>
+    public class AddAddressCommandHandler : IRequestHandler<AddAddressCommand, AddressDto>
     {
         private readonly IAddressRepository _addressRepository;
-
-        public AddAddressCommandHandler(IAddressRepository addressRepository)
+        private readonly IMapper _mapper;
+        public AddAddressCommandHandler(IAddressRepository addressRepository, IMapper mapper)
         {
             _addressRepository = addressRepository;
+            _mapper = mapper;
         }
 
-        public async Task<AddressModel> Handle(AddAddressCommand request, CancellationToken cancellationToken)
+        public async Task<AddressDto> Handle(AddAddressCommand request, CancellationToken cancellationToken)
         {
-            AddressModel addressToCreate = new()
-            {
-                AddressId = Guid.NewGuid(),
-                StreetName = request.NewAddress.StreetName ?? string.Empty,
-                StreetNumber = request.NewAddress.StreetNumber ?? string.Empty,
-                Apartment = request.NewAddress.Apartment,
-                ZipCode = request.NewAddress.ZipCode ?? string.Empty,
-                Floor = request.NewAddress.Floor,
-                // Additional geographic information
-                City = request.NewAddress.City,
-                State = request.NewAddress.State,
-                Country = request.NewAddress.Country,
-                Latitude = request.NewAddress.Latitude,
-                Longitude = request.NewAddress.Longitude,
-            };
+            var addressmodel = _mapper.Map<AddressModel>(request.NewAddress);
 
-            // Asynchronously save the new address using the repository
-            await _addressRepository.AddAddressAsync(addressToCreate);
+            await _addressRepository.AddAddressAsync(addressmodel);
 
-            return addressToCreate;
+            var addressDto = _mapper.Map<AddressDto>(addressmodel);
+
+            return addressDto;
+
         }
     }
 

@@ -30,10 +30,10 @@ namespace Infrastructure.Database
         {
 
             modelBuilder.Entity<ApplicationUser>()
-            .HasMany(u => u.Addresses)
-            .WithOne(a => a.User as ApplicationUser)
-            .HasForeignKey(a => a.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+                .HasMany(u => u.Addresses)
+                .WithOne()
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Configure one-to-many relationship between ShelfModel and BoxModel
             modelBuilder.Entity<ShelfModel>()

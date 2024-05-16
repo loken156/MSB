@@ -15,8 +15,8 @@ namespace Tests.Infrastructure.Repositories
                 .Options;
             var admins = new List<AdminModel>
             {
-                new AdminModel { Id = Guid.NewGuid().ToString(), UserName = "TestAdmin1", EmployeeEmail = "test1@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" },
-                new AdminModel { Id = Guid.NewGuid().ToString(), UserName = "TestAdmin2", EmployeeEmail = "test2@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" },
+                new AdminModel { Id = Guid.NewGuid().ToString(), UserName = "TestAdmin1", Email = "test1@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" },
+                new AdminModel { Id = Guid.NewGuid().ToString(), UserName = "TestAdmin2", Email = "test2@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" },
             };
             using (var context = new MSB_Database(options))
             {
@@ -43,7 +43,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var adminId = Guid.NewGuid().ToString();
-            var expectedAdmin = new AdminModel { Id = adminId, UserName = "TestAdmin", EmployeeEmail = "test@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
+            var expectedAdmin = new AdminModel { Id = adminId, UserName = "TestAdmin", Email = "test@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
             using (var context = new MSB_Database(options))
             {
                 context.Admins.Add(expectedAdmin);
@@ -68,7 +68,7 @@ namespace Tests.Infrastructure.Repositories
             var options = new DbContextOptionsBuilder<MSB_Database>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            var admin = new AdminModel { Id = Guid.NewGuid().ToString(), UserName = "TestAdmin", EmployeeEmail = "test@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
+            var admin = new AdminModel { Id = Guid.NewGuid().ToString(), UserName = "TestAdmin", Email = "test@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
             using (var context = new MSB_Database(options))
             {
                 var adminRepository = new AdminRepository(context);
@@ -90,8 +90,8 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var adminId = Guid.NewGuid().ToString();
-            var originalAdmin = new AdminModel { Id = adminId, UserName = "OriginalAdmin", EmployeeEmail = "original@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
-            var updatedAdmin = new AdminModel { Id = adminId, UserName = "UpdatedAdmin", EmployeeEmail = "updated@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
+            var originalAdmin = new AdminModel { Id = adminId, UserName = "OriginalAdmin", Email = "original@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
+            var updatedAdmin = new AdminModel { Id = adminId, UserName = "UpdatedAdmin", Email = "updated@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
             using (var context = new MSB_Database(options))
             {
                 context.Admins.Add(originalAdmin);
@@ -118,7 +118,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var adminId = Guid.NewGuid().ToString();
-            var admin = new AdminModel { Id = adminId, UserName = "TestAdmin", EmployeeEmail = "test@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
+            var admin = new AdminModel { Id = adminId, UserName = "TestAdmin", Email = "test@example.com", FirstName = "Test", LastName = "Admin", Role = "Admin" };
             using (var context = new MSB_Database(options))
             {
                 context.Admins.Add(admin);
