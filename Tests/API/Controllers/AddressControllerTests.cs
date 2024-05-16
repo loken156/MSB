@@ -43,6 +43,8 @@ namespace Tests.API.Controllers
             // Arrange
             var command = new AddAddressCommand(new AddressDto());
             _mediatorMock.Setup(m => m.Send(It.IsAny<AddAddressCommand>(), default)).ThrowsAsync(new Exception());
+            var address = new AddressModel();
+
 
             // Act
             var result = await _controller.AddAddress(command);
@@ -57,7 +59,7 @@ namespace Tests.API.Controllers
         public async Task AddAddress_ReturnsBadRequest_WhenModelStateIsInvalid()
         {
             // Arrange
-            var command = new AddAddressCommand(new AddressModel());
+            var command = new AddAddressCommand(new AddressDto());
             _addressValidationsMock.Setup(v => v.Validate(It.IsAny<AddressDto>())).Returns(new ValidationResult());
 
             // Act

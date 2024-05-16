@@ -8,7 +8,9 @@ using Domain.Models.Order;
 using Domain.Models.Warehouse;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Repositories.WarehouseRepo;
+using Infrastructure.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace Tests.Application.Order.CommandHandlers
@@ -19,6 +21,8 @@ namespace Tests.Application.Order.CommandHandlers
         private readonly Mock<IWarehouseRepository> _mockWarehouseRepository;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IMediator> _mockMediator;
+        private readonly Mock<ILogger<AddOrderCommandHandler>> _mockLogger; // Additional parameter 1
+        private readonly Mock<LabelPrinterService> _laberlPrintService;  // Additional parameter 2
         private readonly AddOrderCommandHandler _handler;
 
         public AddOrderCommandHandlerTests()
@@ -27,7 +31,15 @@ namespace Tests.Application.Order.CommandHandlers
             _mockWarehouseRepository = new Mock<IWarehouseRepository>();
             _mockMapper = new Mock<IMapper>();
             _mockMediator = new Mock<IMediator>();
-            _handler = new AddOrderCommandHandler(_mockOrderRepository.Object, _mockWarehouseRepository.Object, _mockMapper.Object, _mockMediator.Object);
+            _mockLogger = new Mock<ILogger<AddOrderCommandHandler>>(); // Initialize additional parameter 1
+            _laberlPrintService = new Mock<LabelPrinterService>();  // Initialize additional parameter 2
+            _handler = new AddOrderCommandHandler(
+                _mockOrderRepository.Object,
+                _mockWarehouseRepository.Object,
+                _mockMapper.Object,
+                _mockMediator.Object,
+                _mockLogger.Object,              // Pass additional parameter 1
+                _laberlPrintService.Object);  // Pass additional parameter 2
 
             // Setup default behaviors for mapper
             _mockMapper.Setup(m => m.Map<OrderModel>(It.IsAny<AddOrderDto>())).Returns(new OrderModel());
@@ -112,6 +124,5 @@ namespace Tests.Application.Order.CommandHandlers
             // Assert
             _mockMediator.Verify(m => m.Send(It.IsAny<AddBoxCommand>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
         }
-
     }
 }

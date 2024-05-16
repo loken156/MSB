@@ -3,6 +3,7 @@ using Application.Dto.Box;
 using AutoMapper;
 using Domain.Models.Box;
 using Infrastructure.Repositories.BoxRepo;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -14,13 +15,14 @@ namespace Tests.Application.Box.CommandHandlers
         private readonly Mock<ILogger<AddBoxCommandHandler>> _mockLogger;
         private readonly Mock<IMapper> _mockMapper;
         private readonly AddBoxCommandHandler _handler;
+        private readonly Mock<IMediator> _mockMediator;
 
         public AddBoxCommandHandlerTests()
         {
             _mockBoxRepository = new Mock<IBoxRepository>();
             _mockLogger = new Mock<ILogger<AddBoxCommandHandler>>();
             _mockMapper = new Mock<IMapper>();
-
+            _mockMediator = new Mock<IMediator>();
             _handler = new AddBoxCommandHandler(_mockBoxRepository.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
@@ -35,10 +37,6 @@ namespace Tests.Application.Box.CommandHandlers
             _mockBoxRepository.Setup(repo => repo.AddBoxAsync(It.IsAny<BoxModel>())).ReturnsAsync(newBoxModel);
 
             var command = new AddBoxCommand(newBoxDto);
-
-            var handler = new AddBoxCommandHandler(mockBoxRepository.Object, mockLogger.Object);
-            var newBox = new BoxDto { Type = "Type1", TimesUsed = 1, Stock = 10, ImageUrl = "http://example.com", UserNotes = "Note", Size = "Large" };
-            var command = new AddBoxCommand(newBox, Guid.NewGuid());
 
             // Act
             var result = await _handler.Handle(command, new CancellationToken());
