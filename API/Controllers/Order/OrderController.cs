@@ -4,7 +4,13 @@ using Application.Commands.Order.UpdateOrder;
 using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
+using AutoMapper;
+using Domain.Models.Box;
 using Domain.Models.Notification;
+using Domain.Models.Order;
+using Infrastructure.Repositories.BoxRepo;
+using Infrastructure.Repositories.OrderRepo;
+using Infrastructure.Services.Caching;
 using Infrastructure.Services.Notification;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,23 +26,33 @@ namespace API.Controllers.Order
         private readonly IMediator _mediator;
         private readonly INotificationService _notificationService;
         private readonly ILogger<OrderController> _logger;
+        private readonly IMapper _mapper;
+        private readonly ICacheService _cacheService;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IBoxRepository _boxRepository;
 
-        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger)
+        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper, ICacheService cacheService, IOrderRepository repository, IBoxRepository boxRepository)
         {
             _mediator = mediator;
             _notificationService = notificationService;
             _logger = logger;
+            _mapper = mapper;
+            _cacheService = cacheService;
+            _orderRepository = repository;
+            _boxRepository = boxRepository;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("Add Order")]
-        public async Task<ActionResult<OrderDto>> AddOrder(OrderDto orderdto, [FromQuery] Guid warehouseId)
+        public async Task<ActionResult<OrderDto>> AddOrder(AddOrderDto orderDto, [FromQuery] Guid warehouseId)
         {
             try
             {
-                var command = new AddOrderCommand(orderdto, warehouseId);
+                var command = new AddOrderCommand(orderDto, warehouseId);
                 var order = await _mediator.Send(command);
+
+                await _cacheService.SetAsync($"OrderForUser_{order.UserId}", order, TimeSpan.FromMinutes(30));
 
                 var notification = new NotificationModel
                 {
@@ -46,24 +62,41 @@ namespace API.Controllers.Order
 
                 await _notificationService.SendNotification(notification);
 
-                var orderDto = new OrderDto
-                {
-                    OrderId = order.OrderId,
-                    OrderDate = order.OrderDate,
-                    TotalCost = order.TotalCost,
-                    OrderStatus = order.OrderStatus,
-                    UserId = order.UserId,
-                    WarehouseId = order.WarehouseId,
-                    RepairNotes = order.RepairNotes
-                };
-                return CreatedAtAction(nameof(GetOrderById), new { id = orderDto.OrderId }, orderDto);
+                // Assuming you want to map the result back to OrderDto before returning
+                var resultDto = _mapper.Map<OrderDto>(order); // Use AutoMapper to map OrderModel back to OrderDto
+                return CreatedAtAction(nameof(GetOrderById), new { id = resultDto.OrderId }, resultDto);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error adding order with command: {Command}", orderdto);
+                _logger.LogError(ex, "Error adding order with command: {Command}", orderDto);
                 return StatusCode(500, "An error occurred while adding the order");
             }
         }
+
+        public async Task<IActionResult> SaveOrderAndBox(string userId)
+        {
+            // Retrieve the order and box from the cache
+            var order = await _cacheService.GetAsync<OrderModel>($"OrderForUser_{userId}");
+            var box = await _cacheService.GetAsync<BoxModel>($"BoxForUser_{userId}");
+
+            // Save the order and box to the database
+            await _orderRepository.CreateOrderAsync(order);
+            await _boxRepository.AddBoxAsync(box);
+
+            //Remove the order and box from the cache
+            await _cacheService.RemoveAsync($"OrderForUser_{userId}");
+            await _cacheService.RemoveAsync($"BoxForUser_{userId}");
+
+
+        }
+
+
+
+
+
+
+
+
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]

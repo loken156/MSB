@@ -24,14 +24,14 @@ namespace Tests.Application.Employee.CommandHandlers
             await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            mockEmployeeRepository.Verify(repo => repo.CreateEmployeeAsync(It.Is<EmployeeModel>(model => model.EmployeeEmail == command.NewEmployee.Email)), Times.Once);
+            mockEmployeeRepository.Verify(repo => repo.CreateEmployeeAsync(It.Is<EmployeeModel>(model => model.Email == command.NewEmployee.Email)), Times.Once);
         }
 
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsCreatedEmployeeModel()
         {
             // Arrange
-            var createdEmployee = new EmployeeModel { FirstName = "John", LastName = "Doe", EmployeeEmail = "john.doe@example.com" };
+            var createdEmployee = new EmployeeModel { FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             mockEmployeeRepository.Setup(repo => repo.CreateEmployeeAsync(It.IsAny<EmployeeModel>()))
                 .ReturnsAsync(createdEmployee);
@@ -44,7 +44,7 @@ namespace Tests.Application.Employee.CommandHandlers
             // Assert
             Assert.Equal(createdEmployee.FirstName, result.FirstName);
             Assert.Equal(createdEmployee.LastName, result.LastName);
-            Assert.Equal(createdEmployee.EmployeeEmail, result.EmployeeEmail);
+            Assert.Equal(createdEmployee.Email, result.Email);
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Tests.Infrastructure.Repositories
                 .Options;
             var users = new List<ApplicationUser>
             {
-                new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "TestUser1", EmployeeEmail = "test1@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>() },
-                new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "TestUser2", EmployeeEmail = "test2@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>() },
+                new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "TestUser1", Email = "test1@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>() },
+                new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "TestUser2", Email = "test2@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>() },
             };
             using (var context = new MSB_Database(options))
             {
@@ -45,7 +45,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var userId = Guid.NewGuid().ToString();
-            var expectedUser = new ApplicationUser { Id = userId, UserName = "TestUser", EmployeeEmail = "test@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>() };
+            var expectedUser = new ApplicationUser { Id = userId, UserName = "TestUser", Email = "test@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>() };
             using (var context = new MSB_Database(options))
             {
                 context.Users.Add(expectedUser);
@@ -72,8 +72,8 @@ namespace Tests.Infrastructure.Repositories
                 .Options;
             var userId = Guid.NewGuid().ToString();
             var concurrencyStamp = Guid.NewGuid().ToString();
-            var originalUser = new ApplicationUser { Id = userId, UserName = "OriginalUser", EmployeeEmail = "original@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>(), ConcurrencyStamp = concurrencyStamp };
-            var updatedUser = new ApplicationUser { Id = userId, UserName = "UpdatedUser", EmployeeEmail = "updated@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>(), ConcurrencyStamp = concurrencyStamp };
+            var originalUser = new ApplicationUser { Id = userId, UserName = "OriginalUser", Email = "original@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>(), ConcurrencyStamp = concurrencyStamp };
+            var updatedUser = new ApplicationUser { Id = userId, UserName = "UpdatedUser", Email = "updated@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>(), ConcurrencyStamp = concurrencyStamp };
             using (var context = new MSB_Database(options))
             {
                 context.Users.Add(originalUser);
@@ -100,7 +100,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var userId = Guid.NewGuid().ToString();
-            var user = new ApplicationUser { Id = userId, UserName = "TestUser", EmployeeEmail = "test@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>() };
+            var user = new ApplicationUser { Id = userId, UserName = "TestUser", Email = "test@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>() };
             using (var context = new MSB_Database(options))
             {
                 context.Users.Add(user);
@@ -126,8 +126,8 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var userId = Guid.NewGuid().ToString();
-            var originalUser = new ApplicationUser { Id = userId, UserName = "OriginalUser", EmployeeEmail = "original@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>(), PasswordHash = "originalHash" };
-            var updatedUser = new ApplicationUser { Id = userId, UserName = "OriginalUser", EmployeeEmail = "original@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>(), PasswordHash = "updatedHash" };
+            var originalUser = new ApplicationUser { Id = userId, UserName = "OriginalUser", Email = "original@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>(), PasswordHash = "originalHash" };
+            var updatedUser = new ApplicationUser { Id = userId, UserName = "OriginalUser", Email = "original@example.com", FirstName = "Test", LastName = "User", Addresses = new List<AddressModel>(), PasswordHash = "updatedHash" };
             using (var context = new MSB_Database(options))
             {
                 context.Users.Add(originalUser);

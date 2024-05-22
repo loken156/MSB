@@ -119,7 +119,7 @@ namespace API.Controllers.Employee
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating employee: {EmployeeEmail}", employeeDto.Email);
+                _logger.LogError(ex, "Error updating employee: {Email}", employeeDto.Email);
                 return StatusCode(500, new { Message = "Internal server error" });
             }
         }

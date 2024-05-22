@@ -16,8 +16,8 @@ namespace Tests.Infrastructure.Repositories
                 .Options;
             var employees = new List<EmployeeModel>
             {
-                new EmployeeModel { Id = Guid.NewGuid().ToString(), UserName = "TestEmployee1", EmployeeEmail = "test1@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() },
-                new EmployeeModel { Id = Guid.NewGuid().ToString(), UserName = "TestEmployee2", EmployeeEmail = "test2@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Marketing", Position = "Executive", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() },
+                new EmployeeModel { Id = Guid.NewGuid().ToString(), UserName = "TestEmployee1", Email = "test1@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() },
+                new EmployeeModel { Id = Guid.NewGuid().ToString(), UserName = "TestEmployee2", Email = "test2@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Marketing", Position = "Executive", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() },
             };
             using (var context = new MSB_Database(options))
             {
@@ -44,7 +44,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var employeeId = Guid.NewGuid().ToString();
-            var expectedEmployee = new EmployeeModel { Id = employeeId, UserName = "TestEmployee", EmployeeEmail = "test@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
+            var expectedEmployee = new EmployeeModel { Id = employeeId, UserName = "TestEmployee", Email = "test@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Employees.Add(expectedEmployee);
@@ -69,7 +69,7 @@ namespace Tests.Infrastructure.Repositories
             var options = new DbContextOptionsBuilder<MSB_Database>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            var employee = new EmployeeModel { Id = Guid.NewGuid().ToString(), UserName = "TestEmployee", EmployeeEmail = "test@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
+            var employee = new EmployeeModel { Id = Guid.NewGuid().ToString(), UserName = "TestEmployee", Email = "test@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 var employeeRepository = new EmployeeRepository(context);
@@ -91,8 +91,8 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var employeeId = Guid.NewGuid().ToString();
-            var originalEmployee = new EmployeeModel { Id = employeeId, UserName = "OriginalEmployee", EmployeeEmail = "original@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
-            var updatedEmployee = new EmployeeModel { Id = employeeId, UserName = "UpdatedEmployee", EmployeeEmail = "updated@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Marketing", Position = "Executive", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
+            var originalEmployee = new EmployeeModel { Id = employeeId, UserName = "OriginalEmployee", Email = "original@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
+            var updatedEmployee = new EmployeeModel { Id = employeeId, UserName = "UpdatedEmployee", Email = "updated@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Marketing", Position = "Executive", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Employees.Add(originalEmployee);
@@ -119,7 +119,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var employeeId = Guid.NewGuid().ToString();
-            var employee = new EmployeeModel { Id = employeeId, UserName = "TestEmployee", EmployeeEmail = "test@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
+            var employee = new EmployeeModel { Id = employeeId, UserName = "TestEmployee", Email = "test@example.com", FirstName = "Test", LastName = "Employee", Role = "Employee", Department = "Sales", Position = "Manager", HireDate = DateTime.Now, WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Employees.Add(employee);

@@ -23,7 +23,7 @@ namespace Application.Commands.Admin.Add
             {
                 Id = request.AdminId.ToString(),
                 UserName = request.Email,
-                EmployeeEmail = request.Email,
+                Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Role = "Admin",

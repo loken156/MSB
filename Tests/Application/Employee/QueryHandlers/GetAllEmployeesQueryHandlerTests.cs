@@ -25,8 +25,8 @@ namespace Tests.Application.Employee.QueryHandlers
             // Arrange
             var employees = new List<EmployeeModel>
             {
-                new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "John", LastName = "Doe", EmployeeEmail = "john.doe@example.com" },
-                new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "Jane", LastName = "Doe", EmployeeEmail = "jane.doe@example.com" }
+                new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" },
+                new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "Jane", LastName = "Doe", Email = "jane.doe@example.com" }
             };
             _mockEmployeeRepository.Setup(m => m.GetEmployeesAsync()).ReturnsAsync(employees);
 
@@ -41,7 +41,7 @@ namespace Tests.Application.Employee.QueryHandlers
         public async Task Handle_MapsEmployeeModelCorrectly()
         {
             // Arrange
-            var employee = new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "John", LastName = "Doe", EmployeeEmail = "john.doe@example.com" };
+            var employee = new EmployeeModel { Id = Guid.NewGuid().ToString(), FirstName = "John", LastName = "Doe", Email = "john.doe@example.com" };
             var employees = new List<EmployeeModel> { employee };
             _mockEmployeeRepository.Setup(m => m.GetEmployeesAsync()).ReturnsAsync(employees);
 
@@ -53,7 +53,7 @@ namespace Tests.Application.Employee.QueryHandlers
             Assert.Equal(employee.Id, employeeDto.Id);
             Assert.Equal(employee.FirstName, employeeDto.FirstName);
             Assert.Equal(employee.LastName, employeeDto.LastName);
-            Assert.Equal(employee.EmployeeEmail, employeeDto.EmployeeEmail);
+            Assert.Equal(employee.Email, employeeDto.Email);
         }
     }
 }

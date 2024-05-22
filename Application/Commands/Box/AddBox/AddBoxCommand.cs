@@ -4,14 +4,14 @@ using MediatR;
 
 namespace Application.Commands.Box.AddBox
 {
-    public class AddBoxCommand : IRequest<BoxModel>
+    public class AddBoxCommand : IRequest<BoxDto>
     {
-        public AddBoxCommand(BoxDto newBox, Guid shelfId)
+        public BoxDto NewBox { get; }
+        public AddBoxCommand(BoxDto newBox)
         {
             NewBox = newBox;
-            ShelfId = shelfId;
         }
-        public BoxDto NewBox { get; }
-        public Guid ShelfId { get; }
+
+
     }
 }

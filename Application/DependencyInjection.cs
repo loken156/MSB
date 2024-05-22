@@ -28,6 +28,9 @@ namespace Application
             services.AddTransient<IValidator<EmployeeDto>, EmployeeValidations>();
             services.AddTransient<IValidator<LogInDto>, LogInDtoValidator>();
 
+            // Register IAddressValidations with its implementation
+            services.AddScoped<IAddressValidations, AddressValidations>();
+
             return services;
         }
     }

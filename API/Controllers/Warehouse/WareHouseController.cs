@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> dfd87ccee0de982382aad4063b4ebc4aa60c1a9f
 using Application.Commands.Warehouse.AddWarehouse;
 using Application.Commands.Warehouse.DeleteWarehouse;
 using Application.Commands.Warehouse.UpdateWarehouse;
@@ -21,6 +25,7 @@ namespace API.Controllers.Warehouse
         private readonly IValidator<AddWarehouseDto> _wareHouseValidations;
 
         public WarehouseController(IMediator mediator, ILogger<WarehouseController> logger, IValidator<AddWarehouseDto> validations)
+<<<<<<< HEAD
         {
             _mediator = mediator;
             _logger = logger;
@@ -138,6 +143,8 @@ namespace API.Controllers.Warehouse
         private readonly WareHouseValidations _wareHouseValidations;
 
         public WarehouseController(IMediator mediator, ILogger<WarehouseController> logger, WareHouseValidations validations)
+=======
+>>>>>>> dfd87ccee0de982382aad4063b4ebc4aa60c1a9f
         {
             _mediator = mediator;
             _logger = logger;
@@ -268,5 +275,9 @@ namespace API.Controllers.Warehouse
 
         }
     }
+<<<<<<< HEAD
 }
 >>>>>>> e0c49caed95726b131fb260b89c807a4ccb1d4f9
+=======
+}
+>>>>>>> dfd87ccee0de982382aad4063b4ebc4aa60c1a9f
