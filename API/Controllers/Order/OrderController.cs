@@ -4,6 +4,7 @@ using Application.Commands.Order.UpdateOrder;
 using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
+using Application.Services;
 using AutoMapper;
 using Domain.Models.Notification;
 using Infrastructure.Services.Notification;
@@ -22,13 +23,15 @@ namespace API.Controllers.Order
         private readonly INotificationService _notificationService;
         private readonly ILogger<OrderController> _logger;
         private readonly IMapper _mapper;
+        private readonly DeliveryService _deliveryService;
 
-        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper)
+        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper, DeliveryService deliveryService)
         {
             _mediator = mediator;
             _notificationService = notificationService;
             _logger = logger;
             _mapper = mapper;
+            _deliveryService = deliveryService;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -48,6 +51,7 @@ namespace API.Controllers.Order
                 };
 
                 await _notificationService.SendNotification(notification);
+                await _deliveryService.ScheduleDeliveries();
 
                 // Assuming you want to map the result back to OrderDto before returning
                 var resultDto = _mapper.Map<OrderDto>(order); // Use AutoMapper to map OrderModel back to OrderDto
