@@ -35,7 +35,7 @@ namespace Application
             services.AddTransient<ILabelPrinterService, LabelPrinterService>();
             // Register IAddressValidations with its implementation
             services.AddScoped<IAddressValidations, AddressValidations>();
-           
+
             services.AddHttpClient();
             return services;
         }
