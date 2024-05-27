@@ -74,6 +74,9 @@ namespace API.Controllers.Order
             }
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Route("Save order")]
         public async Task<IActionResult> SaveOrderAndBox(string userId)
         {
             try
