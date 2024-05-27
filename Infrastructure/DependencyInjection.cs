@@ -10,6 +10,7 @@ using Infrastructure.Repositories.ShelfRepo;
 using Infrastructure.Repositories.UserRepo;
 using Infrastructure.Repositories.WarehouseRepo;
 using Infrastructure.Services;
+using Infrastructure.Services.Caching;
 using Infrastructure.Services.Notification;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,9 @@ namespace Infrastructure
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddMemoryCache();
+            services.AddScoped<ICacheService, MemoryCacheService>();
+            services.AddScoped<ILabelPrinterService, LabelPrinterService>();
 
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<IMessageSender>(provider =>

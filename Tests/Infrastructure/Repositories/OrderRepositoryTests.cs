@@ -53,7 +53,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var orderId = Guid.NewGuid();
-            var expectedOrder = new OrderModel { OrderId = orderId, OrderNumber = 1, OrderDate = DateTime.Now, TotalCost = 100.0m, UserId = Guid.NewGuid().ToString(), CarId = orderId };
+            var expectedOrder = new OrderModel { OrderId = orderId, OrderNumber = 1, OrderDate = DateTime.Now, TotalCost = 100.0m, UserId = Guid.NewGuid().ToString(), CarId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Orders.Add(expectedOrder);
@@ -100,8 +100,8 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var orderId = Guid.NewGuid();
-            var originalOrder = new OrderModel { OrderId = orderId, OrderNumber = 1, OrderDate = DateTime.Now, TotalCost = 100.0m, UserId = Guid.NewGuid().ToString(), CarId = orderId };
-            var updatedOrder = new OrderModel { OrderId = orderId, OrderNumber = 2, OrderDate = DateTime.Now, TotalCost = 200.0m, UserId = Guid.NewGuid().ToString(), CarId = orderId };
+            var originalOrder = new OrderModel { OrderId = orderId, OrderNumber = 1, OrderDate = DateTime.Now, TotalCost = 100.0m, UserId = Guid.NewGuid().ToString(), CarId = Guid.NewGuid() };
+            var updatedOrder = new OrderModel { OrderId = orderId, OrderNumber = 2, OrderDate = DateTime.Now, TotalCost = 200.0m, UserId = Guid.NewGuid().ToString(), CarId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Orders.Add(originalOrder);
@@ -128,7 +128,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var orderId = Guid.NewGuid();
-            var order = new OrderModel { OrderId = orderId, OrderNumber = 1, OrderDate = DateTime.Now, TotalCost = 100.0m, UserId = Guid.NewGuid().ToString(), CarId = orderId };
+            var order = new OrderModel { OrderId = orderId, OrderNumber = 1, OrderDate = DateTime.Now, TotalCost = 100.0m, UserId = Guid.NewGuid().ToString(), CarId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Orders.Add(order);

@@ -6,9 +6,9 @@ using Application.Dto.AddWarehouse;
 using Application.Dto.Warehouse;
 using Application.Queries.Warehouse.GetAll;
 using Application.Queries.Warehouse.GetByID;
+using Application.Validators.WarehouseValidator;
 using Domain.Models.Shelf;
 using Domain.Models.Warehouse;
-using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,13 +22,13 @@ namespace Tests.API.Controllers
         private readonly Mock<IMediator> _mediatorMock;
         private readonly WarehouseController _controller;
         private readonly Mock<ILogger<WarehouseController>> _loggerMock;
-        private readonly Mock<IValidator<AddWarehouseDto>> _validationsMock;
+        private readonly Mock<WareHouseValidations> _validationsMock;
 
         public WarehouseControllerTests()
         {
             _mediatorMock = new Mock<IMediator>();
             _loggerMock = new Mock<ILogger<WarehouseController>>();
-            _validationsMock = new Mock<IValidator<AddWarehouseDto>>();
+            _validationsMock = new Mock<WareHouseValidations>();
             _controller = new WarehouseController(_mediatorMock.Object, _loggerMock.Object, _validationsMock.Object);
         }
 
@@ -38,7 +38,7 @@ namespace Tests.API.Controllers
             // Arrange
             var mediatorMock = new Mock<IMediator>();
             var loggerMock = new Mock<ILogger<WarehouseController>>();
-            var validatorMock = new Mock<IValidator<AddWarehouseDto>>();
+            var validatorMock = new Mock<WareHouseValidations>();
             var warehouseController = new WarehouseController(mediatorMock.Object, loggerMock.Object, validatorMock.Object);
 
             var newWarehouseDto = new AddWarehouseDto

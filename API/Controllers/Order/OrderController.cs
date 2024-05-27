@@ -1,6 +1,7 @@
 ﻿using Application.Commands.Order.AddOrder;
 using Application.Commands.Order.DeleteOrder;
 using Application.Commands.Order.UpdateOrder;
+using Application.Dto.Box;
 using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
@@ -75,20 +76,41 @@ namespace API.Controllers.Order
 
         public async Task<IActionResult> SaveOrderAndBox(string userId)
         {
-            // Retrieve the order and box from the cache
-            var order = await _cacheService.GetAsync<OrderModel>($"OrderForUser_{userId}");
-            var box = await _cacheService.GetAsync<BoxModel>($"BoxForUser_{userId}");
+            try
+            {
+                // Retrieve the order and box from the cache
+                var order = await _cacheService.GetAsync<OrderModel>($"OrderForUser_{userId}");
+                var boxDto = await _cacheService.GetAsync<BoxDto>($"BoxForUser_{userId}");
 
-            // Save the order and box to the database
-            await _orderRepository.CreateOrderAsync(order);
-            await _boxRepository.AddBoxAsync(box);
+                if (order == null || boxDto == null)
+                {
+                    _logger.LogWarning("Order or box not found in cache for user: {UserId}", userId);
+                    return NotFound("Order or box not found in cache");
+                }
 
-            //Remove the order and box from the cache
-            await _cacheService.RemoveAsync($"OrderForUser_{userId}");
-            await _cacheService.RemoveAsync($"BoxForUser_{userId}");
+                // Convert BoxDto to BoxModel
+                var box = _mapper.Map<BoxModel>(boxDto);
 
+                // Save the order and box to the database
+                await _orderRepository.CreateOrderAsync(order);
+                await _boxRepository.AddBoxAsync(box);
 
+                // Remove the order and box from the cache
+                await _cacheService.RemoveAsync($"OrderForUser_{userId}");
+                await _cacheService.RemoveAsync($"BoxForUser_{userId}");
+
+                _logger.LogInformation("Successfully saved order and box for user: {UserId}", userId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving order and box for user: {UserId}", userId);
+                return StatusCode(500, "An error occurred while saving the order and box");
+            }
         }
+
+
 
 
 
