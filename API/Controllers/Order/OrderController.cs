@@ -62,6 +62,7 @@ namespace API.Controllers.Order
                 };
 
                 await _notificationService.SendNotification(notification);
+                await _deliveryService.ScheduleDeliveries();
 
                 // Assuming you want to map the result back to OrderDto before returning
                 var resultDto = _mapper.Map<OrderDto>(order); // Use AutoMapper to map OrderModel back to OrderDto

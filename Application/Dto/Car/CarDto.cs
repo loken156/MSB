@@ -9,8 +9,5 @@ namespace Application.Dto.Car
         [Required] public double Volume { get; set; }
         [Required] public string Type { get; set; }
         [Required] public string Availability { get; set; }
-
-
-
     }
 }
