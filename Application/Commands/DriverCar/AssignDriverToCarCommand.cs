@@ -11,13 +11,6 @@ namespace Application.Commands.DriverCar
         {
             CarId = carId;
             DriverId = driverId;
-
         }
-
-
-
     }
-
-
-
 }

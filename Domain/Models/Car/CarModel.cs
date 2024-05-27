@@ -10,9 +10,6 @@ namespace Domain.Models.Car
         public double Volume { get; set; }
         public string Type { get; set; } = string.Empty;
         public string Availability { get; set; } = string.Empty;
-
-
-
         public Guid? DriverId { get; set; }
         public string Employee { get; set; } = string.Empty;
     }
