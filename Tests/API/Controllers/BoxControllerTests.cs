@@ -37,6 +37,7 @@ namespace Tests.API.Controllers
                 .ReturnsAsync(new BoxDto { /* Initialize properties as needed */ });
         }
 
+        // Test to verify that AddBox returns CreatedAtAction when box is created
         [Fact]
         public async Task AddBox_ReturnsCreatedAtAction_WhenBoxIsCreated()
         {
@@ -57,6 +58,7 @@ namespace Tests.API.Controllers
             Assert.Equal(boxDto.BoxId, returnValue.BoxId);
         }
 
+        // Test to verify that AddBox returns BadRequest when model state is invalid
         [Fact]
         public async Task GetAllBoxes_ReturnsOk_WhenBoxesExist()
         {
@@ -73,7 +75,7 @@ namespace Tests.API.Controllers
             Assert.Equal(boxes.Count, returnValue.Count());
         }
 
-
+        // Test to verify that GetBoxById returns Ok when box exists
         [Fact]
         public async Task GetBoxById_ReturnsOk_WhenBoxExists()
         {
@@ -91,6 +93,7 @@ namespace Tests.API.Controllers
             Assert.Equal(box.BoxId, returnValue.BoxId);
         }
 
+        // Test to verify that GetBoxById returns NotFound when box does not exist
         [Fact]
         public async Task GetBoxById_ReturnsNotFound_WhenBoxDoesNotExist()
         {
@@ -105,7 +108,7 @@ namespace Tests.API.Controllers
             Assert.IsType<NotFoundObjectResult>(result.Result);
         }
 
-
+        // Test to verify that UpdateBox returns NoContent when box is updated
         [Fact]
         public async Task UpdateBox_ReturnsNoContent_WhenBoxIsUpdated()
         {
@@ -122,6 +125,7 @@ namespace Tests.API.Controllers
             Assert.IsType<NoContentResult>(result);
         }
 
+        // Test to verify that DeleteBox returns NoContent when box is deleted
         [Fact]
         public async Task DeleteBox_ReturnsNoContent_WhenBoxIsDeleted()
         {

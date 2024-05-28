@@ -8,6 +8,7 @@ namespace Tests.Application.Warehouse.CommandHandlers
 {
     public class UpdateWarehouseCommandHandlerTests
     {
+        // Test to verify that UpdateWarehouse calls UpdateWarehouseAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsUpdateWarehouseAsyncOnRepository()
         {
@@ -23,6 +24,7 @@ namespace Tests.Application.Warehouse.CommandHandlers
             mockWarehouseRepository.Verify(repo => repo.UpdateWarehouseAsync(It.IsAny<WarehouseModel>()), Times.Once);
         }
 
+        // Test to verify that UpdateWarehouse returns updated warehouse model
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsUpdatedWarehouseModel()
         {

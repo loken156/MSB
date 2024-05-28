@@ -24,6 +24,7 @@ namespace Tests.Application.Address.CommandHandlers
             _mapperMock.Setup(m => m.Map<AddressDto>(It.IsAny<AddressModel>())).Returns(new AddressDto());
         }
 
+        // Test to verify that AddAddress returns an AddressDto when address is added
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsCorrectAddressDto()
         {
@@ -62,6 +63,7 @@ namespace Tests.Application.Address.CommandHandlers
             Assert.Equal(newAddressDto.Longitude, result.Longitude);
         }
 
+        // Test to verify that AddAddress returns an AddressDto with empty strings when null values are given
         [Fact]
         public async Task Handle_GivenNullValues_ReturnsAddressDtoWithEmptyStrings()
         {

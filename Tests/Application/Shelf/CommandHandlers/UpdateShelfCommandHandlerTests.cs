@@ -8,6 +8,7 @@ namespace Tests.Application.Shelf.CommandHandlers
 {
     public class UpdateShelfCommandHandlerTests
     {
+        // Test to verify that UpdateShelf calls UpdateShelfAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsUpdateShelfAsyncOnRepository()
         {
@@ -23,6 +24,7 @@ namespace Tests.Application.Shelf.CommandHandlers
             mockShelfRepository.Verify(repo => repo.UpdateShelfAsync(It.Is<ShelfModel>(model => model.ShelfId == command.UpdatedShelf.ShelfId)), Times.Once);
         }
 
+        // Test to verify that UpdateShelf returns updated shelf model
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsUpdatedShelfModel()
         {

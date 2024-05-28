@@ -19,6 +19,7 @@ namespace Tests.Application.Employee.QueryHandlers
             _handler = new GetAllEmployeesQueryHandler(_mockEmployeeRepository.Object, _logger.Object);
         }
 
+        // Test to verify that GetAllEmployees returns all employees
         [Fact]
         public async Task Handle_ReturnsAllEmployees()
         {
@@ -37,6 +38,7 @@ namespace Tests.Application.Employee.QueryHandlers
             Assert.Equal(employees.Count, result.Count);
         }
 
+        // Test to verify that GetAllEmployees maps EmployeeModel correctly
         [Fact]
         public async Task Handle_MapsEmployeeModelCorrectly()
         {

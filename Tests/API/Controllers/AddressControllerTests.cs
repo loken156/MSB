@@ -37,6 +37,7 @@ namespace Tests.API.Controllers
                 _loggerMock.Object);
         }
 
+        // Test to verify that AddAddress returns a 500 status code when an exception is thrown
         [Fact]
         public async Task AddAddress_Returns500_WhenExceptionIsThrown()
         {
@@ -54,6 +55,7 @@ namespace Tests.API.Controllers
             Assert.Equal(500, objectResult.StatusCode);
         }
 
+        // Test to verify that AddAddress returns BadRequest when model state is invalid
         [Fact]
         public async Task AddAddress_ReturnsBadRequest_WhenModelStateIsInvalid()
         {
@@ -71,8 +73,7 @@ namespace Tests.API.Controllers
             Assert.Equal(500, objectResult.StatusCode);
         }
 
-
-
+        // Test to verify that GetAllAddresses returns a 500 status code when an exception is thrown
         [Fact]
         public async Task GetAllAddresses_Returns500_WhenExceptionIsThrown()
         {
@@ -87,6 +88,7 @@ namespace Tests.API.Controllers
             Assert.Equal(500, objectResult.StatusCode);
         }
 
+        // Test to verify that GetAddressById returns a 500 status code when an exception is thrown
         [Fact]
         public async Task GetAddressById_Returns500_WhenExceptionIsThrown()
         {
@@ -102,6 +104,7 @@ namespace Tests.API.Controllers
             Assert.Equal(500, objectResult.StatusCode);
         }
 
+        // Test to verify that UpdateAddress returns a 500 status code when an exception is thrown
         [Fact]
         public async Task UpdateAddress_Returns500_WhenExceptionIsThrown()
         {
@@ -118,6 +121,7 @@ namespace Tests.API.Controllers
             Assert.Equal(500, objectResult.StatusCode);
         }
 
+        // Test to verify that DeleteAddress returns a 500 status code when an exception is thrown
         [Fact]
         public async Task DeleteAddress_Returns500_WhenExceptionIsThrown()
         {
@@ -133,6 +137,7 @@ namespace Tests.API.Controllers
             Assert.Equal(500, objectResult.StatusCode);
         }
 
+        // Test to verify that AddAddress returns a 201 status code when an address is successfully added
         [Fact]
         public async Task UpdateAddress_ReturnsBadRequest_WhenIdDoesNotMatchAddressId()
         {
@@ -147,6 +152,7 @@ namespace Tests.API.Controllers
             Assert.IsType<BadRequestResult>(result);
         }
 
+        // Test to verify that AddAddress returns a 201 status code when an address is successfully added
         [Fact]
         public async Task DeleteAddress_ReturnsOk_WhenDeleteIsSuccessful()
         {

@@ -7,6 +7,7 @@ namespace Tests.Application.Warehouse.CommandHandlers
 {
     public class DeleteWarehouseCommandHandlerTests
     {
+        // Test to verify that DeleteWarehouse calls DeleteWarehouseAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsDeleteWarehouseAsyncOnRepository()
         {
@@ -22,6 +23,7 @@ namespace Tests.Application.Warehouse.CommandHandlers
             mockWarehouseRepository.Verify(repo => repo.DeleteWarehouseAsync(command.WarehouseId), Times.Once);
         }
 
+        // Test to verify that DeleteWarehouse returns Unit value
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsUnitValue()
         {
@@ -36,6 +38,5 @@ namespace Tests.Application.Warehouse.CommandHandlers
             // Assert
             Assert.Equal(Unit.Value, result);
         }
-
     }
 }

@@ -16,6 +16,7 @@ namespace Tests.Application.Shelf.QueryHandlers
             _handler = new GetShelfByIdQueryHandler(_mockShelfRepository.Object);
         }
 
+        // Test to verify that GetShelfById calls GetShelfByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidId_ReturnsShelfDto()
         {
@@ -42,6 +43,7 @@ namespace Tests.Application.Shelf.QueryHandlers
             Assert.Equal(shelf.WarehouseId, result.WarehouseId);
         }
 
+        // Test to verify that GetShelfById throws an exception
         [Fact]
         public async Task Handle_GivenInvalidId_ThrowsException()
         {

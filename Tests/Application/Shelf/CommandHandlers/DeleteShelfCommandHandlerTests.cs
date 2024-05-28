@@ -6,6 +6,7 @@ namespace Tests.Application.Shelf.CommandHandlers
 {
     public class DeleteShelfCommandHandlerTests
     {
+        // Test to verify that DeleteShelf calls DeleteShelfAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsDeleteShelfAsyncOnRepository()
         {

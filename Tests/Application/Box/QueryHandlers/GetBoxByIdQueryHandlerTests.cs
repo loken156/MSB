@@ -7,6 +7,7 @@ namespace Tests.Application.Box.QueryHandlers
 {
     public class GetBoxByIdQueryHandlerTests
     {
+        // Test to verify that GetBoxById calls GetBoxByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidQuery_CallsGetBoxByIdAsyncOnRepository()
         {
@@ -24,6 +25,7 @@ namespace Tests.Application.Box.QueryHandlers
             mockBoxRepository.Verify(repo => repo.GetBoxByIdAsync(It.IsAny<Guid>()), Times.Once);
         }
 
+        // Test to verify that GetBoxById throws an exception
         [Fact]
         public async Task Handle_GivenInvalidQuery_ThrowsException()
         {
@@ -37,6 +39,7 @@ namespace Tests.Application.Box.QueryHandlers
             await Assert.ThrowsAsync<Exception>(() => handler.Handle(query, new CancellationToken()));
         }
 
+        // Test to verify that GetBoxById returns correct data
         [Fact]
         public async Task Handle_GivenValidQuery_ReturnsCorrectData()
         {

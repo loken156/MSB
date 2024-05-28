@@ -16,6 +16,7 @@ namespace Tests.Application.Employee.QueryHandlers
             _handler = new GetEmployeeByIdQueryHandler(_mockEmployeeRepository.Object);
         }
 
+        // Test to verify that GetEmployeeById calls GetEmployeeByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidId_ReturnsEmployeeDto()
         {
@@ -48,6 +49,7 @@ namespace Tests.Application.Employee.QueryHandlers
             Assert.Equal(employee.WarehouseId, result.WarehouseId);
         }
 
+        // Test to verify that GetEmployeeById throws an exception
         [Fact]
         public async Task Handle_GivenInvalidId_ThrowsException()
         {

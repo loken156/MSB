@@ -16,6 +16,7 @@ namespace Tests.Application.Shelf.QueryHandlers
             _handler = new GetAllShelvesQueryHandler(_mockShelfRepository.Object);
         }
 
+        // Test to verify that GetAllShelves returns all shelves
         [Fact]
         public async Task Handle_ReturnsAllShelves()
         {
@@ -34,6 +35,7 @@ namespace Tests.Application.Shelf.QueryHandlers
             Assert.Equal(shelves.Count, result.Count());
         }
 
+        // Test to verify that GetAllShelves throws an exception
         [Fact]
         public async Task Handle_MapsShelfModelCorrectly()
         {

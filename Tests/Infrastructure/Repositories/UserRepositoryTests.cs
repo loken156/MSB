@@ -8,6 +8,7 @@ namespace Tests.Infrastructure.Repositories
 {
     public class UserRepositoryTests
     {
+        // Test to verify that GetAllUsersAsync returns all users
         [Fact]
         public async Task GetAllUsersAsync_ReturnsAllUsers()
         {
@@ -37,6 +38,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetUserByIdAsync returns user when user exists
         [Fact]
         public async Task GetUserByIdAsync_ReturnsUser_WhenUserExists()
         {
@@ -63,6 +65,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateUserAsync updates user in database
         [Fact]
         public async Task UpdateUserAsync_UpdatesUserInDatabase()
         {
@@ -91,7 +94,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
-
+        // Test to verify that DeleteUserAsync deletes user from database
         [Fact]
         public async Task DeleteUserAsync_DeletesUserFromDatabase()
         {
@@ -118,6 +121,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdatePasswordAsync updates password in database
         [Fact]
         public async Task UpdatePasswordAsync_UpdatesPasswordInDatabase()
         {

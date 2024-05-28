@@ -16,6 +16,7 @@ namespace Tests.Application.Warehouse.QueryHandlers
             _handler = new GetAllWarehousesQueryHandler(_mockWarehouseRepository.Object);
         }
 
+        // Test to verify that GetAllWarehouses returns all warehouses
         [Fact]
         public async Task Handle_ReturnsAllWarehouses()
         {
@@ -34,6 +35,7 @@ namespace Tests.Application.Warehouse.QueryHandlers
             Assert.Equal(warehouses.Count, result.Count());
         }
 
+        // Test to verify that GetAllWarehouses throws an exception
         [Fact]
         public async Task Handle_MapsWarehouseModelCorrectly()
         {

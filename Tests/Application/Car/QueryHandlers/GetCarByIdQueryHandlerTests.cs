@@ -16,6 +16,7 @@ namespace Tests.Application.Car.QueryHandlers
             _handler = new GetCarByIdQueryHandler(_mockCarRepository.Object);
         }
 
+        // Test to verify that GetCarById returns car
         [Fact]
         public async Task Handle_GivenValidId_ReturnsCar()
         {
@@ -31,6 +32,7 @@ namespace Tests.Application.Car.QueryHandlers
             Assert.Equal(car, result);
         }
 
+        // Test to verify that GetCarById throws an exception
         [Fact]
         public async Task Handle_GivenInvalidId_ThrowsException()
         {

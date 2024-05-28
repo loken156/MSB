@@ -8,6 +8,7 @@ namespace Tests.Application.Employee.CommandHandlers
 {
     public class UpdateEmployeeCommandHandlerTests
     {
+        // Test to verify that UpdateEmployee calls GetEmployeeByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsGetEmployeeByIdAsyncOnRepository()
         {
@@ -29,6 +30,7 @@ namespace Tests.Application.Employee.CommandHandlers
             mockEmployeeRepository.Verify(repo => repo.GetEmployeeByIdAsync(employeeId), Times.Once);
         }
 
+        // Test to verify that UpdateEmployee calls UpdateEmployeeAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsUpdateEmployeeAsyncOnRepository()
         {
@@ -50,6 +52,7 @@ namespace Tests.Application.Employee.CommandHandlers
             mockEmployeeRepository.Verify(repo => repo.UpdateEmployeeAsync(employeeId, It.IsAny<EmployeeModel>()), Times.Once);
         }
 
+        // Test to verify that UpdateEmployee returns updated employee model
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsUpdatedEmployeeModel()
         {

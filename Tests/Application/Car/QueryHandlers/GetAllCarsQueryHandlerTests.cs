@@ -16,6 +16,7 @@ namespace Tests.Application.Car.QueryHandlers
             _handler = new GetAllCarsQueryHandler(_mockCarRepository.Object);
         }
 
+        // Test to verify that GetAllCars accesses cars on database
         [Fact]
         public async Task Handle_GivenValidQuery_AccessesCarsOnDatabase()
         {
@@ -33,6 +34,7 @@ namespace Tests.Application.Car.QueryHandlers
             Assert.Equal(cars, result);
         }
 
+        // Test to verify that GetAllCars throws an exception
         [Fact]
         public async Task Handle_GivenInvalidQuery_ThrowsException()
         {

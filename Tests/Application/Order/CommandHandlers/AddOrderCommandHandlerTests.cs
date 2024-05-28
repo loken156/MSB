@@ -48,6 +48,7 @@
 //            _mockMapper.Setup(m => m.Map<BoxDto>(It.IsAny<BoxModel>())).Returns(new BoxDto());
 //        }
 
+// Test to verify that AddOrder returns an OrderModel when order is added
 //        [Fact]
 //        public async Task Handle_GivenValidCommand_CallsGetWarehouseByIdAsyncOnRepository()
 //        {
@@ -63,6 +64,7 @@
 //            _mockWarehouseRepository.Verify(repo => repo.GetWarehouseByIdAsync(command.WarehouseId), Times.Once);
 //        }
 
+// Test to verify that AddOrder returns an OrderModel when order is added
 //        [Fact]
 //        public async Task Handle_GivenInvalidCommand_ThrowsException()
 //        {
@@ -75,6 +77,7 @@
 //            await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
 //        }
 
+// Test to verify that AddOrder returns an OrderModel when order is adde
 //        [Fact]
 //        public async Task Handle_GivenValidCommand_CallsAddOrderAsyncOnRepository()
 //        {
@@ -90,6 +93,7 @@
 //            _mockOrderRepository.Verify(repo => repo.AddOrderAsync(It.IsAny<OrderModel>()), Times.Once);
 //        }
 
+// Test to verify that AddOrder returns an OrderModel when order is added
 //        [Fact]
 //        public async Task Handle_GivenValidCommand_ReturnsCreatedOrderModel()
 //        {
@@ -108,6 +112,7 @@
 //            Assert.Equal(createdOrder, result);
 //        }
 
+// Test to verify that AddOrder calls AddBoxCommand for each box in order
 //        [Fact]
 //        public async Task Handle_GivenValidCommand_AddsBoxesToOrder()
 //        {
@@ -126,6 +131,7 @@
 //            _mockMediator.Verify(m => m.Send(It.IsAny<AddBoxCommand>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
 //        }
 
+// Test to verify that AddOrder throws an exception when AddBoxCommand fails
 //        [Fact]
 //        public async Task Handle_GivenValidCommand_PrintsLabel()
 //        {
@@ -146,6 +152,7 @@
 //                label.OrderDate == createdOrder.OrderDate)), Times.Once);
 //        }
 
+// Test to verify that AddOrder throws an exception when AddBoxCommand fails
 //        [Fact]
 //        public async Task Handle_GivenValidCommand_ThrowsException_WhenLabelPrintingFails()
 //        {

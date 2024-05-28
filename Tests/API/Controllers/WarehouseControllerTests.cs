@@ -35,6 +35,7 @@ namespace Tests.API.Controllers
             _controller = new WarehouseController(_mediatorMock.Object, _loggerMock.Object, _validationsMock.Object, _mapperMock.Object);
         }
 
+        // Test to verify that AddWarehouse returns CreatedAtActionResult when warehouse is created
         [Fact]
         public async void AddWarehouse_ReturnsCreatedAtActionResult_WhenWarehouseIsSuccessfullyAdded()
         {
@@ -80,6 +81,7 @@ namespace Tests.API.Controllers
             Assert.Equal(warehouseDto, returnedWarehouseDto);
         }
 
+        // Test to verify that AddWarehouse returns BadRequest when model state is invalid
         [Fact]
         public async void GetAllWarehouses_ReturnsOk_WhenWarehousesExist()
         {
@@ -96,6 +98,7 @@ namespace Tests.API.Controllers
             Assert.Equal(warehouses.Count, returnValue.Count());
         }
 
+        // Test to verify that GetWarehouseById returns Ok when warehouse exists
         [Fact]
         public async void GetWarehouseById_ReturnsOk_WhenWarehouseExists()
         {
@@ -116,6 +119,7 @@ namespace Tests.API.Controllers
             Assert.Equal(warehouseDto, returnValue);
         }
 
+        // Test to verify that GetWarehouseById returns NotFound when warehouse does not exist
         [Fact]
         public async void GetWarehouseById_ReturnsNotFound_WhenWarehouseDoesNotExist()
         {
@@ -130,6 +134,7 @@ namespace Tests.API.Controllers
             Assert.IsType<NotFoundResult>(result.Result);
         }
 
+        // Test to verify that UpdateWarehouse returns Ok when warehouse is updated
         [Fact]
         public async void UpdateWarehouse_ReturnsOk_WhenWarehouseIsUpdated()
         {
@@ -150,6 +155,7 @@ namespace Tests.API.Controllers
             Assert.Equal(warehouseDto, returnValue);
         }
 
+        // Test to verify that UpdateWarehouse returns BadRequest when model state is invalid
         [Fact]
         public async void DeleteWarehouse_ReturnsNoContent_WhenWarehouseIsDeleted()
         {

@@ -6,6 +6,7 @@ namespace Tests.Application.Box.CommandHandlers
 {
     public class DeleteBoxCommandHandlerTests
     {
+        // Test to verify that DeleteBox calls DeleteBoxAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsDeleteBoxAsyncOnRepository()
         {
@@ -22,6 +23,7 @@ namespace Tests.Application.Box.CommandHandlers
             mockBoxRepository.Verify(repo => repo.DeleteBoxAsync(It.IsAny<Guid>()), Times.Once);
         }
 
+        // Test to verify that DeleteBox throws an exception
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {

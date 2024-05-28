@@ -16,6 +16,7 @@ namespace Tests.Application.Order.QueryHandlers
             _handler = new GetAllOrdersQueryHandler(_mockOrderRepository.Object);
         }
 
+        // Test to verify that GetAllOrders calls GetAllOrdersAsync on repository
         [Fact]
         public async Task Handle_ReturnsAllOrders()
         {
@@ -34,6 +35,7 @@ namespace Tests.Application.Order.QueryHandlers
             Assert.Equal(orders.Count, result.Count());
         }
 
+        // Test to verify that GetAllOrders throws an exception
         [Fact]
         public async Task Handle_MapsOrderModelCorrectly()
         {

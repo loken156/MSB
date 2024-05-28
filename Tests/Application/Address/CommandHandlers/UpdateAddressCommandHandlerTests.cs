@@ -7,6 +7,7 @@ namespace Tests.Application.Address.CommandHandlers
 {
     public class UpdateAddressCommandHandlerTests
     {
+        // Test to verify that UpdateAddress calls UpdateAddressAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsUpdateAddressAsyncOnRepository()
         {
@@ -23,6 +24,7 @@ namespace Tests.Application.Address.CommandHandlers
             mockAddressRepository.Verify(repo => repo.UpdateAddressAsync(address), Times.Once);
         }
 
+        // Test to verify that UpdateAddress returns updated address model
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsUpdatedAddressModel()
         {

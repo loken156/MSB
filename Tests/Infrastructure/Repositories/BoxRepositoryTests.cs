@@ -19,6 +19,7 @@ namespace Tests.Infrastructure.Repositories
             return options;
         }
 
+        // Test to verify that AddBoxAsync adds a box to the database
         [Fact]
         public async Task AddBoxAsync_AddsBoxToDatabase()
         {
@@ -39,6 +40,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that DeleteBoxAsync deletes a box from the database
         [Fact]
         public async Task DeleteBoxAsync_DeletesBoxFromDatabase()
         {
@@ -64,6 +66,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetAllBoxesAsync returns all boxes
         [Fact]
         public async Task GetAllBoxesAsync_ReturnsAllBoxes()
         {
@@ -93,6 +96,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetBoxByIdAsync returns a box, when box exists
         [Fact]
         public async Task GetBoxByIdAsync_ReturnsBox_WhenBoxExists()
         {
@@ -119,6 +123,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateBoxAsync updates a box in the database
         [Fact]
         public async Task UpdateBoxAsync_UpdatesBoxInDatabase()
         {

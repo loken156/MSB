@@ -26,6 +26,7 @@ namespace Tests.Application.Box.CommandHandlers
             _handler = new AddBoxCommandHandler(_mockBoxRepository.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
+        // Test to verify that AddBox returns a BoxDto when box is added
         [Fact]
         public async Task Handle_GivenValidCommand_CreatesNewBoxWithCorrectProperties()
         {
@@ -52,6 +53,7 @@ namespace Tests.Application.Box.CommandHandlers
             Assert.Equal(newBoxDto.Size, result.Size);
         }
 
+        // Test to verify that AddBox returns a BoxDto with non-empty ID
         [Fact]
         public async Task Handle_GivenValidCommand_CreatesNewBoxWithNonEmptyId()
         {

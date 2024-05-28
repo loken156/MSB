@@ -7,6 +7,7 @@ namespace Tests.Application.Address.QueryHandlers
 {
     public class GetAddressByIdQueryHandlerTests
     {
+        // Test to verify that GetAddressById calls GetAddressByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidQuery_CallsGetAddressByIdAsyncOnRepository()
         {
@@ -24,6 +25,7 @@ namespace Tests.Application.Address.QueryHandlers
             mockAddressRepository.Verify(repo => repo.GetAddressByIdAsync(It.IsAny<Guid>()), Times.Once);
         }
 
+        // Test to verify that GetAddressById throws an exception
         [Fact]
         public async Task Handle_GivenInvalidQuery_ThrowsException()
         {
