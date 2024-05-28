@@ -16,6 +16,7 @@ namespace Tests.Application.Order.QueryHandlers
             _handler = new GetOrderByIdQueryHandler(_mockOrderRepository.Object);
         }
 
+        // Test to verify that GetOrderById calls GetOrderByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidId_ReturnsOrderDto()
         {
@@ -44,6 +45,7 @@ namespace Tests.Application.Order.QueryHandlers
             Assert.Equal(order.CarId, result.CarId);
         }
 
+        // Test to verify that GetOrderById throws an exception
         [Fact]
         public async Task Handle_GivenInvalidId_ThrowsException()
         {

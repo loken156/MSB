@@ -12,6 +12,7 @@ namespace Tests.Infrastructure.Services
         private readonly Mock<UserManager<ApplicationUser>> mockUserManager;
         private readonly EmployeeService employeeService;
 
+        // Constructor with mock setup for UserManager which is used in EmployeeService
         public EmployeeServiceTests()
         {
             mockUserManager = new Mock<UserManager<ApplicationUser>>(
@@ -27,6 +28,7 @@ namespace Tests.Infrastructure.Services
             employeeService = new EmployeeService(mockUserManager.Object);
         }
 
+        // Test to verify that FindByIdAsync returns null when user does not exist
         [Fact]
         public async Task FindByIdAsync_ReturnsNull_WhenUserDoesNotExist()
         {
@@ -41,6 +43,7 @@ namespace Tests.Infrastructure.Services
             Assert.Null(result);
         }
 
+        // Test to verify that ChangePasswordAsync returns failed when user does not exist
         [Fact]
         public async Task ChangePasswordAsync_ReturnsFailed_WhenUserDoesNotExist()
         {
@@ -58,6 +61,7 @@ namespace Tests.Infrastructure.Services
             Assert.Contains("User not found", result.Errors);
         }
 
+        // Test to verify that ChangePasswordAsync returns failed when password change fails
         [Fact]
         public async Task ChangePasswordAsync_ReturnsFailed_WhenPasswordChangeFails()
         {
@@ -78,6 +82,7 @@ namespace Tests.Infrastructure.Services
             Assert.Contains("Password change failed", result.Errors);
         }
 
+        // Test to verify that ChangePasswordAsync returns failed when current password is incorrect
         [Fact]
         public async Task ChangePasswordAsync_ReturnsFailed_WhenCurrentPasswordIsIncorrect()
         {
@@ -98,6 +103,7 @@ namespace Tests.Infrastructure.Services
             Assert.Contains("Incorrect current password", result.Errors);
         }
 
+        // Test to verify that ChangePasswordAsync returns failed when new password is invalid
         [Fact]
         public async Task ChangePasswordAsync_ReturnsFailed_WhenNewPasswordIsInvalid()
         {

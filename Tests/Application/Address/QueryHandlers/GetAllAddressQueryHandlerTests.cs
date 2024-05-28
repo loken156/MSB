@@ -7,6 +7,7 @@ namespace Tests.Application.Address.QueryHandlers
 {
     public class GetAllAddressQueryHandlerTests
     {
+        // Test to verify that GetAllAddresses calls GetAllAddressesAsync on repository
         [Fact]
         public async Task Handle_GivenValidQuery_CallsGetAllAddressesAsyncOnRepository()
         {
@@ -23,6 +24,7 @@ namespace Tests.Application.Address.QueryHandlers
             mockAddressRepository.Verify(repo => repo.GetAllAddressesAsync(), Times.Once);
         }
 
+        // Test to verify that GetAllAddresses throws an exception
         [Fact]
         public async Task Handle_GivenInvalidQuery_ThrowsException()
         {
@@ -36,6 +38,7 @@ namespace Tests.Application.Address.QueryHandlers
             await Assert.ThrowsAsync<Exception>(() => handler.Handle(query, new CancellationToken()));
         }
 
+        // Test to verify that GetAllAddresses returns correct data
         [Fact]
         public async Task Handle_GivenValidQuery_ReturnsCorrectData()
         {

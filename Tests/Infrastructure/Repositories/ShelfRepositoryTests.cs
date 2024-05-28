@@ -7,6 +7,7 @@ namespace Tests.Infrastructure.Repositories
 {
     public class ShelfRepositoryTests
     {
+        // Test to verify that GetAllAsync returns all shelves
         [Fact]
         public async Task GetAllAsync_ReturnsAllShelves()
         {
@@ -36,6 +37,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetShelfByIdAsync returns shelf when shelf exists
         [Fact]
         public async Task GetShelfByIdAsync_ReturnsShelf_WhenShelfExists()
         {
@@ -62,6 +64,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that AddShelfAsync creates shelf in database
         [Fact]
         public async Task AddShelfAsync_CreatesShelfInDatabase()
         {
@@ -83,6 +86,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateShelfAsync updates shelf in database
         [Fact]
         public async Task UpdateShelfAsync_UpdatesShelfInDatabase()
         {
@@ -111,6 +115,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that DeleteShelfAsync deletes shelf from database
         [Fact]
         public async Task DeleteShelfAsync_DeletesShelfFromDatabase()
         {

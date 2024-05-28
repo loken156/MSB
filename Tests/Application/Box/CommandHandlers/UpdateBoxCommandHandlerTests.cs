@@ -8,6 +8,7 @@ namespace Tests.Application.Box.CommandHandlers
 {
     public class UpdateBoxCommandHandlerTests
     {
+        // Test to verify that UpdateBox calls UpdateBoxAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsUpdateBoxAsyncOnRepository()
         {
@@ -26,6 +27,7 @@ namespace Tests.Application.Box.CommandHandlers
             mockBoxRepository.Verify(repo => repo.UpdateBoxAsync(It.IsAny<BoxModel>()), Times.Once);
         }
 
+        // Test to verify that UpdateBox returns updated box model
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {

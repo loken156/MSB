@@ -38,6 +38,7 @@ namespace Tests.API.Controllers
             _controller = new AdminController(_adminRepositoryMock.Object, _userManagerMock.Object, _loggerMock.Object, _mediatorMock.Object);
         }
 
+        // Test to verify that GetAdmins returns Ok when admins exist
         [Fact]
         public async Task GetAdmins_ReturnsOk_WhenAdminsExist()
         {
@@ -54,6 +55,7 @@ namespace Tests.API.Controllers
             Assert.Equal(admins, returnValue);
         }
 
+        // Test to verify that GetAdmins returns NotFound when no admins exist
         [Fact]
         public async Task GetAdmin_ReturnsOk_WhenAdminExists()
         {
@@ -71,6 +73,7 @@ namespace Tests.API.Controllers
             Assert.Equal(admin, returnValue);
         }
 
+        // Test to verify that GetAdmin returns NotFound when admin does not exist
         [Fact]
         public async Task GetAdmin_ReturnsNotFound_WhenAdminDoesNotExist()
         {
@@ -85,6 +88,7 @@ namespace Tests.API.Controllers
             Assert.IsType<NotFoundResult>(result.Result);
         }
 
+        // Test to verify that CreateAdmin returns CreatedAtAction when admin is created
         [Fact]
         public async Task CreateAdmin_ReturnsCreatedAtAction_WhenAdminIsCreated()
         {
@@ -104,6 +108,7 @@ namespace Tests.API.Controllers
             Assert.Equal(admin, returnValue);
         }
 
+        // Test to verify that UpdateAdmin returns Ok when admin is updated
         [Fact]
         public async Task UpdateAdmin_ReturnsOk_WhenAdminIsUpdated()
         {
@@ -120,7 +125,7 @@ namespace Tests.API.Controllers
             Assert.IsType<OkObjectResult>(result);
         }
 
-
+        // Test to verify that DeleteAdmin returns NoContent when admin is deleted
         [Fact]
         public async Task DeleteAdmin_ReturnsNoContent_WhenAdminIsDeleted()
         {

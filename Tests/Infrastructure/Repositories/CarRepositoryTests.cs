@@ -7,6 +7,7 @@ namespace Tests.Infrastructure.Repositories
 {
     public class CarRepositoryTests
     {
+        // Test to verify that AddCar adds car to database
         [Fact]
         public async Task AddCar_AddsCarToDatabase()
         {
@@ -27,6 +28,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetAllCars returns all cars
         [Fact]
         public async Task GetAllCars_ReturnsAllCars()
         {
@@ -56,6 +58,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetCarById returns car when car exists
         [Fact]
         public async Task GetCarById_ReturnsCar_WhenCarExists()
         {
@@ -82,6 +85,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateCar updates car in database
         [Fact]
         public async Task UpdateCar_UpdatesCarInDatabase()
         {
@@ -110,6 +114,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that DeleteCar deletes car from database
         [Fact]
         public async Task DeleteCar_DeletesCarFromDatabase()
         {

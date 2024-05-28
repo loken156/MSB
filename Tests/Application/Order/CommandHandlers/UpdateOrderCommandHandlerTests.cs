@@ -8,6 +8,7 @@ namespace Tests.Application.Order.CommandHandlers
 {
     public class UpdateOrderCommandHandlerTests
     {
+        // Test to verify that UpdateOrder calls GetOrderByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsGetOrderByIdAsyncOnRepository()
         {
@@ -25,6 +26,7 @@ namespace Tests.Application.Order.CommandHandlers
             mockOrderRepository.Verify(repo => repo.GetOrderByIdAsync(command.Order.OrderId), Times.Once);
         }
 
+        // Test to verify that UpdateOrder throws an exception
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {
@@ -39,6 +41,7 @@ namespace Tests.Application.Order.CommandHandlers
             await Assert.ThrowsAsync<Exception>(() => handler.Handle(command, CancellationToken.None));
         }
 
+        // Test to verify that UpdateOrder calls UpdateOrderAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsUpdateOrderAsyncOnRepository()
         {
@@ -56,6 +59,7 @@ namespace Tests.Application.Order.CommandHandlers
             mockOrderRepository.Verify(repo => repo.UpdateOrderAsync(It.IsAny<OrderModel>()), Times.Once);
         }
 
+        // Test to verify that UpdateOrder returns updated order model
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsUpdatedOrderModel()
         {

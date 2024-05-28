@@ -7,6 +7,7 @@ namespace Tests.Infrastructure.Repositories
 {
     public class EmployeeRepositoryTests
     {
+        // Test to verify that GetEmployeesAsync returns all employees
         [Fact]
         public async Task GetEmployeesAsync_ReturnsAllEmployees()
         {
@@ -36,6 +37,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetEmployeeByIdAsync returns employee when employee exists
         [Fact]
         public async Task GetEmployeeByIdAsync_ReturnsEmployee_WhenEmployeeExists()
         {
@@ -62,6 +64,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that CreateEmployeeAsync creates employee in database
         [Fact]
         public async Task CreateEmployeeAsync_CreatesEmployeeInDatabase()
         {
@@ -83,6 +86,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateEmployeeAsync updates employee in database
         [Fact]
         public async Task UpdateEmployeeAsync_UpdatesEmployeeInDatabase()
         {
@@ -111,6 +115,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that DeleteEmployeeAsync deletes employee from database
         [Fact]
         public async Task DeleteEmployeeAsync_DeletesEmployeeFromDatabase()
         {

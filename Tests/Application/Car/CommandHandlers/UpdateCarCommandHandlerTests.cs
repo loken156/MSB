@@ -8,6 +8,7 @@ namespace Tests.Application.Car.CommandHandlers
 {
     public class UpdateCarCommandHandlerTests
     {
+        // Test to verify that UpdateCar calls UpdateCar on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsUpdateCarOnRepository()
         {
@@ -26,6 +27,7 @@ namespace Tests.Application.Car.CommandHandlers
             mockCarRepository.Verify(repo => repo.UpdateCar(It.IsAny<CarModel>()), Times.Once);
         }
 
+        // Test to verify that UpdateCar passes correct car to repository
         [Fact]
         public async Task Handle_GivenNonExistentCar_DoesNotCallUpdateCarOnRepository()
         {
@@ -43,6 +45,7 @@ namespace Tests.Application.Car.CommandHandlers
             mockCarRepository.Verify(repo => repo.UpdateCar(It.IsAny<CarModel>()), Times.Never);
         }
 
+        // Test to verify that UpdateCar throws an exception
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {

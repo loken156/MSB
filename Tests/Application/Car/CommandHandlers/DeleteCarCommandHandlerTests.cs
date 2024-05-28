@@ -7,6 +7,7 @@ namespace Tests.Application.Car.CommandHandlers
 {
     public class DeleteCarCommandHandlerTests
     {
+        // Test to verify that DeleteCar calls DeleteCar on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsDeleteCarOnRepository()
         {
@@ -24,6 +25,7 @@ namespace Tests.Application.Car.CommandHandlers
             mockCarRepository.Verify(repo => repo.DeleteCar(It.IsAny<CarModel>()), Times.Once);
         }
 
+        // Test to verify that DeleteCar does not call DeleteCar on repository
         [Fact]
         public async Task Handle_GivenNonExistentCar_DoesNotCallDeleteCarOnRepository()
         {
@@ -40,6 +42,7 @@ namespace Tests.Application.Car.CommandHandlers
             mockCarRepository.Verify(repo => repo.DeleteCar(It.IsAny<CarModel>()), Times.Never);
         }
 
+        // Test to verify that DeleteCar throws an exception
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {

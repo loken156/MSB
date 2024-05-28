@@ -7,6 +7,7 @@ namespace Tests.Infrastructure.Repositories
 {
     public class WarehouseRepositoryTests
     {
+        // Test to verify that GetAllWarehousesAsync returns all warehouses
         [Fact]
         public async Task GetAllWarehousesAsync_ReturnsAllWarehouses()
         {
@@ -36,6 +37,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetWarehouseByIdAsync returns warehouse when warehouse exists
         [Fact]
         public async Task GetWarehouseByIdAsync_ReturnsWarehouse_WhenWarehouseExists()
         {
@@ -62,6 +64,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that AddWarehouseAsync adds warehouse to database
         [Fact]
         public async Task AddWarehouseAsync_AddsWarehouseToDatabase()
         {
@@ -83,6 +86,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateWarehouseAsync updates warehouse in database
         [Fact]
         public async Task UpdateWarehouseAsync_UpdatesWarehouseInDatabase()
         {
@@ -111,6 +115,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that DeleteWarehouseAsync deletes warehouse from database
         [Fact]
         public async Task DeleteWarehouseAsync_DeletesWarehouseFromDatabase()
         {

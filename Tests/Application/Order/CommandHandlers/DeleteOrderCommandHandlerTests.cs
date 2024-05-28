@@ -6,6 +6,7 @@ namespace Tests.Application.Order.CommandHandlers
 {
     public class DeleteOrderCommandHandlerTests
     {
+        // Test to verify that DeleteOrder calls DeleteOrderAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsDeleteOrderAsyncOnRepository()
         {
@@ -21,6 +22,7 @@ namespace Tests.Application.Order.CommandHandlers
             mockOrderRepository.Verify(repo => repo.DeleteOrderAsync(command.OrderId), Times.Once);
         }
 
+        // Test to verify that DeleteOrder does not throw an exception
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {

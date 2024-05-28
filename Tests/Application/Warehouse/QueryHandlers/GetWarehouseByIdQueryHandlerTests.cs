@@ -16,6 +16,7 @@ namespace Tests.Application.Warehouse.QueryHandlers
             _handler = new GetWarehouseByIdQueryHandler(_mockWarehouseRepository.Object);
         }
 
+        // Test to verify that GetWarehouseById calls GetWarehouseByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidId_ReturnsWarehouseDto()
         {
@@ -36,6 +37,7 @@ namespace Tests.Application.Warehouse.QueryHandlers
             Assert.Equal(warehouse.WarehouseName, result.WarehouseName);
         }
 
+        // Test to verify that GetWarehouseById throws an exception
         [Fact]
         public async Task Handle_GivenInvalidId_ThrowsException()
         {

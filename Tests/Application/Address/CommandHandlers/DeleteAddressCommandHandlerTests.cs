@@ -6,6 +6,7 @@ namespace Tests.Application.Address.CommandHandlers
 {
     public class DeleteAddressCommandHandlerTests
     {
+        // Test to verify that DeleteAddress calls DeleteAddressAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsDeleteAddressAsyncOnRepository()
         {
@@ -21,6 +22,7 @@ namespace Tests.Application.Address.CommandHandlers
             mockAddressRepository.Verify(repo => repo.DeleteAddressAsync(command.AddressId), Times.Once);
         }
 
+        // Test to verify that DeleteAddress does not throw an exception
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {

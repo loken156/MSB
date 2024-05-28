@@ -27,6 +27,7 @@ namespace Tests.Application.Shelf.CommandHandlers
             _mockMapper.Setup(m => m.Map<ShelfModel>(It.IsAny<AddShelfDto>())).Returns(new ShelfModel());
         }
 
+        // Test to verify that AddShelf calls GetWarehouseByNameAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsGetWarehouseByNameAsyncOnRepository()
         {
@@ -43,6 +44,7 @@ namespace Tests.Application.Shelf.CommandHandlers
             _mockWarehouseRepository.Verify(repo => repo.GetWarehouseByNameAsync(warehouseName), Times.Once);
         }
 
+        // Test to verify that AddShelf throws an exception
         [Fact]
         public async Task Handle_GivenInvalidCommand_ThrowsException()
         {
@@ -56,6 +58,7 @@ namespace Tests.Application.Shelf.CommandHandlers
             await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
         }
 
+        // Test to verify that AddShelf calls AddShelfAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsAddShelfAsyncOnRepository()
         {
@@ -72,6 +75,7 @@ namespace Tests.Application.Shelf.CommandHandlers
             _mockShelfRepository.Verify(repo => repo.AddShelfAsync(It.IsAny<ShelfModel>()), Times.Once);
         }
 
+        // Test to verify that AddShelf returns created shelf model
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsCreatedShelfModel()
         {
@@ -89,9 +93,5 @@ namespace Tests.Application.Shelf.CommandHandlers
             // Assert
             Assert.Equal(createdShelf, result);
         }
-
-
-
-
     }
 }

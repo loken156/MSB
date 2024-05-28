@@ -32,6 +32,7 @@ namespace Tests.API.Controllers
             _controller = new WarehouseController(_mediatorMock.Object, _loggerMock.Object, _validationsMock.Object);
         }
 
+        // Test to verify that AddWarehouse returns CreatedAtActionResult when warehouse is created
         [Fact]
         public async Task AddWarehouse_ReturnsCreatedAtActionResult_WhenWarehouseIsSuccessfullyAdded()
         {
@@ -75,6 +76,7 @@ namespace Tests.API.Controllers
             Assert.Equal(warehouseModel.Shelves.Select(shelf => shelf.ShelfId), returnedWarehouseDto.ShelfIds);
         }
 
+        // Test to verify that AddWarehouse returns BadRequest when model state is invalid
         [Fact]
         public async Task GetAllWarehouses_ReturnsOk_WhenWarehousesExist()
         {
@@ -91,6 +93,7 @@ namespace Tests.API.Controllers
             Assert.Equal(warehouses.Count, returnValue.Count());
         }
 
+        // Test to verify that GetWarehouseById returns Ok when warehouse exists
         [Fact]
         public async Task GetWarehouseById_ReturnsOk_WhenWarehouseExists()
         {
@@ -108,6 +111,7 @@ namespace Tests.API.Controllers
             Assert.Equal(warehouse.WarehouseId, returnValue.WarehouseId);
         }
 
+        // Test to verify that GetWarehouseById returns NotFound when warehouse does not exist
         [Fact]
         public async Task GetWarehouseById_ReturnsNotFound_WhenWarehouseDoesNotExist()
         {
@@ -123,6 +127,7 @@ namespace Tests.API.Controllers
             Assert.IsType<NotFoundResult>(result.Result);
         }
 
+        // Test to verify that UpdateWarehouse returns Ok when warehouse is updated
         [Fact]
         public async Task UpdateWarehouse_ReturnsOk_WhenWarehouseIsUpdated()
         {
@@ -141,6 +146,7 @@ namespace Tests.API.Controllers
             Assert.Equal(warehouse.WarehouseId, returnValue.WarehouseId);
         }
 
+        // Test to verify that UpdateWarehouse returns BadRequest when model state is invalid
         [Fact]
         public async Task DeleteWarehouse_ReturnsNoContent_WhenWarehouseIsDeleted()
         {

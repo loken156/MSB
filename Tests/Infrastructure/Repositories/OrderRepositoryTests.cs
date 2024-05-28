@@ -16,6 +16,7 @@ namespace Tests.Infrastructure.Repositories
             _notificationServiceMock = new Mock<INotificationService>();
         }
 
+        // Test to verify that GetAllOrdersAsync returns all orders
         [Fact]
         public async Task GetAllOrdersAsync_ReturnsAllOrders()
         {
@@ -45,6 +46,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetOrderByIdAsync returns order when order exists
         [Fact]
         public async Task GetOrderByIdAsync_ReturnsOrder_WhenOrderExists()
         {
@@ -71,6 +73,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that AddOrderAsync creates order in database
         [Fact]
         public async Task AddOrderAsync_CreatesOrderInDatabase()
         {
@@ -92,6 +95,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateOrderAsync updates order in database
         [Fact]
         public async Task UpdateOrderAsync_UpdatesOrderInDatabase()
         {
@@ -120,6 +124,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that DeleteOrderAsync deletes order from database
         [Fact]
         public async Task DeleteOrderAsync_DeletesOrderFromDatabase()
         {

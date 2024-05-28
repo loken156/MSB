@@ -6,6 +6,7 @@ namespace Tests.Infrastructure.Repositories
 {
     public class AdminRepositoryTests
     {
+        // Test to verify that GetAdminsAsync returns all admins
         [Fact]
         public async Task GetAdminsAsync_ReturnsAllAdmins()
         {
@@ -35,6 +36,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetAdminAsync returns admin, when admin exists
         [Fact]
         public async Task GetAdminAsync_ReturnsAdmin_WhenAdminExists()
         {
@@ -61,6 +63,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that CreateAdminAsync creates admin in database
         [Fact]
         public async Task CreateAdminAsync_CreatesAdminInDatabase()
         {
@@ -82,6 +85,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateAdminAsync updates admin in database
         [Fact]
         public async Task UpdateAdminAsync_UpdatesAdminInDatabase()
         {
@@ -110,6 +114,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that DeleteAdminAsync deletes admin from database
         [Fact]
         public async Task DeleteAdminAsync_DeletesAdminFromDatabase()
         {

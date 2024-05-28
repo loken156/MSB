@@ -7,6 +7,7 @@ namespace Tests.Application.Box.QueryHandlers
 {
     public class GetAllBoxesQueryHandlerTests
     {
+        // Test to verify that GetAllBoxes calls GetAllBoxesAsync on repository
         [Fact]
         public async Task Handle_GivenValidQuery_CallsGetAllBoxesAsyncOnRepository()
         {
@@ -23,6 +24,7 @@ namespace Tests.Application.Box.QueryHandlers
             mockBoxRepository.Verify(repo => repo.GetAllBoxesAsync(), Times.Once);
         }
 
+        // Test to verify that GetAllBoxes throws an exception
         [Fact]
         public async Task Handle_GivenInvalidQuery_ThrowsException()
         {
@@ -36,6 +38,7 @@ namespace Tests.Application.Box.QueryHandlers
             await Assert.ThrowsAsync<Exception>(() => handler.Handle(query, new CancellationToken()));
         }
 
+        // Test to verify that GetAllBoxes returns correct data
         [Fact]
         public async Task Handle_GivenValidQuery_ReturnsCorrectData()
         {

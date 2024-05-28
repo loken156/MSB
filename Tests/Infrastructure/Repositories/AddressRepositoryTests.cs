@@ -7,6 +7,7 @@ namespace Tests.Infrastructure.Repositories
 {
     public class AddressRepositoryTests
     {
+        // Test to verify that AddAddressAsync adds address to database
         [Fact]
         public async Task AddAddressAsync_AddsAddressToDatabase()
         {
@@ -30,6 +31,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetAllAddresses returns all addresses
         [Fact]
         public async Task GetAllAddressesAsync_ReturnsAllAddresses()
         {
@@ -59,6 +61,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that GetAddressById returns address when address exists
         [Fact]
         public async Task GetAddressByIdAsync_ReturnsAddress_WhenAddressExists()
         {
@@ -85,6 +88,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that UpdateAddressAsync updates address in database
         [Fact]
         public async Task UpdateAddressAsync_UpdatesAddressInDatabase()
         {
@@ -113,6 +117,7 @@ namespace Tests.Infrastructure.Repositories
             }
         }
 
+        // Test to verify that DeleteAddressAsync deletes address from database
         [Fact]
         public async Task DeleteAddressAsync_DeletesAddressFromDatabase()
         {

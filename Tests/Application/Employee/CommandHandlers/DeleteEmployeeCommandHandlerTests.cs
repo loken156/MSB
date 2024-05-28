@@ -7,6 +7,7 @@ namespace Tests.Application.Employee.CommandHandlers
 {
     public class DeleteEmployeeCommandHandlerTests
     {
+        // Test to verify that DeleteEmployee calls GetEmployeeByIdAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsGetEmployeeByIdAsyncOnRepository()
         {
@@ -26,6 +27,7 @@ namespace Tests.Application.Employee.CommandHandlers
             mockEmployeeRepository.Verify(repo => repo.GetEmployeeByIdAsync(command.EmployeeId), Times.Once);
         }
 
+        // Test to verify that DeleteEmployee calls DeleteEmployeeAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsDeleteEmployeeAsyncOnRepository()
         {
@@ -45,6 +47,7 @@ namespace Tests.Application.Employee.CommandHandlers
             mockEmployeeRepository.Verify(repo => repo.DeleteEmployeeAsync(command.EmployeeId), Times.Once);
         }
 
+        // Test to verify that DeleteEmployee returns deleted employee model
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsDeletedEmployeeModel()
         {

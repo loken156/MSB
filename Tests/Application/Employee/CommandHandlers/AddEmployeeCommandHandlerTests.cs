@@ -8,6 +8,7 @@ namespace Tests.Application.Employee.CommandHandlers
 {
     public class AddEmployeeCommandHandlerTests
     {
+        // Test to verify that AddEmployee calls CreateEmployeeAsync on repository
         [Fact]
         public async Task Handle_GivenValidCommand_CallsCreateEmployeeAsyncOnRepository()
         {
@@ -27,6 +28,7 @@ namespace Tests.Application.Employee.CommandHandlers
             mockEmployeeRepository.Verify(repo => repo.CreateEmployeeAsync(It.Is<EmployeeModel>(model => model.Email == command.NewEmployee.Email)), Times.Once);
         }
 
+        // Test to verify that AddEmployee returns created employee model
         [Fact]
         public async Task Handle_GivenValidCommand_ReturnsCreatedEmployeeModel()
         {
