@@ -1,4 +1,3 @@
-
 using Application.Commands.Warehouse.AddWarehouse;
 using Application.Commands.Warehouse.DeleteWarehouse;
 using Application.Commands.Warehouse.UpdateWarehouse;
@@ -6,6 +5,7 @@ using Application.Dto.AddWarehouse;
 using Application.Dto.Warehouse;
 using Application.Queries.Warehouse.GetAll;
 using Application.Queries.Warehouse.GetByID;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +19,16 @@ namespace API.Controllers.Warehouse
         private readonly IMediator _mediator;
         private readonly ILogger<WarehouseController> _logger;
         private readonly IValidator<AddWarehouseDto> _wareHouseValidations;
+        private readonly IMapper _mapper;
 
-        public WarehouseController(IMediator mediator, ILogger<WarehouseController> logger, IValidator<AddWarehouseDto> validations)
+
+
+        public WarehouseController(IMediator mediator, ILogger<WarehouseController> logger, IValidator<AddWarehouseDto> validations, IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
             _wareHouseValidations = validations;
+            _mapper = mapper;
         }
 
         [HttpPost("Add Warehouse")]
@@ -41,13 +45,7 @@ namespace API.Controllers.Warehouse
             {
                 // This sends the command and should return a WarehouseModel, which you will then map to a WarehouseDto.
                 var warehouseModel = await _mediator.Send(command);
-                var warehouseDto = new WarehouseDto
-                {
-                    WarehouseId = warehouseModel.WarehouseId,
-                    WarehouseName = warehouseModel.WarehouseName,
-                    AddressId = warehouseModel.AddressId,
-                    ShelfIds = warehouseModel.Shelves.Select(shelf => shelf.ShelfId).ToList(), // Updated to support multiple shelves
-                };
+                var warehouseDto = _mapper.Map<WarehouseDto>(warehouseModel); // Use AutoMapper to map WarehouseModel to WarehouseDto
 
                 _logger.LogInformation("Warehouse added successfully: {WarehouseName}", warehouseDto.WarehouseName);
                 return CreatedAtAction(nameof(AddWarehouse), warehouseDto);
@@ -63,7 +61,7 @@ namespace API.Controllers.Warehouse
 
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete Warehouse by {id}")]
         public async Task<IActionResult> DeleteWarehouse(Guid id)
         {
             try
@@ -85,11 +83,7 @@ namespace API.Controllers.Warehouse
             try
             {
                 var warehouse = await _mediator.Send(command);
-                var warehouseDto = new WarehouseDto
-                {
-                    WarehouseId = warehouse.WarehouseId,
-                    WarehouseName = warehouse.WarehouseName
-                };
+                var warehouseDto = _mapper.Map<WarehouseDto>(warehouse); // Use AutoMapper to map WarehouseModel to WarehouseDto
                 return Ok(warehouseDto);
             }
             catch (Exception ex)
@@ -97,7 +91,6 @@ namespace API.Controllers.Warehouse
                 _logger.LogError(ex, "Error updating warehouse with command: {Command}", command);
                 return StatusCode(500, "An error occurred while updating the warehouse");
             }
-
         }
 
         [HttpGet("Get All WareHouses")]
@@ -136,11 +129,7 @@ namespace API.Controllers.Warehouse
                     return NotFound();
                 }
 
-                var warehouseDto = new WarehouseDto
-                {
-                    WarehouseId = warehouse.WarehouseId,
-                    WarehouseName = warehouse.WarehouseName
-                };
+                var warehouseDto = _mapper.Map<WarehouseDto>(warehouse); // Use AutoMapper to map WarehouseModel to WarehouseDto
                 return Ok(warehouseDto);
             }
             catch (Exception ex)
@@ -148,7 +137,7 @@ namespace API.Controllers.Warehouse
                 _logger.LogError(ex, "Error while getting warehouse by id");
                 return StatusCode(500, "An error occurred while getting warehouse by id");
             }
-
         }
+
     }
 }

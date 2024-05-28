@@ -36,7 +36,9 @@ namespace Application
             // Register IAddressValidations with its implementation
             services.AddScoped<IAddressValidations, AddressValidations>();
 
-            services.AddHttpClient();
+            // Register IAddressValidations with its implementation
+            services.AddScoped<IAddressValidations, AddressValidations>();
+
             return services;
         }
     }
