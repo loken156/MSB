@@ -33,11 +33,11 @@ Here are the steps to contribute to the project and creating a pull request:
 9. Ask a colleague to approve your code changes in the pull request
 10. Merge and delete branch
 
-Always make sure to update tests as approriate and follow the coding standard and conventions in this project.
+Always make sure to update tests as appropriate and follow the coding standards and conventions in this project.
 
 ## Continuous Integration
 
-This project uses GitHub Actions for continuous integration, which helps to ensure that the project is always in a good state. The workflow is defined in the `.github/workflows/pull_request_checks.yml` file.
+This project uses GitHub Actions for continuous integration, which helps to ensure that the project is always in a working state. The workflow is defined in the `.github/workflows/pull_request_checks.yml` file.
 
 The workflow runs on every pull request to the `development` and `production` branches. It performs the following steps:
 
@@ -72,7 +72,7 @@ The application can be deployed using any server that supports .NET, such as IIS
 
 * **Tomas Lehtelä**
 * **Robert Svart**
-* **Fredrik Ekeroth**
+* **Fredrik Ekroth**
 * **David Larsson**
 * **Aramsin Oraha**
 * **Abdirisak Aden**
