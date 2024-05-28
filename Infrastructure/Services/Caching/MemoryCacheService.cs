@@ -2,6 +2,11 @@
 
 namespace Infrastructure.Services.Caching
 {
+
+    /// <summary>
+    /// This service is used to cache data in memory, the logic is to cache the creation info
+    /// of a new order so that the orderid is created and then signed to the newly created box.
+    /// </summary>
     public class MemoryCacheService : ICacheService
     {
         private readonly IMemoryCache _cache;
