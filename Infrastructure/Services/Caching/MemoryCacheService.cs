@@ -38,4 +38,3 @@ namespace Infrastructure.Services.Caching
         }
     }
 }
-

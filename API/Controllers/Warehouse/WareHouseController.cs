@@ -32,7 +32,6 @@ namespace API.Controllers.Warehouse
         }
 
         [HttpPost("Add Warehouse")]
-        [HttpPost("Add Warehouse")]
         public async Task<IActionResult> AddWarehouse([FromBody] AddWarehouseCommand command)
         {
             var validationResult = _wareHouseValidations.Validate(command.NewWarehouse); // Validate the DTO inside the command
@@ -78,7 +77,6 @@ namespace API.Controllers.Warehouse
 
         }
 
-        [HttpPut("Update Warehouse")]
         [HttpPut("Update Warehouse")]
         public async Task<ActionResult<WarehouseDto>> UpdateWarehouse([FromBody] UpdateWarehouseCommand command)
         {
