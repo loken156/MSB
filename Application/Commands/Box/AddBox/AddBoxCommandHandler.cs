@@ -5,6 +5,11 @@ using Infrastructure.Repositories.BoxRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
+// This class handles the command to add a new box. It uses MediatR for processing the command, 
+// AutoMapper for mapping between the DTO and the domain model, and ILogger for logging errors. 
+// The handler interacts with the box repository to save the new box and returns the created box as a DTO.
+
+
 namespace Application.Commands.Box.AddBox
 {
     public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxDto>

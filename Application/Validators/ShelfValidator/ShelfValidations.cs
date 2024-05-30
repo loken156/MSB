@@ -2,6 +2,14 @@
 using FluentValidation;
 using Infrastructure.Repositories.WarehouseRepo;
 
+// This class defines validation rules for AddShelfDto objects using FluentValidation.
+// Each property of the AddShelfDto class is validated with specific rules:
+// - ShelfRow must be greater than or equal to 1.
+// - ShelfColumn must be greater than or equal to 1.
+// - Occupancy must be false, indicating the new shelf is not already occupied.
+// Additional validations for other fields can be added as needed.
+// The rule for WarehouseId is commented out, but it can be enabled to validate the existence of a warehouse with the given id.
+
 namespace Application.Validators.ShelfValidator
 {
     public class ShelfValidations : AbstractValidator<AddShelfDto>

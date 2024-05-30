@@ -2,6 +2,12 @@
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
 
+// This class handles the GetEmployeeByIdQuery, responsible for retrieving an employee by ID. 
+// It depends on an IEmployeeRepository instance provided via its constructor for data access. 
+// The Handle method asynchronously processes the query, attempting to retrieve the employee 
+// with the specified ID from the repository. Any exceptions encountered during the process are 
+// caught and rethrown with an appropriate message.
+
 namespace Application.Queries.Employee.GetById
 {
     public class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery, EmployeeModel>

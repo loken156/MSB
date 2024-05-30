@@ -2,6 +2,10 @@
 using Infrastructure.Repositories.ShelfRepo;
 using MediatR;
 
+// This class handles the GetShelfByIdQuery, responsible for retrieving a shelf by its ID.
+// It depends on an IShelfRepository instance provided via its constructor for data access.
+// The Handle method asynchronously processes the query, retrieving the shelf with the specified ID from the repository.
+
 namespace Application.Queries.Shelf.GetByID
 {
     public class GetShelfByIdQueryHandler : IRequestHandler<GetShelfByIdQuery, ShelfModel>

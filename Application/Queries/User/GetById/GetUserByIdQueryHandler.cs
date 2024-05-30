@@ -2,6 +2,12 @@
 using Infrastructure.Repositories.UserRepo;
 using MediatR;
 
+// This class handles the GetUserByIdQuery, responsible for retrieving a user by their ID from the database.
+// It depends on an IUserRepository instance provided via its constructor for data access.
+// The Handle method asynchronously processes the query, retrieving the user with the specified ID from the repository.
+// If no user is found with the specified ID, it returns null.
+// If an exception occurs during the process, it throws a new Exception with the error message.
+
 namespace Application.Queries.User.GetById
 {
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, IAppUser>

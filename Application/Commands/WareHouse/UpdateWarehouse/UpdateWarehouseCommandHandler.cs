@@ -2,6 +2,15 @@
 using Infrastructure.Repositories.WarehouseRepo;
 using MediatR;
 
+// This class resides in the Application layer and handles the command to update a warehouse. 
+// It implements the IRequestHandler interface provided by MediatR for processing the command. 
+// The handler interacts with the warehouse repository in the Infrastructure layer to update 
+// the warehouse entity in the database. It constructs a new WarehouseModel object with the 
+// properties provided in the UpdateWarehouseCommand, including WarehouseId and WarehouseName. 
+// Other properties like AddressId and ShelfId are commented out indicating they are pending 
+// implementation. After updating the warehouse in the database, it returns the updated 
+// WarehouseModel entity.
+
 namespace Application.Commands.Warehouse.UpdateWarehouse
 {
     public class UpdateWarehouseCommandHandler : IRequestHandler<UpdateWarehouseCommand, WarehouseModel>

@@ -2,6 +2,16 @@
 using Application.Dto.Register;
 using FluentValidation;
 
+// This class defines validation rules for RegisterDto objects using FluentValidation.
+// Each property of the RegisterDto class is validated with specific rules:
+// - Email must not be empty and must be in a correct email format.
+// - Password must not be empty and must meet certain criteria:
+//   - Minimum length of 5 characters.
+//   - Maximum length of 15 characters.
+//   - Must contain at least one uppercase letter, one lowercase letter, and one special character.
+//   - Cannot be case-insensitive equal to "password".
+// - The Address property is validated using the AddressValidations validator, which defines rules for AddressDto.  
+
 namespace Application.Validators.UserValidator
 {
     public class UserValidations : AbstractValidator<RegisterDto>

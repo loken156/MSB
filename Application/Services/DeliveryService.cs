@@ -6,8 +6,16 @@ using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.EmployeeRepo;
 using Infrastructure.Repositories.OrderRepo;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Net.Http.Json;
+
+// This class represents a delivery service responsible for scheduling deliveries.
+// It depends on various repositories for accessing car, employee, address, and order data,
+// as well as IConfiguration for retrieving the Detrack API key.
+// The ScheduleDeliveries method schedules deliveries by assigning pending orders to available cars and drivers.
+// It retrieves all pending orders, then iterates through available cars and drivers, assigning up to 10 orders to each.
+// The AssignDeliveriesToDriver method assigns deliveries to a specific driver by sending requests to the Detrack API.
+// It constructs the necessary payload for each delivery and sends a POST request to the Detrack API to create the delivery.
+// Upon successful creation of a delivery, it updates the order status to "Assigned" in the database.
 
 namespace Application.Services
 {

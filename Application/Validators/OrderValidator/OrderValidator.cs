@@ -1,6 +1,16 @@
 ﻿using Application.Dto.Order;
 using FluentValidation;
 
+// This class defines validation rules for OrderDto objects using FluentValidation.
+// Each property of the OrderDto class is validated with specific rules:
+// - OrderId must not be empty.
+// - OrderDate must not be empty.
+// - TotalCost must not be empty and must be greater than 0.
+// - OrderStatus must not be empty and can't exceed 50 characters.
+// - UserId must not be empty.
+// - RepairNotes can't exceed 200 characters.
+// Additional validations for other fields can be added as needed.
+
 namespace Application.Validators.OrderValidator
 {
     public class OrderValidator : AbstractValidator<OrderDto>

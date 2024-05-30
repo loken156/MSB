@@ -2,6 +2,16 @@ using Domain.Models.Employee;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
+// This class implements the IEmployeeRepository interface and provides methods for managing EmployeeModel entities in the MSB_Database.
+// The class includes methods to:
+// - Retrieve all employees asynchronously with GetEmployeesAsync()
+// - Retrieve a specific employee by ID asynchronously with GetEmployeeByIdAsync(Guid id)
+// - Create a new employee asynchronously with CreateEmployeeAsync(EmployeeModel employee)
+// - Update an existing employee asynchronously with UpdateEmployeeAsync(Guid id, EmployeeModel employee)
+// - Delete an employee asynchronously with DeleteEmployeeAsync(Guid id)
+// The class uses Entity Framework Core for database operations and ensures changes are saved asynchronously to the database.
+// The UpdateEmployeeAsync method also handles updating only the properties of an existing employee that are provided in the input EmployeeModel.
+
 namespace Infrastructure.Repositories.EmployeeRepo
 {
     public class EmployeeRepository : IEmployeeRepository

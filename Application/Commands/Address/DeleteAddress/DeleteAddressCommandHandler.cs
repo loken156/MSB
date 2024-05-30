@@ -1,6 +1,9 @@
 ﻿using Infrastructure.Repositories.AddressRepo;
 using MediatR;
 
+// This class handles the command to delete an address. It uses MediatR for processing the command
+// and interacts with the address repository to remove the specified address from the data source.
+
 namespace Application.Commands.Address.DeleteAddress
 {
     public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand, Unit>

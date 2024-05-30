@@ -1,6 +1,15 @@
 ﻿using Domain.Models.Notification;
 using System.Net;
 using System.Net.Mail;
+
+// This class implements the INotificationService and IMessageSender interfaces to provide functionality for sending email notifications.
+// It utilizes the System.Net.Mail namespace for sending emails via SMTP (Simple Mail Transfer Protocol).
+// The constructor initializes the SmtpClient with the provided SMTP server, port, sender email, and sender password.
+// It sets up SSL for a secure connection and sets credentials for the sender email.
+// The SendNotification method asynchronously sends a notification using the SendMessage method.
+// The SendMessage method constructs a MailMessage with the sender email, subject, message body, and recipient email (userId).
+// It then sends the email asynchronously using the configured SmtpClient.
+
 namespace Infrastructure.Services.Notification
 {
     public class EmailNotificationService : INotificationService, IMessageSender

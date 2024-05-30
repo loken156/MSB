@@ -4,6 +4,14 @@ using Infrastructure.Repositories.ShelfRepo;
 using Infrastructure.Repositories.WarehouseRepo;
 using MediatR;
 
+// This class resides in the Application layer and handles the command to add a new shelf. 
+// It implements the IRequestHandler interface provided by MediatR for processing the command. 
+// The handler interacts with the shelf repository and the warehouse repository in the Infrastructure 
+// layer to persist the new shelf entity and retrieve warehouse information, respectively. It utilizes 
+// AutoMapper to map the AddShelfDto to a ShelfModel. After creating the shelf, it generates a new GUID 
+// for the ShelfId and sets the WarehouseId based on the retrieved warehouse. Finally, it adds the shelf 
+// to the database and returns the created shelf model.
+
 namespace Application.Commands.Shelf.AddShelf
 {
     public class AddShelfCommandHandler : IRequestHandler<AddShelfCommand, ShelfModel>

@@ -1,6 +1,17 @@
 using Application.Dto.Adress;
 using FluentValidation;
-using FluentValidation.Results;
+
+// This class defines validation rules for AddressDto objects using FluentValidation.
+// Each property of the AddressDto class is validated with specific rules:
+// - StreetName must not be empty and must have a length between 1 and 100 characters.
+// - StreetNumber must not be empty and must match the pattern for a valid street number (digits optionally followed by a letter).
+// - Apartment must not be empty and must be a valid alphanumeric string.
+// - ZipCode must not be empty.
+// - Floor must not be empty and must be alphanumeric.
+// - City must not be empty and must have a length between 1 and 50 characters.
+// - State must not be empty and must have a length between 1 and 50 characters.
+// - Country must not be empty and must have a length between 1 and 50 characters.
+// Additional validation rules for Latitude and Longitude are commented out but can be uncommented if needed.
 
 namespace Application.Validators.AddressValidator
 {

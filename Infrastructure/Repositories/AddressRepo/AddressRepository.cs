@@ -4,6 +4,9 @@ using Infrastructure.Database;
 using Infrastructure.Repositories.AddressRepo;
 using Microsoft.EntityFrameworkCore;
 
+// This class implements the IAddressRepository interface and provides methods to interact with the AddressModel entities in the MSB_Database.
+// It includes methods for adding, retrieving, updating, and deleting addresses.
+
 namespace Infrastructure.Repositories.OrderRepo
 {
     public class AddressRepository : IAddressRepository

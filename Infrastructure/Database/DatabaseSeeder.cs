@@ -7,6 +7,8 @@ using Domain.Models.Warehouse;
 using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
+// Mock database for seeding, should be edited and removed after usings have been verified.
+
 namespace Infrastructure.Database
 {
     public static class DatabaseSeeder

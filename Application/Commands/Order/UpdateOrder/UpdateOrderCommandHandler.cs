@@ -2,6 +2,13 @@
 using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 
+// This class resides in the Application layer and handles the command to update an order. 
+// It implements the IRequestHandler interface provided by MediatR for processing the command. 
+// The handler interacts with the order repository in the Infrastructure layer to retrieve 
+// the existing order entity based on the provided OrderId. If the order is not found, it 
+// throws an exception. Otherwise, it updates the properties of the order with the values 
+// provided in the UpdateOrderCommand and then saves the updated order to the database.
+
 namespace Application.Commands.Order.UpdateOrder
 {
     public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, OrderModel>

@@ -3,6 +3,16 @@ using Infrastructure.Database;
 using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
+// This class implements the IUserRepository interface and provides methods for managing ApplicationUser entities in the MSB_Database.
+// The class includes methods to:
+// - Retrieve all users asynchronously with GetAllUsersAsync()
+// - Retrieve a specific user by ID asynchronously with GetUserByIdAsync(string id)
+// - Retrieve a user by email asynchronously with GetByEmailAsync(string email)
+// - Update a user asynchronously with UpdateUserAsync(ApplicationUser user)
+// - Update a user's password asynchronously with UpdatePasswordAsync(ApplicationUser user)
+// - Delete a user asynchronously with DeleteUserAsync(string id)
+// Entity Framework Core is used for database operations, ensuring asynchronous save changes to the database.
+
 namespace Infrastructure.Repositories.UserRepo
 {
     public class UserRepository : IUserRepository

@@ -4,6 +4,18 @@ using Infrastructure.Database;
 using Infrastructure.Services.Notification;
 using Microsoft.EntityFrameworkCore;
 
+// This class implements the IOrderRepository interface and provides methods for managing OrderModel entities in the MSB_Database.
+// The class includes methods to:
+// - Retrieve all orders asynchronously with GetAllOrdersAsync()
+// - Retrieve a specific order by ID asynchronously with GetOrderByIdAsync(Guid orderId)
+// - Create a new order asynchronously with AddOrderAsync(OrderModel order) and CreateOrderAsync(OrderModel newOrder)
+// - Update an existing order asynchronously with UpdateOrderAsync(OrderModel order)
+// - Delete an order asynchronously with DeleteOrderAsync(Guid orderId)
+// - Retrieve the highest order number asynchronously with GetHighestOrderNumberAsync()
+// The class also integrates with the INotificationService to send notifications when an order's status is updated to "Delivered".
+// The UpdateOrderAsync method ensures notifications are sent to the user when their order is delivered to the warehouse.
+// Entity Framework Core is used for database operations, ensuring asynchronous save changes to the database.
+
 namespace Infrastructure.Repositories.OrderRepo
 {
     public class OrderRepository : IOrderRepository
