@@ -1,6 +1,6 @@
-# Magnificent Store Buddies
+# MSB
 
-Magnificent Store Buddies is a .NET 8 application that provides a platform for customers to handle pick-up, return, and storage of their boxes or various items. Customers can track their items online and request a return whenever they need.
+MSB is a .NET 8 application that provides a platform for customers to handle pick-up, return, and storage of their boxes or various items. Customers can track their items online and request a return whenever they need.
 
 ## Getting Started
 
@@ -78,10 +78,6 @@ The application can be deployed using any server that supports .NET, such as IIS
 * **Abdirisak Aden**
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
