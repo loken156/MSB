@@ -4,6 +4,10 @@ using Infrastructure.Repositories.AdminRepo;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
+// This class handles the command to add a new admin. It uses MediatR for processing the command,
+// interacts with the admin repository to create the admin in the data source, and assigns the "Admin" role
+// using the ASP.NET Core Identity framework.
+
 namespace Application.Commands.Admin.Add
 {
     public class AddAdminCommandHandler : IRequestHandler<AddAdminCommand, AdminModel>

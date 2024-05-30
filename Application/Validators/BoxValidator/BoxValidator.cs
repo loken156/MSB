@@ -1,6 +1,13 @@
 ﻿using Application.Dto.Box;
 using FluentValidation;
 
+// This class defines validation rules for BoxDto objects using FluentValidation.
+// Each property of the BoxDto class is validated with specific rules:
+// - BoxId must not be empty.
+// - Type must not be empty.
+// - Size must not be empty.
+// Additional validation rules for Orders are commented out but can be uncommented if needed.
+
 namespace Application.Validators.BoxValidator
 {
     public class BoxValidator : AbstractValidator<BoxDto>

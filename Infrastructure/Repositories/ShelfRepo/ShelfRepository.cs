@@ -2,6 +2,15 @@
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
+// This class implements the IShelfRepository interface and provides methods for managing ShelfModel entities in the MSB_Database.
+// The class includes methods to:
+// - Retrieve all shelves asynchronously with GetAllAsync()
+// - Retrieve a specific shelf by ID asynchronously with GetShelfByIdAsync(Guid shelfId)
+// - Create a new shelf asynchronously with AddShelfAsync(ShelfModel shelfToCreate)
+// - Update an existing shelf asynchronously with UpdateShelfAsync(ShelfModel shelfToUpdate)
+// - Delete a shelf asynchronously with DeleteShelfAsync(Guid shelfId)
+// Entity Framework Core is used for database operations, ensuring asynchronous save changes to the database.
+
 namespace Infrastructure.Repositories.ShelfRepo
 {
     public class ShelfRepository : IShelfRepository

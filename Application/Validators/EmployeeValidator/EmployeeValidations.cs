@@ -1,6 +1,19 @@
 ﻿using Application.Dto.Employee;
 using FluentValidation;
 
+// This class defines validation rules for EmployeeDto objects using FluentValidation.
+// Each property of the EmployeeDto class is validated with specific rules:
+// - FirstName must not be empty and can't exceed 50 characters.
+// - LastName must not be empty and can't exceed 50 characters.
+// - Email must not be empty and must be a valid email address.
+// - PhoneNumber must not be empty and must consist of 10 digits.
+// - Department must not be empty.
+// - Position must not be empty.
+// - HireDate must not be empty and must be in the past.
+// - WarehouseId must not be empty.
+// - Roles must not be empty and must include 'Employee'. Each role must be either 'Employee', 'Manager', or 'Admin'.
+// Additional validations for roles and other fields can be added as needed.
+
 namespace Application.Validators.EmployeeValidator
 {
     public class EmployeeValidations : AbstractValidator<EmployeeDto>

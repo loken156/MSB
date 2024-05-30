@@ -3,6 +3,15 @@ using Infrastructure.Database;
 using Infrastructure.Repositories.AdminRepo;
 using Microsoft.EntityFrameworkCore;
 
+// This class implements the IAdminRepository interface and provides methods for interacting with the AdminModel entities in the MSB_Database.
+// The class includes methods to:
+// - Retrieve all admins asynchronously with GetAdminsAsync()
+// - Retrieve a specific admin by ID asynchronously with GetAdminAsync(Guid id)
+// - Create a new admin asynchronously with CreateAdminAsync(AdminModel admin)
+// - Update an existing admin asynchronously with UpdateAdminAsync(Guid id, AdminModel admin)
+// - Delete an admin by ID asynchronously with DeleteAdminAsync(Guid id)
+// The class leverages Entity Framework Core for database operations and ensures changes are saved asynchronously to the database.
+
 public class AdminRepository : IAdminRepository
 {
     private readonly MSB_Database _database;

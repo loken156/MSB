@@ -7,6 +7,14 @@ using Infrastructure.Repositories.WarehouseRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
+// This class resides in the Application layer and handles the command to add a new order. 
+// It implements the IRequestHandler interface provided by MediatR for processing the command. 
+// The handler interacts with the order repository and the warehouse repository in the Infrastructure layer 
+// to persist the new order entity and retrieve warehouse information, respectively. It utilizes AutoMapper 
+// to map the AddOrderDto to an OrderModel. After creating the order, it generates a new GUID for the OrderId 
+// and adds the order to the database. Additionally, it invokes a label printing service to print a label for 
+// the newly created order. If an error occurs during label printing, it logs the error and rethrows the exception.
+
 namespace Application.Commands.Order.AddOrder
 {
     public class AddOrderCommandHandler : IRequestHandler<AddOrderCommand, OrderModel>

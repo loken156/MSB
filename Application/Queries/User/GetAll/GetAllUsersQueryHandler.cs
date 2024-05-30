@@ -2,6 +2,11 @@
 using Infrastructure.Repositories.UserRepo;
 using MediatR;
 
+// This class handles the GetAllUsersQuery, responsible for retrieving all users from the database.
+// It depends on an IUserRepository instance provided via its constructor for data access.
+// The Handle method asynchronously processes the query, retrieving all users from the repository.
+// If no users are found, it throws an InvalidOperationException.
+
 namespace Application.Queries.User.GetAll
 {
     public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, List<IAppUser>>

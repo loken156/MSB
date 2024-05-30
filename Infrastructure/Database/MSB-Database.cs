@@ -10,6 +10,8 @@ using Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
+// Database context for program
+
 namespace Infrastructure.Database
 {
     public class MSB_Database : IdentityDbContext<ApplicationUser>

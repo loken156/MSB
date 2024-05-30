@@ -2,6 +2,12 @@ using Domain.Models.Car;
 using Infrastructure.Repositories.CarRepo;
 using MediatR;
 
+// This class handles the GetCarByIdQuery, responsible for retrieving a car by its ID. It relies 
+// on an ICarRepository instance provided via its constructor. The Handle method asynchronously 
+// processes the query, attempting to retrieve the car from the repository by its ID. If the car 
+// is not found, it throws a KeyNotFoundException. Any other exceptions encountered during the 
+// process are caught and rethrown with a general error message.
+
 namespace Application.Queries.Car.GetById
 {
     public class GetCarByIdQueryHandler : IRequestHandler<GetCarByIdQuery, CarModel>

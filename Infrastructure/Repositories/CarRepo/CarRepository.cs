@@ -3,6 +3,17 @@ using Domain.Models.Employee;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
+// This class implements the ICarRepository interface and provides methods for managing CarModel entities in the MSB_Database.
+// The class includes methods to:
+// - Add a new car asynchronously with AddCar(CarModel carModel)
+// - Retrieve all cars asynchronously with GetAllCars()
+// - Retrieve a specific car by ID asynchronously with GetCarById(Guid carId)
+// - Update an existing car asynchronously with UpdateCar(CarModel car)
+// - Delete a car asynchronously with DeleteCar(CarModel car)
+// - Assign a driver to a car asynchronously with AssignDriverToCar(CarModel car, EmployeeModel driver)
+// - Remove a driver from a car asynchronously with RemoveDriverFromCar(CarModel car)
+// The class uses Entity Framework Core for database operations and ensures changes are saved asynchronously to the database.
+
 namespace Infrastructure.Repositories.CarRepo
 {
     public class CarRepository : ICarRepository

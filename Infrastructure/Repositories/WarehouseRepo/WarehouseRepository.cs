@@ -2,6 +2,17 @@
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
+// This class implements the IWarehouseRepository interface and provides methods for managing WarehouseModel entities in the MSB_Database.
+// The class includes methods to:
+// - Add a new warehouse asynchronously with AddWarehouseAsync(WarehouseModel warehouse)
+// - Delete a warehouse asynchronously with DeleteWarehouseAsync(Guid id)
+// - Check if a warehouse exists asynchronously with ExistWarehouseAsync(Guid warehouseId)
+// - Retrieve all warehouses asynchronously with GetAllWarehousesAsync()
+// - Retrieve a warehouse by ID asynchronously with GetWarehouseByIdAsync(Guid id)
+// - Retrieve a warehouse by name asynchronously with GetWarehouseByNameAsync(string warehouseName)
+// - Update a warehouse asynchronously with UpdateWarehouseAsync(WarehouseModel warehouse)
+// Entity Framework Core is used for database operations, ensuring asynchronous save changes to the database.
+
 namespace Infrastructure.Repositories.WarehouseRepo
 {
     public class WarehouseRepository : IWarehouseRepository

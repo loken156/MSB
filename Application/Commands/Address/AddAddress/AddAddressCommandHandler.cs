@@ -4,6 +4,11 @@ using Domain.Models.Address;
 using Infrastructure.Repositories.AddressRepo;
 using MediatR;
 
+// This class handles the command to add a new address. It uses MediatR for processing the command 
+// and AutoMapper for converting between DTOs and domain models. The handler interacts with the 
+// address repository to save the new address and returns the created address as a DTO.
+
+
 namespace Application.Commands.Address.AddAddress
 {
     public class AddAddressCommandHandler : IRequestHandler<AddAddressCommand, AddressDto>
@@ -18,11 +23,11 @@ namespace Application.Commands.Address.AddAddress
 
         public async Task<AddressDto> Handle(AddAddressCommand request, CancellationToken cancellationToken)
         {
-            var addressmodel = _mapper.Map<AddressModel>(request.NewAddress);
+            var addressModel = _mapper.Map<AddressModel>(request.NewAddress);
 
-            await _addressRepository.AddAddressAsync(addressmodel);
+            await _addressRepository.AddAddressAsync(addressModel);
 
-            var addressDto = _mapper.Map<AddressDto>(addressmodel);
+            var addressDto = _mapper.Map<AddressDto>(addressModel);
 
             return addressDto;
 

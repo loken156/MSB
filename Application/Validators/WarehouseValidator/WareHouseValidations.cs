@@ -1,6 +1,14 @@
 ﻿using Application.Dto.AddWarehouse;
 using FluentValidation;
 
+// This class defines validation rules for AddWarehouseDto objects using FluentValidation.
+// Each property of the AddWarehouseDto class is validated with specific rules:
+// - WarehouseName must not be empty and must meet certain length criteria:
+//   - Minimum length of 3 characters.
+//   - Maximum length of 50 characters.
+// - AddressId must not be empty.
+// - ShelfIds must not be empty and must not contain any empty Guid values.
+
 namespace Application.Validators.WarehouseValidator
 {
     public class WareHouseValidations : AbstractValidator<AddWarehouseDto>
