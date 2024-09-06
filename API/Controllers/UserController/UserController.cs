@@ -29,7 +29,7 @@ namespace API.Controllers.UserController
 
         // Endpoint to get all users
         [HttpGet]
-        [Route("Get all users")]
+        [Route("Getallusers")]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -48,7 +48,7 @@ namespace API.Controllers.UserController
 
         // Endpoint to get a user by their ID
         [HttpGet]
-        [Route("GetUser by Id")]
+        [Route("GetUserbyId")]
         public async Task<IActionResult> GetUserById(string UserId)
         {
             try
@@ -71,7 +71,7 @@ namespace API.Controllers.UserController
 
         // Endpoint to update a user's information
         [HttpPut]
-        [Route("Update User")]
+        [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto updatedUserInfoDto, [FromQuery] string updatedUserId)
         {
             try
@@ -82,7 +82,7 @@ namespace API.Controllers.UserController
 
                 if (result == null)
                 {
-                    return NotFound("User not found");
+                    return NotFound("Usernotfound");
                 }
 
                 return Ok(result);
@@ -96,7 +96,7 @@ namespace API.Controllers.UserController
         }
 
         // Endpoint to delete a user by their ID
-        [HttpDelete("Delete User by {id}")]
+        [HttpDelete("DeleteUserby{id}")]
         public async Task<IActionResult> DeleteUserById(string id)
         {
             try

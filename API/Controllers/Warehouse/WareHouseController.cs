@@ -31,7 +31,7 @@ namespace API.Controllers.Warehouse
             _mapper = mapper;
         }
 
-        [HttpPost("Add Warehouse")]
+        [HttpPost("AddWarehouse")]
         public async Task<IActionResult> AddWarehouse([FromBody] AddWarehouseCommand command)
         {
             var validationResult = _wareHouseValidations.Validate(command.NewWarehouse); // Validate the DTO inside the command
@@ -61,7 +61,7 @@ namespace API.Controllers.Warehouse
 
 
 
-        [HttpDelete("Delete Warehouse by {id}")]
+        [HttpDelete("DeleteWarehouseby{id}")]
         public async Task<IActionResult> DeleteWarehouse(Guid id)
         {
             try
@@ -77,7 +77,7 @@ namespace API.Controllers.Warehouse
 
         }
 
-        [HttpPut("Update Warehouse")]
+        [HttpPut("UpdateWarehouse")]
         public async Task<ActionResult<WarehouseDto>> UpdateWarehouse([FromBody] UpdateWarehouseCommand command)
         {
             try
@@ -93,7 +93,7 @@ namespace API.Controllers.Warehouse
             }
         }
 
-        [HttpGet("Get All WareHouses")]
+        [HttpGet("GetAllWareHouses")]
         public async Task<ActionResult<IEnumerable<WarehouseDto>>> GetAllWarehouses()
         {
             try
@@ -116,7 +116,7 @@ namespace API.Controllers.Warehouse
 
         }
 
-        [HttpGet("Get Warehouse By {id}")]
+        [HttpGet("GetWarehouseBy{id}")]
         public async Task<ActionResult<WarehouseDto>> GetWarehouseById(Guid id)
         {
             try

@@ -51,7 +51,7 @@ namespace API.Controllers.Order
         // Endpoint to add a new order
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        [Route("Add Order")]
+        [Route("AddOrder")]
         public async Task<ActionResult<OrderDto>> AddOrder(AddOrderDto orderDto, [FromQuery] Guid warehouseId)
         {
             try
@@ -89,7 +89,7 @@ namespace API.Controllers.Order
         // Endpoint to save order and box details
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        [Route("Save order")]
+        [Route("Saveorder")]
         public async Task<IActionResult> SaveOrderAndBox(string userId)
         {
             try
@@ -160,7 +160,7 @@ namespace API.Controllers.Order
 
         // Endpoint to get an order by its ID
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("Get Order By {id}")]
+        [HttpGet("GetOrderBy{id}")]
         public async Task<ActionResult<OrderDto>> GetOrderById(Guid id)
         {
             try
@@ -196,7 +196,7 @@ namespace API.Controllers.Order
 
         // Endpoint to update an order by its ID
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPut("Update Order By {id}")]
+        [HttpPut("UpdateOrderBy{id}")]
         public async Task<IActionResult> UpdateOrder(Guid id, OrderDto orderDto)
         {
             try
@@ -222,7 +222,7 @@ namespace API.Controllers.Order
 
         // Endpoint to delete an order by its ID
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpDelete("Delete Order By {id}")]
+        [HttpDelete("DeleteOrderBy{id}")]
         public async Task<IActionResult> DeleteOrder(Guid id)
         {
             try

@@ -30,10 +30,15 @@ namespace API.Controllers.BoxController
         }
 
         [HttpPost]
-        [Route("Add Box")]
+        [Route("AddBox")]
         public async Task<ActionResult<BoxDto>> AddBox([FromBody] BoxDto newBoxDto)
         {
             _logger.LogInformation("Attempting to add a new box");
+
+            if (newBoxDto.BoxId == Guid.Empty)
+            {
+                newBoxDto.BoxId = Guid.NewGuid(); // Generate a new GUID for BoxId
+            }
 
             // Validate the DTO
             ValidationResult validationResult = _boxValidator.Validate(newBoxDto);
@@ -63,7 +68,7 @@ namespace API.Controllers.BoxController
         }
 
         [HttpGet]
-        [Route("Get All Boxes")]
+        [Route("GetAllBoxes")]
         public async Task<ActionResult<IEnumerable<BoxDto>>> GetAllBoxes()
         {
             _logger.LogInformation("Attempting to retrieve all boxes");
@@ -101,7 +106,7 @@ namespace API.Controllers.BoxController
             }
         }
 
-        [HttpGet("Get Box By {id}")]
+        [HttpGet("GetBoxBy{id}")]
         public async Task<ActionResult<BoxDto>> GetBoxById(Guid id)
         {
             _logger.LogInformation("Attempting to retrieve box with ID {BoxId}", id);
@@ -138,7 +143,7 @@ namespace API.Controllers.BoxController
             }
         }
 
-        [HttpPut("Update Box By {id}")]
+        [HttpPut("UpdateBoxBy{id}")]
         public async Task<IActionResult> UpdateBox(Guid id, BoxDto boxDto)
         {
             // Inject ILogger via constructor or method injection to use it here
@@ -172,7 +177,7 @@ namespace API.Controllers.BoxController
             }
         }
 
-        [HttpDelete("Delete Box By {id}")]
+        [HttpDelete("DeleteBoxBy{id}")]
         public async Task<IActionResult> DeleteBox(Guid id)
         {
             _logger.LogInformation("Starting deletion of box with Id {BoxId}", id);

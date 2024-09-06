@@ -41,7 +41,7 @@ namespace API.Controllers.Employee
 
         // GET: api/Employee
         [HttpGet]
-        [Route("Get All Employees")]
+        [Route("GetAllEmployees")]
         public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployees()
         {
             try
@@ -57,7 +57,7 @@ namespace API.Controllers.Employee
         }
 
         // GET: api/Employee/{id}
-        [HttpGet("Get Employee By {id}")]
+        [HttpGet("GetEmployeeBy{id}")]
         public async Task<ActionResult<EmployeeDto>> GetEmployeeById(Guid id)
         {
             var employee = await _mediator.Send(new GetEmployeeByIdQuery(id));
@@ -70,7 +70,7 @@ namespace API.Controllers.Employee
 
         // POST: api/Employee
         [HttpPost]
-        [Route("Add Employee")]
+        [Route("AddEmployee")]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeDto employeeDto, bool isAdmin)
         {
             _logger.LogInformation("Starting to create new employee: {EmployeeEmail}", employeeDto.Email);
@@ -103,7 +103,7 @@ namespace API.Controllers.Employee
 
 
         // PUT: api/Employee/{id}
-        [HttpPut("Update Employee By {id}")]
+        [HttpPut("UpdateEmployeeBy{id}")]
         public async Task<IActionResult> UpdateEmployee(Guid id, EmployeeDto employeeDto)
         {
             try
@@ -125,7 +125,7 @@ namespace API.Controllers.Employee
         }
 
         // DELETE: api/Employee/{id}
-        [HttpDelete("Delete Employee By {id}")]
+        [HttpDelete("DeleteEmployeeBy{id}")]
         public async Task<IActionResult> DeleteEmployee(Guid id)
         {
 
