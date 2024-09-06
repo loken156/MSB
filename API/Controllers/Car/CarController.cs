@@ -43,7 +43,7 @@ namespace API.Controllers.Car
         }
 
         [HttpGet]
-        [Route("Get all cars")]
+        [Route("Getallcars")]
         public async Task<IActionResult> GetAllCars()
         {
             try

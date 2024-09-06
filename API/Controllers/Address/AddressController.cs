@@ -30,7 +30,7 @@ namespace API.Controllers.Address
         }
 
         [HttpPost]
-        [Route("Add Address")]
+        [Route("AddAddress")]
         public async Task<ActionResult<AddressDto>> AddAddress([FromBody] AddAddressCommand command)
         {
 
@@ -53,7 +53,7 @@ namespace API.Controllers.Address
         }
 
         [HttpGet]
-        [Route("Get All Addresses")]
+        [Route("GetAllAddresses")]
         public async Task<ActionResult<IEnumerable<AddressDto>>> GetAllAddresses()
         {
             try

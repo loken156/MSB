@@ -32,7 +32,7 @@ namespace API.Controllers.Shelf
         }
 
         // Endpoint to add a new shelf
-        [HttpPost("Add Shelf")]
+        [HttpPost("AddShelf")]
         public async Task<IActionResult> AddShelf([FromBody] AddShelfCommand command)
         {
             _logger.LogInformation("Adding a new shelf with command: {Command}", command);
@@ -66,7 +66,7 @@ namespace API.Controllers.Shelf
 
         // Endpoint to get all shelves
         [HttpGet]
-        [Route("Get All Shelves")]
+        [Route("GetAllShelves")]
         public async Task<ActionResult<IEnumerable<ShelfDto>>> GetAllShelves()
         {
             // Create and send the GetAllShelvesQuery using MediatR
@@ -86,7 +86,7 @@ namespace API.Controllers.Shelf
         }
 
         // Endpoint to get a shelf by its ID
-        [HttpGet("Get Shelf By {id}")]
+        [HttpGet("GetShelfBy{id}")]
         public async Task<ActionResult<ShelfDto>> GetShelfById(Guid id)
         {
             // Create and send the GetShelfByIdQuery using MediatR
@@ -111,7 +111,7 @@ namespace API.Controllers.Shelf
         }
 
         // Endpoint to update a shelf by its ID
-        [HttpPut("Update Shelf By {id}")]
+        [HttpPut("UpdateShelfBy{id}")]
         public async Task<IActionResult> UpdateShelf(Guid id, ShelfDto shelfDto)
         {
             if (id != shelfDto.ShelfId)
@@ -127,7 +127,7 @@ namespace API.Controllers.Shelf
         }
 
         // Endpoint to delete a shelf by its ID
-        [HttpDelete("Delete Shelf By {id}")]
+        [HttpDelete("DeleteShelfBy{id}")]
         public async Task<IActionResult> DeleteShelf(Guid id)
         {
             // Create and send the DeleteShelfCommand using MediatR
