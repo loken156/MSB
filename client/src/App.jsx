@@ -1,16 +1,25 @@
-import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import Prices from './pages/PricesPage';
+import Services from './pages/ServicesPage';
+import FAQ from './pages/FAQPage';
+import './App.css';
 
-import './App.css'
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <h1>Magnificent Store Buddies</h1>
-      <h2>Welcome to our Webpage</h2>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/prices" element={<Prices />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/faq" element={<FAQ />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
