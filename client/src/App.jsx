@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import Footer from "./Footer";
+import ServicesPage from "./ServicesPage";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -39,6 +42,11 @@ const AdminRoute = ({ children }) => {
 function App() {
   return (
     <>
+      <h1>Magnificent Store Buddies</h1>
+      <h2>Welcome to our Webpage</h2>
+      <ServicesPage />
+      <Footer />
+
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
