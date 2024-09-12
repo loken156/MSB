@@ -18,6 +18,19 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Adds logging to the console.
 builder.Logging.AddDebug(); // Adds logging to the debug window.
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:5173") // Адрес вашего фронтенда
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .AllowCredentials();
+        });
+});
+
 // Add global authorization filter
 builder.Services.AddControllers(options =>
 {
@@ -49,10 +62,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddApplication();
-
 builder.Services.AddInfrastructure(builder.Configuration);
-
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Add EF Core Identity to the ApplicationUser
@@ -70,14 +80,12 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-        // Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer"
     });
 
-    // Telling Swaggeat this API requires a Bearer token
-    // so you don't need to add "Bearer" to each endpoint
+    // Telling Swagger that this API requires a Bearer token
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -115,6 +123,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable CORS globally
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();
