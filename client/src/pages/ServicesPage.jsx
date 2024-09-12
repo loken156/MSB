@@ -1,4 +1,4 @@
-import "./ServicesPage.css";
+import "../css/ServicesPage.css";
 
 function  ServicesPage() {
 
