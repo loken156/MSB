@@ -17,7 +17,7 @@
     padding-top: 400px;
     padding-bottom: 100px;
     background-color: rgb(158, 158, 189);
-    background-image: url(assets\20200320_191503.jpg);
+    background-image: url("../src/assets/20200320_191503.jpg");
     background-size: cover;
     background-blend-mode: lighten;
     color: rgb(49, 31, 98)(55, 255, 255);

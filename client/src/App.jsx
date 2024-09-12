@@ -1,6 +1,4 @@
-import { useState } from 'react'
-import Footer from "./Footer";
-import ServicesPage from "./ServicesPage";
+import Footer from "./components/Footer";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -12,7 +10,7 @@ import MyAccountPage from './pages/MyAccountPage';
 import AdminPage from './pages/AdminPage'; // Импортируем страницу для админов
 import { jwtDecode } from 'jwt-decode';
 
-import './App.css';
+import './css/App.css';
 
 // Функция для проверки авторизации
 const isAuthenticated = () => {
@@ -42,10 +40,6 @@ const AdminRoute = ({ children }) => {
 function App() {
   return (
     <>
-      <h1>Magnificent Store Buddies</h1>
-      <h2>Welcome to our Webpage</h2>
-      <ServicesPage />
-      <Footer />
 
       <Navbar />
       <Routes>
@@ -75,6 +69,9 @@ function App() {
           }
         />
       </Routes>
+
+      <Footer />
+
     </>
   );
 }
