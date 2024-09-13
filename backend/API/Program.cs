@@ -1,4 +1,5 @@
 using Application;
+using Application.Services.Employee;
 using Infrastructure;
 using Infrastructure.Database;
 using Infrastructure.Entities;
@@ -26,6 +27,8 @@ builder.Services.AddControllers(options =>
         .Build();
     options.Filters.Add(new AuthorizeFilter(policy));
 });
+
+builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 
 // JWT Authentication configuration
 builder.Services.AddAuthentication(options =>
