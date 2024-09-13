@@ -1,5 +1,4 @@
 using Application;
-using Application.Services.Employee;
 using Infrastructure;
 using Infrastructure.Database;
 using Infrastructure.Entities;
@@ -26,20 +25,6 @@ builder.Services.AddControllers(options =>
         .RequireAuthenticatedUser()
         .Build();
     options.Filters.Add(new AuthorizeFilter(policy));
-});
-
-// Add CORS for the frontend to acces the backend
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend",
-        builder =>
-        {
-            builder.WithOrigins("http://localhost:5173") // Your frontend URL
-                   .AllowAnyHeader()
-                   .AllowAnyMethod()
-                   .AllowCredentials(); // If you need to allow credentials like cookies
-        });
 });
 
 // JWT Authentication configuration
@@ -74,9 +59,6 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<MSB_Database>()
     .AddDefaultTokenProviders();
-
-// Register the IEmployeeServices service
-builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -133,8 +115,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseCors("AllowFrontend"); // Allowing for frontend to make requests 
 
 app.UseAuthentication();
 app.UseAuthorization();
