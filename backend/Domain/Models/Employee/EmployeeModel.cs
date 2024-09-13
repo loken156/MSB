@@ -7,7 +7,7 @@ namespace Domain.Models.Employee
 {
     public class EmployeeModel : IAppUser
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string UserName { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
@@ -19,7 +19,7 @@ namespace Domain.Models.Employee
         public string Position { get; set; }
         public DateTime HireDate { get; set; }
         public Guid WarehouseId { get; set; }
-        public WarehouseModel Warehouse { get; set; }
+        //public WarehouseModel Warehouse { get; set; }
     }
 
 }

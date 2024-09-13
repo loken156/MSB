@@ -16,7 +16,7 @@ namespace Application.Dto.Employee
         [Required] public string Position { get; set; } = string.Empty;
         [Required] public DateTime HireDate { get; set; }
         [Required] public Guid WarehouseId { get; set; }
-        public WarehouseModel Warehouse { get; set; }
+        //public WarehouseModel Warehouse { get; set; }
 
     }
 }
