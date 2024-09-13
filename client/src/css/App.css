@@ -16,7 +16,6 @@ body {
   min-height: 100vh;
 }
 
-/* Стили для навбара */
 nav {
   background-color: #f0f0f0;
   padding: 10px;
@@ -57,7 +56,6 @@ nav a:hover {
   height: calc(100vh - 60px);
 }
 
-/* Стили для заголовков */
 h1 {
   color: #cfcdca;
   font-size: 3.2em;
@@ -66,4 +64,8 @@ h1 {
 h2 {
   color: #cfcdca;
   font-size: 28px;
+}
+
+p {
+  color: #cfcdca;
 }

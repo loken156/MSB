@@ -6,33 +6,30 @@ import Prices from './pages/PricesPage';
 import Services from './pages/ServicesPage';
 import FAQ from './pages/FAQPage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import MyAccountPage from './pages/MyAccountPage';
-import AdminPage from './pages/AdminPage'; // Импортируем страницу для админов
+import AdminPage from './pages/AdminPage';
+import ApiTestPage from './pages/ApiTestPage';
 import { jwtDecode } from 'jwt-decode';
-
 import './css/App.css';
 
-// Функция для проверки авторизации
 const isAuthenticated = () => {
-  return !!localStorage.getItem('token'); // Проверяет наличие токена
+  return !!localStorage.getItem('token');
 };
 
-// Функция для проверки роли
 const isAdmin = () => {
   const token = localStorage.getItem('token');
   if (token) {
-    const decoded = jwtDecode(token); // Декодируем токен
-    return decoded.role && decoded.role.includes('Admin'); // Проверяем наличие роли Admin
+    const decoded = jwtDecode(token);
+    return decoded.role && decoded.role.includes('Admin');
   }
   return false;
 };
 
-// Компонент для защиты маршрутов
 const PrivateRoute = ({ children }) => {
   return isAuthenticated() ? children : <Navigate to="/login" />;
 };
 
-// Компонент для защиты админских маршрутов
 const AdminRoute = ({ children }) => {
   return isAuthenticated() && isAdmin() ? children : <Navigate to="/" />;
 };
@@ -40,7 +37,6 @@ const AdminRoute = ({ children }) => {
 function App() {
   return (
     <>
-
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -48,8 +44,9 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/testing-apis" element={<ApiTestPage />} />
 
-        {/* Защищенный маршрут для страницы "My Account" */}
         <Route
           path="/my-account"
           element={
@@ -59,7 +56,6 @@ function App() {
           }
         />
 
-        {/* Защищенный маршрут для страницы админа */}
         <Route
           path="/admin"
           element={
@@ -71,7 +67,6 @@ function App() {
       </Routes>
 
       <Footer />
-
     </>
   );
 }
