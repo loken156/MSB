@@ -46,9 +46,9 @@ namespace Infrastructure.Database
 
             // Example of configuring other relationships
             modelBuilder.Entity<WarehouseModel>()
-                .HasMany(w => w.Shelves) // Warehouse has many Shelves
-                .WithOne(s => s.Warehouse) // Each Shelf belongs to one Warehouse
-                .HasForeignKey(s => s.WarehouseId); // ForeignKey in ShelfModel
+                .HasOne(w => w.Address) // Warehouse has one Address
+                .WithMany() // Address can have many Warehouses (or you can leave this out if no inverse navigation property)
+                .HasForeignKey(w => w.AddressId);// Foreign key in WarehouseModel
 
             // DatabaseSeeder.Seed(modelBuilder); // Uncomment this line to seed the database with mock data
 

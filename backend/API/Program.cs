@@ -19,6 +19,18 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Adds logging to the console.
 builder.Logging.AddDebug(); // Adds logging to the debug window.
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+});
+
 // Add global authorization filter
 builder.Services.AddControllers(options =>
 {
@@ -118,6 +130,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();

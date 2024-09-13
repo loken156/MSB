@@ -23,9 +23,10 @@ namespace Application.Validators.WarehouseValidator
             RuleFor(warehouse => warehouse.AddressId)
                 .NotEmpty().WithMessage("Address ID is required.");
 
-            RuleFor(warehouse => warehouse.ShelfIds)
-                .NotEmpty().WithMessage("At least one Shelf ID is required.")
-                .Must(ids => ids.All(id => id != Guid.Empty)).WithMessage("Shelf IDs must not be empty.");
+            // ShelfIds are optional, but if provided, they must not contain empty Guids
+            //RuleFor(warehouse => warehouse.ShelfIds)
+            //    .Must(ids => ids == null || ids.All(id => id != Guid.Empty))
+            //    .WithMessage("Shelf IDs must not be empty if provided.");
         }
     }
 }
