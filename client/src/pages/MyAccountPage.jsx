@@ -1,4 +1,3 @@
-// src/pages/MyAccountPage.jsx
 
 function MyAccountPage() {
   return (

@@ -1,5 +1,3 @@
-// src/pages/AdminPage.jsx
-
 function AdminPage() {
   return (
     <div className="adminContainer">

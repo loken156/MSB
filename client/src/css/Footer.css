@@ -26,10 +26,8 @@ footer{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+  }
 
-  }
-  .contact-logos{
-  }
   .footer-bottom{
     display: flex;
     flex-wrap: wrap;

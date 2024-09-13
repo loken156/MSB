@@ -7,7 +7,10 @@ using Application.Queries.Address.GetByID;
 using Application.Validators.AddressValidator;
 using Domain.Models.Address;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace API.Controllers.Address
 {
@@ -15,7 +18,6 @@ namespace API.Controllers.Address
     [ApiController]
     public class AddressController : ControllerBase
     {
-
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IAddressValidations _addressValidations;
@@ -29,11 +31,11 @@ namespace API.Controllers.Address
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("AddAddress")]
         public async Task<ActionResult<AddressDto>> AddAddress([FromBody] AddAddressCommand command)
         {
-
             try
             {
                 var validationResult = _addressValidations.Validate(command.NewAddress);
@@ -49,9 +51,9 @@ namespace API.Controllers.Address
                 _logger.LogError(ex, "Error while adding address");
                 return StatusCode(500, "An error occurred while adding address");
             }
-
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetAllAddresses")]
         public async Task<ActionResult<IEnumerable<AddressDto>>> GetAllAddresses()
@@ -67,10 +69,9 @@ namespace API.Controllers.Address
                 _logger.LogError(ex, "Error while getting all addresses");
                 return StatusCode(500, "An error occurred while getting all addresses");
             }
-
-
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<AddressDto>> GetAddressById(Guid id)
         {
@@ -91,10 +92,9 @@ namespace API.Controllers.Address
                 _logger.LogError(ex, "Error while getting address by id");
                 return StatusCode(500, "An error occurred while getting address by id");
             }
-
-
         }
 
+        [AllowAnonymous]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAddress(Guid id, AddressModel address)
         {
@@ -109,17 +109,15 @@ namespace API.Controllers.Address
                 var updatedAddress = await _mediator.Send(command);
 
                 return Ok("Update successful");
-
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error updating address with id: {id}", id);
                 return StatusCode(500, "An error occurred while updating the address");
             }
-
-
         }
 
+        [AllowAnonymous]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(Guid id)
         {
@@ -135,7 +133,6 @@ namespace API.Controllers.Address
                 _logger.LogError(ex, "Error deleting address with id: {id}", id);
                 return StatusCode(500, "An error occurred while deleting the address");
             }
-
         }
     }
 }
