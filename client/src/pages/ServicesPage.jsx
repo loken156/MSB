@@ -3,13 +3,13 @@ import "../css/ServicesPage.css";
 function  ServicesPage() {
 
 return (
-<div className = "paige-container-servicepaige">
+<div className = "page-container">
 
-    <div className = "hero-section-servicepaige">
+    <div className = "hero-section">
 
         <h1>Our Services</h1>
         <h2>Tailored Storage Solution for Every Need</h2>
-        <button className = "hero-button-servicepaige">Book</button>
+        <button className = "hero-button">Book</button>
 
     </div>
 
