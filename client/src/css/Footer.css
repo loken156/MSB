@@ -28,7 +28,14 @@
   }
   .contact-boxes{
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .footer-bottom{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
   }

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import '../css/LoginPage.css';
+
+
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,8 +27,8 @@ function LoginPage() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token); // Сохраняем токен в localStorage
-        navigate('/'); // Перенаправляем пользователя на главную страницу
+        localStorage.setItem('token', data.token);
+        navigate('/');
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Invalid login attempt');

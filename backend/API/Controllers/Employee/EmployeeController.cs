@@ -27,7 +27,7 @@ namespace API.Controllers.Employee
         private readonly IEmployeeServices _employeeService;
 
 
-        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, Mediator mediator,
+        public EmployeeController(IEmployeeRepository employeeRepository, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMediator mediator,
             ILogger<EmployeeController> logger, EmployeeValidations validations, IEmployeeServices employeeService)
         {
             _employeeRepository = employeeRepository;

@@ -5,18 +5,21 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Удаляем токен из localStorage
-    navigate('/login'); // Перенаправляем на страницу логина
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
-  // Проверка роли пользователя
   const isAdmin = () => {
     const token = localStorage.getItem('token');
     if (token) {
-      const decoded = jwtDecode(token); // Декодируем токен
-      return decoded.role && decoded.role.includes('Admin'); // Проверяем наличие роли Admin
+      const decoded = jwtDecode(token);
+      return decoded.role && decoded.role.includes('Admin');
     }
     return false;
+  };
+
+  const isAuthenticated = () => {
+    return !!localStorage.getItem('token');
   };
 
   return (
@@ -26,15 +29,19 @@ const Navbar = () => {
         <li><Link to="/prices">Prices</Link></li>
         <li><Link to="/services">Our Services</Link></li>
         <li><Link to="/faq">FAQ</Link></li>
-        {isAdmin() && <li><Link to="/admin">Admin</Link></li>} {/* Ссылка видна только админам */}
+        <li><Link to="/testing-apis">API Test</Link></li>
+        {isAdmin() && <li><Link to="/admin">Admin</Link></li>}
         <li>
-          {localStorage.getItem('token') ? (
+          {isAuthenticated() ? (
             <>
               <Link to="/my-account">My Account</Link>
               <button onClick={handleLogout} style={{ marginLeft: '10px' }}>Logout</button>
             </>
           ) : (
-            <Link to="/login">Login</Link>
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register" style={{ marginLeft: '10px' }}>Register</Link>
+            </>
           )}
         </li>
       </ul>
