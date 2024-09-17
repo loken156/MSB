@@ -17,6 +17,6 @@ namespace Domain.Models.Warehouse
         public virtual AddressModel Address { get; set; }
 
         // Shelves relationship
-        public virtual ICollection<ShelfModel> Shelves { get; set; } = new List<ShelfModel>();
+        //public virtual ICollection<ShelfModel>? Shelves { get; set; }
     }
 }

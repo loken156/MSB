@@ -57,7 +57,7 @@ namespace Tests.API.Controllers
                 WarehouseId = System.Guid.NewGuid(),
                 WarehouseName = "Test Warehouse",
                 AddressId = newWarehouseDto.AddressId,
-                Shelves = new List<ShelfModel>()
+                //Shelves = new List<ShelfModel>()
             };
 
             _mediatorMock.Setup(m => m.Send(addWarehouseCommand, It.IsAny<CancellationToken>())).ReturnsAsync(warehouseModel);
@@ -67,7 +67,7 @@ namespace Tests.API.Controllers
                 WarehouseId = warehouseModel.WarehouseId,
                 WarehouseName = warehouseModel.WarehouseName,
                 AddressId = warehouseModel.AddressId,
-                ShelfIds = warehouseModel.Shelves.Select(shelf => shelf.ShelfId).ToList()
+                //ShelfIds = warehouseModel.Shelves.Select(shelf => shelf.ShelfId).ToList()
             };
 
             _mapperMock.Setup(m => m.Map<WarehouseDto>(warehouseModel)).Returns(warehouseDto);

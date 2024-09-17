@@ -24,11 +24,20 @@ namespace Application.Commands.Employee.AddEmployee
         {
             try
             {
+                var selectedRole = request.NewEmployee.Roles.FirstOrDefault() ?? throw new Exception("Role cannot be null or empty.");
+                
                 EmployeeModel employeeToCreate = new()
                 {
+                    Id = Guid.NewGuid().ToString(),
                     FirstName = request.NewEmployee.FirstName,
                     LastName = request.NewEmployee.LastName,
                     Email = request.NewEmployee.Email,
+                    Department = request.NewEmployee.Department,
+                    Position = request.NewEmployee.Position,
+                    HireDate = request.NewEmployee.HireDate,
+                    Role = selectedRole, //Assigns the first Role in the list provided
+                    WarehouseId = request.NewEmployee.WarehouseId,
+                    UserName = request.NewEmployee.Email
                     // Initialize other properties as needed
                 };
 
