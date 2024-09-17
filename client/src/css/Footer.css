@@ -9,6 +9,12 @@ footer{
     flex-direction: column;
     align-items: center;
     background-color: rgb(182, 184, 183);
+footer{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(182, 184, 183);
     font-family: Arial, Helvetica, sans-serif;
     color: blue;
   }
@@ -44,6 +50,7 @@ footer{
     flex-direction: row;
     justify-content: center;
     width: 80%;
+    width: 80%;
     align-items: center;
     padding-bottom: 50px;
     gap: 580px;
@@ -62,7 +69,29 @@ footer{
     .footer-links-bottom{
       margin: 10px;
     }
+    padding-bottom: 50px;
+    gap: 580px;
 
+    }
+    .footer-links-top{
+      margin: 0px;
+    }
+    .footer-logo{
+      margin-top: 50px;
+      font-weight: bold;
+    }
+    .footer-links{
+      margin-top: 50px;
+    }
+    .footer-links-bottom{
+      margin: 10px;
+    }
+
+    .contact-boxes{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
     .contact-boxes{
         display: flex;
         flex-direction: column;
