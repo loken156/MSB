@@ -10,6 +10,7 @@ using AutoMapper;
 using Domain.Models.Box;
 using Domain.Models.Notification;
 using Domain.Models.Order;
+using Infrastructure.Entities;
 using Infrastructure.Repositories.BoxRepo;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Services.Caching;
@@ -17,6 +18,7 @@ using Infrastructure.Services.Notification;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Order
@@ -35,9 +37,11 @@ namespace API.Controllers.Order
         private readonly IOrderRepository _orderRepository;
         private readonly IBoxRepository _boxRepository;
         private readonly DeliveryService _deliveryService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         // Constructor to initialize the dependencies
-        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper, ICacheService cacheService, IOrderRepository repository, IBoxRepository boxRepository)
+        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper, ICacheService cacheService, IOrderRepository repository, IBoxRepository boxRepository, UserManager<ApplicationUser> userManager)
+
         {
             _mediator = mediator;
             _notificationService = notificationService;
@@ -46,9 +50,9 @@ namespace API.Controllers.Order
             _cacheService = cacheService;
             _orderRepository = repository;
             _boxRepository = boxRepository;
+            _userManager = userManager;
         }
 
-        // Endpoint to add a new order
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("AddOrder")]
@@ -60,16 +64,45 @@ namespace API.Controllers.Order
                 var command = new AddOrderCommand(orderDto, warehouseId);
                 var order = await _mediator.Send(command);
 
+                if (order == null)
+                {
+                    _logger.LogError("Order creation failed.");
+                    return StatusCode(500, "Order creation failed.");
+                }
+
+                // Check if the order includes boxes and add them
+                if (orderDto.Boxes != null && orderDto.Boxes.Any())
+                {
+                    foreach (var boxDto in orderDto.Boxes)
+                    {
+                        var box = _mapper.Map<BoxModel>(boxDto);
+                        box.OrderId = order.OrderId;  // Link box to the created order
+                        await _boxRepository.AddBoxAsync(box);  // Save box to the database
+                    }
+                }
+
                 // Cache the order for the user
                 await _cacheService.SetAsync($"OrderForUser_{order.UserId}", order, TimeSpan.FromMinutes(30));
 
                 // Send a notification to the user
+                // Retrieve user details to get the email
+                var user = await _userManager.FindByIdAsync(order.UserId); // Assuming you're using ASP.NET Identity
+
+                if (user == null)
+                {
+                    _logger.LogError("User not found for ID: {UserId}", order.UserId);
+                    return StatusCode(500, "User not found");
+                }
+
                 var notification = new NotificationModel
                 {
-                    UserId = order.UserId,
+                    Email = user.Email,  // Set the email address
                     Message = "Your order has been accepted."
                 };
+
+                // Send the notification
                 await _notificationService.SendNotification(notification);
+
 
                 // Schedule deliveries
                 await _deliveryService.ScheduleDeliveries();
@@ -86,6 +119,45 @@ namespace API.Controllers.Order
             }
         }
 
+        /*
+                // Endpoint to add a new order
+                [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+                [HttpPost]
+                [Route("AddOrder")]
+                public async Task<ActionResult<OrderDto>> AddOrder(AddOrderDto orderDto, [FromQuery] Guid warehouseId)
+                {
+                    try
+                    {
+                        // Create and send the AddOrderCommand using MediatR
+                        var command = new AddOrderCommand(orderDto, warehouseId);
+                        var order = await _mediator.Send(command);
+
+                        // Cache the order for the user
+                        await _cacheService.SetAsync($"OrderForUser_{order.UserId}", order, TimeSpan.FromMinutes(30));
+
+                        // Send a notification to the user
+                        var notification = new NotificationModel
+                        {
+                            UserId = order.UserId,
+                            Message = "Your order has been accepted."
+                        };
+                        await _notificationService.SendNotification(notification);
+
+                        // Schedule deliveries
+                        await _deliveryService.ScheduleDeliveries();
+
+                        // Map the result to OrderDto before returning
+                        var resultDto = _mapper.Map<OrderDto>(order);
+                        return CreatedAtAction(nameof(GetOrderById), new { id = resultDto.OrderId }, resultDto);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log error and return a server error status
+                        _logger.LogError(ex, "Error adding order with command: {Command}", orderDto);
+                        return StatusCode(500, "An error occurred while adding the order");
+                    }
+                }
+        */
         // Endpoint to save order and box details
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]

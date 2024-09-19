@@ -1,8 +1,10 @@
 using Application;
+using Application.MappingProfiles;
 using Application.Services.Employee;
 using Infrastructure;
 using Infrastructure.Database;
 using Infrastructure.Entities;
+using Infrastructure.Services.Caching;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +20,10 @@ builder.Services.AddHttpClient();
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Adds logging to the console.
 builder.Logging.AddDebug(); // Adds logging to the debug window.
+
+builder.Services.AddMemoryCache(); // enabling memory cache
+builder.Services.AddScoped<ICacheService, MemoryCacheService>();
+
 
 builder.Services.AddCors(options =>
 {
@@ -69,6 +75,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(OrderMapping));
+
 
 // Add EF Core Identity to the ApplicationUser
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
