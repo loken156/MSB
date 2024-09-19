@@ -1,5 +1,7 @@
+using Application.Dto.Car;
 using Domain.Models.Car;
 using Infrastructure.Repositories.CarRepo;
+using MediatR;
 
 // This class handles the GetAllCarsQuery, responsible for retrieving all cars. It relies on an 
 // ICarRepository instance provided via its constructor. The Handle method asynchronously processes 
@@ -7,7 +9,7 @@ using Infrastructure.Repositories.CarRepo;
 
 namespace Application.Queries.Car
 {
-    public class GetAllCarsQueryHandler
+    public class GetAllCarsQueryHandler : IRequestHandler<GetAllCarsQuery, IEnumerable<CarModel>>
     {
         private readonly ICarRepository _carRepository;
 
@@ -16,7 +18,7 @@ namespace Application.Queries.Car
             _carRepository = carRepository;
         }
 
-        public async Task<List<CarModel>> Handle(GetAllCarsQuery query)
+        public async Task<IEnumerable<CarModel>> Handle(GetAllCarsQuery query, CancellationToken cancellationToken)
         {
             var cars = await _carRepository.GetAllCars();
             return cars.ToList();
