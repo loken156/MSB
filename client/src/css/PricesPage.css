@@ -1,0 +1,112 @@
+*, html {
+    margin:0;
+    padding:0;  
+}
+
+.pricepaige-paige-container{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #d8d7d7;
+    padding-top: 200px;
+    padding-bottom: 200px;
+}
+
+/*------------------------------------------------------------*/
+
+.hero-section-pricepaige{
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 400px;
+    padding-bottom: 100px;
+    background-color: rgb(71, 71, 233);
+    background-image: url("../src/assets/warehouse-background.jpg");
+    background-size: cover;
+    background-blend-mode: lighten;
+
+    color: rgb(49, 31, 98)(55, 255, 255);
+}
+.hero-button-pricepaige{
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+}
+.hero-section-pricepaige h1, .hero-section-pricepaige h2, .hero-section-pricepaige .hero-button-pricepaige{
+    margin-bottom: 20px; 
+}
+
+/*------------------------------------------------------------*/
+
+
+.media-scroller{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 21%;
+    gap: 20px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.media-element{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    background: #a8a6a6;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.101);
+}
+.snaps-inline{
+    scroll-snap-type: inline mandatory;
+    scroll-padding-inline: 20px;
+}
+.snaps-inline > *{
+    scroll-snap-align: start;
+}
+.box-pictures{
+    height: auto;
+    inline-size: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+.box-title{
+    font-weight: bold;
+    font-size: x-large;
+}
+.cart-button{
+    padding: 10px;
+    font-size: larger;
+    background: rgb(243, 240, 240);
+    border-radius: 10px;
+    border-style: none;
+    cursor: pointer;
+}
+.price-per-month{
+    font-weight: bold;
+}
+
+.media-scroller::-webkit-scrollbar {
+    width: 8px;
+    height: 20px; 
+    padding-bottom: 10px;
+}
+
+.media-scroller::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.media-scroller::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+.media-scroller::-webkit-scrollbar-track {
+    background: #f7efef;
+    border-radius: 10px;
+}

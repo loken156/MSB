@@ -1,0 +1,75 @@
+*, html {
+    margin:0;
+    padding:0;  
+}
+
+/*------------------------------------------------------------*/
+
+.hero-section-FAQ{
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 400px;
+    padding-bottom: 100px;
+    background-color: rgb(71, 71, 233);
+    background-image: url("../src/assets/warehouse-background.jpg");
+    background-size: cover;
+    background-blend-mode: lighten;
+
+    color: rgb(49, 31, 98)(55, 255, 255);
+}
+
+/*------------------------------------------------------------*/
+
+.FAQ-paige-container{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #d8d7d7;
+    display: grid;
+    grid-template-columns: repeat(12, 80px);
+    column-gap: 20px;
+    justify-content: center;
+}
+.FAQ-grid-container{
+    grid-column: 1/13;
+}
+
+/*------------------------------------------------------------*/
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.accordian-header{
+margin: 60px;
+}
+.accordian{
+    width: 500px;
+    margin-bottom: 60px;
+}
+.item{
+    background: #c1c0c0a0;
+    margin-bottom: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.title{
+    color: #183cbd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.content{
+    color:#555252 ;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0,1,0,1);
+}
+.content.show{
+    height: auto;
+    max-height: 9999px;
+    transition: all 0.5s cubic-bezier(1,0,1,0);
+}

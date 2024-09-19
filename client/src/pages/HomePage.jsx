@@ -65,9 +65,9 @@ function HomePage() {
               </p>
               <button className = "work-cards-homepaige-button">Book</button>
             </article>
-            <img className = "work-cards-homepaige-image-1" src = "../src/assets/20200320_191503.jpg" alt = "Box"></img>
-            <img className = "work-cards-homepaige-image-2" src = "../src/assets/20200320_191503.jpg" alt = "Box"></img>
-            <img className = "work-cards-homepaige-image-3" src = "../src/assets/20200320_191503.jpg" alt = "Box"></img>
+            <img className = "work-cards-homepaige-image-1" src = "../src/assets/handing-box.png" alt = "Box"></img>
+            <img className = "work-cards-homepaige-image-2" src = "../src/assets/warehouse.png" alt = "Box"></img>
+            <img className = "work-cards-homepaige-image-3" src = "../src/assets/table-box.png" alt = "Box"></img>
           </div>
           </div>
       </div>
