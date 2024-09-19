@@ -2,7 +2,6 @@
 
 namespace Infrastructure.Services.Caching
 {
-
     /// <summary>
     /// This service is used to cache data in memory, the logic is to cache the creation info
     /// of a new order so that the orderid is created and then signed to the newly created box.
@@ -10,6 +9,12 @@ namespace Infrastructure.Services.Caching
     public class MemoryCacheService : ICacheService
     {
         private readonly IMemoryCache _cache;
+
+        // Injecting IMemoryCache through constructor
+        public MemoryCacheService(IMemoryCache cache)
+        {
+            _cache = cache;
+        }
 
         public Task<T> GetAsync<T>(string key)
         {

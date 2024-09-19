@@ -15,7 +15,7 @@ namespace Application.Dto.Order
         //public Guid RepairId { get; set; }
         [Required] public Guid WarehouseId { get; set; }
         [Required] public Guid AddressId { get; set; }
-        public List<BoxDto> Boxes { get; set; } = new List<BoxDto>();
+        public List<BoxDto>? Boxes { get; set; } = new List<BoxDto>();
         public string RepairNotes { get; set; } = "No notes";
     }
 }

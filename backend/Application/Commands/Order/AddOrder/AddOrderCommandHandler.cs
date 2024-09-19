@@ -59,7 +59,8 @@ namespace Application.Commands.Order.AddOrder
             };
             try
             {
-                await _labelPrinterService.PrintLabelAsync(label);
+                //COMMENTING THIS OUT BECAUSE WE HAVE NO PRINTER
+                //it _labelPrinterService.PrintLabelAsync(label);
             }
             catch (Exception ex)
             {

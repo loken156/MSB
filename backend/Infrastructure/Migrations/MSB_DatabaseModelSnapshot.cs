@@ -229,8 +229,6 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WarehouseId");
-
                     b.ToTable("Employees");
                 });
 
@@ -248,9 +246,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("varchar(255)");
-
-                    b.Property<Guid>("BoxId")
-                        .HasColumnType("char(36)");
 
                     b.Property<Guid?>("CarId")
                         .HasColumnType("char(36)");
@@ -565,8 +560,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Order.OrderModel", "Order")
                         .WithMany("Boxes")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Domain.Models.Shelf.ShelfModel", "Shelf")
                         .WithMany("Boxes")
@@ -577,17 +571,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Shelf");
-                });
-
-            modelBuilder.Entity("Domain.Models.Employee.EmployeeModel", b =>
-                {
-                    b.HasOne("Domain.Models.Warehouse.WarehouseModel", "Warehouse")
-                        .WithMany()
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("Domain.Models.Order.OrderModel", b =>
@@ -622,7 +605,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Models.Shelf.ShelfModel", b =>
                 {
                     b.HasOne("Domain.Models.Warehouse.WarehouseModel", "Warehouse")
-                        .WithMany("Shelves")
+                        .WithMany()
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -714,11 +697,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Models.Shelf.ShelfModel", b =>
                 {
                     b.Navigation("Boxes");
-                });
-
-            modelBuilder.Entity("Domain.Models.Warehouse.WarehouseModel", b =>
-                {
-                    b.Navigation("Shelves");
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.ApplicationUser", b =>
