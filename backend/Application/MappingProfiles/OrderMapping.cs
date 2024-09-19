@@ -15,6 +15,12 @@ namespace Application.MappingProfiles
         public OrderMapping()
         {
             CreateMap<OrderDto, OrderModel>().ReverseMap();
+            
+            // New mapping for AddOrderDto to OrderModel
+            CreateMap<AddOrderDto, OrderModel>()
+                .ForMember(dest => dest.OrderId, opt => opt.Ignore()) // OrderId is typically generated
+                .ForMember(dest => dest.Boxes, opt => opt.Ignore())   // Boxes might be added later
+                .ForMember(dest => dest.Car, opt => opt.Ignore());    // Car might not always be provided
         }
 
     }

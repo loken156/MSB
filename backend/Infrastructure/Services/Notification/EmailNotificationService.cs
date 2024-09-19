@@ -27,12 +27,24 @@ namespace Infrastructure.Services.Notification
             _smtpClient.Credentials = new NetworkCredential(_senderEmail, _senderPassword);
         }
 
+        // Sends the notification using the recipient's email address
         public async Task SendNotification(NotificationModel notification)
         {
-            await SendMessage(notification.UserId, notification.Message);
+            if (string.IsNullOrEmpty(notification.Email))
+            {
+                throw new ArgumentNullException(nameof(notification.Email), "Recipient email address is required.");
+            }
+
+            if (!IsValidEmail(notification.Email))
+            {
+                throw new FormatException("The specified email address is not in the correct format.");
+            }
+
+            await SendMessage(notification.Email, notification.Message);
         }
 
-        public async Task SendMessage(string userId, string message)
+        // Sends the email message
+        public async Task SendMessage(string email, string message)
         {
             var mailMessage = new MailMessage
             {
@@ -42,10 +54,23 @@ namespace Infrastructure.Services.Notification
                 IsBodyHtml = true
             };
 
-            mailMessage.To.Add(userId);
+            mailMessage.To.Add(email);  // Use the recipient email from the NotificationModel
 
             await _smtpClient.SendMailAsync(mailMessage);
         }
-    }
 
+        // Validate email format using regex
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var mailAddress = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+    }
 }

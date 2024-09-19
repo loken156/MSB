@@ -30,13 +30,24 @@ namespace Infrastructure.Database
         public DbSet<AdminModel> Admins { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Addresses)
                 .WithOne()
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            // Configure one-to-many relationship between OrderModel and BoxModel
+            modelBuilder.Entity<OrderModel>()
+                .HasMany(o => o.Boxes)      // An Order can have many Boxes
+                .WithOne(b => b.Order)      // Each Box belongs to one Order
+                .HasForeignKey(b => b.OrderId) // Foreign key in BoxModel
+                .OnDelete(DeleteBehavior.Cascade)  // Optional: cascade delete, removing order will remove associated boxes
+                .IsRequired(false); // Make the foreign key nullable
 
+            
             // Configure one-to-many relationship between ShelfModel and BoxModel
             modelBuilder.Entity<ShelfModel>()
                 .HasMany(s => s.Boxes) // Shelf has many Boxes
@@ -52,7 +63,7 @@ namespace Infrastructure.Database
 
             // DatabaseSeeder.Seed(modelBuilder); // Uncomment this line to seed the database with mock data
 
-            base.OnModelCreating(modelBuilder);
+            
         }
     }
 }
