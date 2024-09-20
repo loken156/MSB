@@ -4,6 +4,7 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MSB_Database))]
-    partial class MSB_DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240920103548_AddRoleForeignKeyToEmployee")]
+    partial class AddRoleForeignKeyToEmployee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,6 +219,14 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RoleIds")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -335,12 +346,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("EmployeeModelId")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("RolesId")
+                    b.Property<string>("IdentityRoleId")
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("EmployeeModelId", "RolesId");
+                    b.HasKey("EmployeeModelId", "IdentityRoleId");
 
-                    b.HasIndex("RolesId");
+                    b.HasIndex("IdentityRoleId");
 
                     b.ToTable("EmployeeRoles", (string)null);
                 });
@@ -645,7 +656,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
-                        .HasForeignKey("RolesId")
+                        .HasForeignKey("IdentityRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

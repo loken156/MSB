@@ -1,6 +1,7 @@
 ﻿using Domain.Models.Employee;
 using Infrastructure.Repositories.EmployeeRepo;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 // This class resides in the Application layer and handles the command to add a new employee. 
 // It implements the IRequestHandler interface provided by MediatR for processing the command. 
@@ -15,17 +16,37 @@ namespace Application.Commands.Employee.AddEmployee
     public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommand, EmployeeModel>
     {
         private readonly IEmployeeRepository _employeeRepository;
-        public AddEmployeeCommandHandler(IEmployeeRepository employeeRepository)
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public AddEmployeeCommandHandler(IEmployeeRepository employeeRepository, RoleManager<IdentityRole> roleManager)
         {
             _employeeRepository = employeeRepository;
+            _roleManager = roleManager;
         }
 
         public async Task<EmployeeModel> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var selectedRole = request.NewEmployee.Roles.FirstOrDefault() ?? throw new Exception("Role cannot be null or empty.");
-                
+                if (request.NewEmployee.Roles == null || !request.NewEmployee.Roles.Any())
+                {
+                    throw new Exception("At least one role must be provided.");
+                }
+
+                var roles = new List<IdentityRole>();
+
+                // Fetch the actual IdentityRole objects from the RoleManager
+                foreach (var roleName in request.NewEmployee.Roles)
+                {
+                    var role = await _roleManager.FindByNameAsync(roleName);
+                    if (role == null)
+                    {
+                        throw new Exception($"Role '{roleName}' not found.");
+                    }
+                    roles.Add(role); // Store the IdentityRole object
+                }
+
+                // Create the EmployeeModel with the Roles property as ICollection<IdentityRole>
                 EmployeeModel employeeToCreate = new()
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -35,10 +56,9 @@ namespace Application.Commands.Employee.AddEmployee
                     Department = request.NewEmployee.Department,
                     Position = request.NewEmployee.Position,
                     HireDate = request.NewEmployee.HireDate,
-                    Role = selectedRole, //Assigns the first Role in the list provided
+                    Roles = roles, // Assign the list of IdentityRole objects
                     WarehouseId = request.NewEmployee.WarehouseId,
                     UserName = request.NewEmployee.Email
-                    // Initialize other properties as needed
                 };
 
                 // Save the new employee to the database
@@ -57,7 +77,5 @@ namespace Application.Commands.Employee.AddEmployee
                 throw newException;
             }
         }
-
-
     }
 }
