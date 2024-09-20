@@ -123,7 +123,9 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    await Infrastructure.Identity.RoleInitializer.InitializeAsync(roleManager);
+    var dbContext = scope.ServiceProvider.GetRequiredService<MSB_Database>(); // Adding dbContext Variable for easy access
+
+    await Infrastructure.Identity.RoleInitializer.InitializeAsync(roleManager, dbContext);
 }
 
 // Configure the HTTP request pipeline.

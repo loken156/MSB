@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -216,10 +216,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -332,6 +328,21 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AddressId");
 
                     b.ToTable("Warehouses");
+                });
+
+            modelBuilder.Entity("EmployeeModelIdentityRole", b =>
+                {
+                    b.Property<string>("EmployeeModelId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("RolesId")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("EmployeeModelId", "RolesId");
+
+                    b.HasIndex("RolesId");
+
+                    b.ToTable("EmployeeRoles", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.ApplicationUser", b =>
@@ -622,6 +633,21 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("EmployeeModelIdentityRole", b =>
+                {
+                    b.HasOne("Domain.Models.Employee.EmployeeModel", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeeModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
