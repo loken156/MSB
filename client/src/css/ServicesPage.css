@@ -24,13 +24,16 @@
     color: rgb(49, 31, 98)(55, 255, 255);
 }
 .hero-button-servicepaige{
+    border-radius: 5px;
     width: 200px;
     height: 30px;
 }
 .hero-section-servicepaige h1, .hero-section-servicepaige h2, .hero-section-servicepaige .hero-button-servicepaige {
     margin-bottom: 20px; 
 }
-
+.hero-button-servicepaige {
+    cursor: pointer;
+}
 /*------------------------------------------------------------*/
 .how-we-work-section-container{
     display: flex;

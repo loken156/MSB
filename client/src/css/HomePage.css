@@ -38,6 +38,9 @@
 .hero-section-homepaige h1, .hero-section-homepaige h2, .hero-section-homepaige .hero-button-homepaige{
     margin-bottom: 20px; 
 }
+.hero-button-homepaige{
+    cursor: pointer;
+}
 
 /*------------------------------------------------------------*/
 
@@ -133,4 +136,5 @@
     border-radius: 5px;
     padding: 10px;
     margin-top: 40px;
+    cursor: pointer;
 }

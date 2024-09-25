@@ -1,8 +1,71 @@
-.loginContainer {
+*, html {
+  margin:0;
+  padding:0;  
+}
+
+.paige-container-loginpage{
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #d8d7d7;
+  display: grid;
+  grid-template-columns: repeat(12, 80px);
+  column-gap: 20px;
   height: 100vh;
-  width: 100%;
-  margin-top: 80px;
+  justify-content: center;
+}
+.paige-container-grid-loginpage{
+  grid-column: 1/13;
+}
+.login-section{
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
+  padding: 40px;
+  margin-top: 100px;
+  border: 2px solid black;
+  box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.101);
+  border-radius: 10px;
+}
+.login-container {
+  display: flex;
   flex-direction: column;
+}
+.login-image{
+  height: 300px;
+  width: auto;
+  border-radius: 10px;
+}
+.character-field{
+  font-weight: bold;
+  color: rgb(62, 103, 181);
+}
+.login-button{
+  padding: 10px;
+  width:  400px;
+  border-radius: 5px ;
+  background-color: rgb(62, 103, 181);
+  color: aliceblue;
+  cursor: pointer;
+}
+.input-field-loginpaige{
+  width:  380px;
+  border-radius: 5px;
+  padding: 10px;
+}
+.input-field-loginpaige:focus{
+  background-color: rgb(233, 230, 158);
+}
+.input-field-loginpaige[type="email"], 
+.input-field-loginpaige[type="password"]{
+    font-size: large;
+}
+.heading, .heading-2{
+  margin-top: 25px;
+  margin-bottom: 25px;
+  color: rgb(13, 77, 195);
+}
+.register-link:hover {
+  color: rgb(214, 184, 12);
+  background-color: transparent;
+  text-decoration: underline;
 }

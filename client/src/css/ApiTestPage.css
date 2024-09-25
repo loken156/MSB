@@ -5,8 +5,5 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-}
-
-pre {
-  color: #cfcdca;
+  background-color: #d8d7d7;
 }

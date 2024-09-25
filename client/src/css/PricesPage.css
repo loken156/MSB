@@ -36,7 +36,9 @@
 .hero-section-pricepaige h1, .hero-section-pricepaige h2, .hero-section-pricepaige .hero-button-pricepaige{
     margin-bottom: 20px; 
 }
-
+.hero-button-pricepaige{
+    cursor: pointer;
+}
 /*------------------------------------------------------------*/
 
 
