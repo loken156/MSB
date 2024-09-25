@@ -1,0 +1,85 @@
+.payment_page {
+    padding: 20px;
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.progress_circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #000033;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.active .progress_circle {
+    background-color: #000033;
+    color: white;
+}
+
+.line {
+    width: 100px;
+    height: 2px;
+    background-color: #ccc;
+}
+
+.active .line {
+    background-color: #000033;
+}
+
+.form_section {
+    margin-top: 30px;
+}
+
+.form_group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.form_group label {
+    margin-bottom: 5px;
+    color: #000033;
+}
+
+.form_group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.short_input {
+    width: 48%;
+}
+
+.pay_btn {
+    background-color: #000033;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.pay_btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

@@ -30,6 +30,10 @@ const Navbar = () => {
         <li><Link to="/services">Our Services</Link></li>
         <li><Link to="/faq">FAQ</Link></li>
         <li><Link to="/testing-apis">API Test</Link></li>
+        <li><Link to="/shipping">Shipping</Link></li>
+        <li><Link to="/payment">Payment</Link></li>
+
+
         {isAdmin() && <li><Link to="/admin">Admin</Link></li>}
         <li>
           {isAuthenticated() ? (
