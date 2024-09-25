@@ -1,0 +1,64 @@
+*, html {
+    margin:0;
+    padding:0;  
+}
+  
+.paige-container-registerpage{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #d8d7d7;
+    display: grid;
+    grid-template-columns: repeat(12, 80px);
+    column-gap: 20px;
+    justify-content: center;
+}
+.paige-container-grid-registerpage{
+    grid-column: 1/13;
+}
+.register-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.101);
+    border-radius: 10px;
+    padding: 40px;
+}
+.register-form{
+    color: rgb(62, 103, 181);
+}
+.form-group{
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.heading-registerpage{
+    margin-bottom: 20px;
+}
+.register-image{
+    border-radius: 10px;
+}
+.register-button{
+    background-color: rgb(62, 103, 181);
+    color: aliceblue;
+    font-weight: bold;
+    width: 400px;
+    height: 35px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.input-field-registerpage{
+    width: 380px;
+    border-radius: 5px;
+    padding: 10px;
+}
+.input-field-registerpage:focus{
+    background-color: rgb(233, 230, 158);
+}
+.input-field-registerpage[type="text"],
+.input-field-registerpage[type="email"], 
+.input-field-registerpage[type="password"],
+.input-field-registerpage[type="tel"]{
+    font-size: large;
+}
