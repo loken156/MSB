@@ -60,6 +60,13 @@ namespace Infrastructure.Database
                 .HasOne(w => w.Address) // Warehouse has one Address
                 .WithMany() // Address can have many Warehouses (or you can leave this out if no inverse navigation property)
                 .HasForeignKey(w => w.AddressId);// Foreign key in WarehouseModel
+            
+            // Configure Employee to Role relationship
+            modelBuilder.Entity<EmployeeModel>()
+                .HasMany(e => e.Roles) // Employee has many roles
+                .WithMany() // A role can have many employees
+                .UsingEntity(j => j.ToTable("EmployeeRoles")); // Name the join table "EmployeeRoles"
+
 
             // DatabaseSeeder.Seed(modelBuilder); // Uncomment this line to seed the database with mock data
 
