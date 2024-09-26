@@ -3,6 +3,7 @@ using Domain.Models.Admin;
 using Domain.Models.Box;
 using Domain.Models.Car;
 using Domain.Models.Employee;
+using Domain.Models.BoxType;
 using Domain.Models.Order;
 using Domain.Models.Shelf;
 using Domain.Models.Warehouse;
@@ -28,6 +29,8 @@ namespace Infrastructure.Database
         public virtual DbSet<ShelfModel> Shelves { get; set; }
         public virtual DbSet<BoxModel> Boxes { get; set; }
         public DbSet<AdminModel> Admins { get; set; }
+        
+        public DbSet<BoxTypeModel> BoxTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -70,7 +73,11 @@ namespace Infrastructure.Database
 
             // DatabaseSeeder.Seed(modelBuilder); // Uncomment this line to seed the database with mock data
 
-            
+            modelBuilder.Entity<BoxTypeModel>()
+                .HasMany(bt => bt.Boxes)
+                .WithOne(b => b.BoxType) // Link back to BoxType
+                .HasForeignKey(b => b.BoxTypeId) // Use BoxTypeId as the foreign key
+                .OnDelete(DeleteBehavior.Restrict); // Optional: prevent cascade delete
         }
     }
 }

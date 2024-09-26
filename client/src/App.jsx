@@ -7,9 +7,13 @@ import Services from './pages/ServicesPage';
 import FAQ from './pages/FAQPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ShippingPage from './pages/ShippingPage';
+import PaymentPage from './pages/PaymentPage';
 import MyAccountPage from './pages/MyAccountPage';
 import AdminPage from './pages/AdminPage';
 import ApiTestPage from './pages/ApiTestPage';
+import BoxDateSelectionPage from "./pages/BoxDateSelectionPage";
+import ContactUsPage from "./pages/ContactUsPage";
 import { jwtDecode } from 'jwt-decode';
 import './css/App.css';
 
@@ -45,7 +49,11 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/shipping" element={<ShippingPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/testing-apis" element={<ApiTestPage />} />
+        <Route path="/box-date-selection-page" element={<BoxDateSelectionPage />} />
+        <Route path="/Contact-Us" element={<ContactUsPage/>} />
 
         <Route
           path="/my-account"

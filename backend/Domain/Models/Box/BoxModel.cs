@@ -1,4 +1,5 @@
-﻿using Domain.Models.Order;
+﻿using Domain.Models.BoxType;
+using Domain.Models.Order;
 using Domain.Models.Shelf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,18 +25,15 @@ namespace Domain.Models.Box
         public Guid OrderId { get; set; }
         public virtual OrderModel Order { get; set; }
 
-        public string Size { get; set; }
+        // Add the Size property back to the BoxModel
+        public string Size { get; set; } = string.Empty; // Size of the box
 
         [ForeignKey("ShelfId")]
         public Guid ShelfId { get; set; }
-
         public virtual ShelfModel Shelf { get; set; }
-    }
-    public enum BoxSize
-    {
-        Small,
-        Medium,
-        Large
-    }
 
+        // Foreign key to BoxType
+        public int BoxTypeId { get; set; }
+        public virtual BoxTypeModel BoxType { get; set; }  // Navigation property to BoxType
+    }
 }

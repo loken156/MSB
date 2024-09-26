@@ -122,6 +122,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<int>("BoxTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -152,11 +155,39 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("BoxId");
 
+                    b.HasIndex("BoxTypeId");
+
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ShelfId");
 
                     b.ToTable("Boxes");
+                });
+
+            modelBuilder.Entity("Domain.Models.BoxType.BoxTypeModel", b =>
+                {
+                    b.Property<int>("BoxTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("BoxTypeId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.HasKey("BoxTypeId");
+
+                    b.ToTable("BoxTypes");
                 });
 
             modelBuilder.Entity("Domain.Models.Car.CarModel", b =>
@@ -581,6 +612,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Box.BoxModel", b =>
                 {
+                    b.HasOne("Domain.Models.BoxType.BoxTypeModel", "BoxType")
+                        .WithMany("Boxes")
+                        .HasForeignKey("BoxTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Domain.Models.Order.OrderModel", "Order")
                         .WithMany("Boxes")
                         .HasForeignKey("OrderId")
@@ -591,6 +628,8 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("ShelfId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("BoxType");
 
                     b.Navigation("Order");
 
@@ -719,6 +758,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Addresses");
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Domain.Models.BoxType.BoxTypeModel", b =>
+                {
+                    b.Navigation("Boxes");
                 });
 
             modelBuilder.Entity("Domain.Models.Employee.EmployeeModel", b =>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -20,6 +22,7 @@ nav {
   background-color: #f0f0f0;
   padding: 10px;
   position: fixed;
+  z-index: 2;
   top: 0;
   width: 100%;
   display: flex;
@@ -56,16 +59,22 @@ nav a:hover {
   height: calc(100vh - 60px);
 }
 
-/*h1 {
-  color: #cfcdca;
-  font-size: 3.2em;
+body {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  font-weight: 700;
+  color: #000228;
 }
 
 h2 {
-  color: #cfcdca;
-  font-size: 28px;
+  font-weight: 400;
+  color: #000228;
 }
 
 p {
-  color: #cfcdca;
+  font-weight: 300;
+  color: #000228;
 }
