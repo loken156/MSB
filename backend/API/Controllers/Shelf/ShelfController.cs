@@ -1,6 +1,8 @@
-﻿using Application.Commands.Shelf.AddShelf;
+﻿using Application.Commands.Box.AddBoxToShelf;
+using Application.Commands.Shelf.AddShelf;
 using Application.Commands.Shelf.DeleteShelf;
 using Application.Commands.Shelf.UpdateShelf;
+using Application.Dto.Box;
 using Application.Dto.Shelf;
 using Application.Queries.Shelf.GetAll;
 using Application.Queries.Shelf.GetByID;
@@ -64,6 +66,22 @@ namespace API.Controllers.Shelf
             }
         }
 
+        [HttpPost("AddBoxToShelf")]
+        public async Task<IActionResult> AddBoxToShelf([FromBody] AddBoxToShelfCommand command)
+        {
+            try
+            {
+                var box = await _mediator.Send(command);
+                return Ok(box);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding box to shelf");
+                return StatusCode(500, "An error occurred while adding the box to the shelf");
+            }
+        }
+
+
         // Endpoint to get all shelves
         [HttpGet]
         [Route("GetAllShelves")]
@@ -77,8 +95,15 @@ namespace API.Controllers.Shelf
             var shelfDtos = shelves.Select(shelf => new ShelfDto
             {
                 ShelfId = shelf.ShelfId,
-                ShelfRow = shelf.ShelfRow,
+                ShelfRows = shelf.ShelfRows,
                 ShelfColumn = shelf.ShelfColumn,
+                Section = shelf.Section,
+                LargeBoxCapacity = shelf.LargeBoxCapacity,
+                MediumBoxCapacity = shelf.MediumBoxCapacity,
+                SmallBoxCapacity = shelf.SmallBoxCapacity,
+                AvailableLargeSlots = shelf.AvailableLargeSlots,
+                AvailableMediumSlots = shelf.AvailableMediumSlots,
+                AvailableSmallSlots = shelf.AvailableSmallSlots,
                 Occupancy = shelf.Occupancy,
                 WarehouseId = shelf.WarehouseId
             });
@@ -102,10 +127,23 @@ namespace API.Controllers.Shelf
             var shelfDto = new ShelfDto
             {
                 ShelfId = shelf.ShelfId,
-                ShelfRow = shelf.ShelfRow,
+                ShelfRows = shelf.ShelfRows,
                 ShelfColumn = shelf.ShelfColumn,
+                Section = shelf.Section,
+                LargeBoxCapacity = shelf.LargeBoxCapacity,
+                MediumBoxCapacity = shelf.MediumBoxCapacity,
+                SmallBoxCapacity = shelf.SmallBoxCapacity,
+                AvailableLargeSlots = shelf.AvailableLargeSlots,
+                AvailableMediumSlots = shelf.AvailableMediumSlots,
+                AvailableSmallSlots = shelf.AvailableSmallSlots,
                 Occupancy = shelf.Occupancy,
-                WarehouseId = shelf.WarehouseId
+                WarehouseId = shelf.WarehouseId,
+                Boxes = shelf.Boxes.Select(b => new BoxDto
+                {
+                    BoxId = b.BoxId,
+                    BoxName = b.BoxName,
+                    Size = b.Size
+                }).ToList()
             };
             return Ok(shelfDto);
         }

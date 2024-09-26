@@ -43,9 +43,11 @@ namespace Infrastructure.Repositories.ShelfRepo
             return await _msbDatabase.Shelves.ToListAsync();
         }
 
-        public async Task<ShelfModel> GetShelfByIdAsync(Guid shelfId)
+        public async Task<ShelfModel> GetShelfWithBoxesAsync(Guid shelfId)
         {
-            return await _msbDatabase.Shelves.FindAsync(shelfId);
+            return await _msbDatabase.Shelves
+                .Include(s => s.Boxes)  // Include the related boxes
+                .FirstOrDefaultAsync(s => s.ShelfId == shelfId);
         }
 
         public async Task<ShelfModel> UpdateShelfAsync(ShelfModel shelfToUpdate)

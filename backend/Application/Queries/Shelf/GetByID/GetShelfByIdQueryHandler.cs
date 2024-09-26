@@ -11,13 +11,21 @@ namespace Application.Queries.Shelf.GetByID
     public class GetShelfByIdQueryHandler : IRequestHandler<GetShelfByIdQuery, ShelfModel>
     {
         private readonly IShelfRepository _shelfRepository;
+
         public GetShelfByIdQueryHandler(IShelfRepository shelfRepository)
         {
             _shelfRepository = shelfRepository;
         }
+
         public async Task<ShelfModel> Handle(GetShelfByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _shelfRepository.GetShelfByIdAsync(request.ShelfId);
+            var shelf = await _shelfRepository.GetShelfWithBoxesAsync(request.ShelfId);
+            if (shelf == null)
+            {
+                throw new KeyNotFoundException($"Shelf with ID {request.ShelfId} was not found.");
+            }
+            return shelf;
         }
     }
+
 }

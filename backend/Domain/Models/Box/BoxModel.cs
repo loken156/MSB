@@ -24,11 +24,18 @@ namespace Domain.Models.Box
         public Guid OrderId { get; set; }
         public virtual OrderModel Order { get; set; }
 
-        public string Size { get; set; } = string.Empty;
+        public string Size { get; set; }
 
         [ForeignKey("ShelfId")]
         public Guid ShelfId { get; set; }
 
         public virtual ShelfModel Shelf { get; set; }
     }
+    public enum BoxSize
+    {
+        Small,
+        Medium,
+        Large
+    }
+
 }
