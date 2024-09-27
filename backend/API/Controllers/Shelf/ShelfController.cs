@@ -13,18 +13,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Shelf
 {
-    // Define the route and make this a controller for handling API requests related to shelves
     [Route("api/[controller]")]
     [ApiController]
     public class ShelfController : ControllerBase
     {
-        // Dependencies injected via constructor
         private readonly IMediator _mediator;
         private readonly ILogger<ShelfController> _logger;
         private readonly ShelfValidations _shelfValidations;
         private readonly IMapper _mapper;
 
-        // Constructor to initialize the dependencies
         public ShelfController(IMediator mediator, ILogger<ShelfController> logger, ShelfValidations shelfValidations, IMapper mapper)
         {
             _mediator = mediator;
@@ -39,7 +36,6 @@ namespace API.Controllers.Shelf
         {
             _logger.LogInformation("Adding a new shelf with command: {Command}", command);
 
-            // Validate the command using FluentValidation
             var validationResult = await _shelfValidations.ValidateAsync(command.NewShelf);
             if (!validationResult.IsValid)
             {
@@ -49,10 +45,7 @@ namespace API.Controllers.Shelf
 
             try
             {
-                // Send the AddShelfCommand using MediatR
                 var shelf = await _mediator.Send(command);
-
-                // Use AutoMapper to map ShelfModel to ShelfDto
                 var shelfDto = _mapper.Map<ShelfDto>(shelf);
 
                 _logger.LogInformation("Shelf added successfully: {ShelfId}", shelfDto.ShelfId);
@@ -60,12 +53,12 @@ namespace API.Controllers.Shelf
             }
             catch (Exception ex)
             {
-                // Log error and return a server error status
                 _logger.LogError(ex, "Error adding shelf with command: {Command}", command);
                 return StatusCode(500, "An error occurred while adding the shelf");
             }
         }
 
+        // Endpoint to add a box to a shelf
         [HttpPost("AddBoxToShelf")]
         public async Task<IActionResult> AddBoxToShelf([FromBody] AddBoxToShelfCommand command)
         {
@@ -81,17 +74,13 @@ namespace API.Controllers.Shelf
             }
         }
 
-
         // Endpoint to get all shelves
-        [HttpGet]
-        [Route("GetAllShelves")]
+        [HttpGet("GetAllShelves")]
         public async Task<ActionResult<IEnumerable<ShelfDto>>> GetAllShelves()
         {
-            // Create and send the GetAllShelvesQuery using MediatR
             var query = new GetAllShelvesQuery();
             var shelves = await _mediator.Send(query);
 
-            // Map each ShelfModel to ShelfDto
             var shelfDtos = shelves.Select(shelf => new ShelfDto
             {
                 ShelfId = shelf.ShelfId,
@@ -106,7 +95,8 @@ namespace API.Controllers.Shelf
                 AvailableSmallSlots = shelf.AvailableSmallSlots,
                 Occupancy = shelf.Occupancy,
                 WarehouseId = shelf.WarehouseId
-            });
+            }).ToList();
+
             return Ok(shelfDtos);
         }
 
@@ -114,7 +104,6 @@ namespace API.Controllers.Shelf
         [HttpGet("GetShelfBy{id}")]
         public async Task<ActionResult<ShelfDto>> GetShelfById(Guid id)
         {
-            // Create and send the GetShelfByIdQuery using MediatR
             var query = new GetShelfByIdQuery(id);
             var shelf = await _mediator.Send(query);
 
@@ -123,7 +112,6 @@ namespace API.Controllers.Shelf
                 return NotFound();
             }
 
-            // Map the ShelfModel to ShelfDto
             var shelfDto = new ShelfDto
             {
                 ShelfId = shelf.ShelfId,
@@ -141,10 +129,11 @@ namespace API.Controllers.Shelf
                 Boxes = shelf.Boxes.Select(b => new BoxDto
                 {
                     BoxId = b.BoxId,
-                    BoxName = b.BoxName,
-                    Size = b.Size
+                    Type = b.Type,   // Assuming 'Type' represents the box type
+                    Size = b.BoxType?.Size ?? "Unknown" // Use the BoxType's size or fallback to "Unknown" if null
                 }).ToList()
             };
+
             return Ok(shelfDto);
         }
 
@@ -157,7 +146,6 @@ namespace API.Controllers.Shelf
                 return BadRequest();
             }
 
-            // Create and send the UpdateShelfCommand using MediatR
             var command = new UpdateShelfCommand(shelfDto);
             var updatedShelf = await _mediator.Send(command);
 
@@ -168,7 +156,6 @@ namespace API.Controllers.Shelf
         [HttpDelete("DeleteShelfBy{id}")]
         public async Task<IActionResult> DeleteShelf(Guid id)
         {
-            // Create and send the DeleteShelfCommand using MediatR
             var command = new DeleteShelfCommand(id);
             await _mediator.Send(command);
 

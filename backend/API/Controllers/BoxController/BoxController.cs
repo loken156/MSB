@@ -2,6 +2,7 @@
 using Application.Commands.Box.DeleteBox;
 using Application.Commands.Box.UpdateBox;
 using Application.Dto.Box;
+using Application.Dto.BoxType;
 using Application.Queries.Box.GetAll;
 using Application.Queries.Box.GetByID;
 using AutoMapper;
@@ -93,7 +94,7 @@ namespace API.Controllers.BoxController
                     ImageUrl = box.ImageUrl,
                     UserNotes = box.UserNotes,
                     OrderId = box.OrderId,
-                    Size = box.Size,
+                    BoxType = _mapper.Map<BoxTypeDto>(box.BoxType) // Use the BoxType for Size
                 }).ToList();
 
                 _logger.LogInformation("Retrieved {Count} boxes successfully", boxDtos.Count);
@@ -130,7 +131,8 @@ namespace API.Controllers.BoxController
                     Stock = box.Stock,
                     ImageUrl = box.ImageUrl,
                     UserNotes = box.UserNotes,
-                    Size = box.Size,
+                    OrderId = box.OrderId,
+                    BoxType = _mapper.Map<BoxTypeDto>(box.BoxType) // Map the BoxType
                 };
 
                 _logger.LogInformation("Box with ID {BoxId} retrieved successfully", id);
@@ -146,7 +148,6 @@ namespace API.Controllers.BoxController
         [HttpPut("UpdateBoxBy{id}")]
         public async Task<IActionResult> UpdateBox(Guid id, BoxDto boxDto)
         {
-            // Inject ILogger via constructor or method injection to use it here
             _logger.LogInformation("Starting update of box with ID {BoxId}", id);
 
             try
@@ -191,7 +192,7 @@ namespace API.Controllers.BoxController
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while deleting the box with ID {BoxId}", id);
-                return StatusCode(500, "An error occurred whíle deleting the box. Please try again later.");
+                return StatusCode(500, "An error occurred while deleting the box. Please try again later.");
             }
         }
     }
