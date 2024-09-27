@@ -1,9 +1,4 @@
-﻿using Application.Dto.BoxType;
-using Domain.Models.Order;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Application.Dto.Box
+﻿namespace Application.Dto.Box
 {
     public class BoxDto
     {
@@ -13,11 +8,11 @@ namespace Application.Dto.Box
         public int Stock { get; set; }
         public string ImageUrl { get; set; }
         public string? UserNotes { get; set; }
-        public Guid ShelfId { get; set; }
-        public Guid OrderId { get; set; }
+        public Guid? OrderId { get; set; } // Optional OrderId for linking the box to an order
+        public int BoxTypeId { get; set; }  // Only pass BoxTypeId, not the full BoxType object
 
-        // Reference to BoxTypeDto for size
-        public BoxTypeDto BoxType { get; set; } // This will contain the Size property
-        public string Size { get; set; }
+        // Size is derived from BoxType, no need to pass it from the client.
+        // It will be fetched automatically from the database when the BoxType is retrieved.
+        public string Size { get; set; } 
     }
 }

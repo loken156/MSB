@@ -20,10 +20,9 @@ namespace Application.Validators.BoxValidator
             RuleFor(box => box.Type)
                 .NotEmpty().WithMessage("Box Type needs to be specified");
 
-            RuleFor(box => box.BoxType.Size)  // Accessing Size through BoxType
-                .NotEmpty().WithMessage("Box Size needs to be specified")
-                .MustAsync(async (size, cancellation) => await BeAValidSize(size))
-                .WithMessage("Box Size is invalid. Must be a valid size from the BoxType table.");
+            RuleFor(box => box.BoxId).NotEmpty();
+            RuleFor(box => box.Type).NotEmpty().WithMessage("Type is required");
+            RuleFor(box => box.BoxTypeId).NotEmpty().WithMessage("BoxTypeId is required");
 
         }
 

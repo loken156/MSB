@@ -33,7 +33,7 @@ namespace Application.Commands.Box.UpdateBox
             boxToUpdate.UserNotes = request.Box.UserNotes;
 
             // Update BoxTypeId (the BoxType and Size will be handled via relationships in the domain model)
-            boxToUpdate.BoxTypeId = request.Box.BoxType.BoxTypeId;
+            boxToUpdate.BoxTypeId = request.Box.BoxTypeId;
 
             // Save the updated box
             return await _boxRepository.UpdateBoxAsync(boxToUpdate);

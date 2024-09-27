@@ -3,8 +3,10 @@ using Application.Commands.Box.DeleteBox;
 using Application.Commands.Box.UpdateBox;
 using Application.Dto.Box;
 using Application.Dto.BoxType;
+using Application.Dto.Order;
 using Application.Queries.Box.GetAll;
 using Application.Queries.Box.GetByID;
+using Application.Queries.BoxType.GetByID;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
@@ -94,7 +96,8 @@ namespace API.Controllers.BoxController
                     ImageUrl = box.ImageUrl,
                     UserNotes = box.UserNotes,
                     OrderId = box.OrderId,
-                    BoxType = _mapper.Map<BoxTypeDto>(box.BoxType) // Use the BoxType for Size
+                    BoxTypeId = box.BoxTypeId,  // Only return the BoxTypeId
+                    Size = box.BoxType?.Size  // Optionally return the size based on BoxType
                 }).ToList();
 
                 _logger.LogInformation("Retrieved {Count} boxes successfully", boxDtos.Count);
@@ -123,6 +126,15 @@ namespace API.Controllers.BoxController
                     return NotFound($"No box found with ID {id}.");
                 }
 
+                // Fetch the BoxType using the BoxTypeId
+                var boxType = await _mediator.Send(new GetBoxTypeByIdQuery(box.BoxTypeId));
+                if (boxType == null)
+                {
+                    _logger.LogWarning("No BoxType found with ID {BoxTypeId}", box.BoxTypeId);
+                    return NotFound($"No BoxType found with ID {box.BoxTypeId}.");
+                }
+
+                // Map the box to BoxDto and include the size from BoxType
                 var boxDto = new BoxDto
                 {
                     BoxId = box.BoxId,
@@ -132,7 +144,8 @@ namespace API.Controllers.BoxController
                     ImageUrl = box.ImageUrl,
                     UserNotes = box.UserNotes,
                     OrderId = box.OrderId,
-                    BoxType = _mapper.Map<BoxTypeDto>(box.BoxType) // Map the BoxType
+                    BoxTypeId = box.BoxTypeId,  // Use the BoxTypeId
+                    Size = boxType.Size          // Get the Size from the BoxType
                 };
 
                 _logger.LogInformation("Box with ID {BoxId} retrieved successfully", id);
@@ -144,6 +157,7 @@ namespace API.Controllers.BoxController
                 return StatusCode(500, "An error occurred while retrieving the box. Please try again later.");
             }
         }
+
 
         [HttpPut("UpdateBoxBy{id}")]
         public async Task<IActionResult> UpdateBox(Guid id, BoxDto boxDto)
