@@ -28,16 +28,10 @@ namespace Infrastructure.Repositories.BoxRepo
             return box;
         }
 
-        public async Task DeleteBoxAsync(Guid boxId)
+        public async Task DeleteBoxAsync(BoxModel box)
         {
-            var box = await _database.Boxes.FindAsync(boxId);
-            if (box != null)
-            {
-                _database.Boxes.Remove(box);
-                await _database.SaveChangesAsync();
-            }
-
-
+            _database.Boxes.Remove(box);
+            await _database.SaveChangesAsync();  // Save the changes after deletion
         }
 
         public async Task<IEnumerable<BoxModel>> GetAllBoxesAsync()

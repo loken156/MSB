@@ -1,3 +1,4 @@
+using Application.Dto.Box;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Shelf
@@ -20,5 +21,10 @@ namespace Application.Dto.Shelf
         [Required] public string WarehouseName { get; set; }
         public Guid WarehouseId { get; set; }
 
+        // New property for Boxes
+        public List<BoxDto> Boxes { get; set; } = new List<BoxDto>();
+
+        // New property for BoxTypes (optional, if needed)
+        public List<string> BoxTypes { get; set; } = new List<string>();
     }
 }

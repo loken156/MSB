@@ -21,16 +21,19 @@ public class AddBoxToShelfCommandHandler : IRequestHandler<AddBoxToShelfCommand,
         // Get the shelf from the repository
         var shelf = await _shelfRepository.GetShelfWithBoxesAsync(request.ShelfId);
 
-        // Check for available slots
-        if (request.Box.Size == BoxSize.Large && shelf.AvailableLargeSlots > 0)
+        // Access the Box Size through the BoxType reference
+        var boxSize = request.Box.BoxType.Size;
+
+        // Check for available slots based on the box size
+        if (boxSize == "Large" && shelf.AvailableLargeSlots > 0)
         {
             shelf.AvailableLargeSlots--;
         }
-        else if (request.Box.Size == BoxSize.Medium && shelf.AvailableMediumSlots > 0)
+        else if (boxSize == "Medium" && shelf.AvailableMediumSlots > 0)
         {
             shelf.AvailableMediumSlots--;
         }
-        else if (request.Box.Size == BoxSize.Small && shelf.AvailableSmallSlots > 0)
+        else if (boxSize == "Small" && shelf.AvailableSmallSlots > 0)
         {
             shelf.AvailableSmallSlots--;
         }

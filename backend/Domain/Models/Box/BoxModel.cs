@@ -25,15 +25,16 @@ namespace Domain.Models.Box
         public Guid OrderId { get; set; }
         public virtual OrderModel Order { get; set; }
 
-        // Add the Size property back to the BoxModel
-        public string Size { get; set; } = string.Empty; // Size of the box
+        // The Size property can be inferred from the BoxType, but if necessary, it can remain
+        //public string Size { get; set; } = string.Empty;
 
         [ForeignKey("ShelfId")]
         public Guid ShelfId { get; set; }
         public virtual ShelfModel Shelf { get; set; }
 
-        // Foreign key to BoxType
+        // Foreign key to BoxTypeModel
+        [ForeignKey("BoxTypeId")]
         public int BoxTypeId { get; set; }
-        public virtual BoxTypeModel BoxType { get; set; }  // Navigation property to BoxType
+        public virtual BoxTypeModel BoxType { get; set; }  // Navigation property to BoxTypeModel
     }
 }

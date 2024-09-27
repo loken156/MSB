@@ -57,5 +57,13 @@ namespace Infrastructure.Repositories.BoxTypeRepo
         {
             return await _context.BoxTypes.FindAsync(boxTypeId);
         }
+        
+        public async Task<List<string>> GetAllBoxSizesAsync()
+        {
+            return await _context.BoxTypes
+                .Select(bt => bt.Size)   // Select the size property
+                .Distinct()              // Ensure distinct sizes
+                .ToListAsync();          // Convert to a list
+        }
     }
 }

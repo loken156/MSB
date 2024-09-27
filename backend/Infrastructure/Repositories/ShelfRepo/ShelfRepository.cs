@@ -40,15 +40,21 @@ namespace Infrastructure.Repositories.ShelfRepo
 
         public async Task<IEnumerable<ShelfModel>> GetAllAsync()
         {
-            return await _msbDatabase.Shelves.ToListAsync();
+            return await _msbDatabase.Shelves
+                .Include(s => s.Boxes) // Load related Boxes
+                .ThenInclude(b => b.BoxType) // Load BoxType for each Box
+                .ToListAsync();
         }
 
         public async Task<ShelfModel> GetShelfWithBoxesAsync(Guid shelfId)
         {
             return await _msbDatabase.Shelves
-                .Include(s => s.Boxes)  // Include the related boxes
-                .FirstOrDefaultAsync(s => s.ShelfId == shelfId);
+                .Include(s => s.Boxes)  // Load related Boxes
+                .ThenInclude(b => b.BoxType) // Load BoxType for each Box
+                .FirstOrDefaultAsync(s => s.ShelfId == shelfId)  
+                   ?? throw new InvalidOperationException("Shelf not found");
         }
+
 
         public async Task<ShelfModel> UpdateShelfAsync(ShelfModel shelfToUpdate)
         {
