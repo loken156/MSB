@@ -4,6 +4,7 @@ using Application.Services.Employee;
 using Infrastructure;
 using Infrastructure.Database;
 using Infrastructure.Entities;
+using Infrastructure.Repositories.BoxTypeRepo;
 using Infrastructure.Services.Caching;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -72,6 +73,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddApplication();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddScoped<IBoxTypeRepository, BoxTypeRepository>();
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -98,6 +100,8 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.Http,
         Scheme = "bearer"
     });
+
+
 
     // Telling Swaggeat this API requires a Bearer token
     // so you don't need to add "Bearer" to each endpoint

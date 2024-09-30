@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\BoxType\" />
     <Folder Include="Commands\Order\AddOrder\" />
     <Folder Include="Commands\Order\DeleteOrder\" />
     <Folder Include="Commands\Order\UpdateOrder\" />

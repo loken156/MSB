@@ -4,6 +4,7 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MSB_Database))]
-    partial class MSB_DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240924075151_UpdateBoxModelSizeRelation")]
+    partial class UpdateBoxModelSizeRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -135,10 +138,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("ShelfId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
@@ -244,6 +243,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -359,21 +362,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AddressId");
 
                     b.ToTable("Warehouses");
-                });
-
-            modelBuilder.Entity("EmployeeModelIdentityRole", b =>
-                {
-                    b.Property<string>("EmployeeModelId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("RolesId")
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("EmployeeModelId", "RolesId");
-
-                    b.HasIndex("RolesId");
-
-                    b.ToTable("EmployeeRoles", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.ApplicationUser", b =>
@@ -672,21 +660,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("EmployeeModelIdentityRole", b =>
-                {
-                    b.HasOne("Domain.Models.Employee.EmployeeModel", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeeModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
