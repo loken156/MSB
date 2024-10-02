@@ -44,32 +44,16 @@ namespace Application.Commands.Box.AddBoxToShelf
             // Fetch the shelf from the repository using the ShelfId from the command
             var shelf = await _shelfRepository.GetShelfWithBoxesAsync(request.ShelfId);
 
-            // Access the Box Size through the BoxType reference
-            var boxSize = boxToUpdate.BoxType.Size;
-
-            // Check for available slots based on the box size
-            if (boxSize == "Large" && shelf.AvailableLargeSlots > 0)
+            if (shelf == null)
             {
-                shelf.AvailableLargeSlots--;
-            }
-            else if (boxSize == "Medium" && shelf.AvailableMediumSlots > 0)
-            {
-                shelf.AvailableMediumSlots--;
-            }
-            else if (boxSize == "Small" && shelf.AvailableSmallSlots > 0)
-            {
-                shelf.AvailableSmallSlots--;
-            }
-            else
-            {
-                throw new InvalidOperationException("No available slots for this box size.");
+                throw new KeyNotFoundException("Shelf not found.");
             }
 
-            // Assign the ShelfId to the box
+            // Assign the ShelfId to the box and add the box to the shelf
             boxToUpdate.ShelfId = request.ShelfId;
             shelf.Boxes.Add(boxToUpdate);
 
-            // Update the shelf and save the box
+            // Let the repository handle the logic for updating available slots when updating the shelf
             await _shelfRepository.UpdateShelfAsync(shelf);
             await _boxRepository.UpdateBoxAsync(boxToUpdate);
 
