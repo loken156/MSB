@@ -4,6 +4,7 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MSB_Database))]
-    partial class MSB_DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20241001095642_FixWarehouseForeignKey")]
+    partial class FixWarehouseForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,6 +144,10 @@ namespace Infrastructure.Migrations
                     b.Property<int>("TimesUsed")
                         .HasColumnType("int");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("UserNotes")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -179,10 +186,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("BoxTypeId");
 
@@ -302,8 +305,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("WarehouseId")
-                        .IsRequired()
+                    b.Property<Guid>("WarehouseId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("OrderId");

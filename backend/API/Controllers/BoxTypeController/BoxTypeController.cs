@@ -84,6 +84,7 @@ namespace API.Controllers.BoxTypeController
                 {
                     BoxTypeId = boxtype.BoxTypeId,
                     Size = boxtype.Size,
+                    Type = boxtype.Type,
                     Stock = boxtype.Stock,
                     Description = boxtype.Description
                 }).ToList();
@@ -118,6 +119,7 @@ namespace API.Controllers.BoxTypeController
                 {
                     BoxTypeId = boxtype.BoxTypeId,
                     Size = boxtype.Size,
+                    Type = boxtype.Type,
                     Stock = boxtype.Stock,
                     Description = boxtype.Description
                 };

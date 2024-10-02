@@ -18,9 +18,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
 
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Adds logging to the console.
 builder.Logging.AddDebug(); // Adds logging to the debug window.
+builder.Services.AddLogging(); // Ensure logging is added to the service collection
 
 builder.Services.AddMemoryCache(); // enabling memory cache
 builder.Services.AddScoped<ICacheService, MemoryCacheService>();

@@ -23,7 +23,7 @@ namespace Application.Commands.Shelf.UpdateShelf
             ShelfModel shelfToUpdate = new ShelfModel
             {
                 ShelfId = request.UpdatedShelf.ShelfId,
-                ShelfRow = request.UpdatedShelf.ShelfRow,
+                ShelfRows = request.UpdatedShelf.ShelfRows,
                 ShelfColumn = request.UpdatedShelf.ShelfColumn,
                 Occupancy = request.UpdatedShelf.Occupancy,
                 WarehouseId = request.UpdatedShelf.WarehouseId,

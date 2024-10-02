@@ -25,7 +25,7 @@ namespace Tests.Application.Shelf.QueryHandlers
             var shelf = new ShelfModel
             {
                 ShelfId = shelfId,
-                ShelfRow = 1,
+                ShelfRows = 1,
                 ShelfColumn = 1,
                 Occupancy = false,
                 WarehouseId = Guid.NewGuid()
@@ -37,7 +37,7 @@ namespace Tests.Application.Shelf.QueryHandlers
 
             // Assert
             Assert.Equal(shelf.ShelfId, result.ShelfId);
-            Assert.Equal(shelf.ShelfRow, result.ShelfRow);
+            Assert.Equal(shelf.ShelfRows, result.ShelfRows);
             Assert.Equal(shelf.ShelfColumn, result.ShelfColumn);
             Assert.Equal(shelf.Occupancy, result.Occupancy);
             Assert.Equal(shelf.WarehouseId, result.WarehouseId);

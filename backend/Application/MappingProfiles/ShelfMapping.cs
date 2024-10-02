@@ -16,7 +16,12 @@ namespace Application.MappingProfiles
     {
         public ShelfMapping()
         {
-            CreateMap<ShelfModel, ShelfDto>().ReverseMap();
+            // Ensure that the ShelfModel to ShelfDto is mapped, including Boxes list.
+            CreateMap<ShelfModel, ShelfDto>()
+                .ForMember(dest => dest.Boxes, opt => opt.MapFrom(src => src.Boxes)) // Map the list of boxes
+                .ReverseMap();
+            
+            // Keep the AddShelfDto mapping as you had it
             CreateMap<ShelfModel, AddShelfDto>().ReverseMap();
         }
 

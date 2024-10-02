@@ -10,5 +10,6 @@ namespace Infrastructure.Repositories.BoxTypeRepo
         Task<BoxTypeModel> UpdateBoxTypeAsync(BoxTypeModel box);
         Task DeleteBoxTypeAsync(int BoxTypeId);
         Task<BoxTypeModel> GetBoxTypeByIdAsync(int boxTypeId);
+        Task<List<string>> GetAllBoxSizesAsync();
     }
 }
