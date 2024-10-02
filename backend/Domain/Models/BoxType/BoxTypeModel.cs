@@ -12,6 +12,8 @@ namespace Domain.Models.BoxType
         [Required]
         [MaxLength(50)]
         public string Size { get; private set; } // Size of the box (immutable)
+        
+        public string Type { get; set; } = string.Empty;  // Type of the box (Cardboard, Plastic, etc.)
 
         [Required]
         public int Stock { get; set; } // Amount (modifiable)

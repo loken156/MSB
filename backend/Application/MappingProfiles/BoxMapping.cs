@@ -16,7 +16,14 @@ namespace Application.MappingProfiles
     {
         public BoxMapping()
         {
-            CreateMap<BoxModel, BoxDto>().ReverseMap();
+            // Map BoxModel to BoxDto and reverse, handling BoxType for Size.
+            CreateMap<BoxModel, BoxDto>()
+                .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.BoxType.Size)) // Map Size from BoxType
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.BoxType.Type)) // Map Type from BoxType
+                .ForMember(dest => dest.BoxTypeId, opt => opt.MapFrom(src => src.BoxTypeId)) // Map BoxTypeId directly
+                .ReverseMap();
+
+            // Map between BoxModel and AddBoxToOrderDto
             CreateMap<BoxModel, AddBoxToOrderDto>().ReverseMap();
         }
     }

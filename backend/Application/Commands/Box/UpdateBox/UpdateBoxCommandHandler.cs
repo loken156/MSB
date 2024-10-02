@@ -26,7 +26,7 @@ namespace Application.Commands.Box.UpdateBox
             }
 
             // Update basic properties
-            boxToUpdate.Type = request.Box.Type;
+            //boxToUpdate.Type = request.Box.Type;
             boxToUpdate.TimesUsed = request.Box.TimesUsed;
             boxToUpdate.Stock = request.Box.Stock;
             boxToUpdate.ImageUrl = request.Box.ImageUrl;

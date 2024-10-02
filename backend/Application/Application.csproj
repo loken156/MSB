@@ -29,7 +29,6 @@
     <Folder Include="Dto\Employee\" />
     <Folder Include="Dto\Item\" />
     <Folder Include="Dto\Car\" />
-    <Folder Include="Dto\Shelf\" />
     <Folder Include="Dto\PaymentMethod\" />
     <Folder Include="Dto\Repair\" />
     <Folder Include="Dto\Transaction\" />

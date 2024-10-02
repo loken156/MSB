@@ -41,8 +41,11 @@ namespace Infrastructure.Repositories.BoxRepo
 
         public async Task<BoxModel> GetBoxByIdAsync(Guid boxId)
         {
-            return await _database.Boxes.FindAsync(boxId);
+            return await _database.Boxes
+                .Include(b => b.BoxType)  // Eager load BoxType
+                .FirstOrDefaultAsync(b => b.BoxId == boxId);
         }
+
 
         public async Task<BoxModel> UpdateBoxAsync(BoxModel box)
         {

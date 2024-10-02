@@ -60,19 +60,31 @@ namespace API.Controllers.Shelf
 
         // Endpoint to add a box to a shelf
         [HttpPost("AddBoxToShelf")]
-        public async Task<IActionResult> AddBoxToShelf([FromBody] AddBoxToShelfCommand command)
+        public async Task<IActionResult> AddBoxToShelf([FromBody] AddBoxToShelfDto dto)
         {
             try
             {
-                var box = await _mediator.Send(command);
-                return Ok(box);
+                // Create the command from the DTO
+                var command = new AddBoxToShelfCommand(dto.BoxId, dto.ShelfId);
+
+                // Send the command to the handler via MediatR
+                var updatedBox = await _mediator.Send(command);
+
+                // Optionally map the returned box to a BoxDto if necessary
+                return Ok(updatedBox);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex, "Validation or logic error while adding box to shelf");
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error adding box to shelf");
+                _logger.LogError(ex, "An error occurred while adding the box to the shelf");
                 return StatusCode(500, "An error occurred while adding the box to the shelf");
             }
         }
+
 
         // Endpoint to get all shelves
         [HttpGet("GetAllShelves")]

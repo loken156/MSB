@@ -1,76 +1,74 @@
-﻿using AutoMapper;
-using Domain.Interfaces;
-using Domain.Models.Label;
+﻿using Application.Dto.Order;
+using AutoMapper;
+using Domain.Models.Box;
 using Domain.Models.Order;
+using Infrastructure.Repositories.BoxRepo;
 using Infrastructure.Repositories.OrderRepo;
-using Infrastructure.Repositories.WarehouseRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-// This class resides in the Application layer and handles the command to add a new order. 
-// It implements the IRequestHandler interface provided by MediatR for processing the command. 
-// The handler interacts with the order repository and the warehouse repository in the Infrastructure layer 
-// to persist the new order entity and retrieve warehouse information, respectively. It utilizes AutoMapper 
-// to map the AddOrderDto to an OrderModel. After creating the order, it generates a new GUID for the OrderId 
-// and adds the order to the database. Additionally, it invokes a label printing service to print a label for 
-// the newly created order. If an error occurs during label printing, it logs the error and rethrows the exception.
-
 namespace Application.Commands.Order.AddOrder
 {
-    public class AddOrderCommandHandler : IRequestHandler<AddOrderCommand, OrderModel>
+    public class AddOrderCommandHandler : IRequestHandler<AddOrderCommand, OrderDto>
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IWarehouseRepository _warehouseRepository;
+        private readonly IBoxRepository _boxRepository; // Add a Box repository to handle the boxes
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
         private readonly ILogger<AddOrderCommandHandler> _logger;
-        private readonly ILabelPrinterService _labelPrinterService;
 
-        public AddOrderCommandHandler(IOrderRepository orderRepository, IWarehouseRepository warehouseRepository, IMapper mapper, IMediator mediator, ILogger<AddOrderCommandHandler> logger, ILabelPrinterService labelPrinterService)
+        public AddOrderCommandHandler(IOrderRepository orderRepository, IBoxRepository boxRepository, IMapper mapper, ILogger<AddOrderCommandHandler> logger)
         {
             _orderRepository = orderRepository;
-            _warehouseRepository = warehouseRepository;
+            _boxRepository = boxRepository; // Initialize the box repository
             _mapper = mapper;
-            _mediator = mediator;
             _logger = logger;
-            _labelPrinterService = labelPrinterService;
         }
 
-        public async Task<OrderModel> Handle(AddOrderCommand request, CancellationToken cancellationToken)
+        public async Task<OrderDto> Handle(AddOrderCommand request, CancellationToken cancellationToken)
         {
-            var warehouse = await _warehouseRepository.GetWarehouseByIdAsync(request.WarehouseId);
-
-            if (warehouse == null)
-            {
-                throw new Exception("Warehouse not found");
-            }
-
-            // Use AutoMapper to map AddOrderDto to OrderModel
-            var orderToCreate = _mapper.Map<OrderModel>(request.NewOrder);
-            orderToCreate.OrderId = Guid.NewGuid(); // Ensure OrderId is set to a new GUID
-
-            var createdOrder = await _orderRepository.AddOrderAsync(orderToCreate);
-
-            // Add label
-            var label = new LabelModel
-            {
-                OrderNumber = createdOrder.OrderNumber.ToString(),
-                OrderDate = createdOrder.OrderDate,
-            };
             try
             {
-                //COMMENTING THIS OUT BECAUSE WE HAVE NO PRINTER
-                //it _labelPrinterService.PrintLabelAsync(label);
+                // Map the AddOrderDto (from request) to the OrderModel (domain model)
+                var orderModel = _mapper.Map<OrderModel>(request.NewOrder);
+
+                // Set the warehouse ID only if it's provided and valid (not empty)
+                if (request.WarehouseId != Guid.Empty)
+                {
+                    orderModel.WarehouseId = request.WarehouseId;
+                }
+                else
+                {
+                    orderModel.WarehouseId = null; // Make WarehouseId nullable if not provided
+                }
+
+                // Check if there are boxes included in the request
+                if (request.NewOrder.Boxes != null && request.NewOrder.Boxes.Count > 0)
+                {
+                    // Map each BoxDto to a BoxModel and associate it with the order
+                    var boxModels = _mapper.Map<List<BoxModel>>(request.NewOrder.Boxes);
+                    
+                    foreach (var box in boxModels)
+                    {
+                        box.OrderId = orderModel.OrderId; // Link the box to the order
+                        await _boxRepository.AddBoxAsync(box); // Persist each box to the repository
+                    }
+
+                    // Associate the boxes with the order
+                    orderModel.Boxes = boxModels;
+                }
+
+                // Add the order to the repository
+                await _orderRepository.AddOrderAsync(orderModel);
+
+                // Map the result back to OrderDto (return type)
+                var orderDto = _mapper.Map<OrderDto>(orderModel);
+                return orderDto;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed to print label for order {createdOrder.OrderId}");
+                _logger.LogError(ex, "Error adding order.");
                 throw;
             }
-
-            return createdOrder;
         }
-
     }
-
 }

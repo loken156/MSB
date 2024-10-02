@@ -18,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
 
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Adds logging to the console.
 builder.Logging.AddDebug(); // Adds logging to the debug window.

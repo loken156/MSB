@@ -1,16 +1,19 @@
-﻿using Domain.Models.Box;
+﻿using Application.Dto.Box;
+using Application.Dto.Shelf;
+using Domain.Models.Box;
 using MediatR;
 
 namespace Application.Commands.Box.AddBoxToShelf;
 
-public class AddBoxToShelfCommand : IRequest<BoxModel>
+public class AddBoxToShelfCommand : IRequest<BoxDto>
 {
-    public AddBoxToShelfCommand(BoxModel box, Guid shelfId)
+    public Guid BoxId { get; set; }  // The ID of the box to be added
+    public Guid ShelfId { get; set; }  // The ID of the shelf where the box will be added
+
+    public AddBoxToShelfCommand(Guid boxId, Guid shelfId)
     {
-        Box = box;
+        BoxId = boxId;
         ShelfId = shelfId;
     }
-
-    public BoxModel Box { get; }
-    public Guid ShelfId { get; }
 }
+

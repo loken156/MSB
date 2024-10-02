@@ -34,5 +34,13 @@ namespace Domain.Models.Shelf
         
         // Optional relationship to BoxTypes (if needed)
         public ICollection<BoxTypeModel> BoxTypes { get; set; } = new List<BoxTypeModel>();
+        
+        // Generate available slots based on capacity
+        public void InitializeAvailableSlots()
+        {
+            AvailableLargeSlots = LargeBoxCapacity;
+            AvailableMediumSlots = MediumBoxCapacity;
+            AvailableSmallSlots = SmallBoxCapacity;
+        }
     }
 }

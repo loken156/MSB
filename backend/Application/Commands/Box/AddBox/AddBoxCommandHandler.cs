@@ -1,79 +1,57 @@
-﻿using Application.Dto.Box;
+﻿using Application.Commands.Box.AddBox;
+using Application.Dto.Box;
 using AutoMapper;
 using Domain.Models.Box;
 using Infrastructure.Repositories.BoxRepo;
 using Infrastructure.Repositories.BoxTypeRepo;
-using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Commands.Box.AddBox
+public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxDto>
 {
-    public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxDto>
+    private readonly IBoxRepository _boxRepository;
+    private readonly IBoxTypeRepository _boxTypeRepository; // Added for BoxType fetching
+    private readonly ILogger<AddBoxCommandHandler> _logger;
+    private readonly IMapper _mapper;
+
+    public AddBoxCommandHandler(IBoxRepository boxRepository, IBoxTypeRepository boxTypeRepository, ILogger<AddBoxCommandHandler> logger, IMapper mapper)
     {
-        private readonly IBoxRepository _boxRepository;
-        private readonly IBoxTypeRepository _boxTypeRepository;
-        private readonly IOrderRepository _orderRepository;
-        private readonly ILogger<AddBoxCommandHandler> _logger;
-        private readonly IMapper _mapper;
+        _boxRepository = boxRepository;
+        _boxTypeRepository = boxTypeRepository;
+        _logger = logger;
+        _mapper = mapper;
+    }
 
-        public AddBoxCommandHandler(
-            IBoxRepository boxRepository, 
-            IBoxTypeRepository boxTypeRepository, 
-            IOrderRepository orderRepository, 
-            ILogger<AddBoxCommandHandler> logger, 
-            IMapper mapper)
+    public async Task<BoxDto> Handle(AddBoxCommand request, CancellationToken cancellationToken)
+    {
+        try
         {
-            _boxRepository = boxRepository;
-            _boxTypeRepository = boxTypeRepository;
-            _orderRepository = orderRepository;
-            _logger = logger;
-            _mapper = mapper;
+            // Fetch BoxType from the repository using BoxTypeId
+            var boxType = await _boxTypeRepository.GetBoxTypeByIdAsync(request.NewBox.BoxTypeId);
+            if (boxType == null)
+            {
+                throw new Exception($"BoxType with ID {request.NewBox.BoxTypeId} not found.");
+            }
+
+            // Map the incoming BoxDto to the domain model (BoxModel)
+            var boxModel = _mapper.Map<BoxModel>(request.NewBox);
+            
+            // Assign the BoxType to the BoxModel (this links BoxType with Size and Type)
+            boxModel.BoxType = boxType;
+
+            // Save the box to the database
+            await _boxRepository.AddBoxAsync(boxModel);
+
+            // Map the result back to BoxDto and include the size and type from BoxType
+            var boxDto = _mapper.Map<BoxDto>(boxModel);
+            boxDto.Size = boxType.Size; // Manually set the Size in BoxDto
+            boxDto.Type = boxType.Type; // Manually set the Type in BoxDto
+            return boxDto;
         }
-
-        public async Task<BoxDto> Handle(AddBoxCommand request, CancellationToken cancellationToken)
+        catch (Exception ex)
         {
-            try
-            {
-                // Fetch the BoxType from the database using BoxTypeId
-                var boxType = await _boxTypeRepository.GetBoxTypeByIdAsync(request.NewBox.BoxTypeId);
-                if (boxType == null)
-                {
-                    throw new Exception($"BoxType with ID {request.NewBox.BoxTypeId} not found.");
-                }
-
-                // Map the incoming BoxDto to the domain model (BoxModel)
-                var boxModel = _mapper.Map<BoxModel>(request.NewBox);
-
-                // Assign the BoxType details from the database
-                boxModel.BoxType = boxType;
-
-                // Optionally link the box to an order if OrderId is provided
-                if (request.NewBox.OrderId.HasValue)
-                {
-                    var order = await _orderRepository.GetOrderByIdAsync(request.NewBox.OrderId.Value);
-                    if (order == null)
-                    {
-                        throw new Exception($"Order with ID {request.NewBox.OrderId} not found.");
-                    }
-
-                    // Add the box to the order and update the order
-                    order.Boxes.Add(boxModel);
-                    await _orderRepository.UpdateOrderAsync(order);
-                }
-
-                // Save the box to the database
-                await _boxRepository.AddBoxAsync(boxModel);
-
-                // Map the result back to BoxDto and return
-                var boxDto = _mapper.Map<BoxDto>(boxModel);
-                return boxDto;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error adding box.");
-                throw;
-            }
+            _logger.LogError(ex, "Error adding box.");
+            throw;
         }
     }
 }
