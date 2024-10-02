@@ -38,9 +38,10 @@ namespace API.Controllers.Order
         private readonly IBoxRepository _boxRepository;
         private readonly DeliveryService _deliveryService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly OrderService _orderService;  // Added OrderService
 
         // Constructor to initialize the dependencies
-        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper, ICacheService cacheService, IOrderRepository repository, IBoxRepository boxRepository, UserManager<ApplicationUser> userManager)
+        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper, ICacheService cacheService, IOrderRepository repository, IBoxRepository boxRepository, UserManager<ApplicationUser> userManager, OrderService orderService)
 
         {
             _mediator = mediator;
@@ -51,18 +52,22 @@ namespace API.Controllers.Order
             _orderRepository = repository;
             _boxRepository = boxRepository;
             _userManager = userManager;
+            _orderService = orderService;
+
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("AddOrder")]
-        public async Task<ActionResult<OrderDto>> AddOrder(AddOrderDto orderDto, [FromQuery] Guid warehouseId)
+        public async Task<ActionResult<OrderDto>> AddOrder(AddOrderDto orderDto)
         {
             try
             {
-                // Create and send the AddOrderCommand using MediatR
-                var command = new AddOrderCommand(orderDto, warehouseId);
-                var order = await _mediator.Send(command);
+                // Map the AddOrderDto to an OrderModel
+                var newOrder = _mapper.Map<OrderModel>(orderDto);
+
+                // Use the OrderService to create the order, including generating the order number
+                var order = await _orderService.CreateOrderAsync(newOrder);
 
                 if (order == null)
                 {

@@ -1,5 +1,6 @@
 using Application;
 using Application.MappingProfiles;
+using Application.Services;
 using Application.Services.Employee;
 using Infrastructure;
 using Infrastructure.Database;
@@ -26,6 +27,7 @@ builder.Services.AddLogging(); // Ensure logging is added to the service collect
 
 builder.Services.AddMemoryCache(); // enabling memory cache
 builder.Services.AddScoped<ICacheService, MemoryCacheService>();
+builder.Services.AddScoped<OrderService>();
 
 
 builder.Services.AddCors(options =>
