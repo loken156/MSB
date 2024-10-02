@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers.Address
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class AddressController : ControllerBase
@@ -31,7 +32,6 @@ namespace API.Controllers.Address
             _logger = logger;
         }
 
-        [AllowAnonymous]
         [HttpPost]
         [Route("AddAddress")]
         public async Task<ActionResult<AddressDto>> AddAddress([FromBody] AddAddressCommand command)
@@ -53,7 +53,6 @@ namespace API.Controllers.Address
             }
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("GetAllAddresses")]
         public async Task<ActionResult<IEnumerable<AddressDto>>> GetAllAddresses()
@@ -71,7 +70,6 @@ namespace API.Controllers.Address
             }
         }
 
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<AddressDto>> GetAddressById(Guid id)
         {
@@ -94,7 +92,6 @@ namespace API.Controllers.Address
             }
         }
 
-        [AllowAnonymous]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAddress(Guid id, AddressModel address)
         {
@@ -117,7 +114,6 @@ namespace API.Controllers.Address
             }
         }
 
-        [AllowAnonymous]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(Guid id)
         {

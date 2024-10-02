@@ -28,7 +28,7 @@ namespace Application.Commands.Warehouse.UpdateWarehouse
             {
                 WarehouseId = request.Warehouse.WarehouseId,
                 WarehouseName = request.Warehouse.WarehouseName,
-                // AddressId = request.Warehouse.AddressId, // Comment until implemented
+                AddressId = request.Warehouse.AddressId, // Comment until implemented
                 // ShelfId = request.Warehouse.ShelfId // Comment until implemented
 
 

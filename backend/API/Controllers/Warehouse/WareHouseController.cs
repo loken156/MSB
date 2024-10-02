@@ -8,10 +8,13 @@ using Application.Queries.Warehouse.GetByID;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace API.Controllers.Warehouse
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class WarehouseController : ControllerBase
@@ -100,20 +103,20 @@ namespace API.Controllers.Warehouse
             {
                 var query = new GetAllWarehousesQuery();
                 var warehouses = await _mediator.Send(query);
+
                 var warehouseDtos = warehouses.Select(warehouse => new WarehouseDto
                 {
                     WarehouseId = warehouse.WarehouseId,
-                    WarehouseName = warehouse.WarehouseName
+                    WarehouseName = warehouse.WarehouseName,
+                    AddressId = warehouse.AddressId
                 });
                 return Ok(warehouseDtos);
-
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while getting all warehouses");
                 return StatusCode(500, "An error occurred while getting all warehouses");
             }
-
         }
 
         [HttpGet("GetWarehouseBy{id}")]

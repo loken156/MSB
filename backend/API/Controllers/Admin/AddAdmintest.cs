@@ -3,13 +3,16 @@ using Application.Dto.Admin;
 using Domain.Models.Admin;
 using Infrastructure.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
+
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminMaker : ControllerBase

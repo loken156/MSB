@@ -5,10 +5,13 @@ using Application.Queries.User.GetAll;
 using Application.Queries.User.GetById;
 using Domain.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace API.Controllers.UserController
 {
+    [AllowAnonymous]
     // Define the route and make this a controller for handling API requests related to user management
     [Route("api/[controller]")]
     [ApiController]

@@ -48,12 +48,12 @@ namespace Infrastructure.Repositories.WarehouseRepo
 
         public async Task<IEnumerable<WarehouseModel>> GetAllWarehousesAsync()
         {
-            return await _database.Warehouses.ToListAsync();
+            return await _database.Warehouses.Include(w => w.Address).ToListAsync();
         }
 
         public async Task<WarehouseModel> GetWarehouseByIdAsync(Guid id)
         {
-            return await _database.Warehouses.FindAsync(id);
+            return await _database.Warehouses.Include(w => w.Address).FirstOrDefaultAsync(w => w.WarehouseId == id);
         }
 
         public async Task<WarehouseModel?> GetWarehouseByNameAsync(string warehouseName)

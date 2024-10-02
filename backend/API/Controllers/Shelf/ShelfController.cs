@@ -7,10 +7,13 @@ using Application.Queries.Shelf.GetByID;
 using Application.Validators.ShelfValidator;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace API.Controllers.Shelf
 {
+    [AllowAnonymous]
     // Define the route and make this a controller for handling API requests related to shelves
     [Route("api/[controller]")]
     [ApiController]
