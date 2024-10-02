@@ -28,16 +28,10 @@ namespace Infrastructure.Repositories.BoxRepo
             return box;
         }
 
-        public async Task DeleteBoxAsync(Guid boxId)
+        public async Task DeleteBoxAsync(BoxModel box)
         {
-            var box = await _database.Boxes.FindAsync(boxId);
-            if (box != null)
-            {
-                _database.Boxes.Remove(box);
-                await _database.SaveChangesAsync();
-            }
-
-
+            _database.Boxes.Remove(box);
+            await _database.SaveChangesAsync();  // Save the changes after deletion
         }
 
         public async Task<IEnumerable<BoxModel>> GetAllBoxesAsync()
@@ -47,8 +41,11 @@ namespace Infrastructure.Repositories.BoxRepo
 
         public async Task<BoxModel> GetBoxByIdAsync(Guid boxId)
         {
-            return await _database.Boxes.FindAsync(boxId);
+            return await _database.Boxes
+                .Include(b => b.BoxType)  // Eager load BoxType
+                .FirstOrDefaultAsync(b => b.BoxId == boxId);
         }
+
 
         public async Task<BoxModel> UpdateBoxAsync(BoxModel box)
         {

@@ -2,7 +2,8 @@
 // which represents an order in the application's domain layer. 
 // This class includes properties for order details, relationships with other entities, and relevant data annotations.
 
-using Domain.Models.Box; // Importing the Box model from the Domain.Models.Box namespace.
+using Domain.Models.Box;
+using Domain.Models.Warehouse; // Importing the Box model from the Domain.Models.Box namespace.
 using System.ComponentModel.DataAnnotations; // Importing data annotation attributes.
 using System.ComponentModel.DataAnnotations.Schema; // Importing attributes for database schema mapping.
 using System.Text.Json.Serialization; // Importing attributes for JSON serialization control.
@@ -50,10 +51,15 @@ namespace Domain.Models.Order
 
         // Foreign key linking to the return address associated with the order.
         [ForeignKey("AddressId")]
-        public Guid AddressId { get; set; }
+        public Guid? AddressId { get; set; }
 
         // Navigation property for the address associated with the order.
         public Address.AddressModel Address { get; set; }
+        [ForeignKey("WarehouseId")]
+        public Guid? WarehouseId { get; set; } // nullable
+
+        // Navigation property to Warehouse (assuming there's a WarehouseModel)
+        public virtual WarehouseModel Warehouse { get; set; }
 
         // Notes about the repair, with a default value of "No notes".
         public string RepairNotes { get; set; } = "No notes";

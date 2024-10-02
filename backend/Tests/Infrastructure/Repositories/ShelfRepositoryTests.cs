@@ -17,8 +17,8 @@ namespace Tests.Infrastructure.Repositories
                 .Options;
             var shelves = new List<ShelfModel>
             {
-                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() },
-                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 2, ShelfColumn = 2, Occupancy = true, WarehouseId = Guid.NewGuid() },
+                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() },
+                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 2, ShelfColumn = 2, Occupancy = true, WarehouseId = Guid.NewGuid() },
             };
             using (var context = new MSB_Database(options))
             {
@@ -46,7 +46,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var shelfId = Guid.NewGuid();
-            var expectedShelf = new ShelfModel { ShelfId = shelfId, ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
+            var expectedShelf = new ShelfModel { ShelfId = shelfId, ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Shelves.Add(expectedShelf);
@@ -72,7 +72,7 @@ namespace Tests.Infrastructure.Repositories
             var options = new DbContextOptionsBuilder<MSB_Database>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            var shelf = new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
+            var shelf = new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 var shelfRepository = new ShelfRepository(context);
@@ -95,8 +95,8 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var shelfId = Guid.NewGuid();
-            var originalShelf = new ShelfModel { ShelfId = shelfId, ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
-            var updatedShelf = new ShelfModel { ShelfId = shelfId, ShelfRow = 2, ShelfColumn = 2, Occupancy = true, WarehouseId = Guid.NewGuid() };
+            var originalShelf = new ShelfModel { ShelfId = shelfId, ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
+            var updatedShelf = new ShelfModel { ShelfId = shelfId, ShelfRows = 2, ShelfColumn = 2, Occupancy = true, WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Shelves.Add(originalShelf);
@@ -111,7 +111,7 @@ namespace Tests.Infrastructure.Repositories
 
                 // Assert
                 Assert.Equal(updatedShelf.ShelfId, result.ShelfId);
-                Assert.Equal(updatedShelf.ShelfRow, context.Shelves.Single().ShelfRow);
+                Assert.Equal(updatedShelf.ShelfRows, context.Shelves.Single().ShelfRows);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Tests.Infrastructure.Repositories
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var shelfId = Guid.NewGuid();
-            var shelf = new ShelfModel { ShelfId = shelfId, ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
+            var shelf = new ShelfModel { ShelfId = shelfId, ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
             using (var context = new MSB_Database(options))
             {
                 context.Shelves.Add(shelf);

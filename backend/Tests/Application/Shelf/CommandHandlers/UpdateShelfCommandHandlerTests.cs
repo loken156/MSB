@@ -15,7 +15,7 @@ namespace Tests.Application.Shelf.CommandHandlers
             // Arrange
             var mockShelfRepository = new Mock<IShelfRepository>();
             var handler = new UpdateShelfCommandHandler(mockShelfRepository.Object);
-            var command = new UpdateShelfCommand(new ShelfDto { ShelfId = Guid.NewGuid(), ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() });
+            var command = new UpdateShelfCommand(new ShelfDto { ShelfId = Guid.NewGuid(), ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() });
 
             // Act
             await handler.Handle(command, CancellationToken.None);
@@ -34,7 +34,7 @@ namespace Tests.Application.Shelf.CommandHandlers
             mockShelfRepository.Setup(repo => repo.UpdateShelfAsync(It.IsAny<ShelfModel>()))
                 .ReturnsAsync(updatedShelf);
             var handler = new UpdateShelfCommandHandler(mockShelfRepository.Object);
-            var command = new UpdateShelfCommand(new ShelfDto { ShelfId = updatedShelf.ShelfId, ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() });
+            var command = new UpdateShelfCommand(new ShelfDto { ShelfId = updatedShelf.ShelfId, ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() });
 
             // Act
             var result = await handler.Handle(command, CancellationToken.None);

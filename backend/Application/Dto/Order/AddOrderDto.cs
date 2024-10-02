@@ -1,17 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Application.Dto.Box;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Order
 {
     public class AddOrderDto
     {
+        public Guid? OrderId { get; set; } // Nullable, auto-generated if not provided
+        public int OrderNumber { get; set; } // Auto-generated server-side
+        public DateTime OrderDate { get; set; } = DateTime.UtcNow; // Default to current date
+        public string UserId { get; set; } // Required for linking to a user
+        public Guid? AddressId { get; set; } // Nullable, can be assigned later
+        public string RepairNotes { get; set; } = "No notes"; // Default value
 
-        [Required] public Guid OrderId { get; set; }
-        [Required] public int OrderNumber { get; set; }
-        [Required] public DateTime OrderDate { get; set; }
-        [Required] public string UserId { get; set; }
-        [Required] public Guid AddressId { get; set; }
-        public List<AddBoxToOrderDto>? Boxes { get; set; } = new List<AddBoxToOrderDto>();
-        public string RepairNotes { get; set; } = "No notes";
-
+        // Optional list of boxes that the customer can add to the order
+        public List<BoxDto>? Boxes { get; set; }
     }
 }

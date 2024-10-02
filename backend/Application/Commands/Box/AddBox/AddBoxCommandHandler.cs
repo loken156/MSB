@@ -1,47 +1,57 @@
-﻿using Application.Dto.Box;
+﻿using Application.Commands.Box.AddBox;
+using Application.Dto.Box;
 using AutoMapper;
 using Domain.Models.Box;
 using Infrastructure.Repositories.BoxRepo;
+using Infrastructure.Repositories.BoxTypeRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-// This class handles the command to add a new box. It uses MediatR for processing the command, 
-// AutoMapper for mapping between the DTO and the domain model, and ILogger for logging errors. 
-// The handler interacts with the box repository to save the new box and returns the created box as a DTO.
-
-
-namespace Application.Commands.Box.AddBox
+public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxDto>
 {
-    public class AddBoxCommandHandler : IRequestHandler<AddBoxCommand, BoxDto>
+    private readonly IBoxRepository _boxRepository;
+    private readonly IBoxTypeRepository _boxTypeRepository; // Added for BoxType fetching
+    private readonly ILogger<AddBoxCommandHandler> _logger;
+    private readonly IMapper _mapper;
+
+    public AddBoxCommandHandler(IBoxRepository boxRepository, IBoxTypeRepository boxTypeRepository, ILogger<AddBoxCommandHandler> logger, IMapper mapper)
     {
-        private readonly IBoxRepository _boxRepository;
-        private readonly ILogger<AddBoxCommandHandler> _logger;
-        private readonly IMapper _mapper;
+        _boxRepository = boxRepository;
+        _boxTypeRepository = boxTypeRepository;
+        _logger = logger;
+        _mapper = mapper;
+    }
 
-        public AddBoxCommandHandler(IBoxRepository boxRepository, ILogger<AddBoxCommandHandler> logger, IMapper mapper)
+    public async Task<BoxDto> Handle(AddBoxCommand request, CancellationToken cancellationToken)
+    {
+        try
         {
-            _boxRepository = boxRepository;
-            _logger = logger;
-            _mapper = mapper;
+            // Fetch BoxType from the repository using BoxTypeId
+            var boxType = await _boxTypeRepository.GetBoxTypeByIdAsync(request.NewBox.BoxTypeId);
+            if (boxType == null)
+            {
+                throw new Exception($"BoxType with ID {request.NewBox.BoxTypeId} not found.");
+            }
+
+            // Map the incoming BoxDto to the domain model (BoxModel)
+            var boxModel = _mapper.Map<BoxModel>(request.NewBox);
+            
+            // Assign the BoxType to the BoxModel (this links BoxType with Size and Type)
+            boxModel.BoxType = boxType;
+
+            // Save the box to the database
+            await _boxRepository.AddBoxAsync(boxModel);
+
+            // Map the result back to BoxDto and include the size and type from BoxType
+            var boxDto = _mapper.Map<BoxDto>(boxModel);
+            boxDto.Size = boxType.Size; // Manually set the Size in BoxDto
+            boxDto.Type = boxType.Type; // Manually set the Type in BoxDto
+            return boxDto;
         }
-
-
-        public async Task<BoxDto> Handle(AddBoxCommand request, CancellationToken cancellationToken)
+        catch (Exception ex)
         {
-
-            try
-            {
-                var boxModel = _mapper.Map<BoxModel>(request.NewBox);
-                await _boxRepository.AddBoxAsync(boxModel);
-                var boxDto = _mapper.Map<BoxDto>(boxModel);
-                return boxDto;
-
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception, "Error adding box");
-                throw;
-            }
+            _logger.LogError(ex, "Error adding box.");
+            throw;
         }
     }
 }

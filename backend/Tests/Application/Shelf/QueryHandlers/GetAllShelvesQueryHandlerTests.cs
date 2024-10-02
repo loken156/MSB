@@ -23,8 +23,8 @@ namespace Tests.Application.Shelf.QueryHandlers
             // Arrange
             var shelves = new List<ShelfModel>
             {
-                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() },
-                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 2, ShelfColumn = 2, Occupancy = true, WarehouseId = Guid.NewGuid() }
+                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() },
+                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 2, ShelfColumn = 2, Occupancy = true, WarehouseId = Guid.NewGuid() }
             };
             _mockShelfRepository.Setup(m => m.GetAllAsync()).ReturnsAsync(shelves);
 
@@ -40,7 +40,7 @@ namespace Tests.Application.Shelf.QueryHandlers
         public async Task Handle_MapsShelfModelCorrectly()
         {
             // Arrange
-            var shelf = new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
+            var shelf = new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 1, ShelfColumn = 1, Occupancy = false, WarehouseId = Guid.NewGuid() };
             var shelves = new List<ShelfModel> { shelf };
             _mockShelfRepository.Setup(m => m.GetAllAsync()).ReturnsAsync(shelves);
 
@@ -50,7 +50,7 @@ namespace Tests.Application.Shelf.QueryHandlers
 
             // Assert
             Assert.Equal(shelf.ShelfId, shelfDto.ShelfId);
-            Assert.Equal(shelf.ShelfRow, shelfDto.ShelfRow);
+            Assert.Equal(shelf.ShelfRows, shelfDto.ShelfRows);
             Assert.Equal(shelf.ShelfColumn, shelfDto.ShelfColumn);
             Assert.Equal(shelf.Occupancy, shelfDto.Occupancy);
             Assert.Equal(shelf.WarehouseId, shelfDto.WarehouseId);
