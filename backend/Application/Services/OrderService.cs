@@ -32,10 +32,12 @@ namespace Application.Services
                 try
                 {
                     // Get the highest order number
-                    int highestOrderNumber = await _orderRepository.GetHighestOrderNumberAsync();
+                    int? highestOrderNumber = await _orderRepository.GetHighestOrderNumberAsync();
 
-                    // Extract the order number part and increment it
-                    int orderNumberPart = highestOrderNumber % 10000;
+                    // If the highest order number is null, set it to 0 (so that the first order number becomes 1)
+                    int orderNumberPart = (highestOrderNumber ?? 0) % 10000;
+                    
+                    // Increment the order number part
                     orderNumberPart++;
 
                     // Get the current year and month
