@@ -1,6 +1,14 @@
+
+import { Link, useNavigate } from 'react-router-dom';
 import "../css/HomePage.css";
 
 function HomePage() {
+  const navigate = useNavigate();
+
+  const goToDisposal = () => {
+    navigate('/disposal')
+  };
+
   return (
 <>
     
@@ -16,11 +24,11 @@ function HomePage() {
       <div className = "services-section-container">
         <div className = "services-section">
 
-          <article className="services-cards">
+          <article className="services-cards" onClick={goToDisposal}>
             <p>Book</p>
             <img  className = "services-images-1" src ="../src/assets/icon-storage.png" alt = "storage logo"></img>
             <p className = "services-arrows">&rarr;</p>
-            </article>
+          </article>
           <article className="services-cards">
             <p>Disposal</p>
             <img  className = "services-images-1" src ="../src/assets/icon-disposal.png" alt = "disposal logo"></img>
