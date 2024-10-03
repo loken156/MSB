@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MSB_Database))]
-    [Migration("20241003123112_InitialMigration")]
+    [Migration("20241003124754_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -375,6 +375,28 @@ namespace Infrastructure.Migrations
                     b.HasIndex("WarehouseId");
 
                     b.ToTable("Shelves");
+                });
+
+            modelBuilder.Entity("Domain.Models.TimeSlot.TimeSlotModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Occupancy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TimeSlot")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TimeSlots");
                 });
 
             modelBuilder.Entity("Domain.Models.Warehouse.WarehouseModel", b =>

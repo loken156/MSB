@@ -374,6 +374,28 @@ namespace Infrastructure.Migrations
                     b.ToTable("Shelves");
                 });
 
+            modelBuilder.Entity("Domain.Models.TimeSlot.TimeSlotModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Occupancy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TimeSlot")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TimeSlots");
+                });
+
             modelBuilder.Entity("Domain.Models.Warehouse.WarehouseModel", b =>
                 {
                     b.Property<Guid>("WarehouseId")
