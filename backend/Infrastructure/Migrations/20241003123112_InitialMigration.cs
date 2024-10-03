@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -113,6 +113,35 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cars", x => x.CarId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FirstName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Role = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Department = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Position = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    HireDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    WarehouseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -287,6 +316,38 @@ namespace Infrastructure.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Employees_EmployeeModelId",
+                        column: x => x.EmployeeModelId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeRoles",
+                columns: table => new
+                {
+                    EmployeeModelId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    RolesId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeRoles", x => new { x.EmployeeModelId, x.RolesId });
+                    table.ForeignKey(
+                        name: "FK_EmployeeRoles_AspNetRoles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeRoles_Employees_EmployeeModelId",
+                        column: x => x.EmployeeModelId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -312,63 +373,6 @@ namespace Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Employees",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FirstName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Role = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Department = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Position = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    HireDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    WarehouseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employees_Warehouses_WarehouseId",
-                        column: x => x.WarehouseId,
-                        principalTable: "Warehouses",
-                        principalColumn: "WarehouseId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Shelves",
-                columns: table => new
-                {
-                    ShelfId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    ShelfRow = table.Column<int>(type: "int", nullable: false),
-                    ShelfColumn = table.Column<int>(type: "int", nullable: false),
-                    Occupancy = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    WarehouseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shelves", x => x.ShelfId);
-                    table.ForeignKey(
-                        name: "FK_Shelves_Warehouses_WarehouseId",
-                        column: x => x.WarehouseId,
-                        principalTable: "Warehouses",
-                        principalColumn: "WarehouseId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -381,8 +385,8 @@ namespace Infrastructure.Migrations
                     UserId = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CarId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    BoxId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    AddressId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    AddressId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    WarehouseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     RepairNotes = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     AdminModelId = table.Column<string>(type: "varchar(255)", nullable: true)
@@ -399,8 +403,7 @@ namespace Infrastructure.Migrations
                         name: "FK_Orders_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "AddressId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "AddressId");
                     table.ForeignKey(
                         name: "FK_Orders_Admins_AdminModelId",
                         column: x => x.AdminModelId,
@@ -421,6 +424,68 @@ namespace Infrastructure.Migrations
                         column: x => x.EmployeeModelId,
                         principalTable: "Employees",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_Warehouses_WarehouseId",
+                        column: x => x.WarehouseId,
+                        principalTable: "Warehouses",
+                        principalColumn: "WarehouseId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Shelves",
+                columns: table => new
+                {
+                    ShelfId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Section = table.Column<string>(type: "varchar(1)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ShelfRows = table.Column<int>(type: "int", nullable: false),
+                    ShelfColumn = table.Column<int>(type: "int", nullable: false),
+                    LargeBoxCapacity = table.Column<int>(type: "int", nullable: false),
+                    MediumBoxCapacity = table.Column<int>(type: "int", nullable: false),
+                    SmallBoxCapacity = table.Column<int>(type: "int", nullable: false),
+                    AvailableLargeSlots = table.Column<int>(type: "int", nullable: false),
+                    AvailableMediumSlots = table.Column<int>(type: "int", nullable: false),
+                    AvailableSmallSlots = table.Column<int>(type: "int", nullable: false),
+                    Occupancy = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    WarehouseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shelves", x => x.ShelfId);
+                    table.ForeignKey(
+                        name: "FK_Shelves_Warehouses_WarehouseId",
+                        column: x => x.WarehouseId,
+                        principalTable: "Warehouses",
+                        principalColumn: "WarehouseId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "BoxTypes",
+                columns: table => new
+                {
+                    BoxTypeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Size = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ShelfModelShelfId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BoxTypes", x => x.BoxTypeId);
+                    table.ForeignKey(
+                        name: "FK_BoxTypes_Shelves_ShelfModelShelfId",
+                        column: x => x.ShelfModelShelfId,
+                        principalTable: "Shelves",
+                        principalColumn: "ShelfId");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -429,8 +494,6 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     BoxId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Type = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     TimesUsed = table.Column<int>(type: "int", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "longtext", nullable: false)
@@ -438,13 +501,18 @@ namespace Infrastructure.Migrations
                     UserNotes = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     OrderId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Size = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ShelfId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    ShelfId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    BoxTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Boxes", x => x.BoxId);
+                    table.ForeignKey(
+                        name: "FK_Boxes_BoxTypes_BoxTypeId",
+                        column: x => x.BoxTypeId,
+                        principalTable: "BoxTypes",
+                        principalColumn: "BoxTypeId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Boxes_Orders_OrderId",
                         column: x => x.OrderId,
@@ -513,6 +581,11 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Boxes_BoxTypeId",
+                table: "Boxes",
+                column: "BoxTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Boxes_OrderId",
                 table: "Boxes",
                 column: "OrderId");
@@ -523,9 +596,14 @@ namespace Infrastructure.Migrations
                 column: "ShelfId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_WarehouseId",
-                table: "Employees",
-                column: "WarehouseId");
+                name: "IX_BoxTypes_ShelfModelShelfId",
+                table: "BoxTypes",
+                column: "ShelfModelShelfId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeRoles_RolesId",
+                table: "EmployeeRoles",
+                column: "RolesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_AddressId",
@@ -553,6 +631,11 @@ namespace Infrastructure.Migrations
                 column: "EmployeeModelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_WarehouseId",
+                table: "Orders",
+                column: "WarehouseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Shelves_WarehouseId",
                 table: "Shelves",
                 column: "WarehouseId");
@@ -561,30 +644,11 @@ namespace Infrastructure.Migrations
                 name: "IX_Warehouses_AddressId",
                 table: "Warehouses",
                 column: "AddressId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Addresses_Employees_EmployeeModelId",
-                table: "Addresses",
-                column: "EmployeeModelId",
-                principalTable: "Employees",
-                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Addresses_Admins_AdminModelId",
-                table: "Addresses");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Addresses_AspNetUsers_UserId",
-                table: "Addresses");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Addresses_Employees_EmployeeModelId",
-                table: "Addresses");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -604,16 +668,28 @@ namespace Infrastructure.Migrations
                 name: "Boxes");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "EmployeeRoles");
+
+            migrationBuilder.DropTable(
+                name: "BoxTypes");
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Shelves");
 
             migrationBuilder.DropTable(
                 name: "Cars");
+
+            migrationBuilder.DropTable(
+                name: "Warehouses");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Admins");
@@ -623,12 +699,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "Warehouses");
-
-            migrationBuilder.DropTable(
-                name: "Addresses");
         }
     }
 }

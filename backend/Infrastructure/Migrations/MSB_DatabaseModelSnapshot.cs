@@ -248,6 +248,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("longtext");
