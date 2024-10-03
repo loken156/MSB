@@ -6,6 +6,7 @@ using Domain.Models.Employee;
 using Domain.Models.BoxType;
 using Domain.Models.Order;
 using Domain.Models.Shelf;
+using Domain.Models.TimeSlot;
 using Domain.Models.Warehouse;
 using Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -31,6 +32,7 @@ namespace Infrastructure.Database
         public DbSet<AdminModel> Admins { get; set; }
         
         public DbSet<BoxTypeModel> BoxTypes { get; set; }
+        public DbSet<TimeSlotModel> TimeSlots { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
