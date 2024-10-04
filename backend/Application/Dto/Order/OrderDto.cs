@@ -13,7 +13,7 @@ namespace Application.Dto.Order
         [Required] public string UserId { get; set; }
         public Guid? CarId { get; set; }
         //public Guid RepairId { get; set; }
-        [Required] public Guid WarehouseId { get; set; }
+        //[Required] public Guid WarehouseId { get; set; }
         [Required] public Guid AddressId { get; set; }
         public List<BoxDto>? Boxes { get; set; } = new List<BoxDto>();
         public string RepairNotes { get; set; } = "No notes";

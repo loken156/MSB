@@ -5,13 +5,11 @@ namespace Application.Commands.Order.AddOrder
 {
     public class AddOrderCommand : IRequest<OrderDto>
     {
-        public AddOrderCommand(AddOrderDto newOrder, Guid warehouseId)
+        public AddOrderCommand(AddOrderDto newOrder)
         {
             NewOrder = newOrder;
-            WarehouseId = warehouseId;
         }
 
         public AddOrderDto NewOrder { get; }
-        public Guid WarehouseId { get; }
     }
 }

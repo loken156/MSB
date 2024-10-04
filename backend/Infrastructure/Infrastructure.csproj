@@ -38,6 +38,7 @@
     <None Remove="Services\Notification\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Resources\" />
     <Folder Include="Repositories\EmployeeRepo\" />
     <Folder Include="Repositories\CarRepo\" />
