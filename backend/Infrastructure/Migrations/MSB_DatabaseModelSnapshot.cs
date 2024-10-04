@@ -248,10 +248,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -306,10 +302,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("WarehouseId")
-                        .IsRequired()
-                        .HasColumnType("char(36)");
-
                     b.HasKey("OrderId");
 
                     b.HasIndex("AddressId");
@@ -321,8 +313,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("CarId");
 
                     b.HasIndex("EmployeeModelId");
-
-                    b.HasIndex("WarehouseId");
 
                     b.ToTable("Orders");
                 });
@@ -706,17 +696,9 @@ namespace Infrastructure.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("EmployeeModelId");
 
-                    b.HasOne("Domain.Models.Warehouse.WarehouseModel", "Warehouse")
-                        .WithMany()
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Address");
 
                     b.Navigation("Car");
-
-                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("Domain.Models.Shelf.ShelfModel", b =>
