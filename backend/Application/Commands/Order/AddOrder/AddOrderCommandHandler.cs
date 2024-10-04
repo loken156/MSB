@@ -12,14 +12,14 @@ namespace Application.Commands.Order.AddOrder
     public class AddOrderCommandHandler : IRequestHandler<AddOrderCommand, OrderDto>
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IBoxRepository _boxRepository; // Add a Box repository to handle the boxes
+        private readonly IBoxRepository _boxRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<AddOrderCommandHandler> _logger;
 
         public AddOrderCommandHandler(IOrderRepository orderRepository, IBoxRepository boxRepository, IMapper mapper, ILogger<AddOrderCommandHandler> logger)
         {
             _orderRepository = orderRepository;
-            _boxRepository = boxRepository; // Initialize the box repository
+            _boxRepository = boxRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -30,16 +30,6 @@ namespace Application.Commands.Order.AddOrder
             {
                 // Map the AddOrderDto (from request) to the OrderModel (domain model)
                 var orderModel = _mapper.Map<OrderModel>(request.NewOrder);
-
-                // Set the warehouse ID only if it's provided and valid (not empty)
-                if (request.WarehouseId != Guid.Empty)
-                {
-                    orderModel.WarehouseId = request.WarehouseId;
-                }
-                else
-                {
-                    orderModel.WarehouseId = null; // Make WarehouseId nullable if not provided
-                }
 
                 // Check if there are boxes included in the request
                 if (request.NewOrder.Boxes != null && request.NewOrder.Boxes.Count > 0)

@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\Admin\Delete\" />
+    <Folder Include="Commands\Admin\Update\" />
     <Folder Include="Commands\BoxType\" />
     <Folder Include="Commands\Order\AddOrder\" />
     <Folder Include="Commands\Order\DeleteOrder\" />
@@ -33,8 +35,6 @@
     <Folder Include="Dto\Repair\" />
     <Folder Include="Dto\Transaction\" />
     <Folder Include="Dto\User\" />
-    <Folder Include="Commands\Admin\Delete\" />
-    <Folder Include="Commands\Admin\Update\" />
     <Folder Include="Queries\Admin\GetAll\" />
     <Folder Include="Queries\Admin\GetById\" />
     <Folder Include="Queries\User\GetAll\" />
