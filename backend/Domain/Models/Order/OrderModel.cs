@@ -55,11 +55,11 @@ namespace Domain.Models.Order
 
         // Navigation property for the address associated with the order.
         public Address.AddressModel Address { get; set; }
-        [ForeignKey("WarehouseId")]
-        public Guid? WarehouseId { get; set; } // nullable
+        //[ForeignKey("WarehouseId")]
+        //public Guid? WarehouseId { get; set; } // nullable
 
         // Navigation property to Warehouse (assuming there's a WarehouseModel)
-        public virtual WarehouseModel Warehouse { get; set; }
+        //public virtual WarehouseModel Warehouse { get; set; }
 
         // Notes about the repair, with a default value of "No notes".
         public string RepairNotes { get; set; } = "No notes";
