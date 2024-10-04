@@ -42,7 +42,6 @@
     <Folder Include="Resources\" />
     <Folder Include="Repositories\EmployeeRepo\" />
     <Folder Include="Repositories\CarRepo\" />
-    <Folder Include="Services\Notification\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Interop.bpac">

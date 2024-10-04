@@ -7,6 +7,7 @@ using Infrastructure.Repositories.CarRepo;
 using Infrastructure.Repositories.EmployeeRepo;
 using Infrastructure.Repositories.OrderRepo;
 using Infrastructure.Repositories.ShelfRepo;
+using Infrastructure.Repositories.TimeSlotRepo;
 using Infrastructure.Repositories.UserRepo;
 using Infrastructure.Repositories.WarehouseRepo;
 using Infrastructure.Services;
@@ -34,12 +35,14 @@ namespace Infrastructure
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IShelfRepository, ShelfRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
+            services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddMemoryCache();
             services.AddScoped<ICacheService, MemoryCacheService>();
             services.AddScoped<ILabelPrinterService, LabelPrinterService>();
+            services.AddScoped<TimeSlotService>(); // Register the service TimeSlot Service
 
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<IMessageSender>(provider =>
