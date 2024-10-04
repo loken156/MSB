@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MSB_Database))]
-    [Migration("20240903094143_InitialCreate")]
+    [Migration("20241003094354_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -125,6 +125,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<int>("BoxTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -132,12 +135,8 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("ShelfId")
+                    b.Property<Guid?>("ShelfId")
                         .HasColumnType("char(36)");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
@@ -145,21 +144,54 @@ namespace Infrastructure.Migrations
                     b.Property<int>("TimesUsed")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("UserNotes")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("BoxId");
 
+                    b.HasIndex("BoxTypeId");
+
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ShelfId");
 
                     b.ToTable("Boxes");
+                });
+
+            modelBuilder.Entity("Domain.Models.BoxType.BoxTypeModel", b =>
+                {
+                    b.Property<int>("BoxTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("BoxTypeId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<Guid?>("ShelfModelShelfId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("BoxTypeId");
+
+                    b.HasIndex("ShelfModelShelfId");
+
+                    b.ToTable("BoxTypes");
                 });
 
             modelBuilder.Entity("Domain.Models.Car.CarModel", b =>
@@ -232,8 +264,6 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WarehouseId");
-
                     b.ToTable("Employees");
                 });
 
@@ -243,7 +273,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("AddressId")
+                    b.Property<Guid?>("AddressId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("AdminModelId")
@@ -251,9 +281,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("varchar(255)");
-
-                    b.Property<Guid>("BoxId")
-                        .HasColumnType("char(36)");
 
                     b.Property<Guid?>("CarId")
                         .HasColumnType("char(36)");
@@ -282,6 +309,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<Guid?>("WarehouseId")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
                     b.HasKey("OrderId");
 
                     b.HasIndex("AddressId");
@@ -294,6 +325,8 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("EmployeeModelId");
 
+                    b.HasIndex("WarehouseId");
+
                     b.ToTable("Orders");
                 });
 
@@ -303,13 +336,35 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<int>("AvailableLargeSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AvailableMediumSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AvailableSmallSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LargeBoxCapacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MediumBoxCapacity")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Occupancy")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Section")
+                        .IsRequired()
+                        .HasColumnType("varchar(1)");
 
                     b.Property<int>("ShelfColumn")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShelfRow")
+                    b.Property<int>("ShelfRows")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SmallBoxCapacity")
                         .HasColumnType("int");
 
                     b.Property<Guid>("WarehouseId")
@@ -340,6 +395,21 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AddressId");
 
                     b.ToTable("Warehouses");
+                });
+
+            modelBuilder.Entity("EmployeeModelIdentityRole", b =>
+                {
+                    b.Property<string>("EmployeeModelId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("RolesId")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("EmployeeModelId", "RolesId");
+
+                    b.HasIndex("RolesId");
+
+                    b.ToTable("EmployeeRoles", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.ApplicationUser", b =>
@@ -565,41 +635,41 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Box.BoxModel", b =>
                 {
+                    b.HasOne("Domain.Models.BoxType.BoxTypeModel", "BoxType")
+                        .WithMany("Boxes")
+                        .HasForeignKey("BoxTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Domain.Models.Order.OrderModel", "Order")
                         .WithMany("Boxes")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Domain.Models.Shelf.ShelfModel", "Shelf")
                         .WithMany("Boxes")
                         .HasForeignKey("ShelfId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("BoxType");
 
                     b.Navigation("Order");
 
                     b.Navigation("Shelf");
                 });
 
-            modelBuilder.Entity("Domain.Models.Employee.EmployeeModel", b =>
+            modelBuilder.Entity("Domain.Models.BoxType.BoxTypeModel", b =>
                 {
-                    b.HasOne("Domain.Models.Warehouse.WarehouseModel", "Warehouse")
-                        .WithMany()
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Warehouse");
+                    b.HasOne("Domain.Models.Shelf.ShelfModel", null)
+                        .WithMany("BoxTypes")
+                        .HasForeignKey("ShelfModelShelfId");
                 });
 
             modelBuilder.Entity("Domain.Models.Order.OrderModel", b =>
                 {
                     b.HasOne("Domain.Models.Address.AddressModel", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Domain.Models.Admin.AdminModel", null)
                         .WithMany("Orders")
@@ -617,15 +687,23 @@ namespace Infrastructure.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("EmployeeModelId");
 
+                    b.HasOne("Domain.Models.Warehouse.WarehouseModel", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Address");
 
                     b.Navigation("Car");
+
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("Domain.Models.Shelf.ShelfModel", b =>
                 {
                     b.HasOne("Domain.Models.Warehouse.WarehouseModel", "Warehouse")
-                        .WithMany("Shelves")
+                        .WithMany()
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -642,6 +720,21 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("EmployeeModelIdentityRole", b =>
+                {
+                    b.HasOne("Domain.Models.Employee.EmployeeModel", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeeModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -702,6 +795,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Domain.Models.BoxType.BoxTypeModel", b =>
+                {
+                    b.Navigation("Boxes");
+                });
+
             modelBuilder.Entity("Domain.Models.Employee.EmployeeModel", b =>
                 {
                     b.Navigation("Addresses");
@@ -716,12 +814,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Shelf.ShelfModel", b =>
                 {
-                    b.Navigation("Boxes");
-                });
+                    b.Navigation("BoxTypes");
 
-            modelBuilder.Entity("Domain.Models.Warehouse.WarehouseModel", b =>
-                {
-                    b.Navigation("Shelves");
+                    b.Navigation("Boxes");
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.ApplicationUser", b =>

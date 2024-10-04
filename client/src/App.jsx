@@ -14,7 +14,7 @@ import AdminPage from './pages/AdminPage';
 import ApiTestPage from './pages/ApiTestPage';
 import BoxDateSelectionPage from "./pages/BoxDateSelectionPage";
 import ContactUsPage from "./pages/ContactUsPage";
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import './css/App.css';
 
 const isAuthenticated = () => {
