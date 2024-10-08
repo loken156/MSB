@@ -8,28 +8,28 @@ function Footer() {
                 <div className = "footer-section-container">
                     <div className = "footer-section-container-flex-top">
 
-                        <img className = "contact-logos"  alt = "mail logo" src ="./src/assets/icon-mail.png"></img>
+                        <img className = "contact-logos"  alt = "mail logo" src ="/icon-mail.png"></img>
 
                         <div className = "contact-boxes">
                         <h2 className = "footer-header">Email</h2>
                         <a className = "footer-links-top" href="mailto:MSB@email.com">MSB@email.com</a>
                         </div>
 
-                        <img className = "contact-logos"  alt = "phone logo" src ="./src/assets/icon-phone.png"></img>
+                        <img className = "contact-logos"  alt = "phone logo" src ="/icon-phone.png"></img>
 
                         <div className = "contact-boxes">
                         <h2 className = "footer-header">Phone</h2>
                         <a className = "footer-links-top" href="tel:+12332145600">+123 321 456 00</a>
                         </div>
 
-                        <img className = "contact-logos"  alt = "phone logo" src ="./src/assets/icon-phone.png"></img>
+                        <img className = "contact-logos"  alt = "phone logo" src ="/icon-phone.png"></img>
 
                         <div className = "contact-boxes">
                         <h2 className = "footer-header">WhatsApp</h2>
                         <a  className = "footer-links-top" href="https://wa.me/+12332145600">+123 321 456 00</a>
                         </div>
                         
-                        <img className = "contact-logos"  alt = "map logo" src ="./src/assets/icon-map.png"></img>
+                        <img className = "contact-logos"  alt = "map logo" src ="/icon-map.png"></img>
 
                         <div className = "contact-boxes">
                         <h2 className = "footer-header">Adress</h2>
