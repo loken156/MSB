@@ -61,32 +61,61 @@ function FAQPage() {
 <>
 
   <div className = "hero-section-FAQ">
-    <h1>FAQs</h1>
-    <h1>Got Questions? We got answers!</h1>
+    <h1 className ="hero-section-header">FAQs</h1>
   </div>
 
   <div className = "FAQ-paige-container">
-    <div className = "FAQ-grid-container">
+    <div className = "wrapper-FAQ">
+    <h2 className = "accordian-header-FAQ">Find answers to commonly asked<br></br> questions about our services!</h2>
+      <div className = "accordian-FAQ">
 
+      {data.map((item, i) =>(
+          <div className = {`item-FAQ ${selected === i ? 'selected-FAQ' : ''}`}>
+              <div className = "title-FAQ" onClick={() => toogle(i)}>
+                <h2 className = "question-text-FAQ">{item.question}</h2>
+                <span>{selected === i ? "-" : "+"}</span>
+              </div>
+              <div className = {selected === i ? "content-FAQ show-FAQ" : "content-FAQ"}>{item.answer}</div>
+          </div>
+      ))}
 
-      <div className = "wrapper">
-      <h2 className = "accordian-header">Find answers to commonly asked<br></br> questions about our services!</h2>
-        <div className = "accordian">
+      </div>
+    </div>
+  </div>
 
-        {data.map((item, i) =>(
-            <div className = "item">
-                <div className = "title" onClick={() => toogle(i)}>
-                  <h2>{item.question}</h2>
-                  <span>{selected === i ? "-" : "+"}</span>
-                </div>
-                <div className = {selected === i ? "content show" : "content"}>{item.answer}</div>
-            </div>
-        ))}
+  <div className = "email-container-FAQ">
 
+    <h1 className = "email-section-header">Still have a question? We would love<br />
+    to answer it for you!</h1>
+
+    <div className = "email-section-FAQ">
+      <div className = "callback-form-section">
+        <p>Callback form</p>
+        <input className = "email-input-fields-FAQ-name" value = "Name"></input>
+        <input className = "email-input-fields-FAQ-phonenumber" value = "Phone number"></input>
+        <input className = "email-input-fields-FAQ-question" value = "Message"></input>
+        <div className = "date-and-time-selection-callback-form">
+          <input></input>
+          <input></input>
+        </div>
+        <button className = " send-us-a-letter-button">Call me</button>
+
+        <div className = "subscribe-to-newsletter-section">
+          <p>Subscribe to the newsletters!</p>
+          <input className = "email-input-fields-FAQ-newsletter" value = "Email adress"></input><br />
+          <button>Subscribe</button>
         </div>
       </div>
 
+      <div className = "send-us-a-letter-section">
+        <p>Send us a letter!</p>
+        <input className = "email-input-fields-FAQ-name" value = "Name"></input>
+        <input className = "email-input-fields-FAQ-email" value = "Email adress"></input>
+        <input className = "email-input-fields-FAQ-question" value = "Message"></input>
+        <button className = " send-us-a-letter-button">Send</button>
+      </div>
     </div>
+    
   </div>
 
 </>
