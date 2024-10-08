@@ -65,7 +65,7 @@
     color: #06368D;
 }
 .content-FAQ{
-    color:#555252 ;
+    color:#555252;
     max-height: 0;
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0,1,0,1);
@@ -84,34 +84,71 @@
     align-items: center;
     background-color: #d8d7d7;
     width: 100%;
-    padding-top: 100px;
+    gap: 50px;
 }
+
 .email-section-FAQ{
     display: flex;
     flex-direction: row;
-    align-items:normal;
     gap: 200px;
+    padding-bottom: 100px;
 }
 .send-us-a-letter-section{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
 }
 .callback-form-section{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
 }
-.email-container-FAQ input{
+.checkbox-container{
+    display: inline-flex;
+    gap: 5px;
+}
+.subscribe-to-newsletter-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    gap: 10px;
+}
+.email-container-FAQ input,
+.email-container-FAQ textarea{
     border-radius: 5px;
-    min-width: 200px;
-    min-height: 30px;
 }
-.email-container-FAQ input:hover{
+.email-container-FAQ input:hover,
+.email-container-FAQ textarea:hover{
     background-color: #FFC857;
 }
-.email-container-FAQ input:focus{
+.email-container-FAQ input:focus,
+.email-container-FAQ textarea:focus{
     background-color: #FFC857;
+}
+.email-input-fields-letter-name,
+.email-input-fields-letter-email,
+.email-input-fields-FAQ-name,
+.email-input-fields-FAQ-phonenumber,
+.email-input-fields-FAQ-newsletter{
+    width: 300px;
+    height: 30px;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+.email-input-fields-letter-question{
+    width: 300px;
+    height: 200px;
+    resize: none;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    border: 2px solid black;
 }
 .email-container-FAQ button{
     border-radius: 5px;
@@ -123,4 +160,26 @@
 .email-container-FAQ button:hover{
     cursor: pointer;
     background-color:#FFC857;
+}
+.send-us-a-letter-button,
+.subscribe-button,
+.call-me-button{
+    width: 200px;
+    height: 50px;;
+}
+.date-and-time-selection-callback-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+
+}
+.email-input-fields-FAQ-date,
+.email-input-fields-FAQ-time {
+    width: 140px;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+
 }

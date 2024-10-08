@@ -69,7 +69,7 @@ function HomePage() {
         <h2>Declutter your living space with us!</h2>
         <button className = "hero-button-homepaige">Book</button>
         </div>
-        <img className = "header-image-homepaige" src = "src\assets\image_1 1.png"></img>
+        <img className = "header-image-homepaige" src = "\image_1 1.png"></img>
       </div>
 
 
@@ -85,7 +85,7 @@ function HomePage() {
                 that items are transported safely</p>
                 <a href = "#LearnMorePage">Learn More</a>
             </div>
-            <img className = "services-images-1" src = "src\assets\Services-cards-Image-1.png"></img>
+            <img className = "services-images-1" src = "\Services-cards-Image-1.png"></img>
           </article>
           <article className="services-cards">
             <div className = "service-cards-text">
@@ -97,7 +97,7 @@ function HomePage() {
                 dry safe and secure.</p>
                 <a href = "#LearnMorePage">Learn More</a>
             </div>
-            <img className = "services-images-2" src = "src\assets\Services-cards-Image-2.png.png"></img>
+            <img className = "services-images-2" src = "\Services-cards-Image-2.png.png"></img>
           </article>
           <article className="services-cards">
             <div className = "service-cards-text">
@@ -106,7 +106,7 @@ function HomePage() {
                 Request a quote now!</p>
                 <a href = "#LearnMorePage">Learn More</a>
             </div>
-            <img className = "services-images-3" src = "src\assets\Services-cards-Image-3.png.png"></img>
+            <img className = "services-images-3" src = "\Services-cards-Image-3.png.png"></img>
           </article>
           <article className="services-cards">
             <div className = "service-cards-text">
@@ -118,7 +118,7 @@ function HomePage() {
                 convenience at best!</p>
                 <a href = "#LearnMorePage">Learn More</a>
             </div>
-            <img className = "services-images-4" src = "src\assets\Services-cards-Image-4.png.png"></img>
+            <img className = "services-images-4" src = "\Services-cards-Image-4.png.png"></img>
           </article>
 
         </div> 
@@ -131,7 +131,7 @@ function HomePage() {
           <div className = "What-we-do-header-2">
             <p className = "What-we-do-header-text-1">We provide valet<br />
               Storage Solutions</p>
-              <img className = "what-we-do-image-1" src = "src\assets\Services-cards-Image-1.png"></img>
+              <img className = "what-we-do-image-1" src = "\Services-cards-Image-1.png"></img>
               <p className = "What-we-do-header-text-2">Our warehouses are the perfect buddy<br />
                 location for you to store away unwanted<br />
                 items. Homes deserve space too!</p>
@@ -140,7 +140,7 @@ function HomePage() {
             <article className = "work-cards-homepaige-1">
               <div className = "card-header">
                 <h2>Store</h2>
-                <img className = "card-header-image" src = "src\assets\what-we-do-cards-2.png" alt = "MSB collecting"></img>
+                <img className = "card-header-image" src = "\what-we-do-cards-2.png" alt = "MSB collecting"></img>
               </div>
                 <p>
                   1. Select the items you want to store<br />
@@ -151,7 +151,7 @@ function HomePage() {
             <article className = "work-cards-homepaige-2">
             <div className = "card-header">
                 <h2>Collect</h2>
-                <img className = "card-header-image" src = "src\assets\what-we-do-cards-3.png" alt = "Warehouse"></img>
+                <img className = "card-header-image" src = "\what-we-do-cards-3.png" alt = "Warehouse"></img>
               </div>
               <p>
                 Magnificent Store Buddies will transport your belongings<br></br>
@@ -162,7 +162,7 @@ function HomePage() {
             <article className = "work-cards-homepaige-3">
             <div className = "card-header">
                 <h2>Request Return</h2>
-                <img className = "card-header-image" src = "src\assets\what-we-do-cards-1.png" alt = "Store Buddies loading cargo"></img>
+                <img className = "card-header-image" src = "\what-we-do-cards-1.png" alt = "Store Buddies loading cargo"></img>
               </div>
               <p>
                 Upon Request, Magnificent +Store Buddies will return stored items<br></br>to you using our in-house delivery service right to your doorstep.<br></br>
@@ -187,7 +187,7 @@ function HomePage() {
             <article className="work-cards-1-homepaige">
             <span className="number-badge">1</span>
                 <p className = "how-we-work-text">Select the items<br></br>you want to store</p>
-                <img  className = "work-images-homepaige" src ="../src/assets/icon-mouse.png" alt = "mouse logo"></img>
+                <img  className = "work-images-homepaige" src ="/icon-mouse.png" alt = "mouse logo"></img>
             </article>
             <p className = "arrows-1-homepaige">
                 &rarr;
@@ -195,7 +195,7 @@ function HomePage() {
             <article className="work-cards-2-homepaige">
             <span className="number-badge">2</span>
                 <p className = "how-we-work-text"> Choose the best box<br></br>plan for your needs</p>
-                <img  className = "work-images-homepaige" src ="../src/assets/icon-storage.png" alt = "storage logo"></img>
+                <img  className = "work-images-homepaige" src ="/icon-storage.png" alt = "storage logo"></img>
             </article>
             <p className = "arrows-2-homepaige">
                 &rarr;
@@ -203,7 +203,7 @@ function HomePage() {
             <article className="work-cards-3-homepaige">
             <span className="number-badge">3</span>
                 <p className = "how-we-work-text">Schedule a convinient<br></br>date for us to pick up<br></br>your items for storage</p>
-                <img  className = "work-images-homepaige" src ="../src/assets/icon-schecuele.png" alt = "schecuele logo"></img>
+                <img  className = "work-images-homepaige" src ="/icon-schecuele.png" alt = "schecuele logo"></img>
             </article>
             <p className = "arrows-3-homepaige">
                 &uarr;
@@ -214,7 +214,7 @@ function HomePage() {
             <article className="work-cards-4-homepaige">
             <span className="number-badge">6</span>
                 <p className = "how-we-work-text">Upon request, we'll<br></br>deliver your items<br></br>straight to your doorstep</p>
-                <img  className = "work-images-homepaige" src ="../src/assets/icon-clock-truck.png" alt = "clock truck logo"></img>
+                <img  className = "work-images-homepaige" src ="/icon-clock-truck.png" alt = "clock truck logo"></img>
             </article>
             <p className = "arrows-5-homepaige">
                 &larr;
@@ -222,7 +222,7 @@ function HomePage() {
             <article className="work-cards-5-homepaige">
             <span className="number-badge">5</span>
                 <p className = "how-we-work-text">Enjoy extras, including<br></br>repairs, disposal of<br></br>unwanted items, and<br></br>much more</p>
-                <img  className = "work-images-homepaige" src ="../src/assets/icon-repair.png" alt = "repair logo"></img>
+                <img  className = "work-images-homepaige" src ="/icon-repair.png" alt = "repair logo"></img>
             </article>
             <p className = "arrows-6-homepaige">
                 &darr;
@@ -230,7 +230,7 @@ function HomePage() {
             <article className="work-cards-6-homepaige">
             <span className="number-badge">4</span>
                 <p className = "how-we-work-text">We will safely transport<br></br>your belongings to our<br></br>secure, climate-<br></br>controlled warehouse</p>
-                <img  className = "work-images-homepaige" src ="../src/assets/icon-truck.png" alt = "truck logo"></img>
+                <img  className = "work-images-homepaige" src ="/icon-truck.png" alt = "truck logo"></img>
             </article>
         </div>
 
