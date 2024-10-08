@@ -158,7 +158,7 @@ return (
         <div className = "something-else-info-boxes">
             <article className = "something-else-cards">
                 <h2 className = "something-else-header-text">Collect</h2>
-                <img className = "something-else-images" src ="../src/assets/box-image.png" alt = "Box Image"></img>
+                <img className = "something-else-images" src ="/box-image.png" alt = "Box Image"></img>
                 <p className = "something-else-text">Give us a chance to make you forget<br />
                 about this headache! We will come<br />
                 and help you pick up the boxes!</p>
