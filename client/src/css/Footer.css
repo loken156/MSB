@@ -5,7 +5,7 @@
 
   .paige-container-footer{
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #d8d7d7a0;
+    background-color: #7A7A7A;
     display: grid;
     grid-template-columns: repeat(12, 80px);
     column-gap: 20px;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import "../css/ShippingPage.css";
+import arrowImage from "../assets/arrow_input_fields.png"; // Импортируем изображение стрелки
+
 
 const ShippingPage = () => {
   const [isContactOpen, setIsContactOpen] = useState(true);
@@ -48,212 +50,289 @@ const ShippingPage = () => {
     }));
   };
 
-
-
-
-  
-
-    
-
   return (
     <>
-      <div className="shipping_page_greeting">
-        <h1>Shipping</h1>
-        <h2>Almost there!</h2>
-        <img className="greeting_photo" src="../src/assets/GreetingPagePhoto.jpg" alt="greeting_photo" />
-        <div className="scroll-container">
-          <p>Scroll down</p>
-          <div className="circle">
-            <img className='arrow_down' src="../src/assets/icons8-arrow-down-50.png" alt="arrow_down" />
-          </div>
-        </div>
+      <div className="shipping_greeting">
+        <h1 className='h1_shipping'>Shipping</h1>
+        <h2 className='h2_shipping'>Almost there!</h2>
       </div>
 
-      <div className="shipping_page_content">
-
-
-
-        <div className="progress-bar">
-          <div className="step active">
-            <div className="progress_circle">1</div>
-            <p>Shipping</p>
+      <div className="shipping_content">
+        <div className='progress_bar_shipping'>
+          <div className="progress_shipping">
+            <div className="step_shipping active_shipping">
+              <div className="circle_shipping">1</div>
+            </div>
+            <div className="line_shipping"></div>
+            <div className="step_shipping">
+              <div className="circle_shipping">2</div>
+            </div>
+            <div className="line_shipping"></div>
+            <div className="step_shipping">
+              <div className="circle_shipping">3</div>
+            </div>
           </div>
-          <div className="line"></div>
-          <div className="step">
-            <div className="progress_circle">2</div>
-            <p>Payment</p>
-          </div>
-          <div className="line"></div>
-          <div className="step">
-            <div className="progress_circle">3</div>
-            <p>Review</p>
-          </div>
+
+          <div className="progress_text_shipping">
+            <div className="step_shipping active_shipping">
+              <p>Shipping</p>
+            </div>
+            <div className="step_shipping">
+              <p>Payment</p>
+            </div>
+            <div className="step_shipping">
+              <p>Review</p>
+            </div>
+          </div>  
         </div>
 
-
         {/* Contact Information Section */}
-        <div className="form_section">
-          <div className="section_header" onClick={toggleContact}>
+        <div className="form_section_shipping">
+          <div className="section_header_shipping" onClick={toggleContact}>
             <h2>Contact Information</h2>
-            <div className={`arrow ${isContactOpen ? 'arrow_up' : 'arrow_down'}`}></div>
+            <img 
+              src={arrowImage} 
+              alt="Toggle arrow" 
+              className={`arrow_shipping ${isContactOpen ? 'open' : ''}`} 
+            />
           </div>
-          {isContactOpen && (
-            <div className="form_content">
-              <div className="form_group">
-                <label>Phone number</label>
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="+00 000 00 00 00"
-                  value={contactInfo.phone}
-                  onChange={handleContactChange}
-                />
-                <span>Edit</span>
+          <div className={`form_content_shipping ${isContactOpen ? 'open' : 'closed'}`}>
+            <div className='left_side_shipping'>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Phone number</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder="+00 000 00 00 00"
+                    value={contactInfo.phone}
+                    onChange={handleContactChange}
+                  />                  
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="example@email.com"
-                  value={contactInfo.email}
-                  onChange={handleContactChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="example@email.com"
+                    value={contactInfo.email}
+                    onChange={handleContactChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>First name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="Name"
-                  value={contactInfo.firstName}
-                  onChange={handleContactChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>First name</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="Name"
+                    value={contactInfo.firstName}
+                    onChange={handleContactChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>Last name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last"
-                  value={contactInfo.lastName}
-                  onChange={handleContactChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Last name</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last"
+                    value={contactInfo.lastName}
+                    onChange={handleContactChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>             
               </div>
-              <button className="save_btn" disabled={!isContactValid}>
+            </div>
+
+            <div className="save_button_container">
+              <button className="save_btn_shipping" disabled={!isContactValid}>
                 Save
               </button>
-            </div>
-          )}
+            </div>   
+          </div>
         </div>
 
         {/* Delivery Address Section */}
-        <div className="form_section">
-          <div className="section_header" onClick={toggleDelivery}>
+        <div className="form_section_shipping">
+          <div className="section_header_shipping" onClick={toggleDelivery}>
             <h2>Delivery Address</h2>
-            <div className={`arrow ${isDeliveryOpen ? 'arrow_up' : 'arrow_down'}`}></div>
+            <img 
+              src={arrowImage} 
+              alt="Toggle arrow" 
+              className={`arrow_shipping ${isDeliveryOpen ? 'open' : ''}`} 
+            />
           </div>
-          {isDeliveryOpen && (
-            <div className="form_content">
-              <div className="form_group">
-                <label>Street name</label>
-                <input
-                  type="text"
-                  name="street"
-                  placeholder="Example street"
-                  value={deliveryInfo.street}
-                  onChange={handleDeliveryChange}
-                />
-                <span>Edit</span>
+          <div className={`form_content_shipping ${isDeliveryOpen ? 'open' : 'closed'}`}>
+            <div className='left_side_shipping'>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Street name</label>
+                  <input
+                    type="text"
+                    name="street"
+                    placeholder="Example street"
+                    value={deliveryInfo.street}
+                    onChange={handleDeliveryChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>Building number</label>
-                <input
-                  type="text"
-                  name="building"
-                  placeholder="1"
-                  value={deliveryInfo.building}
-                  onChange={handleDeliveryChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Building number</label>
+                  <input
+                    type="text"
+                    name="building"
+                    placeholder="1"
+                    value={deliveryInfo.building}
+                    onChange={handleDeliveryChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>Apartment</label>
-                <input
-                  type="text"
-                  name="apartment"
-                  placeholder="1"
-                  value={deliveryInfo.apartment}
-                  onChange={handleDeliveryChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Apartment</label>
+                  <input
+                    type="text"
+                    name="apartment"
+                    placeholder="1"
+                    value={deliveryInfo.apartment}
+                    onChange={handleDeliveryChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>Zip code</label>
-                <input
-                  type="text"
-                  name="zip"
-                  placeholder="123456"
-                  value={deliveryInfo.zip}
-                  onChange={handleDeliveryChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Zip code</label>
+                  <input
+                    type="text"
+                    name="zip"
+                    placeholder="123456"
+                    value={deliveryInfo.zip}
+                    onChange={handleDeliveryChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>Floor</label>
-                <input
-                  type="text"
-                  name="floor"
-                  placeholder="1"
-                  value={deliveryInfo.floor}
-                  onChange={handleDeliveryChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Floor</label>
+                  <input
+                    type="text"
+                    name="floor"
+                    placeholder="1"
+                    value={deliveryInfo.floor}
+                    onChange={handleDeliveryChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>City</label>
-                <input
-                  type="text"
-                  name="city"
-                  placeholder="City"
-                  value={deliveryInfo.city}
-                  onChange={handleDeliveryChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    placeholder="City"
+                    value={deliveryInfo.city}
+                    onChange={handleDeliveryChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>Province / State</label>
-                <input
-                  type="text"
-                  name="state"
-                  placeholder="State"
-                  value={deliveryInfo.state}
-                  onChange={handleDeliveryChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Province / State</label>
+                  <input
+                    type="text"
+                    name="state"
+                    placeholder="State"
+                    value={deliveryInfo.state}
+                    onChange={handleDeliveryChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
+
               </div>
-              <div className="form_group">
-                <label>Country</label>
-                <input
-                  type="text"
-                  name="country"
-                  placeholder="Country"
-                  value={deliveryInfo.country}
-                  onChange={handleDeliveryChange}
-                />
-                <span>Edit</span>
+              <div className="group_shipping">
+                <div className='form_div_shipping'>
+                  <label>Country</label>
+                  <input
+                    type="text"
+                    name="country"
+                    placeholder="Country"
+                    value={deliveryInfo.country}
+                    onChange={handleDeliveryChange}
+                  />
+                </div>
+
+                <div className='edit_div_shipping'>
+                  <span>Edit</span>                  
+                </div>
               </div>
-              <button className="save_btn" disabled={!isDeliveryValid}>
+            </div>
+
+            <div className="save_button_container">
+              <button className="save_btn_shipping" disabled={!isDeliveryValid}>
                 Save
               </button>
             </div>
-          )}
+          </div>
         </div>
 
-        <button className="continue_btn save_btn" disabled={!(isContactValid && isDeliveryValid)}>
+        <button className="continue_btn save_btn_shipping" disabled={!(isContactValid && isDeliveryValid)}>
           Continue
         </button>
       </div>
