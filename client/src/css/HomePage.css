@@ -3,138 +3,418 @@
     padding:0;  
 }
 
-.paige-container-homepaige{
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #d8d7d7;
-    display: grid;
-    grid-template-columns: repeat(12, 80px);
-    column-gap: 20px;
-    justify-content: center;
-}
-
-/*------------------------------------------------------------*/
+/*------------------------------HERO SECTION---------------------------------------------*/
 
 .hero-section-homepaige{
-
     width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
-    padding-top: 400px;
+    padding-top: 200px;
     padding-bottom: 100px;
-    background-color: rgb(71, 71, 233);
-    background-image: url("../src/assets/warehouse-background.jpg");
-    background-size: cover;
-    background-blend-mode: lighten;
-
-    color: rgb(49, 31, 98)(55, 255, 255);
+    background-color: #d8d7d7;
+}
+.header-text-homepaige{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.hero-section-homepaige h1, .hero-section-homepaige h2{
+    color: #06368D;
+}
+.hero-section-homepaige h1{
+    font-size: 70px ;
 }
 .hero-button-homepaige{
-    width: 200px;
-    height: 30px;
+    padding: 20px 50px 20px 50px;
     border-radius: 5px;
+    background-color: #06368D;
+    color: aliceblue;
+    font-weight: bold;
+    margin-top: 40px;
 }
-.hero-section-homepaige h1, .hero-section-homepaige h2, .hero-section-homepaige .hero-button-homepaige{
-    margin-bottom: 20px; 
-}
-.hero-button-homepaige{
+.hero-button-homepaige:hover{
     cursor: pointer;
+    background-color: #FFC857;
 }
 
-/*------------------------------------------------------------*/
+/*--------------------------------OUR SERVICES SECTION---------------------------------------------*/
 
-.services-section-container{
-    grid-column: 1/13;
-    padding-top:100px;
+.services-section-container {
+    width: 100%;
+    background-color: #FFC857; /* Yellow background */
+    padding-top: 100px;
     padding-bottom: 100px;
 }
-.services-section{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(1, auto);
+.services-section-position{
+    max-width: 800px;    /* Control the width of content for proper alignment */
+    margin: 0 auto;         /* Center the content horizontally */
+    padding: 0 20px;        /* Add padding to avoid content touching edges */
+    display: flex;
+    flex-direction: column;
     gap: 40px;
 }
 .services-cards{
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid black;
+    border: 2px solid #06368D;
     box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.101);
     border-radius: 10px;
-    gap: 70px;
-    padding: 10px;
+    padding: 20px;
+    background-color: #d8d7d7;
+    min-height: 250px;
 }
-.services-images-1{
-    order: -1;
-    height: 40px;
+.services-images-1,
+.services-images-2,
+.services-images-3,
+.services-images-4{
+    height: 200px;
     width: auto;
+}
+.services-images-2,
+.services-images-4{
+    order: -1;
 }
 .services-arrows{
     font-size: 30px;
 }
+.service-cards-text h3,
+.service-cards-text p,
+.service-cards-text a{
+    color: #06368D;
+}
 
-/*------------------------------------------------------------*/
-.how-we-work-section-homepaige-container{
-    grid-column: 1/13;
+/*-------------------------------WHAT WE DO SECTION---------------------------------------------*/
+
+.what-we-do-section-container{
+    width: 100%;
+    background-color: #d8d7d7; 
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
-.how-we-work-section-homepaige-center-grid{
-    display:flex;
+.what-we-do-section-position{
+    max-width: 900px; 
+    margin: 0 auto;     
+    padding: 0 20px;    
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.What-we-do-header-1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
+    gap: 40px;
+    color: #06368D;
+    font-weight: bold;
+    font-size: 30px;
 }
-.how-we-work-section-homepaige-grid{
+.What-we-do-header-2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.What-we-do-header-text-1{
+    color: #06368D;
+    font-size: 25px;
+    font-weight: bold;
+}
+.What-we-do-header-text-2{
+    color: #06368D;
+    font-weight: bold;
+    font-size: 15px;
+}
+.what-we-do-section-cards{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.card-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.what-we-do-section-cards h2,
+.what-we-do-section-cards p{
+    color: #06368D;
+}
+.card-header-image{
+    min-height: 100px;
+    max-width: auto;
+}
+.work-cards-homepaige-1, 
+.work-cards-homepaige-2, 
+.work-cards-homepaige-3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid #06368D;
+    box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.101);
+    border-radius: 10px;
+    padding: 20px;
+    min-width: 400px;
+    min-height: 320px;
+    gap: 30px;
+}
+.what-we-do-image-1{
+    height: 100px;
+    width: auto;
+}
+.services-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+.services-button-1,
+.services-button-2{
+    background-color: #06368D;
+    color: aliceblue;
+    font-weight: bold;
+    padding: 10px 40px 10px 40px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.services-button-1:hover,
+.services-button-2:hover{
+    background-color:#FFC857;
+}
+
+/*-------------------------------HOW WE WORK SECTION---------------------------------------------------*/
+
+.how-we-work-section-container-homepaige{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFC857;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.how-we-work-section-homepaige{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3,auto);
-    gap: 60px;
-    padding-bottom: 200px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, auto); 
 }
-.work-cards-homepaige-1, .work-cards-homepaige-2, .work-cards-homepaige-3{
+.grid-title-homepaige{
+    font-size: 48px;
+    padding-bottom: 30px;
+    font-weight: bold;
+    color: #06368D;
+}
+.work-cards-1-homepaige, 
+.work-cards-2-homepaige, 
+.work-cards-3-homepaige, 
+.work-cards-4-homepaige, 
+.work-cards-5-homepaige, 
+.work-cards-6-homepaige{
+    position: relative; /* Needed for absolute positioning of the number badge */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 2px solid black;
-    box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.101);
+    border: 2px solid #06368D;
     border-radius: 10px;
-    width: 100%;
-    height: 100%;
-}
-.work-cards-homepaige-1{
-    grid-column: 1;
-    grid-row: 1;
-}
-.work-cards-homepaige-2{
-    grid-column: 2;
-    grid-row: 2;
-}
-.work-cards-homepaige-3{
-    grid-column: 1;
-    grid-row: 3;
-}
-.work-cards-homepaige-image-1, .work-cards-homepaige-image-2, .work-cards-homepaige-image-3{
     box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.101);
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
+    padding: 20px;
+    margin: 5px;
+    text-align: center;
+    max-width: 250px;
+    background-color: #d8d7d7;
 }
-.work-cards-homepaige-image-1{
+.how-we-work-text{
+    color: #06368D;
+}
+.work-cards-1-homepaige{
+    grid-column: 1;
+    grid-row: 1;
+}
+.work-cards-2-homepaige{
+    grid-column: 3;
+    grid-row: 1;
+}
+.work-cards-3-homepaige{
+    grid-column: 5;
+    grid-row: 1;
+}
+.work-cards-4-homepaige{
+    grid-column: 1;
+    grid-row: 3;
+}
+.work-cards-5-homepaige{
+    grid-column: 3;
+    grid-row: 3;
+}
+.work-cards-6-homepaige{
+    grid-column: 5;
+    grid-row: 3;
+}
+.work-images-homepaige{
+    order: -1;
+    height: 48px;
+    width: auto;
+}
+.arrows-1-homepaige, 
+.arrows-2-homepaige, 
+.arrows-3-homepaige, 
+.arrows-4-homepaige, 
+.arrows-5-homepaige, 
+.arrows-6-homepaige{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    color: #06368D;
+}
+.arrows-1-homepaige{
     grid-column: 2;
     grid-row: 1;
 }
-.work-cards-homepaige-image-2{
+.arrows-2-homepaige{
+    grid-column: 4;
+    grid-row: 1;
+}
+.arrows-3-homepaige{
     grid-column: 1;
     grid-row: 2;
 }
-.work-cards-homepaige-image-3{
+.arrows-4-homepaige{
     grid-column: 2;
     grid-row: 3;
 }
-.work-cards-homepaige-button{
+.arrows-5-homepaige{
+    grid-column: 4;
+    grid-row: 3;
+}
+.arrows-6-homepaige{
+    grid-column: 5;
+    grid-row: 2;
+    padding:50px
+}
+.number-badge {
+    position: absolute; /* Allows you to position it relative to the nearest positioned ancestor */
+    top: 10px; /* Adjust this value to move it down */
+    left: 10px; /* Adjust this value to move it right */
+    background-color: #06368D; /* Background color for contrast */
+    color: white; /* Text color */
+    border-radius: 50%; /* Makes it round */
+    width: 30px; /* Fixed width */
+    height: 30px; /* Fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px; /* Font size for the number */
+    z-index: 1; /* Ensures it's on top of other content */
+}
+
+/*---------------------------FAQ-Section--------------------------------------------------*/
+
+.FAQ-container-homepaige{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d8d7d7;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.wrapper-homepaige{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.accordian-header-homepaige{
+    margin: 20px;
+    color: #06368D;
+    font-weight: bold;
+}
+.accordian-homepaige{
+    width: 500px;
+    margin-bottom: 60px;
+}
+.item-homepaige{
+    background: #c1c0c0a0;
+    margin-bottom: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.item-homepaige:hover{
+    background: #FFC857;
+}
+.title-homepaige{
+    color: #06368D;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.question-text-FAQ-homepaige{
+    color: #06368D;
+}
+.item-homepaige.selected-FAQ {
+    background: #FFC857;
+}
+.content-homepaige{
+    color:#555252 ;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0,1,0,1);
+}
+.content-homepaige.show-homepaige{
+    height: auto;
+    max-height: 9999px;
+    transition: all 0.5s cubic-bezier(1,0,1,0);
+}
+
+/*---------------------------Email-Section--------------------------------------------------*/
+
+.newletter-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d8d7d7;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    gap: 20px;
+}
+.newsletter-header{
+    color: #06368D;
+    font-size: 30px;
+}
+.email-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+.email-input-homepaige{
+    width: 380px;
     border-radius: 5px;
     padding: 10px;
-    margin-top: 40px;
+    font-size: x-large;
+}
+.email-input-homepaige:focus{
+    background-color: #FFC857;
+}
+.email-button-homepaige{
+    background-color: #06368D;
+    color: aliceblue;
+    font-weight: bold;
+    padding: 10px 40px 10px 40px;
+    border-radius: 5px;
     cursor: pointer;
+}
+.email-button-homepaige:hover{
+    background-color: #FFC857;
 }
