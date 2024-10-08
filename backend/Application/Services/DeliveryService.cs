@@ -74,7 +74,7 @@ namespace Application.Services
 
             var tasks = deliveries.Select(async order =>
             {
-                var address = await _addressRepository.GetAddressByIdAsync(order.AddressId);
+                var address = await _addressRepository.GetAddressByIdAsync(order.AddressId.Value);
                 if (address != null)
                 {
                     var detrackRequest = new

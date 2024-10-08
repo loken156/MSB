@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -122,6 +122,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<int>("BoxTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -129,12 +132,8 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("ShelfId")
+                    b.Property<Guid?>("ShelfId")
                         .HasColumnType("char(36)");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
@@ -142,21 +141,54 @@ namespace Infrastructure.Migrations
                     b.Property<int>("TimesUsed")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("UserNotes")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("BoxId");
 
+                    b.HasIndex("BoxTypeId");
+
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ShelfId");
 
                     b.ToTable("Boxes");
+                });
+
+            modelBuilder.Entity("Domain.Models.BoxType.BoxTypeModel", b =>
+                {
+                    b.Property<int>("BoxTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("BoxTypeId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<Guid?>("ShelfModelShelfId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("BoxTypeId");
+
+                    b.HasIndex("ShelfModelShelfId");
+
+                    b.ToTable("BoxTypes");
                 });
 
             modelBuilder.Entity("Domain.Models.Car.CarModel", b =>
@@ -234,7 +266,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("AddressId")
+                    b.Property<Guid?>("AddressId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("AdminModelId")
@@ -291,13 +323,35 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<int>("AvailableLargeSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AvailableMediumSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AvailableSmallSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LargeBoxCapacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MediumBoxCapacity")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Occupancy")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Section")
+                        .IsRequired()
+                        .HasColumnType("varchar(1)");
 
                     b.Property<int>("ShelfColumn")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShelfRow")
+                    b.Property<int>("ShelfRows")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SmallBoxCapacity")
                         .HasColumnType("int");
 
                     b.Property<Guid>("WarehouseId")
@@ -308,6 +362,28 @@ namespace Infrastructure.Migrations
                     b.HasIndex("WarehouseId");
 
                     b.ToTable("Shelves");
+                });
+
+            modelBuilder.Entity("Domain.Models.TimeSlot.TimeSlotModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Occupancy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TimeSlot")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TimeSlots");
                 });
 
             modelBuilder.Entity("Domain.Models.Warehouse.WarehouseModel", b =>
@@ -568,6 +644,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Box.BoxModel", b =>
                 {
+                    b.HasOne("Domain.Models.BoxType.BoxTypeModel", "BoxType")
+                        .WithMany("Boxes")
+                        .HasForeignKey("BoxTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Domain.Models.Order.OrderModel", "Order")
                         .WithMany("Boxes")
                         .HasForeignKey("OrderId")
@@ -576,21 +658,27 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Shelf.ShelfModel", "Shelf")
                         .WithMany("Boxes")
                         .HasForeignKey("ShelfId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("BoxType");
 
                     b.Navigation("Order");
 
                     b.Navigation("Shelf");
                 });
 
+            modelBuilder.Entity("Domain.Models.BoxType.BoxTypeModel", b =>
+                {
+                    b.HasOne("Domain.Models.Shelf.ShelfModel", null)
+                        .WithMany("BoxTypes")
+                        .HasForeignKey("ShelfModelShelfId");
+                });
+
             modelBuilder.Entity("Domain.Models.Order.OrderModel", b =>
                 {
                     b.HasOne("Domain.Models.Address.AddressModel", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Domain.Models.Admin.AdminModel", null)
                         .WithMany("Orders")
@@ -708,6 +796,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Domain.Models.BoxType.BoxTypeModel", b =>
+                {
+                    b.Navigation("Boxes");
+                });
+
             modelBuilder.Entity("Domain.Models.Employee.EmployeeModel", b =>
                 {
                     b.Navigation("Addresses");
@@ -722,6 +815,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Shelf.ShelfModel", b =>
                 {
+                    b.Navigation("BoxTypes");
+
                     b.Navigation("Boxes");
                 });
 

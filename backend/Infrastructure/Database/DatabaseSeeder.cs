@@ -59,7 +59,7 @@ namespace Infrastructure.Database
                   new OrderModel { OrderId = Guid.NewGuid(), UserId = users[3].Id, OrderDate = DateTime.Now, TotalCost = 4000, OrderStatus = "Created", OrderNumber = 2101010101, CarId = cars[3].CarId, AddressId = addresses[3].AddressId },
             };
 
-            modelBuilder.Entity<OrderModel>().HasData(orders);
+            /*modelBuilder.Entity<OrderModel>().HasData(orders);
             //Mock data for BoxModel
             var boxes = new BoxModel[]
             {
@@ -72,7 +72,7 @@ namespace Infrastructure.Database
                     ImageUrl = "https://pngimg.com/uploads/spongebob/spongebob_PNG11.png",
                     UserNotes = "Bubbles",
                     OrderId = orders[0].OrderId,
-                    Size = "M"
+                    Size = "Medium"
                 },
                 new BoxModel
                 {
@@ -107,9 +107,9 @@ namespace Infrastructure.Database
                     OrderId = orders[3].OrderId,
                     Size = "S"
                 }
-            };
+            };*/
 
-            modelBuilder.Entity<BoxModel>().HasData(boxes);
+            /*modelBuilder.Entity<BoxModel>().HasData(boxes);
 
             // Mock data for WarehouseModels
             var warehouses = new WarehouseModel[]
@@ -124,12 +124,12 @@ namespace Infrastructure.Database
             // Mock data for ShelfModels
             var shelves = new ShelfModel[]
             {
-                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 1, ShelfColumn = 1, Occupancy = true ,WarehouseId = warehouses[0].WarehouseId},
-                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 2, ShelfColumn = 2, Occupancy = true ,WarehouseId = warehouses[1].WarehouseId},
-                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 3, ShelfColumn = 3, Occupancy = true ,WarehouseId = warehouses[2].WarehouseId},
-                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRow = 4, ShelfColumn = 4, Occupancy = true ,WarehouseId = warehouses[3].WarehouseId},
+                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 1, ShelfColumn = 1, Occupancy = true ,WarehouseId = warehouses[0].WarehouseId},
+                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 2, ShelfColumn = 2, Occupancy = true ,WarehouseId = warehouses[1].WarehouseId},
+                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 3, ShelfColumn = 3, Occupancy = true ,WarehouseId = warehouses[2].WarehouseId},
+                new ShelfModel { ShelfId = Guid.NewGuid(), ShelfRows = 4, ShelfColumn = 4, Occupancy = true ,WarehouseId = warehouses[3].WarehouseId},
             };
-            modelBuilder.Entity<ShelfModel>().HasData(shelves);
+            modelBuilder.Entity<ShelfModel>().HasData(shelves);*/
         }
     }
 }

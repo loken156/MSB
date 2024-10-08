@@ -23,7 +23,7 @@ namespace Application.Validators.ShelfValidator
             _warehouseRepository = warehouseRepository;
 
 
-            RuleFor(x => x.ShelfRow)
+            RuleFor(x => x.ShelfRows)
                 .GreaterThanOrEqualTo(1).WithMessage("Shelf row must be greater than or equal to 1");
 
             RuleFor(x => x.ShelfColumn)

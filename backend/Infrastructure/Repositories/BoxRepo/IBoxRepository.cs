@@ -8,6 +8,6 @@ namespace Infrastructure.Repositories.BoxRepo
         Task<IEnumerable<BoxModel>> GetAllBoxesAsync();
         Task<BoxModel> GetBoxByIdAsync(Guid boxId);
         Task<BoxModel> UpdateBoxAsync(BoxModel box);
-        Task DeleteBoxAsync(Guid boxId);
+        Task DeleteBoxAsync(BoxModel box);
     }
 }

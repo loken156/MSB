@@ -1,14 +1,18 @@
 ﻿using Application.Dto.AddShelf;
 using Application.Dto.Adress;
 using Application.Dto.Box;
+using Application.Dto.BoxType;
 using Application.Dto.Employee;
 using Application.Dto.LogIn;
 using Application.Dto.Register;
+using Application.Dto.TimeSlot;
 using Application.Services;
 using Application.Validators.AddressValidator;
+using Application.Validators.BoxTypeValidator;
 using Application.Validators.BoxValidator;
 using Application.Validators.EmployeeValidator;
 using Application.Validators.ShelfValidator;
+using Application.Validators.TimeSlotValidator;
 using Application.Validators.UserValidator;
 using Domain.Interfaces;
 using FluentValidation;
@@ -27,6 +31,8 @@ namespace Application
             services.AddTransient<IValidator<RegisterDto>, UserValidations>();
             services.AddTransient<IValidator<AddressDto>, AddressValidations>();
             services.AddTransient<IValidator<BoxDto>, BoxValidator>();
+            services.AddTransient<IValidator<BoxTypeDto>, BoxTypeValidator>();
+            services.AddTransient<IValidator<TimeSlotDto>, TimeSlotValidator>();
             services.AddTransient<IValidator<AddShelfDto>, ShelfValidations>();
             services.AddTransient<IValidator<EmployeeDto>, EmployeeValidations>();
             services.AddTransient<IValidator<LogInDto>, LogInDtoValidator>();
