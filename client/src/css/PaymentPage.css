@@ -1,76 +1,140 @@
-.payment_page {
-    padding: 20px;
-}
+/* Основные стили для страницы оплаты */
 
-.progress-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-.step {
+.payment_header {
+    margin: 167px 0 60px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.progress_circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: white;
-    border: 2px solid #000033;
-    display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
+    z-index: 1;
 }
 
-.active .progress_circle {
-    background-color: #000033;
-    color: white;
+/* Заголовки H1 и H2 */
+.h1_payment, .h2_payment {
+    text-align: center;
 }
 
-.line {
-    width: 100px;
-    height: 2px;
-    background-color: #ccc;
+.h1_payment {
+    font-size: 64px;
+    color: #06368d;
 }
 
-.active .line {
-    background-color: #000033;
+.h2_payment {
+    font-size: 36px;
+    color: #06368d;
 }
 
-.form_section {
-    margin-top: 30px;
-}
 
-.form_group {
+
+/* Контент страницы */
+.payment_content {
+    background-color: #d9d9d9;
     display: flex;
     flex-direction: column;
-    margin-bottom: 16px;
-}
-
-.form_group label {
-    margin-bottom: 5px;
-    color: #000033;
-}
-
-.form_group input {
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 120px;
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
+}
+
+
+/* Секции формы оплаты */
+.form_section_payment {
+    margin-bottom: 40px;
+    width: 80%;
+}
+
+.form_section_payment input {
+    color: #06368d;
+}
+
+.form_section_payment h2 {
+    font-size: 24px;
+    color: #06368d;
+    margin-bottom: 20px;
+}
+
+/* Группы ввода */
+.form_group_payment {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form_group_payment label {
+    margin-bottom: 5px;
+    color: #7A7A7A;
+}
+
+.form_group_payment input {
+    padding: 10px;
+    border: 1px solid #06368d;
     border-radius: 4px;
+    font-size: 16px;
+    background-color: #d8d7d7;
+    color: #06368d;
 }
 
-.short_input {
-    width: 48%;
+.second_row_carddetail {
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
 }
 
-.pay_btn {
-    background-color: #000033;
+.cardnumber_input {
+    width: 50%;
+}
+
+.carddate_input{
+    width: 20%;
+}
+
+.cardcvv_input {
+    width: 20%;    
+}
+
+
+
+/* Чекбокс для совпадения адреса */
+.checkbox_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.checkbox_container label {
+    margin-right: 10px;
+    font-size: 16px;
+    color: #06368d;
+}
+
+.checkbox_container input {
+    width: 20px;
+}
+
+.checkbox_container input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #d8d7d7; /* Цвет фона, когда не активен */
+    border: 2px solid #06368d; /* Обводка */
+    border-radius: 4px; /* Закругленные углы */
+    cursor: pointer;
+}
+
+.checkbox_container input[type="checkbox"]:checked {
+    background-color: #06368d; /* Цвет фона, когда активен */
+    border-color: #06368d; /* Цвет обводки остается синим */
+}
+
+.checkbox_container input[type="checkbox"]:focus {
+    outline: none; /* Убираем стандартную обводку при фокусе */
+}
+
+
+/* Кнопка "Pay" */
+.pay_btn_payment {
+    background-color: #06368d;
     color: white;
     padding: 12px 24px;
     border: none;
@@ -79,7 +143,77 @@
     cursor: pointer;
 }
 
-.pay_btn:disabled {
+.pay_btn_payment:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+
+
+
+/* Группы ввода и кнопки "Редактировать" для Billing */
+.group_billing {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.form_div_payment {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.group_billing input {
+    width: 100%;
+    border: 1px solid #06368d;
+    border-radius: 4px;
+    background-color: #d8d7d7;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.group_billing label {
+    color: #7A7A7A;
+}
+
+.edit_div_payment {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 8.25px;
+}
+
+.edit_div_payment span {
+    color: #06368d;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid #06368d;
+}
+
+
+.payment_form_and_cart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 60%;
+}
+
+.cart_summary {
+    border: 2px solid #06368d;
+    border-radius: 12px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    width: 30%;
+    height: fit-content;
+}
+
+.left_block_payment {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+
+
+

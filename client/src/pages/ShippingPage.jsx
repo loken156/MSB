@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import "../css/ShippingPage.css";
 import arrowImage from "../assets/arrow_input_fields.png"; // Импортируем изображение стрелки
+import ProgressBar from '../components/ProgressBar'; // Импортируем компонент прогресс-бара
+
 
 
 const ShippingPage = () => {
@@ -58,33 +60,8 @@ const ShippingPage = () => {
       </div>
 
       <div className="shipping_content">
-        <div className='progress_bar_shipping'>
-          <div className="progress_shipping">
-            <div className="step_shipping active_shipping">
-              <div className="circle_shipping">1</div>
-            </div>
-            <div className="line_shipping"></div>
-            <div className="step_shipping">
-              <div className="circle_shipping">2</div>
-            </div>
-            <div className="line_shipping"></div>
-            <div className="step_shipping">
-              <div className="circle_shipping">3</div>
-            </div>
-          </div>
+        <ProgressBar activeStep={1} /> {/* Передаем текущий шаг */}
 
-          <div className="progress_text_shipping">
-            <div className="step_shipping active_shipping">
-              <p>Shipping</p>
-            </div>
-            <div className="step_shipping">
-              <p>Payment</p>
-            </div>
-            <div className="step_shipping">
-              <p>Review</p>
-            </div>
-          </div>  
-        </div>
 
         {/* Contact Information Section */}
         <div className="form_section_shipping">

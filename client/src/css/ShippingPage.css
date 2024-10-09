@@ -5,14 +5,6 @@ html {
     padding: 0;
 }
 
-/* Контейнер страницы доставки */
-.shipping_page_container {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #d8d7d7;
-    padding-top: 200px;
-    padding-bottom: 200px;
-}
-
 /* Заголовки H1 и H2 */
 .h1_shipping, .h2_shipping {
     text-align: center;
@@ -28,7 +20,7 @@ html {
 
 /* Блок приветствия */
 .shipping_greeting {
-    margin: 167px 0 120px;
+    margin: 167px 0 60px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -45,64 +37,6 @@ html {
     align-items: center;
     justify-content: start;
     margin-bottom: 120px;
-}
-
-/* Прогресс бар */
-.progress_bar_shipping {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 120px;
-    max-width: 600px;
-}
-
-.progress_shipping {
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.progress_text_shipping {
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.circle_shipping {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    color: #06368d;
-    background-color: #d9d9d9;
-    border: 2px solid #06368d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-}
-
-.active_shipping .circle_shipping {
-    background-color: #06368d;
-    color: #d9d9d9;
-}
-
-.line_shipping {
-    width: 100px;
-    height: 2px;
-    background-color: #06368d;
-}
-
-.active_shipping .line_shipping {
-    background-color: #06368d;
-}
-
-.step_shipping {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 /* Блок контактной информации */

@@ -14,6 +14,7 @@ import AdminPage from './pages/AdminPage';
 import ApiTestPage from './pages/ApiTestPage';
 import BoxDateSelectionPage from "./pages/BoxDateSelectionPage";
 import ContactUsPage from "./pages/ContactUsPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
 import jwtDecode from 'jwt-decode';
 import './css/App.css';
 
@@ -51,6 +52,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/shipping" element={<ShippingPage />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/testing-apis" element={<ApiTestPage />} />
         <Route path="/box-date-selection-page" element={<BoxDateSelectionPage />} />
         <Route path="/Contact-Us" element={<ContactUsPage/>} />

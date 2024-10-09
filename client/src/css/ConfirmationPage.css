@@ -1,0 +1,64 @@
+.confirmation_header {
+    margin: 167px 0 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* Заголовки H1 */
+.h1_confirmation {
+    text-align: center;
+    font-size: 64px;
+    color: #06368d;
+}
+
+/* Контент страницы */
+.confirmation_content {
+    background-color: #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 120px;
+    width: 100%;
+}
+
+.boxes_confirmation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 5%;
+}
+
+.right_content_confirmation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.buttons_confirmation {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.service_button_confirmation {
+    margin: auto 0px auto 0px;
+}
+
+.button_confirmation {
+    background-color: #06368d;
+    color: #d9d9d9;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    width: calc(100% - 40px);
+    text-decoration: none;
+}

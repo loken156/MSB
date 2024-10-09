@@ -32,6 +32,9 @@ const Navbar = () => {
         <li><Link to="/testing-apis">API Test</Link></li>
         <li><Link to="/box-date-selection-page">Box Date Page</Link></li>
         <li><Link to="/Contact-Us">Contact Us</Link></li>
+        <li><Link to="/shipping">Shipping</Link></li>
+        <li><Link to="/payment">Payment</Link></li>
+        <li><Link to="/confirmation">Confirmation</Link></li>
         {isAdmin() && <li><Link to="/admin">Admin</Link></li>}
         <li>
           {isAuthenticated() ? (
