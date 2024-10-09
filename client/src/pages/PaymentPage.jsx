@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../css/PaymentPage.css";
-import ProgressBar from '../components/ProgressBar'; // Импортируем компонент прогресс-бара
-import CartSummary from '../components/CartSummary';  // Импортируем компонент корзины
+import ProgressBar from '../components/ProgressBar';
+import CartSummary from '../components/CartSummary';
 
 const PaymentPage = () => {
   const [cardDetails, setCardDetails] = useState({
@@ -24,11 +24,9 @@ const PaymentPage = () => {
 
   const [sameAsDelivery, setSameAsDelivery] = useState(false);
 
-  // Проверка на заполненность полей
   const isCardValid = Object.values(cardDetails).every(value => value !== "");
   const isBillingValid = sameAsDelivery || Object.values(billingAddress).every(value => value !== "");
 
-  // Обработчики изменений
   const handleCardChange = (e) => {
     const { name, value } = e.target;
     setCardDetails((prevState) => ({
@@ -57,7 +55,6 @@ const PaymentPage = () => {
 
         <div className='left_block_payment'>
           <div className="payment_form_and_cart">
-            {/* Данные карты */}
             <div className="form_section_payment">
               <h2>Card Details</h2>
               <div className="form_group_payment cardname_input">
@@ -104,7 +101,6 @@ const PaymentPage = () => {
               </div>
             </div>
 
-            {/* Адрес для биллинга */}
             <div className="form_section_payment">
               <h2>Billing Address</h2>
               <div className="form_group_payment checkbox_container">
@@ -140,13 +136,9 @@ const PaymentPage = () => {
             </div>
           </div> 
 
-          {/* Компонент корзины */}
           <CartSummary />                  
         </div>
 
-
-
-        {/* Кнопка "Pay" */}
         <button className="pay_btn_payment" disabled={!(isCardValid && isBillingValid)}>
           Pay
         </button>

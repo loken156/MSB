@@ -8,14 +8,12 @@
     z-index: 1;
 }
 
-/* Заголовки H1 */
 .h1_confirmation {
     text-align: center;
     font-size: 64px;
     color: #06368d;
 }
 
-/* Контент страницы */
 .confirmation_content {
     background-color: #d9d9d9;
     display: flex;

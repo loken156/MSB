@@ -17,6 +17,7 @@ import ContactUsPage from "./pages/ContactUsPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import jwtDecode from 'jwt-decode';
 import './css/App.css';
+import CheckoutPage from "./pages/CheckoutPage";
 
 const isAuthenticated = () => {
   return !!localStorage.getItem('token');
@@ -50,6 +51,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/shipping" element={<ShippingPage />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/confirmation" element={<ConfirmationPage />} />

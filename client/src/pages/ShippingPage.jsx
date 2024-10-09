@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../css/ShippingPage.css";
-import arrowImage from "../assets/arrow_input_fields.png"; // Импортируем изображение стрелки
-import ProgressBar from '../components/ProgressBar'; // Импортируем компонент прогресс-бара
+import arrowImage from "../assets/arrow_input_fields.png";
+import ProgressBar from '../components/ProgressBar';
 
 
 
@@ -9,7 +9,6 @@ const ShippingPage = () => {
   const [isContactOpen, setIsContactOpen] = useState(true);
   const [isDeliveryOpen, setIsDeliveryOpen] = useState(false);
 
-  // Управление состоянием для полей формы
   const [contactInfo, setContactInfo] = useState({
     phone: "",
     email: "",
@@ -28,14 +27,12 @@ const ShippingPage = () => {
     country: "",
   });
 
-  // Проверка на заполненность полей
   const isContactValid = Object.values(contactInfo).every(value => value !== "");
   const isDeliveryValid = Object.values(deliveryInfo).every(value => value !== "");
 
   const toggleContact = () => setIsContactOpen(!isContactOpen);
   const toggleDelivery = () => setIsDeliveryOpen(!isDeliveryOpen);
 
-  // Функции для обновления значений в формах
   const handleContactChange = (e) => {
     const { name, value } = e.target;
     setContactInfo((prevState) => ({
@@ -60,10 +57,8 @@ const ShippingPage = () => {
       </div>
 
       <div className="shipping_content">
-        <ProgressBar activeStep={1} /> {/* Передаем текущий шаг */}
+        <ProgressBar activeStep={1} />
 
-
-        {/* Contact Information Section */}
         <div className="form_section_shipping">
           <div className="section_header_shipping" onClick={toggleContact}>
             <h2>Contact Information</h2>
@@ -152,7 +147,6 @@ const ShippingPage = () => {
           </div>
         </div>
 
-        {/* Delivery Address Section */}
         <div className="form_section_shipping">
           <div className="section_header_shipping" onClick={toggleDelivery}>
             <h2>Delivery Address</h2>

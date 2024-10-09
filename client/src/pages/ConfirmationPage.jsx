@@ -1,8 +1,8 @@
 import React from 'react';
 import "../css/ConfirmationPage.css";
-import ProgressBar from '../components/ProgressBar'; // Импортируем компонент прогресс-бара
-import CartSummary from '../components/CartSummary';  // Импортируем компонент корзины
-import DatesSummary from '../components/DatesSummary';  // Импортируем новый компонент для дат
+import ProgressBar from '../components/ProgressBar';
+import CartSummary from '../components/CartSummary';
+import DatesSummary from '../components/DatesSummary';
 import { Link, useNavigate } from 'react-router-dom';
 
 
@@ -18,11 +18,9 @@ const ConfirmationPage = () => {
 
         <div className='boxes_confirmation'>
 
-            {/* Компонент корзины */}
             <CartSummary />      
 
             <div className='right_content_confirmation'>
-                {/* Новый компонент с датами */}
                 <DatesSummary /> 
 
                 <div className='buttons_confirmation'>

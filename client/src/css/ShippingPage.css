@@ -1,11 +1,9 @@
-/* Основные стили для обнуления */
 *,
 html {
     margin: 0;
     padding: 0;
 }
 
-/* Заголовки H1 и H2 */
 .h1_shipping, .h2_shipping {
     text-align: center;
 }
@@ -18,7 +16,6 @@ html {
     font-size: 36px;
 }
 
-/* Блок приветствия */
 .shipping_greeting {
     margin: 167px 0 60px;
     width: 100%;
@@ -29,7 +26,6 @@ html {
     z-index: 1;
 }
 
-/* Основной контент страницы */
 .shipping_content {
     background-color: #d9d9d9;
     display: flex;
@@ -39,7 +35,6 @@ html {
     margin-bottom: 120px;
 }
 
-/* Блок контактной информации */
 .form_section_shipping {
     width: 80%;
     margin-bottom: 60px ;
@@ -50,7 +45,6 @@ html {
 
 }
 
-/* Заголовок секции с информацией */
 .section_header_shipping {
     display: flex;
     justify-content: space-between;
@@ -65,7 +59,6 @@ html {
     padding-left: 20px;
 }
 
-/* Стрелка для сворачивания секций */
 .arrow_shipping {
     display: block;
     width: 0;
@@ -78,7 +71,6 @@ html {
     border-bottom: 12px solid #06368d;
 }
 
-/* Содержание формы */
 .form_content_shipping {
     padding: 20px;
     display: flex;
@@ -90,7 +82,6 @@ html {
     width: 100%;
 }
 
-/* Группы ввода и кнопки "Редактировать" */
 .group_shipping {
     width: 57%;
     margin-top: 10px;
@@ -105,7 +96,7 @@ html {
 }
 
 .group_shipping input {
-    width: 100%; /* Убедимся, что input занимает всю ширину отведенного контейнера */
+    width: 100%;
     border: 1px solid #06368d;
     border-radius: 4px;
     background-color: #d8d7d7;
@@ -123,11 +114,10 @@ html {
     color: #7A7A7A;
 }
 
-/* Контейнер кнопки "Редактировать" */
 .edit_div_shipping {
     display: flex;
     justify-content: center;
-    align-items: flex-end; /* Исправлено на правильное выравнивание по нижнему краю */
+    align-items: flex-end;
     padding-bottom: 8.25px;
 }
 
@@ -135,7 +125,6 @@ html {
     border-bottom: 1px solid #06368d;
 }
 
-/* Кнопка "Сохранить" */
 .save_btn_shipping {
     background-color: #06368d;
     color: #d9d9d9;
@@ -155,7 +144,6 @@ html {
     cursor: not-allowed;
 }
 
-/* Контейнер кнопки сохранения */
 .save_button_container {
     display: flex;
     justify-content: flex-end;
@@ -163,34 +151,31 @@ html {
     width: 15%;
 }
 
-/* Кнопка "Продолжить" */
 .continue_btn {
     width: 10%;
 }
 
 
-/* Стили для стрелки */
 .arrow_shipping {
     border: 0px;
     margin-right: 20px;
     width: 50px;
     height: 50px;
-    transition: transform 0.3s ease; /* Анимация поворота */
+    transition: transform 0.3s ease;
 }
 
 .arrow_shipping.open {
-    transform: rotate(180deg); /* Переворот стрелки на 180 градусов */
+    transform: rotate(180deg);
 }
 
-/* Анимация для блоков с полями */
 .form_content_shipping {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease, padding 0.5s ease; /* Плавный переход для высоты и отступов */
+    transition: max-height 0.5s ease, padding 0.5s ease;
     padding: 0;
 }
 
 .form_content_shipping.open {
-    max-height: 1000px; /* Максимальная высота. Она должна быть больше, чем любая возможная высота контента. */
-    padding: 20px; /* Отступы при открытом блоке */
+    max-height: 1000px;
+    padding: 20px;
 }
