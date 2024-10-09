@@ -13,25 +13,25 @@ return (
         <div className = "cycle-section-servicepaige">
             <article className="cycle-cards-servicepaige">
                 <p className = "cycle-cards-text">Storage</p>
-                <img  className = "cycle-images-1-servicepaige" src ="../src/assets/icon-storage.png" alt = "storage logo"></img>
+                <img  className = "cycle-images-1-servicepaige" src ="/icon-storage.png" alt = "storage logo"></img>
                 <p className = "cycle-arrows-servicepaige">&rarr;</p>
             </article>
 
             <article className="cycle-cards-servicepaige">
                 <p className = "cycle-cards-text">Delivery</p>
-                <img  className = "cycle-images-1-servicepaige" src ="../src/assets/icon-truck.png" alt = "disposal logo"></img>
+                <img  className = "cycle-images-1-servicepaige" src ="/icon-truck.png" alt = "disposal logo"></img>
                 <p className = "cycle-arrows-servicepaige">&rarr;</p>
             </article>
 
             <article className="cycle-cards-servicepaige">
                 <p className = "cycle-cards-text">Disposal</p>
-                <img  className = "cycle-images-1-servicepaige" src ="../src/assets/icon-disposal.png" alt = "repair logo"></img>
+                <img  className = "cycle-images-1-servicepaige" src ="/icon-disposal.png" alt = "repair logo"></img>
                 <p className = "cycle-arrows-servicepaige">&rarr;</p>
             </article>
 
             <article className="cycle-cards-servicepaige">
                 <p className = "cycle-cards-text">Repair</p>
-                <img  className = "cycle-images-1-servicepaige" src ="../src/assets/icon-repair.png" alt = "repair logo"></img>
+                <img  className = "cycle-images-1-servicepaige" src ="/icon-repair.png" alt = "repair logo"></img>
                 <p className = "cycle-arrows-servicepaige">&rarr;</p>
             </article>
         </div>
@@ -46,49 +46,49 @@ return (
           <div className = "media-element-servicepaige">
             <p className = "box-title-servicepaige">Box S-size</p>
             <p className = "box-measurments-servicepaige">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures-servicepaige" src = "../src/assets/box-image.png" alt = "Picture of a box"></img>
+            <img  className ="box-pictures-servicepaige" src = "/box-image.png" alt = "Picture of a box"></img>
             <p className = "price-per-month-servicepaige">5$ box/month</p>
           </div>  
 
           <div className = "media-element-servicepaige">
             <p className = "box-title-servicepaige">Box M-size</p>
             <p className = "box-measurments-servicepaige">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures-servicepaige" src = "../src/assets/box-image.png" alt = "Picture of a box"></img>
+            <img  className ="box-pictures-servicepaige" src = "/box-image.png" alt = "Picture of a box"></img>
             <p className = "price-per-month-servicepaige">6$ box/month</p>
           </div>
 
           <div className = "media-element-servicepaige">
             <p className = "box-title-servicepaige">Box L-size</p>
             <p className = "box-measurments-servicepaige">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures-servicepaige" src = "../src/assets/box-image.png" alt = "Picture of a box"></img>
+            <img  className ="box-pictures-servicepaige" src = "/box-image.png" alt = "Picture of a box"></img>
             <p className = "price-per-month-servicepaige">7$ box/month</p>
           </div>
 
           <div className = "media-element-servicepaige">
             <p className = "box-title-servicepaige">Box XL-size</p>
             <p className = "box-measurments-servicepaige">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures-servicepaige" src = "../src/assets/box-image.png" alt = "Picture of a box"></img>
+            <img  className ="box-pictures-servicepaige" src = "/box-image.png" alt = "Picture of a box"></img>
             <p className = "price-per-month-servicepaige">8$ box/month</p>
           </div>
 
           <div className = "media-element-servicepaige">
             <p className = "box-title-servicepaige">Box XXL-size</p>
             <p className = "box-measurments-servicepaige">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures-servicepaige" src = "../src/assets/box-image.png" alt = "Picture of a box"></img>
+            <img  className ="box-pictures-servicepaige" src = "/box-image.png" alt = "Picture of a box"></img>
             <p className = "price-per-month-servicepaige">9$ box/month</p>
           </div>
 
           <div className = "media-element-servicepaige">
             <p className = "box-title-servicepaige">Box XXXL-size</p>
             <p className = "box-measurments-servicepaige">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures-servicepaige" src = "../src/assets/box-image.png" alt = "Picture of a box"></img>
+            <img  className ="box-pictures-servicepaige" src = "/box-image.png" alt = "Picture of a box"></img>
             <p className = "price-per-month-servicepaige">10$ box/month</p>
           </div>
 
           <div className = "media-element-servicepaige">
             <p className = "box-title-servicepaige">Box MEGA-size</p>
             <p className = "box-measurments-servicepaige">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures-servicepaige" src = "../src/assets/box-image.png" alt = "Picture of a box"></img>
+            <img  className ="box-pictures-servicepaige" src = "/box-image.png" alt = "Picture of a box"></img>
             <p className = "price-per-month-servicepaige">11$ box/month</p>
           </div>
 
@@ -103,7 +103,7 @@ return (
             <article className="work-cards-1">
             <span className="number-badge-servicepaige">1</span>
                 <p className = "card-text-servicepaige">Select the items<br></br>you want to store</p>
-                <img  className = "work-images" src ="../src/assets/icon-mouse.png" alt = "mouse logo"></img>
+                <img  className = "work-images" src ="/icon-mouse.png" alt = "mouse logo"></img>
             </article>
             <p className = "arrows-1">
                 &rarr;
@@ -111,7 +111,7 @@ return (
             <article className="work-cards-2">
             <span className="number-badge-servicepaige">2</span>
                 <p className = "card-text-servicepaige">Choose the best box<br></br>plan for your needs</p>
-                <img  className = "work-images" src ="../src/assets/icon-storage.png" alt = "storage logo"></img>
+                <img  className = "work-images" src ="/icon-storage.png" alt = "storage logo"></img>
             </article>
             <p className = "arrows-2">
                 &rarr;
@@ -119,7 +119,7 @@ return (
             <article className="work-cards-3">
             <span className="number-badge-servicepaige">3</span>
                 <p className = "card-text-servicepaige">Schedule a convinient<br></br>date for us to pick up<br></br>your items for storage</p>
-                <img  className = "work-images" src ="../src/assets/icon-schecuele.png" alt = "schecuele logo"></img>
+                <img  className = "work-images" src ="/icon-schecuele.png" alt = "schecuele logo"></img>
             </article>
             <p className = "arrows-3">
                 &uarr;
@@ -138,7 +138,7 @@ return (
             <article className="work-cards-5">
             <span className="number-badge-servicepaige">5</span>
                 <p className = "card-text-servicepaige">Enjoy extras, including<br></br>repairs, disposal of<br></br>unwanted items, and<br></br>much more</p>
-                <img  className = "work-images" src ="../src/assets/icon-repair.png" alt = "repair logo"></img>
+                <img  className = "work-images" src ="/icon-repair.png" alt = "repair logo"></img>
             </article>
             <p className = "arrows-6">
                 &darr;
@@ -146,7 +146,7 @@ return (
             <article className="work-cards-6">
                 <span className="number-badge-servicepaige">4</span>
                 <p className = "card-text-servicepaige">We will safely transport<br></br>your belongings to our<br></br>secure, climate-<br></br>controlled warehouse</p>
-                <img  className = "work-images" src ="../src/assets/icon-truck.png" alt = "truck logo"></img>
+                <img  className = "work-images" src ="/icon-truck.png" alt = "truck logo"></img>
             </article>
         </div>
     </div>
@@ -158,14 +158,14 @@ return (
         <div className = "something-else-info-boxes">
             <article className = "something-else-cards">
                 <h2 className = "something-else-header-text">Collect</h2>
-                <img className = "something-else-images" src ="../src/assets/box-image.png" alt = "Box Image"></img>
+                <img className = "something-else-images" src ="/box-image.png" alt = "Box Image"></img>
                 <p className = "something-else-text">Give us a chance to make you forget<br />
                 about this headache! We will come<br />
                 and help you pick up the boxes!</p>
             </article>
             <article className = "something-else-cards">
                 <h2 className = "something-else-header-text">Return</h2>
-                <img className = "something-else-images" src ="../src/assets/box-image.png" alt = "Box Image"></img>
+                <img className = "something-else-images" src ="/box-image.png" alt = "Box Image"></img>
                 <p className = "something-else-text">Need your stuff? We'll bring it right<br />
                 to your doorstep in a few clicks!</p>
             </article>
@@ -176,13 +176,13 @@ return (
         <div className = "something-else-info-boxes">
         <article className = "something-else-cards">
                 <h2 className = "something-else-header-text">Disposal</h2>
-                <img className = "something-else-images" src ="../src/assets/box-image.png" alt = "Box Image"></img>
+                <img className = "something-else-images" src ="/box-image.png" alt = "Box Image"></img>
                 <p className = "something-else-text">For thoose who want to get rid of<br />
                 their things forever!</p>
             </article>          
             <article className = "something-else-cards">
                 <h2 className = "something-else-header-text">Repair</h2>
-                <img className = "something-else-images" src ="../src/assets/box-image.png" alt = "Box Image"></img>
+                <img className = "something-else-images" src ="/box-image.png" alt = "Box Image"></img>
                 <p className = "something-else-text">If you want to give your things a<br />
                 pristine lock - we will help you!</p>
             </article>

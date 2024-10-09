@@ -88,33 +88,36 @@ function FAQPage() {
     <h1 className = "email-section-header">Still have a question? We would love<br />
     to answer it for you!</h1>
 
-    <div className = "email-section-FAQ">
-      <div className = "callback-form-section">
-        <p>Callback form</p>
-        <input className = "email-input-fields-FAQ-name" value = "Name"></input>
-        <input className = "email-input-fields-FAQ-phonenumber" value = "Phone number"></input>
-        <input className = "email-input-fields-FAQ-question" value = "Message"></input>
-        <div className = "date-and-time-selection-callback-form">
-          <input></input>
-          <input></input>
-        </div>
-        <button className = " send-us-a-letter-button">Call me</button>
+      <div className = "email-section-FAQ">
+        <div className = "callback-form-section">
+          <p>Callback form</p>
+          <input className = "email-input-fields-FAQ-name" placeholder="Name"></input>
+          <input className = "email-input-fields-FAQ-phonenumber" placeholder="Phone-number"></input>
+          <div className = "checkbox-container">
+            <input type = "checkbox" id = "email-checkbox-anytime" className = "email-input-fields-FAQ-checkbox"></input>
+            <label for = "email-checkbox-anytime">Anytime</label>
+          </div>
+          <div className = "date-and-time-selection-callback-form">
+            <input type="date" className="email-input-fields-FAQ-date" placeholder="Select date" />
+            <input type="time" className="email-input-fields-FAQ-time" placeholder="Select time" />
+          </div>
+          <button className = " call-me-button">Call me</button>
 
-        <div className = "subscribe-to-newsletter-section">
-          <p>Subscribe to the newsletters!</p>
-          <input className = "email-input-fields-FAQ-newsletter" value = "Email adress"></input><br />
-          <button>Subscribe</button>
+          <div className = "subscribe-to-newsletter-section">
+            <p>Subscribe to the newsletters!</p>
+            <input className = "email-input-fields-FAQ-newsletter" placeholder="Email"></input>
+            <button className ="subscribe-button">Subscribe</button>
+          </div>
+        </div>
+
+        <div className = "send-us-a-letter-section">
+          <p>Send us a letter!</p>
+          <input className = "email-input-fields-letter-name" placeholder="Name"></input>
+          <input className = "email-input-fields-letter-email" placeholder="Email"></input>
+          <textarea className = "email-input-fields-letter-question" placeholder="Question..."></textarea>
+          <button className = "send-us-a-letter-button">Send</button>
         </div>
       </div>
-
-      <div className = "send-us-a-letter-section">
-        <p>Send us a letter!</p>
-        <input className = "email-input-fields-FAQ-name" value = "Name"></input>
-        <input className = "email-input-fields-FAQ-email" value = "Email adress"></input>
-        <input className = "email-input-fields-FAQ-question" value = "Message"></input>
-        <button className = " send-us-a-letter-button">Send</button>
-      </div>
-    </div>
     
   </div>
 
