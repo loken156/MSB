@@ -14,6 +14,7 @@ import AdminPage from './pages/AdminPage';
 import ApiTestPage from './pages/ApiTestPage';
 import BoxDateSelectionPage from "./pages/BoxDateSelectionPage";
 import ContactUsPage from "./pages/ContactUsPage";
+import RequestReturnPage from "./pages/RequestReturnPage";
 import { jwtDecode } from 'jwt-decode';
 import './css/App.css';
 
@@ -54,6 +55,8 @@ function App() {
         <Route path="/testing-apis" element={<ApiTestPage />} />
         <Route path="/box-date-selection-page" element={<BoxDateSelectionPage />} />
         <Route path="/Contact-Us" element={<ContactUsPage/>} />
+        <Route path="/Request-Return" element={<RequestReturnPage/>} />
+
 
         <Route
           path="/my-account"
