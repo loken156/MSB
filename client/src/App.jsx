@@ -15,7 +15,6 @@ import ApiTestPage from './pages/ApiTestPage';
 import BoxDateSelectionPage from "./pages/BoxDateSelectionPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import RequestReturnPage from "./pages/RequestReturnPage";
-import { jwtDecode } from 'jwt-decode';
 import ConfirmationPage from "./pages/ConfirmationPage";
 import jwtDecode from 'jwt-decode';
 import './css/App.css';
