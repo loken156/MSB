@@ -1,0 +1,23 @@
+.dates_summary {
+    border: 2px solid #06368d;
+    border-radius: 12px;
+    background-color: #d8d7d7;
+    padding: 20px;
+    width: 300px;
+    height: fit-content;
+  }
+  
+  .dates_item {
+    margin-bottom: 20px;
+  }
+  
+  .dates_item h3 {
+    margin: 0;
+    color: #06368d;
+  }
+  
+  .dates_item p {
+    margin: 0;
+    color: #7A7A7A;
+  }
+  
