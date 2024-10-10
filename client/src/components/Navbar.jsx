@@ -31,6 +31,7 @@ const Navbar = () => {
         <li><Link to="/faq">FAQ</Link></li>
         <li><Link to="/testing-apis">API Test</Link></li>
         <li><Link to="/box-date-selection-page">Box Date Page</Link></li>
+        <li><Link to="/Request-Return">Request Return Paige</Link></li>
         <li><Link to="/Contact-Us">Contact Us</Link></li>
         <li><Link to="/checkout">Check Out</Link></li>
         <li><Link to="/shipping">Shipping</Link></li>

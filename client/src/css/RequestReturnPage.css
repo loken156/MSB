@@ -1,0 +1,60 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+.boxReturn-section-boxDate-paige{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d8d7d7;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 150px;
+    padding-bottom: 100px;
+    gap: 20px;
+}
+.boxReturn-section-date-selection-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.boxReturn-date-selection-calender-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 40px;
+    gap: 100px;
+}
+.boxReturn-date-selection-button{
+    color: aliceblue;
+    background-color: #06368D;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 50px;
+    cursor: pointer;
+}
+.boxReturn-date-selection-button:hover{
+    background-color: #FFC857;
+    color: black;
+    cursor: pointer;
+}
+.boxReturn-selected-time-result{
+    margin-top: 50px;
+}
+.boxReturn-date-selection-header,
+.boxReturn-timeslot-text,
+.boxReturn-date-selection-calender-section label,
+.boxReturn-selected-time-result{
+    color: #06368D;
+}
+.boxReturn-timeslot-text{
+    font-weight: bold;
+}
+.boxReturn-date-selection-header-main{
+    font-size: 50px;
+    color: #06368D;
+}
+.boxReturn-date-selection-header-second{
+    font-size: 30px;
+    color: #06368D;
+}

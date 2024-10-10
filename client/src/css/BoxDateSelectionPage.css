@@ -3,73 +3,242 @@
     padding:0;  
 }
 
-/*------------------------------------------------------------*/
+/*----------------------------HERO-Section--------------------------------*/
 
-.hero-section-boxdateselectionpage{
-
+.hero-section-boxDateSelectionpage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d8d7d7;
     width: 100%;
+    padding-top: 150px;
+}
+.hero-section-boxDateSelectionpage h1,
+.hero-section-boxDateSelectionpage h2{
+    margin-bottom: 10px; 
+    color: #06368D;
+    font-weight: bold;
+}
+.hero-section-boxDateSelectionpage h1{
+    font-size: 40px;
+}
+.hero-section-boxDateSelectionpage h2{
+    font-size: 30px;
+}
+/*----------------------------Box-Prices-Section--------------------------------*/
+
+.boxPrices-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d8d7d7;
+    width: 100%;
+    padding-top: 100px;
+}
+.media-scroller-boxDate-paige{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 21%;
+    gap: 20px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.media-element-boxDate-paige{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 400px;
-    padding-bottom: 100px;
-    background-color: rgb(71, 71, 233);
-    background-image: url("../src/assets/warehouse-background.jpg");
-    background-size: cover;
-    background-blend-mode: lighten;
-
-    color: rgb(49, 31, 98)(55, 255, 255);
+    gap: 5px;
+    padding: 10px;
+    background: #a8a6a6;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.101);
 }
-.hero-button-boxdateselectionpage{
-    width: 200px;
-    height: 30px;
-    border-radius: 5px;
+.snaps-inline-boxDate-paige{
+    scroll-snap-type: inline mandatory;
+    scroll-padding-inline: 20px;
 }
-.hero-section-boxdateselectionpage h1,
- .hero-section-boxdateselectionpage h2,
-   .hero-button-boxdateselectionpage{
-    margin-bottom: 20px; 
+.snaps-inline-boxDate-paige > *{
+    scroll-snap-align: start;
 }
-.hero-button-boxdateselectionpage{
+.box-pictures-boxDate-paige{
+    height: auto;
+    inline-size: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+.box-title-boxDate-paige{
+    font-weight: bold;
+    font-size: x-large;
+}
+.cart-button-boxDate-paige{
+    padding: 10px;
+    font-size: larger;
+    background: #06368D;
+    color: aliceblue;
+    border-radius: 10px;
+    border-style: none;
     cursor: pointer;
 }
+.cart-button-boxDate-paige:hover{
+    background: #FFC857;
+    color: black;
+}
+.price-per-month-boxDate-paige{
+    font-weight: bold;
+}
+.media-scroller-boxDate-paige::-webkit-scrollbar {
+    width: 8px;
+    height: 20px; 
+    padding-bottom: 10px;
+}
+.media-scroller-boxDate-paige::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
 
-/*------------------------------------------------------------*/
+.media-scroller-boxDate-paige::-webkit-scrollbar-thumb:hover {
+    background-color: #FFC857;
+}
 
-.paige-container-boxedateselectionpage{
-    font-family: Arial, Helvetica, sans-serif;
+.media-scroller-boxDate-paige::-webkit-scrollbar-track {
+    background: #f7efef;
+    border-radius: 10px;
+}
+.box-title-boxDate-paige,
+.box-measurments-boxDate-paige,
+.price-per-month-boxDate-paige,
+.number-of-boxes-boxDate-paige{
+    color: #06368D;
+}
+.checkout-buttons-boxDate-paige{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 50px;
+}
+.checkout-buttons-boxDate-paige p{
+    border: 2px solid #06368D;
+    border-radius: 5px;
+    padding: 5px;
+}
+.checkout-buttons-boxDate-paige p:hover{
+    background-color: #FFC857;
+    cursor: pointer;
+    color: black;
+}
+.checkout-noBoxButton-boxDate-paige{
+    color: #06368D;
+}
+.checkout-withBoxButton-boxDate-paige{
+    background-color: #06368D;
+    color:aliceblue ;
+}
+/*-----------------------Box-date-Delivery-Section-------------------------------------*/
+
+.boxDelivery-section-boxDate-paige{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #d8d7d7;
-    display: grid;
-    grid-template-columns: repeat(12, 80px);
-    column-gap: 20px;
-    height: 100vh;
-    justify-content: center;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    gap: 20px;
 }
-.paige-container-grid-boxedateselectionpage{
-    grid-column: 1/13;
-}
-.date-selection-container{
+.boxDelivery-section-date-selection-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 80px;
 }
-.date-selection-calender-section{
+.boxDelivery-date-selection-calender-section{
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-top: 40px;
     gap: 100px;
 }
-.date-selection-button{
+.boxDelivery-date-selection-button{
     color: aliceblue;
-    background-color: rgb(62, 103, 181);
+    background-color: #06368D;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 50px;
+}
+.boxDelivery-date-selection-button:hover{
+    background-color: #FFC857;
+    color: black;
+    cursor: pointer;
+}
+.boxDelivery-selected-time-result{
+    margin-top: 50px;
+}
+.boxDelivery-date-selection-header,
+.boxDelivery-timeslot-text,
+.boxDelivery-date-selection-calender-section label,
+.boxDelivery-selected-time-result{
+    color: #06368D;
+}
+.boxDelivery-timeslot-text{
+    font-weight: bold;
+}
+.boxDelivery-date-selection-header{
+    font-size: 30px;
+}
+
+/*-----------------------Box-date-Collect-Section-------------------------------------*/
+
+.boxCollect-section-boxDate-paige{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d8d7d7;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    gap: 20px;
+}
+.boxCollect-section-date-selection-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.boxCollect-date-selection-calender-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 40px;
+    gap: 100px;
+}
+.boxCollect-date-selection-button{
+    color: aliceblue;
+    background-color: #06368D;
     border-radius: 5px;
     padding: 10px;
     margin-top: 50px;
     cursor: pointer;
 }
-.selected-time-result{
+.boxCollect-date-selection-button:hover{
+    background-color: #FFC857;
+    color: black;
+    cursor: pointer;
+}
+.boxCollect-selected-time-result{
     margin-top: 50px;
+}
+.boxCollect-date-selection-header,
+.boxCollect-timeslot-text,
+.boxCollect-date-selection-calender-section label,
+.boxCollect-selected-time-result{
+    color: #06368D;
+}
+.boxCollect-timeslot-text{
+    font-weight: bold;
+}
+.boxCollect-date-selection-header{
+    font-size: 30px;
 }
