@@ -1,7 +1,7 @@
 ﻿services:
   - type: web
     name: my-dotnet-backend
-    env: static
+    env: production
     branch: main
     buildCommand: "dotnet build"
     startCommand: "dotnet run --no-launch-profile --urls=http://0.0.0.0:8080"
