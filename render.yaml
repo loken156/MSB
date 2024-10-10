@@ -1,6 +1,7 @@
 ﻿services:
   - type: web
     name: my-dotnet-backend
+    runtime: dotnet
     env: production
     branch: main
     buildCommand: "dotnet build"
