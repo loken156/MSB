@@ -3,73 +3,183 @@
     padding:0;  
 }
 
-/*------------------------------------------------------------*/
+/*-----------------------Hero Section-------------------------------------*/
 
 .hero-section-FAQ{
-
-    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding-top: 400px;
-    padding-bottom: 100px;
-    background-color: rgb(71, 71, 233);
-    background-image: url("../src/assets/warehouse-background.jpg");
-    background-size: cover;
-    background-blend-mode: lighten;
-
-    color: rgb(49, 31, 98)(55, 255, 255);
+    background-color: #d8d7d7;
+    width: 100%;
+    padding-top: 150px;
+}
+.hero-section-header{
+    color: #06368D;
+    font-weight: bold;
+    font-size: 50px;
 }
 
-/*------------------------------------------------------------*/
+/*-------------------------Accordian Section-----------------------------------*/
 
 .FAQ-paige-container{
-    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #d8d7d7;
-    display: grid;
-    grid-template-columns: repeat(12, 80px);
-    column-gap: 20px;
-    justify-content: center;
+    width: 100%;
+    padding-bottom: 100px;
 }
-.FAQ-grid-container{
-    grid-column: 1/13;
-}
-
-/*------------------------------------------------------------*/
-.wrapper{
+.wrapper-FAQ{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.accordian-header{
-margin: 60px;
+.accordian-header-FAQ{
+    color: #06368D;
+    margin: 20px;
 }
-.accordian{
+.accordian-FAQ{
     width: 500px;
     margin-bottom: 60px;
 }
-.item{
+.item-FAQ{
     background: #c1c0c0a0;
     margin-bottom: 5px;
     padding: 10px 20px;
     cursor: pointer;
 }
-.title{
-    color: #183cbd;
+.title-FAQ{
+    color: #06368D;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.content{
-    color:#555252 ;
+.item-FAQ:hover{
+    background: #FFC857;
+}
+.item-FAQ.selected-FAQ {
+    background: #FFC857;
+}
+.question-text-FAQ{
+    color: #06368D;
+}
+.content-FAQ{
+    color:#555252;
     max-height: 0;
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0,1,0,1);
 }
-.content.show{
+.content-FAQ.show-FAQ{
     height: auto;
     max-height: 9999px;
     transition: all 0.5s cubic-bezier(1,0,1,0);
+}
+
+/*-------------------------Send Email Section-----------------------------------*/
+
+.email-container-FAQ{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d8d7d7;
+    width: 100%;
+    gap: 50px;
+}
+
+.email-section-FAQ{
+    display: flex;
+    flex-direction: row;
+    gap: 200px;
+    padding-bottom: 100px;
+}
+.send-us-a-letter-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.callback-form-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.checkbox-container{
+    display: inline-flex;
+    gap: 5px;
+}
+.subscribe-to-newsletter-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    gap: 10px;
+}
+.email-container-FAQ input,
+.email-container-FAQ textarea{
+    border-radius: 5px;
+}
+.email-container-FAQ input:hover,
+.email-container-FAQ textarea:hover{
+    background-color: #FFC857;
+}
+.email-container-FAQ input:focus,
+.email-container-FAQ textarea:focus{
+    background-color: #FFC857;
+}
+.email-input-fields-letter-name,
+.email-input-fields-letter-email,
+.email-input-fields-FAQ-name,
+.email-input-fields-FAQ-phonenumber,
+.email-input-fields-FAQ-newsletter{
+    width: 300px;
+    height: 30px;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+.email-input-fields-letter-question{
+    width: 300px;
+    height: 200px;
+    resize: none;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    border: 2px solid black;
+}
+.email-container-FAQ button{
+    border-radius: 5px;
+    background-color: #06368D;
+    color: aliceblue;
+    font-weight: bold;
+    font-size: 15px;
+}
+.email-container-FAQ button:hover{
+    cursor: pointer;
+    background-color:#FFC857;
+}
+.send-us-a-letter-button,
+.subscribe-button,
+.call-me-button{
+    width: 200px;
+    height: 50px;;
+}
+.date-and-time-selection-callback-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+
+}
+.email-input-fields-FAQ-date,
+.email-input-fields-FAQ-time {
+    width: 140px;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+
 }

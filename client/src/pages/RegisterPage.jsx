@@ -208,7 +208,7 @@ const RegisterPage = () => {
             <button className = "register-button" type="submit">Register</button>
           </form>
 
-          <img className = "register-image" src = "src\assets\Magnificent Store Buddies.png" alt = "MSB Logo"></img>
+          <img className = "register-image" src = "/Magnificent Store Buddies.png" alt = "MSB Logo"></img>
 
         </div>
       </div>

@@ -74,7 +74,7 @@ function LoginPage() {
             </form>
           </div>
 
-          <img className = "login-image" src = "src\assets\Magnificent Store Buddies.png" alt = "Picture of boxes"></img>
+          <img className = "login-image" src = "/Magnificent Store Buddies.png" alt = "Picture of boxes"></img>
 
         </div>
 
