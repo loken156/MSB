@@ -1,6 +1,7 @@
 import Footer from "./components/Footer";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import SuccessPage from "./components/paymentSuccess";
 import HomePage from './pages/HomePage';
 import Prices from './pages/PricesPage';
 import Services from './pages/ServicesPage';
@@ -54,6 +55,7 @@ function App() {
         <Route path="/testing-apis" element={<ApiTestPage />} />
         <Route path="/box-date-selection-page" element={<BoxDateSelectionPage />} />
         <Route path="/Contact-Us" element={<ContactUsPage/>} />
+        <Route path="/success" element={<SuccessPage />} />
 
         <Route
           path="/my-account"
