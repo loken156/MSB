@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MSB_Database))]
-    [Migration("20241004085317_InitialCreate")]
+    [Migration("20241011131955_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -34,10 +34,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("AdminModelId")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Apartment")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -49,16 +45,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("EmployeeModelId")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Floor")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<double>("Latitude")
-                        .HasColumnType("double");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("double");
-
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -67,7 +53,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("StreetNumber")
+                    b.Property<string>("UnitNumber")
                         .IsRequired()
                         .HasColumnType("longtext");
 

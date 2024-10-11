@@ -52,13 +52,7 @@ namespace Application.Commands.Users.UpdateUser
 
                 // Update address properties
                 addressToUpdate.StreetName = addressDto.StreetName ?? addressToUpdate.StreetName;
-                addressToUpdate.StreetNumber = addressDto.StreetNumber ?? addressToUpdate.StreetNumber;
-                addressToUpdate.Apartment = addressDto.Apartment ?? addressToUpdate.Apartment;
-                addressToUpdate.ZipCode = addressDto.ZipCode ?? addressToUpdate.ZipCode;
-                addressToUpdate.Floor = addressDto.Floor ?? addressToUpdate.Floor;
-                addressToUpdate.City = addressDto.City ?? addressToUpdate.City;
-                addressToUpdate.State = addressDto.State ?? addressToUpdate.State;
-                addressToUpdate.Country = addressDto.Country ?? addressToUpdate.Country;
+                addressToUpdate.UnitNumber = addressDto.ZipCode ?? addressToUpdate.UnitNumber;
                 addressToUpdate.ZipCode = addressDto.ZipCode ?? addressToUpdate.ZipCode;
                 // ... Update other address fields as necessary
             }

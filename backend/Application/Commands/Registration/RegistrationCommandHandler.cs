@@ -35,16 +35,12 @@ namespace Application.Commands.Registration
                 PhoneNumber = request.RegDto.PhoneNumber,
                 Addresses = new List<AddressModel>
                 {
-                    new AddressModel
+                    new ()
                     {
                         StreetName = request.RegDto.Address.StreetName,
-                        StreetNumber = request.RegDto.Address.StreetNumber,
-                        Apartment = request.RegDto.Address.Apartment,
+                        UnitNumber = request.RegDto.Address.UnitNumber,
                         ZipCode = request.RegDto.Address.ZipCode,
-                        Floor = request.RegDto.Address.Floor,
-                        City = request.RegDto.Address.City,
-                        State = request.RegDto.Address.State,
-                        Country = request.RegDto.Address.Country,
+                        FullAddress = $"{request.RegDto.Address.StreetName} Singapore {request.RegDto.Address.ZipCode}".TrimEnd(' ')
                     }
                 }
             };

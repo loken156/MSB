@@ -22,34 +22,34 @@ namespace Application.Validators.AddressValidator
             RuleFor(address => address.StreetName)
            .NotEmpty().WithMessage("Street name is required.")
            .Length(1, 100).WithMessage("Street name must be between 1 and 100 characters long.");
+            
+            RuleFor(address => address.UnitNumber)
+                .NotEmpty().WithMessage("Street name is required.")
+                .Length(1, 10).WithMessage("Street name must be between 1 and 10 characters long.");
 
-            RuleFor(address => address.StreetNumber)
-                .NotEmpty().WithMessage("Street number is required.")
-                .Matches(@"^\d+\w*$").WithMessage("Street number must be a valid number, optionally followed by a letter.");
+            //RuleFor(address => address.StreetNumber)
+            //    .NotEmpty().WithMessage("Street number is required.")
+            //    .Matches(@"^\d+\w*$").WithMessage("Street number must be a valid number, optionally followed by a letter.");
 
-            RuleFor(address => address.Apartment)
-                .NotEmpty().WithMessage("Apartment number is required.")
-                .Matches(@"^\w+$").WithMessage("Apartment number must be a valid alphanumeric string.");
+            
 
             RuleFor(address => address.ZipCode)
                 .NotEmpty().WithMessage("Zip code is required.");
             //.Matches(@"^\d{5}(-\d{4})?$").WithMessage("Zip code must be a valid ZIP code (U.S. format)."); // Adjust regex for local format if necessary
 
-            RuleFor(address => address.Floor)
-                .NotEmpty().WithMessage("Floor is required.")
-                .Matches(@"^[a-zA-Z0-9]+$").WithMessage("Floor must be alphanumeric.");
+            
 
-            RuleFor(address => address.City)
-                .NotEmpty().WithMessage("City is required.")
-                .Length(1, 50).WithMessage("City must be between 1 and 50 characters long.");
+            //RuleFor(address => address.City)\
+            //   .NotEmpty().WithMessage("City is required.")
+            //   .Length(1, 50).WithMessage("City must be between 1 and 50 characters long.");
 
-            RuleFor(address => address.State)
-                .NotEmpty().WithMessage("State is required.")
-                .Length(1, 50).WithMessage("State must be between 1 and 50 characters long.");
+            //RuleFor(address => address.State)
+            //    .NotEmpty().WithMessage("State is required.")
+            //    .Length(1, 50).WithMessage("State must be between 1 and 50 characters long.");
 
-            RuleFor(address => address.Country)
-                .NotEmpty().WithMessage("Country is required.")
-                .Length(1, 50).WithMessage("Country must be between 1 and 50 characters long.");
+            //RuleFor(address => address.Country)
+            //    .NotEmpty().WithMessage("Country is required.")
+            //    .Length(1, 50).WithMessage("Country must be between 1 and 50 characters long.");
 
             //RuleFor(address => address.Latitude)
             //    .InclusiveBetween(-90.0, 90.0).WithMessage("Latitude must be between -90 and 90.");
