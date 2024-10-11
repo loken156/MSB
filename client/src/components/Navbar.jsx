@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -31,7 +31,12 @@ const Navbar = () => {
         <li><Link to="/faq">FAQ</Link></li>
         <li><Link to="/testing-apis">API Test</Link></li>
         <li><Link to="/box-date-selection-page">Box Date Page</Link></li>
+        <li><Link to="/Request-Return">Request Return Paige</Link></li>
         <li><Link to="/Contact-Us">Contact Us</Link></li>
+        <li><Link to="/checkout">Check Out</Link></li>
+        <li><Link to="/shipping">Shipping</Link></li>
+        <li><Link to="/payment">Payment</Link></li>
+        <li><Link to="/confirmation">Confirmation</Link></li>
         {isAdmin() && <li><Link to="/admin">Admin</Link></li>}
         <li>
           {isAuthenticated() ? (

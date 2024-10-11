@@ -15,8 +15,11 @@ import AdminPage from './pages/AdminPage';
 import ApiTestPage from './pages/ApiTestPage';
 import BoxDateSelectionPage from "./pages/BoxDateSelectionPage";
 import ContactUsPage from "./pages/ContactUsPage";
-import { jwtDecode } from 'jwt-decode';
+import RequestReturnPage from "./pages/RequestReturnPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
+import jwtDecode from 'jwt-decode';
 import './css/App.css';
+import CheckoutPage from "./pages/CheckoutPage";
 
 const isAuthenticated = () => {
   return !!localStorage.getItem('token');
@@ -50,12 +53,15 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/shipping" element={<ShippingPage />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/testing-apis" element={<ApiTestPage />} />
         <Route path="/box-date-selection-page" element={<BoxDateSelectionPage />} />
         <Route path="/Contact-Us" element={<ContactUsPage/>} />
         <Route path="/success" element={<SuccessPage />} />
+        <Route path="/Request-Return" element={<RequestReturnPage/>} />
 
         <Route
           path="/my-account"
