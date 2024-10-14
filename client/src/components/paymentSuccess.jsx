@@ -1,7 +1,7 @@
 // src/pages/SuccessPage.js
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import "../css/SuccessPage.css"
+import "../css/successPage.css"
 
 const SuccessPage = () => {
     const location = useLocation();
