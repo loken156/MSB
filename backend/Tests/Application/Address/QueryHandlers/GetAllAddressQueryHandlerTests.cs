@@ -44,7 +44,7 @@ namespace Tests.Application.Address.QueryHandlers
         {
             // Arrange
             var mockAddressRepository = new Mock<IAddressRepository>();
-            var addresses = new List<AddressModel> { new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Street1", StreetNumber = "1", City = "City1", Country = "Country1", ZipCode = "ZipCode1" } };
+            var addresses = new List<AddressModel> { new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Street1", UnitNumber="#01-02", City = "City1", Country = "Country1", ZipCode = "ZipCode1" } };
             mockAddressRepository.Setup(repo => repo.GetAllAddressesAsync()).ReturnsAsync(addresses);
             var handler = new GetAllAddressesQueryHandler(mockAddressRepository.Object);
             var query = new GetAllAddressesQuery();

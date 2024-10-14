@@ -13,7 +13,7 @@ namespace Tests.Application.Address.QueryHandlers
         {
             // Arrange
             var mockAddressRepository = new Mock<IAddressRepository>();
-            var address = new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Street1", StreetNumber = "1", City = "City1", Country = "Country1", ZipCode = "ZipCode1" };
+            var address = new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Street1", City = "City1", UnitNumber="#01-02" , Country = "Country1", ZipCode = "ZipCode1" };
             mockAddressRepository.Setup(repo => repo.GetAddressByIdAsync(It.IsAny<Guid>())).ReturnsAsync(address);
             var handler = new GetAddressByIdQueryHandler(mockAddressRepository.Object);
             var query = new GetAddressByIdQuery(address.AddressId);
@@ -44,7 +44,7 @@ namespace Tests.Application.Address.QueryHandlers
         {
             // Arrange
             var mockAddressRepository = new Mock<IAddressRepository>();
-            var address = new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Street1", StreetNumber = "1", City = "City1", Country = "Country1", ZipCode = "ZipCode1" };
+            var address = new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Street1", UnitNumber="#01-02" , City = "City1", Country = "Country1", ZipCode = "ZipCode1" };
             mockAddressRepository.Setup(repo => repo.GetAddressByIdAsync(It.IsAny<Guid>())).ReturnsAsync(address);
             var handler = new GetAddressByIdQueryHandler(mockAddressRepository.Object);
             var query = new GetAddressByIdQuery(address.AddressId);
