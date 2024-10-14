@@ -1,18 +1,16 @@
-﻿using System.Net.Http;
+﻿using Application.Dto.Detrack;
+using Microsoft.Extensions.Logging;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Infrastructure.Services.Detrack.DTOs;
-using Microsoft.Extensions.Logging;
 
-namespace Infrastructure.Services.Detrack
+namespace Application.Services.Detrack
 {
     public class DetrackService : IDetrackService
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<DetrackService> _logger;
         private const string DetrackApiUrl = "https://app.detrack.com/api/v2/delivery"; // Replace with the actual API endpoint
-        private const string ApiKey = "9943520c80ee2aaad2cc80c29bdfb298e85feed021ef0328";
+        private const string ApiKey = "7d5e523be182472211381fa6a6ba508e5919251796bb588a";
 
         public DetrackService(HttpClient httpClient, ILogger<DetrackService> logger)
         {

@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using Infrastructure.Services.Detrack.DTOs;
+﻿using Application.Dto.Detrack;
 
-namespace Infrastructure.Services.Detrack
+namespace Application.Services.Detrack
 {
     public interface IDetrackService
     {

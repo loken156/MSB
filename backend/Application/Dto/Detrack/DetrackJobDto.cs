@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Services.Detrack.DTOs
+﻿namespace Application.Dto.Detrack
 {
     public class DetrackJobDto
     {
