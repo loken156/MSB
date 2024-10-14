@@ -12,6 +12,6 @@ namespace Application.Dto.BoxType
 
         public int Stock { get; set; }      // Amount (modifiable)
 
-        public string Description { get; set; }  // Description of the box (immutable)
+        public string Description { get; set; } // Description of the box (immutable)
     }
 }
