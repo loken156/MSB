@@ -10,7 +10,7 @@ namespace Domain.Models.Address
         [Key]
         public Guid AddressId { get; set; }
         [ForeignKey("UserId")]
-        public string? UserId { get; set; }
+        public string UserId { get; set; }
         public string StreetName { get; set; } = string.Empty;
         
         public string UnitNumber { get; set; } = string.Empty;
