@@ -19,6 +19,7 @@ namespace API.Controllers.UserController
         private readonly ILogger<UserController> _logger;
         private readonly IEmployeeService _employeeService;
 
+
         // Constructor to initialize the dependencies
         public UserController(IMediator mediator, ILogger<UserController> logger, IEmployeeService employeeService)
         {
@@ -76,16 +77,16 @@ namespace API.Controllers.UserController
         {
             try
             {
-                // Create and send the UpdateUserCommand using MediatR
+                // Send the update command with the DTO and the user ID
                 var command = new UpdateUserCommand(updatedUserInfoDto, updatedUserId);
                 var result = await _mediator.Send(command);
 
                 if (result == null)
                 {
-                    return NotFound("Usernotfound");
+                    return NotFound("User not found");
                 }
 
-                return Ok(result);
+                return Ok(result); // Return the updated user object or some success message
             }
             catch (Exception ex)
             {

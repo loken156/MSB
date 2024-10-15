@@ -27,10 +27,10 @@ namespace Infrastructure.Database
             // Mock data for AddressModels
             var addresses = new AddressModel[]
             {
-                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Maple Street", StreetNumber ="21" , Apartment = "Apt 3B", ZipCode = "12345", Floor = "2nd", City = "Springfield", State = "Ohio", Country = "USA", Latitude = 39.9266, Longitude = -83.8064 },
-                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Oak Avenue", StreetNumber ="22" ,Apartment = "Apt 2A", ZipCode = "54321", Floor = "Ground Floor", City = "Willow Creek", State = "California", Country = "USA", Latitude = 37.7833, Longitude = -122.4167 },
-                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Elm Street", StreetNumber ="23" , Apartment = "Apt 5C", ZipCode = "98765", Floor = "3rd", City = "Oakville", State = "New York", Country = "USA", Latitude = 40.7128, Longitude = -74.0060 },
-                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Pine Street", StreetNumber ="24", Apartment = "Apt 10D", ZipCode = "67890", Floor = "4th", City = "Cedarville", State = "Texas", Country = "USA", Latitude = 31.9686, Longitude = -99.9018 }
+                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Maple Street", UnitNumber="#01-02" , ZipCode = "112345", City = "Springfield", State = "Ohio", Country = "USA"},
+                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Oak Avenue", UnitNumber="#02-12" , ZipCode = "154321", City = "Willow Creek", State = "California", Country = "USA"},
+                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Elm Street", UnitNumber="#03-13" , ZipCode = "198765", City = "Oakville", State = "New York", Country = "USA"},
+                new AddressModel { AddressId = Guid.NewGuid(), StreetName = "Pine Street", UnitNumber="#04-14" , ZipCode = "167890", City = "Cedarville", State = "Texas", Country = "USA"}
             };
             for (int i = 0; i < users.Length; i++)
             {
