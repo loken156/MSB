@@ -23,6 +23,16 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 10px auto;
+}
+
+.arrow_down {
+    height: 35px;
+}
+
+p {
+    color: #000228;
+    font-size: 18px;
     z-index: 1;
 }
 
