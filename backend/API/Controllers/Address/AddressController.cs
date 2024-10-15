@@ -128,7 +128,7 @@ namespace API.Controllers.Address
 
                 return Ok("Deletion Successful");
             }
-            catch (Exception ex)
+            catch (Exception ex) //hi
             {
                 _logger.LogError(ex, "Error deleting address with id: {id}", id);
                 return StatusCode(500, "An error occurred while deleting the address");
