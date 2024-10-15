@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MSB_Database))]
-    [Migration("20241011131955_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241015074652_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("EmployeeModelId")
                         .HasColumnType("varchar(255)");
 
+                    b.Property<string>("FullAddress")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -58,6 +62,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("ZipCode")
@@ -628,7 +633,8 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Entities.ApplicationUser", null)
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Models.Box.BoxModel", b =>
