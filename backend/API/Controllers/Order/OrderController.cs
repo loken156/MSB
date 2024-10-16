@@ -6,6 +6,7 @@ using Application.Dto.Order;
 using Application.Queries.Order.GetAll;
 using Application.Queries.Order.GetByID;
 using Application.Services;
+using Application.Services.Detrack;
 using AutoMapper;
 using Domain.Models.Box;
 using Domain.Models.Notification;
@@ -39,9 +40,10 @@ namespace API.Controllers.Order
         private readonly DeliveryService _deliveryService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly OrderService _orderService;  // Added OrderService
+        private readonly IDetrackService _detrackService;  // Inject DetrackService
 
         // Constructor to initialize the dependencies
-        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper, ICacheService cacheService, IOrderRepository repository, IBoxRepository boxRepository, UserManager<ApplicationUser> userManager, OrderService orderService)
+        public OrderController(IMediator mediator, INotificationService notificationService, ILogger<OrderController> logger, IMapper mapper, ICacheService cacheService, IOrderRepository repository, IBoxRepository boxRepository, UserManager<ApplicationUser> userManager, OrderService orderService, IDetrackService detrackService)
 
         {
             _mediator = mediator;
@@ -53,6 +55,7 @@ namespace API.Controllers.Order
             _boxRepository = boxRepository;
             _userManager = userManager;
             _orderService = orderService;
+            _detrackService = detrackService;
 
         }
 
@@ -63,66 +66,32 @@ namespace API.Controllers.Order
         {
             try
             {
-                // Map the AddOrderDto to an OrderModel
+                // Map the DTO to OrderModel
                 var newOrder = _mapper.Map<OrderModel>(orderDto);
 
-                // Use the OrderService to create the order, including generating the order number
-                var order = await _orderService.CreateOrderAsync(newOrder);
+                // Create the order in the database
+                var createdOrder = await _orderRepository.AddOrderAsync(newOrder);
 
-                if (order == null)
+                // Attempt to create a Detrack job
+                var detrackSuccess = await _detrackService.CreateDetrackJobAsync(_mapper.Map<OrderDto>(createdOrder));
+
+                if (!detrackSuccess)
                 {
-                    _logger.LogError("Order creation failed.");
-                    return StatusCode(500, "Order creation failed.");
+                    return StatusCode(500, "Order created but failed to create Detrack job.");
                 }
 
-                // Check if the order includes boxes and add them
-                if (orderDto.Boxes != null && orderDto.Boxes.Any())
-                {
-                    foreach (var boxDto in orderDto.Boxes)
-                    {
-                        var box = _mapper.Map<BoxModel>(boxDto);
-                        box.OrderId = order.OrderId;  // Link box to the created order
-                        await _boxRepository.AddBoxAsync(box);  // Save box to the database
-                    }
-                }
+                // Map the result back to OrderDto
+                var resultDto = _mapper.Map<OrderDto>(createdOrder);
 
-                // Cache the order for the user
-                await _cacheService.SetAsync($"OrderForUser_{order.UserId}", order, TimeSpan.FromMinutes(30));
-
-                // Send a notification to the user
-                // Retrieve user details to get the email
-                var user = await _userManager.FindByIdAsync(order.UserId); // Assuming you're using ASP.NET Identity
-
-                if (user == null)
-                {
-                    _logger.LogError("User not found for ID: {UserId}", order.UserId);
-                    return StatusCode(500, "User not found");
-                }
-
-                var notification = new NotificationModel
-                {
-                    Email = user.Email,  // Set the email address
-                    Message = "Your order has been accepted."
-                };
-
-                // Send the notification
-                await _notificationService.SendNotification(notification);
-
-
-                // Schedule deliveries
-                await _deliveryService.ScheduleDeliveries();
-
-                // Map the result to OrderDto before returning
-                var resultDto = _mapper.Map<OrderDto>(order);
                 return CreatedAtAction(nameof(GetOrderById), new { id = resultDto.OrderId }, resultDto);
             }
             catch (Exception ex)
             {
-                // Log error and return a server error status
-                _logger.LogError(ex, "Error adding order with command: {Command}", orderDto);
-                return StatusCode(500, "An error occurred while adding the order");
+                // Log the error and return 500
+                return StatusCode(500, $"An error occurred while adding the order: {ex.Message}");
             }
         }
+
 
         /*
                 // Endpoint to add a new order
@@ -185,7 +154,7 @@ namespace API.Controllers.Order
                 var box = _mapper.Map<BoxModel>(boxDto);
 
                 // Save the order and box to the database
-                await _orderRepository.CreateOrderAsync(order);
+                await _orderRepository.AddOrderAsync(order);
                 await _boxRepository.AddBoxAsync(box);
 
                 // Remove the order and box from the cache

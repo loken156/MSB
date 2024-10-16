@@ -14,5 +14,7 @@ namespace Application.Dto.Order
 
         // Optional list of boxes that the customer can add to the order
         public List<BoxDto>? Boxes { get; set; }
+        
+        
     }
 }
