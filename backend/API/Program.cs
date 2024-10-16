@@ -2,6 +2,7 @@ using Application;
 using Application.MappingProfiles;
 using Application.Services;
 using Application.Services.Employee;
+using Domain.Models.Stripe;
 using Infrastructure;
 using Infrastructure.Database;
 using Infrastructure.Entities;
@@ -14,9 +15,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Stripe;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var configuration = builder.Configuration;
 
 builder.Services.AddHttpClient();
 
@@ -34,12 +38,16 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost:5173")
+            builder.WithOrigins("http://localhost:5173", "https://localhost:5173")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
         });
 });
+
+builder.Services.AddControllersWithViews();
+
+StripeConfiguration.ApiKey = configuration["StripeSettings:SecretKey"];
 
 // Add global authorization filter
 builder.Services.AddControllers(options =>
@@ -145,14 +153,25 @@ if (app.Environment.IsDevelopment())
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     });
+    app.UseHttpsRedirection();
+}
+else
+{
+    app.UseExceptionHandler("/home/error");
+    app.UseHsts();
 }
 
-app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigin");
+
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();

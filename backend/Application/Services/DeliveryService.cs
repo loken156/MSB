@@ -83,9 +83,7 @@ namespace Application.Services
                         date = order.OrderDate.ToString("yyyy-MM-dd"),
                         vehicle_number = car.CarId.ToString(),
                         driver_name = driver.FirstName + " " + driver.LastName,
-                        address = $"{address.StreetNumber} {address.StreetName}, {address.City}, {address.State} {address.ZipCode}",
-                        latitude = address.Latitude,
-                        longitude = address.Longitude
+                        address = $"{address.StreetName},{address.UnitNumber}, {address.City}, {address.State} {address.ZipCode}",
                     };
 
                     var response = await client.PostAsJsonAsync("https://app.detrack.com/api/v2/deliveries", detrackRequest);

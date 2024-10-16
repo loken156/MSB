@@ -1,4 +1,5 @@
 using Domain.Models.Warehouse;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.Employee
@@ -7,7 +8,9 @@ namespace Application.Dto.Employee
     {
 
         [Required] public string Email { get; set; } = string.Empty;
-        [Required] public string Password { get; set; } = string.Empty;
+        [Required] 
+        [DefaultValue("123Abc!")]
+        public string Password { get; set; } = string.Empty;
         [Required] public string FirstName { get; set; } = string.Empty;
         [Required] public string LastName { get; set; } = string.Empty;
         [Required] public string PhoneNumber { get; set; } = string.Empty;

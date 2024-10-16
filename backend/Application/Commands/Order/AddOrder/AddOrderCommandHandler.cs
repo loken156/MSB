@@ -6,6 +6,8 @@ using Infrastructure.Repositories.BoxRepo;
 using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Application.Dto.Detrack;
+using Application.Services.Detrack; 
 
 namespace Application.Commands.Order.AddOrder
 {
@@ -15,13 +17,19 @@ namespace Application.Commands.Order.AddOrder
         private readonly IBoxRepository _boxRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<AddOrderCommandHandler> _logger;
+        private readonly IDetrackService _detrackService;  // Inject the DetrackService
 
-        public AddOrderCommandHandler(IOrderRepository orderRepository, IBoxRepository boxRepository, IMapper mapper, ILogger<AddOrderCommandHandler> logger)
+        public AddOrderCommandHandler(IOrderRepository orderRepository, 
+                                      IBoxRepository boxRepository, 
+                                      IMapper mapper, 
+                                      ILogger<AddOrderCommandHandler> logger,
+                                      IDetrackService detrackService) // Add DetrackService to constructor
         {
             _orderRepository = orderRepository;
             _boxRepository = boxRepository;
             _mapper = mapper;
             _logger = logger;
+            _detrackService = detrackService; // Assign DetrackService
         }
 
         public async Task<OrderDto> Handle(AddOrderCommand request, CancellationToken cancellationToken)
@@ -52,6 +60,33 @@ namespace Application.Commands.Order.AddOrder
 
                 // Map the result back to OrderDto (return type)
                 var orderDto = _mapper.Map<OrderDto>(orderModel);
+
+                // After successfully adding the order, create the Detrack job
+                var detrackJob = new DetrackJobDto
+                {
+                    DoNumber = orderModel.OrderId.ToString(),
+                    Address = request.NewOrder.Address,
+                    Date = DateTime.Now.ToString("yyyy-MM-dd"),
+                    OrderNumber = orderModel.OrderId.ToString(),
+                    PostalCode = request.NewOrder.PostalCode,
+                    City = request.NewOrder.City,
+                    Country = request.NewOrder.Country,
+                    DeliverTo = request.NewOrder.DeliverToName,
+                    PhoneNumber = request.NewOrder.PhoneNumber,
+                    Instructions = "Handle with care." // Optional instructions
+                };
+
+                var isDetrackJobCreated = await _detrackService.CreateDetrackJobAsync(detrackJob);
+
+                if (isDetrackJobCreated)
+                {
+                    _logger.LogInformation($"Detrack job for order {orderModel.OrderId} successfully created.");
+                }
+                else
+                {
+                    _logger.LogError($"Failed to create Detrack job for order {orderModel.OrderId}.");
+                }
+
                 return orderDto;
             }
             catch (Exception ex)

@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    padding-top: 50px;
+    background-color: #d8d7d7;
+}
+
+h1, p {
+    color: #06368D;
+}

@@ -1,4 +1,6 @@
 import "../css/PricesPage.css";
+import { handleCheckout } from '../utils/Checkout.js';
+import Box from '../components/boxPriceDisplay.jsx';
 
 function PricesPage() {
   return (
@@ -13,82 +15,10 @@ function PricesPage() {
 
         <div className = "media-scroller snaps-inline">
 
-          <div className = "media-element">
-            <p className = "box-title">Box S-size</p>
-            <p className = "box-measurments">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures" src = "/box-image.png" alt = "Picture of a box"></img>
-            <p className = "price-per-month">5$ box/month</p>
-            <label>Select the number of boxes:
-            <input type="number" id="quantity" name="quantity" min="0" max="100" value="0" />
-            </label>
-            <button className = "cart-button">Add to cart</button>
-          </div>  
-
-          <div className = "media-element">
-            <p className = "box-title">Box M-size</p>
-            <p className = "box-measurments">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures" src = "/box-image.png" alt = "Picture of a box"></img>
-            <p className = "price-per-month">6$ box/month</p>
-            <label>Select the number of boxes:
-            <input type="number" id="quantity" name="quantity" min="0" max="100" value="0" />
-            </label>
-            <button className = "cart-button">Add to cart</button>
-          </div>
-
-          <div className = "media-element">
-            <p className = "box-title">Box L-size</p>
-            <p className = "box-measurments">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures" src = "/box-image.png" alt = "Picture of a box"></img>
-            <p className = "price-per-month">7$ box/month</p>
-            <label>Select the number of boxes:
-            <input type="number" id="quantity" name="quantity" min="0" max="100" value="0" />
-            </label>
-            <button className = "cart-button">Add to cart</button>
-          </div>
-
-          <div className = "media-element">
-            <p className = "box-title">Box XL-size</p>
-            <p className = "box-measurments">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures" src = "/box-image.png" alt = "Picture of a box"></img>
-            <p className = "price-per-month">8$ box/month</p>
-            <label>Select the number of boxes:
-            <input type="number" id="quantity" name="quantity" min="0" max="100" value="0" />
-            </label>
-            <button className = "cart-button">Add to cart</button>
-          </div>
-
-          <div className = "media-element">
-            <p className = "box-title">Box XXL-size</p>
-            <p className = "box-measurments">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures" src = "/box-image.png" alt = "Picture of a box"></img>
-            <p className = "price-per-month">9$ box/month</p>
-            <label>Select the number of boxes:
-            <input type="number" id="quantity" name="quantity" min="0" max="100" value="0" />
-            </label>
-            <button className = "cart-button">Add to cart</button>
-          </div>
-
-          <div className = "media-element">
-            <p className = "box-title">Box XXXL-size</p>
-            <p className = "box-measurments">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures" src = "/box-image.png" alt = "Picture of a box"></img>
-            <p className = "price-per-month">10$ box/month</p>
-            <label>Select the number of boxes:
-            <input type="number" id="quantity" name="quantity" min="0" max="100" value="0" />
-            </label>
-            <button className = "cart-button">Add to cart</button>
-          </div>
-
-          <div className = "media-element">
-            <p className = "box-title">Box MEGA-size</p>
-            <p className = "box-measurments">37cm x 27cm x 17cm</p>
-            <img  className ="box-pictures" src = "/box-image.png" alt = "Picture of a box"></img>
-            <p className = "price-per-month">11$ box/month</p>
-            <label>Select the number of boxes:
-            <input type="number" id="quantity" name="quantity" min="0" max="100" value="0" />
-            </label>
-            <button className = "cart-button">Add to cart</button>
-          </div>
+          <Box priceId="price_1Q8LzwHAui1dwuXtYTt9aZW2" title="Box S-size" price="S$15" />
+          <Box priceId="price_1Q8M0tHAui1dwuXtcne0sI9N" title="Box M-size" price="S$20" />
+          <Box priceId="price_1Q8MCsHAui1dwuXtvdd7ynp8" title="Box L-size" price="S$25" />
+          <Box priceId="price_1Q8gkMHAui1dwuXtRxn2HU8J" title="Box XL-size" price="S$30" />
 
         </div>
         
@@ -97,5 +27,6 @@ function PricesPage() {
 </>
   );
 }
+
 
 export default PricesPage;
