@@ -15,11 +15,6 @@ namespace Application.Dto.Order
         // Optional list of boxes that the customer can add to the order
         public List<BoxDto>? Boxes { get; set; }
         
-        public string Address { get; set; } = string.Empty;
-        public string PostalCode { get; set; } = string.Empty;
-        public string City { get; set; } = string.Empty;
-        public string Country { get; set; } = string.Empty;
-        public string DeliverToName { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
+        
     }
 }
