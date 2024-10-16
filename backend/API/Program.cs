@@ -1,6 +1,7 @@
 using Application;
 using Application.MappingProfiles;
 using Application.Services;
+using Application.Services.Detrack;
 using Application.Services.Employee;
 using Domain.Models.Stripe;
 using Infrastructure;
@@ -32,6 +33,7 @@ builder.Services.AddLogging(); // Ensure logging is added to the service collect
 builder.Services.AddMemoryCache(); // enabling memory cache
 builder.Services.AddScoped<ICacheService, MemoryCacheService>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddTransient<IDetrackService, DetrackService>();
 
 builder.Services.AddCors(options =>
 {

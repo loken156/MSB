@@ -6,7 +6,6 @@ using Infrastructure.Repositories.BoxRepo;
 using Infrastructure.Repositories.OrderRepo;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Application.Dto.Detrack;
 using Application.Services.Detrack; 
 
 namespace Application.Commands.Order.AddOrder
@@ -38,6 +37,8 @@ namespace Application.Commands.Order.AddOrder
             {
                 // Map the AddOrderDto (from request) to the OrderModel (domain model)
                 var orderModel = _mapper.Map<OrderModel>(request.NewOrder);
+                
+                
 
                 // Check if there are boxes included in the request
                 if (request.NewOrder.Boxes != null && request.NewOrder.Boxes.Count > 0)
@@ -61,22 +62,8 @@ namespace Application.Commands.Order.AddOrder
                 // Map the result back to OrderDto (return type)
                 var orderDto = _mapper.Map<OrderDto>(orderModel);
 
-                // After successfully adding the order, create the Detrack job
-                var detrackJob = new DetrackJobDto
-                {
-                    DoNumber = orderModel.OrderId.ToString(),
-                    Address = request.NewOrder.Address,
-                    Date = DateTime.Now.ToString("yyyy-MM-dd"),
-                    OrderNumber = orderModel.OrderId.ToString(),
-                    PostalCode = request.NewOrder.PostalCode,
-                    City = request.NewOrder.City,
-                    Country = request.NewOrder.Country,
-                    DeliverTo = request.NewOrder.DeliverToName,
-                    PhoneNumber = request.NewOrder.PhoneNumber,
-                    Instructions = "Handle with care." // Optional instructions
-                };
-
-                var isDetrackJobCreated = await _detrackService.CreateDetrackJobAsync(detrackJob);
+                // After successfully adding the order, pass the OrderDto directly to DetrackService
+                var isDetrackJobCreated = await _detrackService.CreateDetrackJobAsync(orderDto);
 
                 if (isDetrackJobCreated)
                 {

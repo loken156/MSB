@@ -48,7 +48,7 @@ namespace Application.Services
                     newOrder.OrderNumber = year * 1000000 + month * 10000 + orderNumberPart;
 
                     // Save the new order
-                    await _orderRepository.CreateOrderAsync(newOrder);
+                    await _orderRepository.AddOrderAsync(newOrder);
 
                     return newOrder;
                 }
