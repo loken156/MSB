@@ -3,16 +3,23 @@ import { Routes, Route, Navigate, Router, Link, useNavigate } from 'react-router
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './css/App.css'
-import Navbar from './components/navbar2.0'
-import Footer from './components/Footer'
+import Sidebar from './components/Sidebar';
+import CustomerInformationPaige from './pages/CustomerInformationPaige';
+import HomePaige from './pages/HomePaige';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <Navbar />
-      <Footer />
+    
+      <Sidebar />
+
+      <Routes>
+        <Route path="/HomePaige" element={<HomePaige />} />
+        <Route path="/CustomerInformationPaige" element={<CustomerInformationPaige />} />
+      </Routes>
+
     </>
   )
 }
