@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Restore dependencies for the API project
-RUN dotnet restore API/API.csproj
+RUN dotnet restore API/
 
 # Build and publish the API project
 RUN dotnet publish API/API.csproj -c Release -o out
