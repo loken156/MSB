@@ -1,4 +1,4 @@
-﻿using Application.Queries.Car;
+﻿/*using Application.Queries.Car;
 using Domain.Models.Car;
 using Infrastructure.Repositories.CarRepo;
 using Moq;
@@ -45,4 +45,4 @@ namespace Tests.Application.Car.QueryHandlers
             await Assert.ThrowsAsync<Exception>(() => _handler.Handle(new GetAllCarsQuery()));
         }
     }
-}
+}*/

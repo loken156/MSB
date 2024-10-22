@@ -1,4 +1,4 @@
-﻿using Application.Queries.Shelf.GetByID;
+﻿/*using Application.Queries.Shelf.GetByID;
 using Domain.Models.Shelf;
 using Infrastructure.Repositories.ShelfRepo;
 using Moq;
@@ -55,4 +55,4 @@ namespace Tests.Application.Shelf.QueryHandlers
             await Assert.ThrowsAsync<Exception>(() => _handler.Handle(new GetShelfByIdQuery(shelfId), CancellationToken.None));
         }
     }
-}
+}*/

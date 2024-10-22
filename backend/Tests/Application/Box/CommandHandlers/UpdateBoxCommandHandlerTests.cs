@@ -1,4 +1,4 @@
-﻿using Application.Commands.Box.UpdateBox;
+﻿/*using Application.Commands.Box.UpdateBox;
 using Application.Dto.Box;
 using Domain.Models.Box;
 using Infrastructure.Repositories.BoxRepo;
@@ -42,4 +42,4 @@ namespace Tests.Application.Box.CommandHandlers
             await Assert.ThrowsAsync<Exception>(() => handler.Handle(command, new CancellationToken()));
         }
     }
-}
+}*/

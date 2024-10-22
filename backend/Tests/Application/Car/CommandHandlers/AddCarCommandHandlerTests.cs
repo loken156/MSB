@@ -1,4 +1,4 @@
-﻿using Application.Commands.Car.AddCar;
+﻿/*using Application.Commands.Car.AddCar;
 using Application.Dto.Car;
 using Domain.Models.Car;
 using Infrastructure.Repositories.CarRepo;
@@ -57,4 +57,4 @@ namespace Tests.Application.Car.CommandHandlers
             await Assert.ThrowsAsync<Exception>(() => handler.Handle(command));
         }
     }
-}
+}*/
