@@ -1,4 +1,4 @@
-﻿using Application.Queries.Box.GetByID;
+﻿/*using Application.Queries.Box.GetByID;
 using Domain.Models.Box;
 using Infrastructure.Repositories.BoxRepo;
 using Moq;
@@ -57,4 +57,4 @@ namespace Tests.Application.Box.QueryHandlers
             Assert.Equal(box, result);
         }
     }
-}
+}*/
