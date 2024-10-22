@@ -5,6 +5,7 @@ using Application.Queries.User.GetAll;
 using Application.Queries.User.GetById;
 using Domain.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.UserController
@@ -29,6 +30,7 @@ namespace API.Controllers.UserController
         }
 
         // Endpoint to get all users
+        [AllowAnonymous]
         [HttpGet]
         [Route("Getallusers")]
         public async Task<IActionResult> GetAllUsers()
@@ -48,6 +50,7 @@ namespace API.Controllers.UserController
         }
 
         // Endpoint to get a user by their ID
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetUserbyId")]
         public async Task<IActionResult> GetUserById(string UserId)
@@ -71,6 +74,7 @@ namespace API.Controllers.UserController
         }
 
         // Endpoint to update a user's information
+        [AllowAnonymous]
         [HttpPut]
         [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInfoDto updatedUserInfoDto, [FromQuery] string updatedUserId)
@@ -94,9 +98,11 @@ namespace API.Controllers.UserController
                 _logger.LogError(ex, "Error updating user with id: {id}", updatedUserId);
                 return StatusCode(500, "An error occurred while updating the user");
             }
+
         }
 
         // Endpoint to delete a user by their ID
+        [AllowAnonymous]
         [HttpDelete("DeleteUserby{id}")]
         public async Task<IActionResult> DeleteUserById(string id)
         {
@@ -121,6 +127,7 @@ namespace API.Controllers.UserController
         }
 
         // Endpoint to change a user's password
+        [AllowAnonymous]
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(string userId, string currentPassword, string newPassword)
         {
