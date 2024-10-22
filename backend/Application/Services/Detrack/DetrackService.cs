@@ -13,7 +13,7 @@ namespace Application.Services.Detrack
         private readonly ILogger<DetrackService> _logger;
 
         private const string
-            DetrackApiUrl = "https://app.detrack.com/api/v2/delivery"; // Replace with the actual API endpoint
+            DetrackApiUrl = "https://app.detrack.com/api/v2/dn/jobs"; // Replace with the actual API endpoint
 
         private const string ApiKey = "7d5e523be182472211381fa6a6ba508e5919251796bb588a";
         private readonly IAddressRepository _addressRepository; // Inject AddressRepository
@@ -35,25 +35,26 @@ namespace Application.Services.Detrack
                 if (address == null)
                 {
                     _logger.LogError("Address not found for ID: {AddressId}", orderDto.AddressId);
-                    return false; // Fail if the address is not found
+                    return false;
                 }
 
-                // Now you can use the fetched address details to create the DetrackJobDto
+                // Create the DetrackJobDto with nested data object
                 var detrackJob = new DetrackJobDto
                 {
-                    DoNumber = orderDto.OrderId.ToString(), // Unique order reference number
-                    OrderNumber = orderDto.OrderNumber.ToString(),
-                    Address = $"{address.StreetName}, {address.City}, {address.State} {address.ZipCode}",
-                    PostalCode = address.ZipCode,
-                    City = address.City,
-                    Country = address.Country,
-                    DeliverTo = "Customer Name", // You may adjust this if you store customer details separately
-                    PhoneNumber = "CustomerPhone", // Same for phone number, ensure you have this info
-                    Date = orderDto.OrderDate.ToString("yyyy-MM-dd"),
-                    Instructions = "Handle with care" // Add specific instructions if required
+                    data = new DetrackJobDto.JobData
+                    {
+                        do_number = orderDto.OrderId.ToString(), // Unique order reference number
+                        date = DateTime.Now.ToString("yyyy-MM-dd"),
+                        order_number = orderDto.OrderNumber.ToString(),
+                        address = $"{address.StreetName}, {address.City}, {address.State} {address.ZipCode}",
+                        postal_code = address.ZipCode,
+                        deliver_to_collect_from = "Customer Name",  // You may fetch customer name dynamically
+                        phone_number = "CustomerPhone", // Fetch phone number dynamically if needed
+                        instructions = "Handle with care"
+                    }
                 };
 
-                // Prepare the request data
+                // Serialize the request
                 var requestData = JsonSerializer.Serialize(detrackJob);
                 var content = new StringContent(requestData, Encoding.UTF8, "application/json");
 
