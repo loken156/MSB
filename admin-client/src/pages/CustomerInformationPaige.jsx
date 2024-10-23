@@ -3,6 +3,7 @@ import '../css/CustomerInformationPaige.css';
 import { getAllUsers } from '../Services/APIs-User.js';
 import { getUserByID } from '../Services/APIs-User.js';
 import { updateUser } from '../Services/APIs-User.js';
+import { deleteUser } from '../Services/APIs-User.js';
 
 function CustomerInformationPaige() {
 
@@ -62,26 +63,60 @@ function CustomerInformationPaige() {
   }
 
  //----------------------Function to Update User------------------------------
-  const handleUpdateUser = async () => 
-  {
-    if (!editingUser) return;
-  
-    setLoading(true);  
-    setError(null);  
-  
-    try 
+ const handleUpdateUser = async () => {
+  if (!editingUser) return;
+
+  // Check if there is at least one address
+  const addressToSend = editingUser.addresses && editingUser.addresses.length > 0 ? editingUser.addresses[0] : null;
+
+  if (!addressToSend) {
+    setError("Address is required.");
+    return;
+  }
+
+  const userToUpdate = {
+    ...editingUser,
+    Address: addressToSend, // Send the first address as the 'Address' field
+  };
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    const updatedUser = await updateUser(userToUpdate);
+    setUsers(users.map(user => (user.id === updatedUser.id ? updatedUser : user)));
+    setEditingUser(null);
+    alert('User updated successfully!');
+  } catch (error) {
+    setError(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+   //----------------------Function to Delete User------------------------------
+   const handleDeleteUser = async () => 
     {
-      const updatedUser = await updateUser(editingUser);  
-      setUsers(users.map(user => (user.id === updatedUser.id ? updatedUser : user)));
-      setEditingUser(null);
-      alert('User updated successfully!');
-    } catch (error) {
-      setError(error.message);  
-    } 
-    finally 
-    {
-      setLoading(false);  
-    }
+      if (!editingUser) return;
+
+      setLoading(true);  
+      setError(null);  
+
+      try 
+      {
+        await deleteUser(editingUser); // Call delete function
+        setUsers(users.filter(user => user.id !== editingUser.id)); // Remove deleted user from state
+        setEditingUser(null); // Reset editing user state
+        alert('User deleted successfully!');
+      } 
+      catch (error) 
+      {
+        setError(error.message);  
+      } 
+      finally 
+      {
+        setLoading(false);  
+      }
   };
 
  //----------------------Handle input change in the editable fields------------------------------
@@ -117,6 +152,7 @@ function CustomerInformationPaige() {
        {editingUser && (
           <div className="UpdateUser-Button">
             <button onClick={handleUpdateUser}>Update User</button>
+            <button onClick={handleDeleteUser} style={{marginLeft: '10px'}}>Delete User</button> {/* Delete Button */}
           </div>
         )}
 
