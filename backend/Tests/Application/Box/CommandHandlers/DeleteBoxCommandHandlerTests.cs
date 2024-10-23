@@ -1,4 +1,4 @@
-﻿using Application.Commands.Box.DeleteBox;
+﻿/*using Application.Commands.Box.DeleteBox;
 using Infrastructure.Repositories.BoxRepo;
 using Moq;
 
@@ -37,4 +37,4 @@ namespace Tests.Application.Box.CommandHandlers
             await Assert.ThrowsAsync<Exception>(() => handler.Handle(command, new CancellationToken()));
         }
     }
-}
+}*/

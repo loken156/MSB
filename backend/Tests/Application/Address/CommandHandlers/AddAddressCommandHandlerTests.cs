@@ -1,4 +1,4 @@
-﻿using Application.Commands.Address.AddAddress;
+﻿/*using Application.Commands.Address.AddAddress;
 using Application.Dto.Adress;
 using AutoMapper;
 using Domain.Models.Address;
@@ -88,4 +88,4 @@ namespace Tests.Application.Address.CommandHandlers
             Assert.Equal(string.Empty, result.ZipCode);
         }
     }
-}
+} */

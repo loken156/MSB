@@ -80,6 +80,13 @@ namespace Infrastructure.Database
                 .WithOne(b => b.BoxType) // Link back to BoxType
                 .HasForeignKey(b => b.BoxTypeId) // Use BoxTypeId as the foreign key
                 .OnDelete(DeleteBehavior.Restrict); // Optional: prevent cascade delete
+            
+            // Configure the relationship between ApplicationUser and OrderModel
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(u => u.Orders)  // A user can have many orders
+                .WithOne()                // Order has one user (no navigation property back)
+                .HasForeignKey(o => o.UserId)  // Foreign key in OrderModel
+                .OnDelete(DeleteBehavior.Cascade); // Optional: Set up cascade delete behavior
         }
     }
 }

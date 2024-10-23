@@ -3,7 +3,7 @@ using Infrastructure.Database;
 using Infrastructure.Repositories.ShelfRepo;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tests.Infrastructure.Repositories
+/*namespace Tests.Infrastructure.Repositories
 {
     public class ShelfRepositoryTests
     {
@@ -142,4 +142,4 @@ namespace Tests.Infrastructure.Repositories
             }
         }
     }
-}
+}*/

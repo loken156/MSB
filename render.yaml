@@ -1,10 +1,9 @@
 ﻿services:
   - type: web
     name: my-dotnet-backend
-    env: dotnet-core
+    env: docker
     branch: development
-    buildCommand: "dotnet build"
-    startCommand: "dotnet run --no-launch-profile --urls=http://0.0.0.0:8080"
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: DATABASE_URL
         value: "mysql://root:mypassword@localhost:3306/MSB_Database"
