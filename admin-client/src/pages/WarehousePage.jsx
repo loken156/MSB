@@ -3,7 +3,7 @@ import '../css/WarehousePage.css';
 import { getAllWarehouses, addWarehouse } from '../API/warehouseService';
 import { getAllShelves, addShelf } from '../API/shelfService';
 import { getAddressById } from '../API/addressService';
-import arrowImage from '../assets/arrow_input_fields.png';  // Пусть к изображению стрелки
+import arrowImage from '../assets/arrow_input_fields.png';
 
 function WarehousePage() {
   const [warehouses, setWarehouses] = useState([]);
@@ -26,7 +26,7 @@ function WarehousePage() {
   });
   const [response, setResponse] = useState('');
   
-  const [openSections, setOpenSections] = useState({}); // Логика открытия блоков
+  const [openSections, setOpenSections] = useState({});
 
   const fetchWarehousesAndShelves = async () => {
     try {
@@ -117,11 +117,11 @@ function WarehousePage() {
 
   return (
     <div className="warehouse_page">
-      <h1 className="heading margin_top">Warehouse Information</h1>
+      <h1 className="heading_warehouse margin_top_warehouse">Warehouse Information</h1>
       {warehouses.map(warehouse => (
-        <div key={warehouse.warehouseId} className="warehouse_container margin_top">
+        <div key={warehouse.warehouseId} className="warehouse_container margin_top_warehouse">
           <div className="section_header_warehouse" onClick={() => toggleSection(warehouse.warehouseId)}>
-            <h3>Warehouse Name: {warehouse.warehouseName}</h3>
+            <h3 className='h3_warehouse'>Warehouse Name: {warehouse.warehouseName}</h3>
             <img
               src={arrowImage}
               alt="Toggle arrow"
@@ -129,11 +129,11 @@ function WarehousePage() {
             />
           </div>
           <div className={`section_content_warehouse ${openSections[warehouse.warehouseId] ? 'open' : 'closed'}`}>
-            <h4>Address: {addresses[warehouse.addressId] || "No address available"}</h4>
-            <h4>Shelves in {warehouse.warehouseName}:</h4>
-            <table>
+            <h4 className='h4_warehouse'>Address: {addresses[warehouse.addressId] || "No address available"}</h4>
+            <h4 className='h4_warehouse'>Shelves in {warehouse.warehouseName}:</h4>
+            <table className='table_warehouse'>
               <thead>
-                <tr>
+                <tr className='tr_warehouse'>
                   <th>Shelf ID</th>
                   <th>Section</th>
                   <th>Row</th>
@@ -148,7 +148,7 @@ function WarehousePage() {
               </thead>
               <tbody>
                 {getShelvesForWarehouse(warehouse.warehouseId).map(shelf => (
-                  <tr key={shelf.shelfId}>
+                  <tr className='tr_warehouse' key={shelf.shelfId}>
                     <td>{shelf.shelfId}</td>
                     <td>{shelf.section}</td>
                     <td>{shelf.shelfRows}</td>
@@ -167,11 +167,11 @@ function WarehousePage() {
         </div>
       ))}
 
-      {/* Форма для создания нового склада */}
-      <div className="create_warehouse_form margin_top">
-        <h2>Create New Warehouse</h2>
+      <div className="create_warehouse_form margin_top_warehouse">
+        <h2 className='h2_warehouse'>Create New Warehouse</h2>
         <form onSubmit={handleCreateWarehouse}>
           <input
+            className='input_warehouse'
             type="text"
             placeholder="Warehouse Name"
             value={newWarehouse.warehouseName}
@@ -179,22 +179,23 @@ function WarehousePage() {
             required
           />
           <input
+            className='input_warehouse'
             type="text"
             placeholder="Address ID"
             value={newWarehouse.addressId}
             onChange={(e) => setNewWarehouse({ ...newWarehouse, addressId: e.target.value })}
             required
           />
-          <button type="submit">Create Warehouse</button>
+          <button className='button_warehouse' type="submit">Create Warehouse</button>
         </form>
         {response && <p>{response}</p>}
       </div>
 
-      {/* Форма для создания новой полки */}
-      <div className="create_shelf_form margin_top">
-        <h2>Create New Shelf</h2>
+      <div className="create_shelf_form margin_top_warehouse">
+        <h2 className='h2_warehouse'>Create New Shelf</h2>
         <form onSubmit={handleCreateShelf}>
           <input
+            className='input_warehouse'
             type="text"
             placeholder="Shelf Section"
             value={newShelf.section}
@@ -202,6 +203,7 @@ function WarehousePage() {
             required
           />
           <input
+            className='input_warehouse'
             type="number"
             placeholder="Shelf Rows"
             value={newShelf.shelfRows}
@@ -210,6 +212,7 @@ function WarehousePage() {
             required
           />
           <input
+            className='input_warehouse'
             type="number"
             placeholder="Shelf Column"
             value={newShelf.shelfColumn}
@@ -218,6 +221,7 @@ function WarehousePage() {
             required
           />
           <input
+            className='input_warehouse'
             type="number"
             placeholder="Large Box Capacity"
             value={newShelf.largeBoxCapacity}
@@ -225,6 +229,7 @@ function WarehousePage() {
             required
           />
           <input
+            className='input_warehouse'
             type="number"
             placeholder="Medium Box Capacity"
             value={newShelf.mediumBoxCapacity}
@@ -232,6 +237,7 @@ function WarehousePage() {
             required
           />
           <input
+            className='input_warehouse'
             type="number"
             placeholder="Small Box Capacity"
             value={newShelf.smallBoxCapacity}
@@ -239,13 +245,14 @@ function WarehousePage() {
             required
           />
           <input
+            className='input_warehouse'
             type="text"
             placeholder="Warehouse Name"
             value={newShelf.warehouseName}
             onChange={(e) => setNewShelf({ ...newShelf, warehouseName: e.target.value })}
             required
           />
-          <button type="submit">Create Shelf</button>
+          <button className='button_warehouse' type="submit">Create Shelf</button>
         </form>
         {response && <p>{response}</p>}
       </div>
