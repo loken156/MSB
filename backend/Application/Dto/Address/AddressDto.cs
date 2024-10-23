@@ -14,14 +14,14 @@ namespace Application.Dto.Adress
         
         [Required]
         [DefaultValue("Any String")]
-        public string? StreetName { get; set; }    
+        public string StreetName { get; set; }    
         
         [DefaultValue("#12-34")]
         public string UnitNumber { get; set; } 
         
         [Required]      
         [DefaultValue("123456")]
-        public string? ZipCode { get; set; }
+        public string ZipCode { get; set; }
         
         
     }
