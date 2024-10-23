@@ -9,10 +9,13 @@ using Application.Queries.Shelf.GetByID;
 using Application.Validators.ShelfValidator;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace API.Controllers.Shelf
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class ShelfController : ControllerBase
