@@ -63,63 +63,38 @@ function CustomerInformationPaige() {
   }
 
  //----------------------Function to Update User------------------------------
- const handleUpdateUser = async () => {
-  if (!editingUser) return;
+  const handleUpdateUser = async () => {
+    if (!editingUser) return;
 
-  // Check if there is at least one address
-  const addressToSend = editingUser.addresses && editingUser.addresses.length > 0 ? editingUser.addresses[0] : null;
+    // Check if there is at least one address
+    const addressToSend = editingUser.addresses && editingUser.addresses.length > 0 ? editingUser.addresses[0] : null;
 
-  if (!addressToSend) {
-    setError("Address is required.");
-    return;
-  }
+    if (!addressToSend) {
+      setError("Address is required.");
+      return;
+    }
 
-  const userToUpdate = {
-    ...editingUser,
-    Address: addressToSend, // Send the first address as the 'Address' field
+    const userToUpdate = {
+      ...editingUser,
+      Address: addressToSend, // Send the first address as the 'Address' field
+    };
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const updatedUser = await updateUser(userToUpdate);
+      setUsers(users.map(user => (user.id === updatedUser.id ? updatedUser : user)));
+      setEditingUser(null);
+      alert('User updated successfully!');
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  setLoading(true);
-  setError(null);
-
-  try {
-    const updatedUser = await updateUser(userToUpdate);
-    setUsers(users.map(user => (user.id === updatedUser.id ? updatedUser : user)));
-    setEditingUser(null);
-    alert('User updated successfully!');
-  } catch (error) {
-    setError(error.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-   //----------------------Function to Delete User------------------------------
-   const handleDeleteUser = async () => 
-    {
-      if (!editingUser) return;
-
-      setLoading(true);  
-      setError(null);  
-
-      try 
-      {
-        await deleteUser(editingUser); // Call delete function
-        setUsers(users.filter(user => user.id !== editingUser.id)); // Remove deleted user from state
-        setEditingUser(null); // Reset editing user state
-        alert('User deleted successfully!');
-      } 
-      catch (error) 
-      {
-        setError(error.message);  
-      } 
-      finally 
-      {
-        setLoading(false);  
-      }
-  };
-
- //----------------------Handle input change in the editable fields------------------------------
+  //----------------------Handle input change in the editable fields------------------------------
   const handleInputChange = (e, field) => 
   {
     const { value } = e.target;
@@ -224,7 +199,21 @@ function CustomerInformationPaige() {
                       ))
                       )}
                   </td>
-                  <td className = "Table-Datacell-White">{user.orders}</td>
+                  <td className="Table-Datacell-White">
+                    {user.orders && user.orders.length > 0 ? (
+                        <ul>
+                          {user.orders.map((order, index) => (
+                              <li key={index}>
+                                Order Number: {order.orderNumber},
+                                Date: {new Date(order.orderDate).toLocaleDateString()},
+                                Status: {order.orderStatus}
+                              </li>
+                          ))}
+                        </ul>
+                    ) : (
+                        "No Orders"
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -233,7 +222,7 @@ function CustomerInformationPaige() {
       )}
 
       {!loading && !error && users.length === 0 && (
-        <div>No customer information loaded yet.</div>
+          <div>No customer information loaded yet.</div>
       )}
     </div>
   </>

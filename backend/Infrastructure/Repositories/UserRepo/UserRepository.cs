@@ -38,7 +38,8 @@ namespace Infrastructure.Repositories.UserRepo
         {
             var users = await _database.Users
                 .Include(u => u.Addresses)
-                .Include(u => u.Orders)     // Eagerly load orders
+                .Include(u => u.Orders) // Eagerly load orders
+                .AsSplitQuery()          // This splits the query to load related data separately
                 .ToListAsync();
             return users.Cast<IAppUser>().ToList();
         }
@@ -52,6 +53,7 @@ namespace Infrastructure.Repositories.UserRepo
 
             return user as IAppUser ?? throw new KeyNotFoundException($"User with id {id} not found");
         }
+
 
         public async Task<IAppUser> GetByEmailAsync(string email)
         {
