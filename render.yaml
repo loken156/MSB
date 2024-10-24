@@ -5,5 +5,7 @@
     branch: development
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: DATABASE_URL
-        value: "mysql://root:mypassword@localhost:3306/MSB_Database"
+      - key: DB_HOST
+      - key: DB_NAME
+      - key: DB_USER
+      - key: DB_PASSWORD
