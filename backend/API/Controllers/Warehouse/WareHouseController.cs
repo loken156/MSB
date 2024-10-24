@@ -8,10 +8,13 @@ using Application.Queries.Warehouse.GetByID;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace API.Controllers.Warehouse
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class WarehouseController : ControllerBase

@@ -6,6 +6,7 @@ import './css/App.css'
 import Sidebar from './components/Sidebar';
 import CustomerInformationPaige from './pages/CustomerInformationPaige';
 import HomePaige from './pages/HomePaige';
+import WarehousePage from "./pages/WarehousePage";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/HomePaige" element={<HomePaige />} />
         <Route path="/CustomerInformationPaige" element={<CustomerInformationPaige />} />
+        <Route path="/WarehousePage" element={<WarehousePage />} />
       </Routes>
 
     </>
