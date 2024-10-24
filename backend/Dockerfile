@@ -5,10 +5,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copy the entire backend folder
-COPY . .
+COPY backend/ .
 
 # Restore dependencies for the API project
-RUN dotnet restore API/
+RUN dotnet restore API/API.csproj
 
 # Build and publish the API project
 RUN dotnet publish API/API.csproj -c Release -o out
