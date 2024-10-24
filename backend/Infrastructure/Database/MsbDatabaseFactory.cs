@@ -20,7 +20,9 @@ namespace Infrastructure.Database
 
             var optionsBuilder = new DbContextOptionsBuilder<MSB_Database>();
             optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"),
-                new MySqlServerVersion(new Version(8, 3, 0)));
+                new MySqlServerVersion(new Version(8, 0, 21)),
+                mysqlOptions => mysqlOptions.EnableRetryOnFailure());
+
 
             return new MSB_Database(optionsBuilder.Options);
         }
