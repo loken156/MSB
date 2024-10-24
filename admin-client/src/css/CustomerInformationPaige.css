@@ -5,41 +5,145 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/*------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
 
+.paige-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .Header-Section-CustomerInformationPaige{
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
 }
-.other-content-CustomerInformationPaige{
-    padding: 100px;
-    display: flex;
-    justify-content: center;
-}
-.paige-container{
+
+/*----------------------------------------Search, Update and Delete Section---------------------------------------------------------*/
+
+.search-Update-Delete-Section{
+
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 20px;
+    gap: 20px;
+    padding: 20px;
+    background-color: #06368d;
+    border-radius: 5px;
+}
+.updateAndDelete-Section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+.GetCustomerByID-SearchFunction-Section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+.GetAllUsers-Button,
+.getUserByIdButton,
+.updateUserButton,
+.deleteUserButton{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #FFC857;
+    font-size: 20px;
+}
+.GetAllUsers-Button:hover,
+.getUserByIdButton:hover,
+.updateUserButton:hover,
+.deleteUserButton:hover{
+    background-color: #ddd;
+    cursor: pointer;
+}
+.GetUserByID-Input{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #ddd;
+    font-size: 20px;
+}
+.GetUserByID-Input:focus{
+    outline: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 20px;
 }
 
 /*-------------------------------Customer Information Table-----------------------------------------------*/
-.GetCustomerByID-SearchFunction{
-    background-color: #06368d;
-}
+
 .Customer-Info-Section{
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
+}
+.Customer-Info-Table{
+
 }
 .Customer-Info-Table th{
     background-color: #06368d;
     color: aliceblue;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 20px;
 }
 .Table-Datacell-White{
+    padding: 5px;
+    border-radius: 5px;
     background-color: rgb(227, 227, 227);
+    font-size: 20px;
 }
 .Table-Datacell-Gray{
+    padding: 5px;
+    border-radius: 5px;
     background-color: rgb(197, 197, 197) ;
+    font-size: 20px;
+}
+
+/*-------------------------------Customer Information Table - Editing User-----------------------------------------------*/
+.editUser-Info-Section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.editUser-Info-Table th{
+    background-color: #06368d;
+    color: aliceblue;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+.editUserTable-Datacell-White{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(227, 227, 227);
+    font-size: 20px;
+}
+.editUserTable-Datacell-Gray{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(197, 197, 197) ;
+    font-size: 20px;
+}
+.editUserTable-Datacell-Red{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(187, 112, 112) ;
+    font-size: 20px;
+}
+.editUser-Inputfields{
+    border: none;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.editUser-Inputfields:focus{
+    outline: none;
 }
