@@ -14,4 +14,4 @@
       - key: DB_PASSWORD
         value: ${DB_PASSWORD}
       - key: DB_PORT
-        value: ${DB_PORT}
+        value: 3306
