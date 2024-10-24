@@ -9,3 +9,4 @@
       - key: DB_NAME
       - key: DB_USER
       - key: DB_PASSWORD
+      - key: DB_PORT
