@@ -16,5 +16,6 @@ namespace Infrastructure.Entities
 
         public ICollection<OrderModel> Orders { get; set; }
         public ICollection<AddressModel> Addresses { get; set; }
+
     }
 }

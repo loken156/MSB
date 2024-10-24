@@ -7,15 +7,10 @@ return (
     <div className="Header-Section-HomePaige">
         <h1>Home</h1>
     </div>
-    <div className="other-content-HomePaige">
-        <h1>other content</h1>
+    <div className="picture-HomePaige">
+        <img src = "public\Magnificent Store Buddies.png"></img>
     </div>
-    <div className="other-content-HomePaige">
-        <h1>other content</h1>
-    </div>
-    <div className="other-content-HomePaige">
-        <h1>other content</h1>
-    </div>
+
 
 </>
     ); 

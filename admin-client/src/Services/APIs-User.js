@@ -52,6 +52,7 @@ export const getUserByID = async (ID) => {
     if (!response.ok)
     {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
+      
     }
 
     const data = await response.json();
@@ -84,13 +85,46 @@ export const updateUser = async (updatedUser) => {
       body: JSON.stringify(updatedUser)
     });
 
-    if (!response.ok) {
+    if (!response.ok) 
+    {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
 
     return data;
+  } 
+  catch (error) {
+    console.error("Error updating the user:", error);
+    throw error;
+  }
+};
+
+//-----------------------Delete User-----------------------------------------
+
+export const deleteUser = async (deleteUser) => {
+
+  try 
+  {
+    const url = `${API_URL}/DeleteUserby${deleteUser.id}`;
+
+    console.log("Deleting user from URL:", url);
+    
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers:
+      {
+        'accept':  '*/*',
+      }
+    });
+
+    if (response.status !== 204) 
+    {
+      const data = await response.json();
+      return data;
+    }
+    
+    return { message: 'User deleted successfully.' };
   } 
   catch (error) {
     console.error("Error updating the user:", error);

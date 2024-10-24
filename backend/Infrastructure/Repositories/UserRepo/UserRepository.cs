@@ -44,14 +44,13 @@ namespace Infrastructure.Repositories.UserRepo
             return users.Cast<IAppUser>().ToList();
         }
 
-
         public async Task<IAppUser> GetUserByIdAsync(string id)
         {
             var user = await _database.Users
                 .Include(u => u.Addresses)  // Eagerly load the addresses
                 .Include(u => u.Orders)     // Eagerly load the orders
                 .FirstOrDefaultAsync(u => u.Id == id);  // Fetch the user by ID
-                              
+
             return user as IAppUser ?? throw new KeyNotFoundException($"User with id {id} not found");
         }
 
