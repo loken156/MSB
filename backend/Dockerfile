@@ -1,31 +1,28 @@
-﻿# Set the base image for the build (SDK image)
+﻿# Set the base image for .NET SDK
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-# Set the working directory inside the container
-WORKDIR /src
-
-# Copy the .csproj files separately to restore dependencies first (this optimizes caching)
-COPY API/API.csproj API/
-
-# Restore dependencies based on the .csproj file
-RUN dotnet restore API/API.csproj
-
-# Copy the entire backend folder to the container
-COPY . .
-
-# Build and publish the API project
-RUN dotnet publish API/API.csproj -c Release -o /app/out
-
-# Set the base image for runtime (ASP.NET Core image)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-
-# Set the working directory in the runtime container
+# Set the working directory to /app in the container
 WORKDIR /app
 
-# Copy the published app from the build stage
+# Copy the entire backend folder
+COPY . .
+
+# Restore dependencies for the API project
+RUN dotnet restore API/
+
+# Build and publish the API project
+RUN dotnet publish API/API.csproj -c Release -o out
+
+# Set up the runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Set the working directory for the final runtime image
+WORKDIR /app
+
+# Copy the build output from the previous step
 COPY --from=build /app/out .
 
-# Expose the port the app will run on
+# Expose the port
 EXPOSE 8080
 
 # Run the application
